@@ -3,3 +3,8 @@ venv
 
 env
 .env
+financial_data/raw/
+financial_data/processed/
+financial_data/indexed/
+__pycache__/
+*.pyc
