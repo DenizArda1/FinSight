@@ -8,3 +8,4 @@ financial_data/processed/
 financial_data/indexed/
 __pycache__/
 *.pyc
+output

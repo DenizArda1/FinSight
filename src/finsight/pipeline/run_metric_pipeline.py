@@ -1,8 +1,15 @@
+from datetime import date
 from pathlib import Path
 
-from src.finsight.metrics.calculations import index_rows_by_period, calculate_margin, calculate_growth, calculate_cagr
-from src.finsight.utils.utils import load_json, save_json
-from datetime import date
+from src.finsight.metrics.calculations import (
+    calculate_cagr,
+    calculate_growth,
+    calculate_margin,
+    index_rows_by_period,
+)
+from src.finsight.data.contracts import validate_calculations
+from src.finsight.utils.utils import load_json, load_yaml, save_json
+
 
 def match_income_records(revenue_rows, income_rows):
     #Return period-matched record pairs and identify missing periods
@@ -24,7 +31,7 @@ def match_income_records(revenue_rows, income_rows):
 
     return matches
 
-def build_margin_rows(matches, margin_type, income_type):
+def build_margin_rows(matches, margin_type, income_type, revenue_type="revenue"):
     margin_rows = []
     for period, revenue_record, income_record in matches:
         if revenue_record["cik"] != income_record["cik"]:
@@ -41,62 +48,59 @@ def build_margin_rows(matches, margin_type, income_type):
             "value": margin,
             "unit": "ratio",
             "metric": margin_type,
-            "formula": f"{income_type} / revenue",
+            "formula": f"{income_type} / {revenue_type}",
             "inputs": {
                 income_type: income_record,
-                "revenue": revenue_record,
+                revenue_type: revenue_record,
             },
         })
     return margin_rows
 
-def build_growth_rows(pairs):
+def build_growth_rows(pairs, metric_name="revenue_growth", input_type="revenue"):
     growth_rows = []
     for previous_record, current_record in pairs:
         growth = calculate_growth(previous_record["value"],current_record["value"])
         growth_rows.append({
             "cik": current_record["cik"],
-            "metric": "revenue_growth",
+            "metric": metric_name,
             "start": current_record["start"],
             "end": current_record["end"],
             "value": growth,
             "unit": "ratio",
-            "formula": "current_revenue / previous_revenue - 1",
+            "formula": f"current_{input_type} / previous_{input_type} - 1",
             "inputs": {
-                "previous_revenue": previous_record,
-                "current_revenue": current_record,
+                f"previous_{input_type}": previous_record,
+                f"current_{input_type}": current_record,
             },
         })
     return growth_rows
 
-def build_cagr_row(revenue_rows):
+def build_cagr_row(revenue_rows, metric_name="revenue_cagr", input_type="revenue"):
     if len(revenue_rows) < 2:
         raise ValueError("At least two revenue records are required")
     
-    pair_consecutive_periods(revenue_rows)
-    sorted_rows = sorted(revenue_rows, key= lambda row: row["end"])
-    first_record = sorted_rows[0]
-    last_record = sorted_rows[-1]
-    periods = len(sorted_rows) - 1
+    pairs = pair_consecutive_periods(revenue_rows)
+    first_record = pairs[0][0]
+    last_record = pairs[-1][1]
+    periods = len(pairs)
 
-    cagr = calculate_cagr(first_record,last_record,periods)
+    cagr = calculate_cagr(first_record["value"],last_record["value"],periods)
 
     return ({
         "cik": first_record["cik"],
-        "metric": "revenue_cagr",
+        "metric": metric_name,
         "start": first_record["end"],
         "end": last_record["end"],
         "periods": periods,
         "value": cagr,
         "unit": "ratio",
-        "formula": "(end_revenue / start_revenue) ** (1 / periods) - 1",
+        "formula": f"(end_{input_type} / start_{input_type}) ** (1 / periods) - 1",
         "inputs": {
-            "start_revenue": first_record,
-            "end_revenue": last_record,
+            f"start_{input_type}": first_record,
+            f"end_{input_type}": last_record,
         },
     })
     
-
-
 def pair_consecutive_periods(rows):
     index_rows_by_period(rows)
     sorted_rows = sorted(rows, key=lambda row: row["end"])
@@ -120,49 +124,48 @@ def pair_consecutive_periods(rows):
         pairs.append((previous_record, current_record))
     return pairs
 
-def process_company_margins(cik):
-    project_root = Path(__file__).resolve().parents[1]
+def process_company_calculations(cik, calculations, metrics):
+    validate_calculations(calculations, metrics)
+    project_root = Path(__file__).resolve().parents[3]
     company_path = project_root / "financial_data" / "processed" / cik
-    revenue_rows = load_json(company_path / "revenue.json")
-    net_income_rows = load_json(company_path / "net_income.json")
-    operating_income_rows = load_json(company_path / "operating_income.json")
-    pairs = pair_consecutive_periods(revenue_rows)
-    matches = match_income_records(revenue_rows, net_income_rows)
+    records = {}
+    results = {}
 
-    for previous_record, current_record in pairs:
-        print(previous_record["end"], "->", current_record["end"])
+    for calculation_name, definition in calculations.items():
+        input_names = definition["inputs"]
+        for metric_name in input_names:
+            if metric_name not in records:
+                records[metric_name] = load_json(company_path / f"{metric_name}.json")
 
-    operating_matches = match_income_records(
-        revenue_rows,
-        operating_income_rows,
-    )
+        function_name = definition["function"]
+        if function_name == "calculate_margin":
+            income_type, revenue_type = input_names
+            matches = match_income_records(records[revenue_type], records[income_type])
+            rows = build_margin_rows(
+                matches, calculation_name, income_type, revenue_type
+            )
+        elif function_name == "calculate_growth":
+            input_type = input_names[0]
+            pairs = pair_consecutive_periods(records[input_type])
+            rows = build_growth_rows(pairs, calculation_name, input_type)
+        elif function_name == "calculate_cagr":
+            input_type = input_names[0]
+            rows = [build_cagr_row(records[input_type], calculation_name, input_type)]
+        else:
+            raise ValueError(f"Unsupported function for {calculation_name}")
 
-    print("Matched operating income periods:", len(operating_matches))
+        save_json(rows, company_path / f"{calculation_name}.json")
+        results[calculation_name] = rows
+        print(f"{calculation_name}: {len(rows)} records")
 
-    net_margin_rows = build_margin_rows(
-        matches, "net_margin", "net_income"
-    )
+    return results
 
-    operating_margin_rows = build_margin_rows(
-        operating_matches, "operating_margin", "operating_income"
-    )
-    growth_rows = build_growth_rows(pairs)
-
-    cagr_row = build_cagr_row(revenue_rows)
-
-    save_json([cagr_row],company_path / "revenue_cagr.json")
-    save_json(growth_rows, company_path / "revenue_growth.json")
-    save_json(net_margin_rows, company_path / "net_margin.json")
-    save_json(operating_margin_rows, company_path / "operating_margin.json")
-
-    return {
-        "net_margin": net_margin_rows,
-        "operating_margin": operating_margin_rows,
-        "revenue_growth": growth_rows,
-        "revenue_cagr": [cagr_row]
-    }
 
 def main():
+
+    project_root = Path(__file__).resolve().parents[3]
+    config = load_yaml(project_root / "configs" / "metrics.yaml")
+
     companies = {
         "NVDA": "0001045810",
         "AAPL": "0000320193",
@@ -172,7 +175,7 @@ def main():
 
     for ticker, cik in companies.items():
         print("\nProcessing:", ticker)
-        process_company_margins(cik)
+        process_company_calculations(cik, config["calculations"], config["metrics"])
 
 if __name__ == "__main__":
     main()

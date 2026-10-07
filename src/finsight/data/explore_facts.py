@@ -2,6 +2,7 @@ from datetime import date
 from pathlib import Path
 
 from src.finsight.utils.utils import load_json, load_yaml, save_json
+from src.finsight.data.contracts import validate_selection
 
 
 def filter_annual_records(records, selection):
@@ -105,6 +106,7 @@ def process_company(cik, years=5):
     config_path = project_root / "configs" / "metrics.yaml"
 
     config = load_yaml(config_path)
+    validate_selection(config["selection"])
     data = load_json(file_path)
     results = {}
 

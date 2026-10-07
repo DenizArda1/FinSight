@@ -34,3 +34,38 @@ metrics:
     unit: USD
     tags: 
       - OperatingIncomeLoss
+
+calculations:
+  net_margin:
+    description: Annual net profit margin
+    function: calculate_margin
+    inputs:
+      - net_income
+      - revenue
+    unit: ratio
+    period_mode: same_period
+
+  operating_margin:
+    description: Annual operating profit margin
+    function: calculate_margin
+    inputs:
+      - operating_income
+      - revenue
+    unit: ratio
+    period_mode: same_period
+
+  revenue_growth:
+    description: Annual revenue growth
+    function: calculate_growth
+    inputs:
+      - revenue
+    unit: ratio
+    period_mode: consecutive_periods
+
+  revenue_cagr:
+    description: Compound annual revenue growth rate
+    function: calculate_cagr
+    inputs:
+      - revenue
+    unit: ratio
+    period_mode: full_range

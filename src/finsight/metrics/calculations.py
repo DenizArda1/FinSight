@@ -3,12 +3,6 @@ def calculate_margin(income, revenue):
         raise ValueError("Revenue must be positive.")
     return income / revenue
 
-def calculate_net_margin(net_income, revenue):
-    return calculate_margin(net_income,revenue)
-
-def calculate_operating_margin(operating_income, revenue):
-    return calculate_margin(operating_income, revenue)
-
 def calculate_growth(previous_value, current_value):
     if previous_value <= 0:
         raise ValueError("Previous value cannot be zero or negative")
@@ -37,9 +31,3 @@ def index_rows_by_period(rows):
             raise ValueError("Duplicate period found.")
         rows_by_period[period] = row
     return rows_by_period
-
-
-if __name__ == "__main__":
-    print(calculate_cagr(100, 121, 2))  # Expected: approximately 0.10
-    print(calculate_cagr(100, 81, 2))   # Expected: approximately -0.10
-    print(calculate_cagr(100, 100, 4))  # Expected: 0.0
