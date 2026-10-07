@@ -1,5 +1,3 @@
-"""Download official SEC data with sequential requests and verified disk cache."""
-
 import hashlib
 import json
 import time
@@ -9,16 +7,11 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote
 from urllib.request import Request, urlopen
 
-
-def write_json(path, value):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_suffix(path.suffix + ".tmp")
-    temporary.write_text(json.dumps(value, indent=2, ensure_ascii=False), encoding="utf-8")
-    temporary.replace(path)
+from src.finsight.utils.utils import load_json, save_json
 
 
 def filing_rows(columns):
-    """SEC recent and historical files both contain column-oriented arrays."""
+    #SEC recent and historical files both contain column-oriented arrays
     keys = ("accessionNumber", "form", "filingDate", "reportDate", "primaryDocument")
     count = len(columns.get("accessionNumber", []))
     for index in range(count):
@@ -26,12 +19,13 @@ def filing_rows(columns):
 
 
 def select_filings(rows, years):
-    """Select latest N annual reporting periods, including associated amendments."""
+    #Select latest N annual reporting periods, including associated amendments
     if years < 1:
         raise ValueError("years must be positive")
     unique = {row["accessionNumber"]: row for row in rows}
     periods = sorted({row["reportDate"] for row in unique.values()
                       if row["form"] == "10-K" and row["reportDate"]}, reverse=True)[:years]
+
     return sorted([row for row in unique.values()
                    if row["form"] in {"10-K", "10-K/A"} and row["reportDate"] in periods],
                   key=lambda row: (row["reportDate"], row["filingDate"]), reverse=True)
@@ -53,13 +47,15 @@ class EdgarClient:
         metadata_path = path.with_suffix(path.suffix + ".meta.json")
         if path.exists() and metadata_path.exists() and not (self.refresh and mutable):
             content = path.read_bytes()
-            metadata = json.loads(metadata_path.read_text())
+            metadata = load_json(metadata_path)
             if metadata["url"] == url and metadata["sha256"] == hashlib.sha256(content).hexdigest():
                 self.cache_hits += 1
                 return json.loads(content) if json_data else content
+
         for attempt in range(4):
             time.sleep(max(0, 0.25 - (time.monotonic() - self.last_request)))
             self.last_request = time.monotonic()
+
             try:
                 request = Request(url, headers={"User-Agent": self.user_agent,
                                                "Accept-Encoding": "identity"})
@@ -69,19 +65,22 @@ class EdgarClient:
                 if not content:
                     raise ValueError(f"Empty SEC response: {url}")
                 parsed = json.loads(content) if json_data else content
+
                 if not json_data and b"<html" not in content.lower() and b"<xhtml" not in content.lower():
                     raise ValueError(f"Expected HTML filing: {url}")
+
                 path.parent.mkdir(parents=True, exist_ok=True)
                 temporary = path.with_suffix(path.suffix + ".tmp")
                 temporary.write_bytes(content)
                 temporary.replace(path)
-                write_json(metadata_path, {
+                save_json({
                     "url": url, "downloaded_at": datetime.now(timezone.utc).isoformat(),
                     "sha256": hashlib.sha256(content).hexdigest(),
                     "bytes": len(content), "content_type": content_type,
-                })
+                }, metadata_path)
                 self.downloads += 1
                 return parsed
+
             except HTTPError as error:
                 if error.code not in {429, 500, 502, 503, 504} or attempt == 3:
                     raise
@@ -101,11 +100,14 @@ class EdgarClient:
         facts = self.fetch(
             f"https://data.sec.gov/api/xbrl/companyfacts/CIK{cik}.json",
             directory / "companyfacts.json", json_data=True)
+
         if int(submissions["cik"]) != int(cik) or int(facts["cik"]) != int(cik):
             raise ValueError(f"SEC company identity mismatch: {ticker}")
+
         rows = list(filing_rows(submissions["filings"]["recent"]))
         histories = sorted(submissions["filings"].get("files", []),
                            key=lambda item: item["filingTo"], reverse=True)
+
         for history in histories:
             selected = select_filings(rows, years)
             originals = [row for row in selected if row["form"] == "10-K"]
@@ -121,9 +123,11 @@ class EdgarClient:
                                  directory / "history" / name, json_data=True)
             rows.extend(filing_rows(columns))
         selected = select_filings(rows, years)
+        
         if len({row["reportDate"] for row in selected if row["form"] == "10-K"}) < years:
             raise ValueError(f"Fewer than {years} annual periods available: {ticker}")
         records = []
+
         for row in selected:
             accession = row["accessionNumber"]
             document = row["primaryDocument"]
@@ -134,8 +138,9 @@ class EdgarClient:
             destination = directory / "filings" / accession / document
             self.fetch(url, destination, mutable=False)
             records.append({**row, "url": url, "path": str(destination.relative_to(self.root))})
+            
         manifest = {"ticker": ticker, "cik": cik, "name": submissions["name"],
                     "requested_periods": years, "filings": records,
                     "manifest_generated_at": datetime.now(timezone.utc).isoformat()}
-        write_json(directory / "manifest.json", manifest)
+        save_json(manifest, directory / "manifest.json")
         return manifest

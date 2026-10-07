@@ -1,12 +1,10 @@
 import json
-import sys
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from finsight.ingestion.edgar import EdgarClient, filing_rows, select_filings
+from src.finsight.ingestion.edgar import EdgarClient, filing_rows, select_filings
 
 
 class EdgarTests(unittest.TestCase):
@@ -29,7 +27,7 @@ class EdgarTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             client = EdgarClient("FinSight contact@mydomain.test", directory)
             path = Path(directory) / "facts.json"
-            with patch("finsight.ingestion.edgar.urlopen") as mock:
+            with patch("src.finsight.ingestion.edgar.urlopen") as mock:
                 response = mock.return_value.__enter__.return_value
                 response.read.return_value = b'{"cik": 1}'
                 response.headers.get.return_value = "application/json"

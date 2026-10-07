@@ -1,0 +1,36 @@
+version: 1
+
+selection:
+  forms:
+    - 10-K
+    - 10-K/A
+  duration_days:
+    min: 350
+    max: 380
+  period_fields:
+    - start
+    - end
+  within_tag: latest_filed
+  across_tags: first_available
+
+metrics:
+  revenue:
+    description: Annual total revenue
+    taxonomy: us-gaap
+    unit: USD
+    tags:
+      - RevenueFromContractWithCustomerExcludingAssessedTax
+      - Revenues
+      - SalesRevenueNet
+  net_income:
+    description: Net Income
+    taxonomy: us-gaap
+    unit: USD
+    tags: 
+      - NetIncomeLoss
+  operating_income:
+    description: Operating Income
+    taxonomy: us-gaap
+    unit: USD
+    tags: 
+      - OperatingIncomeLoss
