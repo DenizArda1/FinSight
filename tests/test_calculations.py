@@ -126,7 +126,8 @@ class CalculationTests(unittest.TestCase):
         ) as mock_save:
             #The first calculation loads profit, then sales. Later calculations reuse sales.
             mock_load.side_effect = [profit_rows, sales_rows]
-            results = process_company_calculations(
+
+            results = process_company_calculations (
                 "0000320193", calculations, {"profit": {}, "sales": {}}
             )
 
