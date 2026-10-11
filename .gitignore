@@ -9,3 +9,5 @@ financial_data/indexed/
 __pycache__/
 *.pyc
 output
+
+ README.md

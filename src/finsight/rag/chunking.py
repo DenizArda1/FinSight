@@ -34,24 +34,37 @@ def split_text(text, max_chars=1500, overlap=200):
 
     return chunks
 
-def build_document_chunks(document):
-    chunks = split_text(document["text"])
+def build_document_chunks(document, max_chars=1500, overlap=200):
+    #Split each section independently and retain absolute source offsets
     results = []
     accession_number = document["filing"]["accessionNumber"]
-    for i, chunk in enumerate(chunks):
-        chunk_id = f"{accession_number}:{i}"
-        results.append({
-            "chunk_id": chunk_id,
-            "text": chunk["text"],
-            "metadata": {
-                "ticker": document["company"]["ticker"],
-                "cik": document["company"]["cik"],
-                "accession_number": accession_number,
-                "report_date": document["filing"]["reportDate"],
-                "source_url": document["filing"]["url"],
-                "start": chunk["start"],
-                "end": chunk["end"],
-            },
-        })
+    for section in document["sections"]:
+        start, end = section["start"], section["end"]
+        if start < 0 or end <= start or document["text"][start:end] != section["text"]:
+            raise ValueError("Section position does not match the source text")
+
+        chunks = split_text(section["text"], max_chars=max_chars, overlap=overlap)
+        section_id = section["section"].lower().replace(" ", "_")
+        
+        for index, chunk in enumerate(chunks):
+            results.append({
+                "chunk_id": f"{accession_number}:{section_id}:{index}",
+                "text": chunk["text"],
+                "metadata": {
+                    "ticker": document["company"]["ticker"],
+                    "cik": document["company"]["cik"],
+                    "accession_number": accession_number,
+                    "form": document["filing"]["form"],
+                    "fiscal_year": document["filing"]["fiscal_year"],
+                    "report_date": document["filing"]["reportDate"],
+                    "source_url": document["filing"]["url"],
+                    "section": section["section"],
+                    "section_title": section["title"],
+                    "section_start": start,
+                    "section_end": end,
+                    "start": start + chunk["start"],
+                    "end": start + chunk["end"],
+                },
+            })
     return results
 

@@ -1,0 +1,5 @@
+embedding:
+  model: "bge-m3:latest"
+  base_url: "http://localhost:11434"
+  timeout_seconds: 120
+  batch_size: 8

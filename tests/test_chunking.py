@@ -1,8 +1,29 @@
 import unittest
 from src.finsight.rag.chunking import build_document_chunks, split_text
+from src.finsight.pipeline.run_filing_pipeline import prepare_filing
+from tests.filing_fixtures import make_report
 
 
 class ChunkingTests(unittest.TestCase):
+    def test_chunks_never_cross_section_boundaries_and_ids_are_stable(self):
+        document, chunks = prepare_filing(make_report(), max_chars=150, overlap=20)
+        self.assertEqual(chunks, build_document_chunks(document, max_chars=150, overlap=20))
+        self.assertEqual(len({chunk["chunk_id"] for chunk in chunks}), len(chunks))
+        self.assertEqual({c["metadata"]["section"] for c in chunks}, {"Item 1", "Item 1A", "Item 7"})
+        for chunk in chunks:
+            metadata = chunk["metadata"]
+            self.assertGreaterEqual(metadata["start"], metadata["section_start"])
+            self.assertLessEqual(metadata["end"], metadata["section_end"])
+            self.assertEqual(chunk["text"], document["text"][metadata["start"]:metadata["end"]])
+            self.assertLessEqual(len(chunk["text"]), 150)
+            self.assertNotIn("Excluded", chunk["text"])
+
+    def test_incorrect_section_offsets_are_rejected(self):
+        document, _ = prepare_filing(make_report())
+        document["sections"][0]["start"] += 1
+        with self.assertRaisesRegex(ValueError, "Section position"):
+            build_document_chunks(document)
+
     def test_chunks_preserve_source_positions_and_overlap(self):
         text = "abcdefghijklmnopqrstuvwxyz"
 
@@ -51,12 +72,14 @@ class ChunkingTests(unittest.TestCase):
         document = {
             "company": {"ticker": "AAPL", "cik": "0000320193"},
             "filing": {
-                "accessionNumber": "test-accession",
+                "accessionNumber": "test-accession", "form": "10-K", "fiscal_year": 2025,
                 "reportDate": "2025-09-27",
                 "url": "https://example.invalid/report",
             },
             "text": "Annual revenue increased.\n" * 200,
         }
+
+        document["sections"] = [{"section": "Item 1", "title": "Business", "start": 7, "end": len(document["text"]), "text": document["text"][7:]}]
 
         chunks = build_document_chunks(document)
 
@@ -64,7 +87,11 @@ class ChunkingTests(unittest.TestCase):
         self.assertEqual(len({chunk["chunk_id"] for chunk in chunks}), len(chunks))
         for index, chunk in enumerate(chunks):
             metadata = chunk["metadata"]
-            self.assertEqual(chunk["chunk_id"], f"test-accession:{index}")
+            self.assertEqual(chunk["chunk_id"], f"test-accession:item_1:{index}")
+            self.assertEqual(metadata["fiscal_year"], 2025)
+            self.assertEqual(metadata["form"], "10-K")
+            self.assertEqual(metadata["section"], "Item 1")
+            self.assertGreaterEqual(metadata["start"], 7)
             self.assertEqual(metadata["ticker"], "AAPL")
             self.assertEqual(metadata["cik"], "0000320193")
             self.assertEqual(metadata["accession_number"], "test-accession")

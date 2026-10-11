@@ -69,3 +69,16 @@ def extract_text(html):
     text = soup.get_text(separator="", strip=False)
     return normalize_text(text)
 
+
+def extract_fiscal_year(html):
+    #Read the report's declared fiscal year, including hidden inline XBRL
+    soup = BeautifulSoup(html, "html.parser")
+    values = set()
+    for element in soup.find_all(attrs={"name": "dei:DocumentFiscalYearFocus"}):
+        value = element.get_text(strip=True)
+        if not re.fullmatch(r"\d{4}", value):
+            raise ValueError("Invalid DocumentFiscalYearFocus in report")
+        values.add(int(value))
+    if len(values) != 1:
+        raise ValueError("Expected one unambiguous DocumentFiscalYearFocus in report")
+    return values.pop()

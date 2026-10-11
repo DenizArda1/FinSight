@@ -1,9 +1,24 @@
 import unittest
 
-from src.finsight.rag.html_parser import extract_text, normalize_text
+from src.finsight.rag.html_parser import extract_fiscal_year, extract_text, normalize_text
 
 
 class HtmlParserTests(unittest.TestCase):
+    def test_fiscal_year_is_read_before_hidden_xbrl_is_removed(self):
+        html = '<ix:header><ix:nonnumeric name="dei:DocumentFiscalYearFocus">2025</ix:nonnumeric></ix:header><p>Report filed in 2026.</p>'
+        self.assertEqual(extract_fiscal_year(html), 2025)
+        self.assertEqual(extract_text(html), "Report filed in 2026.")
+
+    def test_missing_invalid_or_conflicting_fiscal_years_are_rejected(self):
+        for values in ([], ["FY2025"], ["2025", "2024"]):
+            html = "<div>Report</div>" + "".join(
+                f'<ix:nonnumeric name="dei:DocumentFiscalYearFocus">{value}</ix:nonnumeric>'
+                for value in values
+            )
+            with self.subTest(values=values):
+                with self.assertRaisesRegex(ValueError, "DocumentFiscalYearFocus"):
+                    extract_fiscal_year(html)
+
     def test_hidden_elements_are_removed_and_visible_values_are_kept(self):
         html = """
         <html><head><title>HEAD_TEXT</title><style>STYLE_TEXT</style></head>

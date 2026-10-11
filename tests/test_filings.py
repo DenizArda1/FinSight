@@ -2,12 +2,28 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from src.finsight.rag.filings import load_latest_filing
+from src.finsight.rag.filings import load_latest_filing, select_filings
 
 
 class FilingTests(unittest.TestCase):
     def setUp(self):
         self.company = {"ticker": "AAPL", "name": "Apple Inc.", "cik": "0000320193"}
+
+    def test_multiple_periods_are_selected_without_duplicate_report_dates(self):
+        recent = {"form": "10-K", "reportDate": "2025-09-27", "filingDate": "2025-10-31"}
+        earlier = {**recent, "filingDate": "2025-10-01"}
+        older = {**recent, "reportDate": "2024-09-28"}
+        oldest = {**recent, "reportDate": "2023-09-30"}
+        with patch("src.finsight.rag.filings.resolve_company", return_value=self.company), patch(
+            "src.finsight.rag.filings.load_json", return_value={"filings": [earlier, oldest, older, recent]}
+        ):
+            result = select_filings("AAPL", years=2)
+        self.assertEqual(result["filings"], [recent, older])
+
+    def test_invalid_period_count_is_rejected(self):
+        for years in (0, -1, True, 1.5):
+            with self.subTest(years=years), self.assertRaisesRegex(ValueError, "positive integer"):
+                select_filings("AAPL", years=years)
 
     def test_latest_10_k_uses_report_date_then_filing_date(self):
         older_period = {
