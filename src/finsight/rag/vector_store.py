@@ -58,19 +58,11 @@ def validate_filing_records(records):
         elif record_identity != identity:
             raise ValueError("All records must belong to the same CIK and accession number")
 
-    validate_vectors(
-        [record.get("embedding") for record in records], expected_count=len(records)
-    )
+    validate_vectors([record.get("embedding") for record in records], expected_count=len(records))
     return identity
 
 
 def save_embedding_records(collection, records):
-    """Synchronize a report using its COMPLETE, non-empty set of chunk records.
-
-    Call once per report, not once per embedding batch. Writes precede deletions;
-    failures propagate so the caller can retry. This is not a transaction and
-    concurrent writers for the same report are not supported.
-    """
     cik, accession_number = validate_filing_records(records)
     ids = [record["chunk_id"] for record in records]
     documents = [record["text"] for record in records]
