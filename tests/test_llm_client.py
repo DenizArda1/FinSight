@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import requests
 
-from src.finsight.llm.client import generate_response
+from src.finsight.llm.client import generate_response, send_chat_request
 from src.finsight.verification.grounding import verify_report_answer
 
 
@@ -33,6 +33,37 @@ class LLMClientTests(unittest.TestCase):
         self.assertIn("Tax claim [Source 1].", payload["messages"][1]["content"])
         self.assertIn("Source text", payload["messages"][1]["content"])
         self.assertEqual(result, {"supported": False, "issues": ["Unsupported tax claim."]})
+
+    def test_tool_request_preserves_complete_message_with_empty_content(self):
+        message = {
+            "role": "assistant", "content": "", "thinking": "Resolve the company first.",
+            "tool_calls": [{"function": {
+                "index": 0, "name": "resolve_ticker_to_cik", "arguments": {"ticker": "NVDA"},
+            }}],
+        }
+        self.post.return_value.json.return_value = {"message": message}
+        tools = [{"type": "function", "function": {
+            "name": "resolve_ticker_to_cik",
+            "parameters": {"type": "object", "properties": {"ticker": {"type": "string"}}},
+        }}]
+        messages = [{"role": "user", "content": "Find NVIDIA's CIK."}]
+
+        result = send_chat_request(messages, self.config, tools=tools)
+
+        self.assertEqual(result, message)
+        self.post.assert_called_once_with(
+            "http://localhost:11434/api/chat",
+            json={"model": "test-model", "messages": messages, "stream": False, "tools": tools},
+            timeout=180,
+        )
+
+    def test_text_entry_point_still_rejects_tool_only_message(self):
+        self.post.return_value.json.return_value = {"message": {
+            "role": "assistant", "content": "",
+            "tool_calls": [{"function": {"name": "resolve_ticker_to_cik", "arguments": {"ticker": "NVDA"}}}],
+        }}
+        with self.assertRaisesRegex(ValueError, "content must be a non-empty string"):
+            generate_response([], self.config)
 
     def test_malformed_and_empty_responses_are_rejected(self):
         for payload in (None, [], {}, {"message": None}, {"message": {}},
