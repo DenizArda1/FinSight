@@ -124,6 +124,36 @@ def pair_consecutive_periods(rows):
         pairs.append((previous_record, current_record))
     return pairs
 
+def calculate_metric_rows(calculation_name, definition, records):
+    # Build source-linked results without writing files.
+    input_names = definition["inputs"]
+    function_name = definition["function"]
+    if function_name == "calculate_margin":
+        income_type, revenue_type = input_names
+        matches = match_income_records(records[revenue_type], records[income_type])
+        rows = build_margin_rows(
+            matches, calculation_name, income_type, revenue_type
+        )
+    elif function_name == "calculate_growth":
+        input_type = input_names[0]
+        pairs = pair_consecutive_periods(records[input_type])
+        rows = build_growth_rows(pairs, calculation_name, input_type)
+    elif function_name == "calculate_cagr":
+        input_type = input_names[0]
+        rows = [build_cagr_row(records[input_type], calculation_name, input_type)]
+    else:
+        raise ValueError(f"Unsupported function for {calculation_name}")
+
+    if definition["period_mode"] != "full_range":
+        fiscal_years = {row["end"]: row["fiscal_year"] for row in records[input_names[0]] if "fiscal_year" in row}
+        for row in rows:
+            if row["end"] in fiscal_years:
+                row["fiscal_year"] = fiscal_years[row["end"]]
+                row["period_label"] = f"FY{row['fiscal_year']} (period end: {row['end']})"
+
+    return rows
+
+
 def process_company_calculations(cik, calculations, metrics):
     validate_calculations(calculations, metrics)
     project_root = Path(__file__).resolve().parents[3]
@@ -137,22 +167,7 @@ def process_company_calculations(cik, calculations, metrics):
             if metric_name not in records:
                 records[metric_name] = load_json(company_path / f"{metric_name}.json")
 
-        function_name = definition["function"]
-        if function_name == "calculate_margin":
-            income_type, revenue_type = input_names
-            matches = match_income_records(records[revenue_type], records[income_type])
-            rows = build_margin_rows(
-                matches, calculation_name, income_type, revenue_type
-            )
-        elif function_name == "calculate_growth":
-            input_type = input_names[0]
-            pairs = pair_consecutive_periods(records[input_type])
-            rows = build_growth_rows(pairs, calculation_name, input_type)
-        elif function_name == "calculate_cagr":
-            input_type = input_names[0]
-            rows = [build_cagr_row(records[input_type], calculation_name, input_type)]
-        else:
-            raise ValueError(f"Unsupported function for {calculation_name}")
+        rows = calculate_metric_rows(calculation_name, definition, records)
 
         save_json(rows, company_path / f"{calculation_name}.json")
         results[calculation_name] = rows

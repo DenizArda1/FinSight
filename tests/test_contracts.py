@@ -8,7 +8,7 @@ class ContractTests(unittest.TestCase):
         selection = {
             "forms": ["10-K", "10-K/A"],
             "within_tag": "latest_filed",
-            "across_tags": "first_available",
+            "across_tags": "latest_filed_then_priority",
             "period_fields": ["start", "end"],
             "duration_days": {"min": 350, "max": 380},
         }
@@ -18,7 +18,7 @@ class ContractTests(unittest.TestCase):
         selection = {
             "forms": ["10-K", "10-K/A"],
             "within_tag": "oldest_filed",
-            "across_tags": "first_available",
+            "across_tags": "latest_filed_then_priority",
             "period_fields": ["start", "end"],
             "duration_days": {"min": 350, "max": 380},
         }
@@ -29,7 +29,7 @@ class ContractTests(unittest.TestCase):
         selection = {
             "forms": ["10-K", "10-K/A"],
             "within_tag": "latest_filed",
-            "across_tags": "first_available",
+            "across_tags": "latest_filed_then_priority",
             "period_fields": ["fy"],
             "duration_days": {"min": 350, "max": 380},
         }
@@ -51,7 +51,7 @@ class ContractTests(unittest.TestCase):
         selection = {
             "forms": ["10-K", "10-K/A"],
             "within_tag": "latest_filed",
-            "across_tags": "first_available",
+            "across_tags": "latest_filed_then_priority",
             "period_fields": ["start", "end"],
             "duration_days": {"min": 380, "max": 350},
         }
@@ -62,7 +62,7 @@ class ContractTests(unittest.TestCase):
         selection = {
             "forms": ["10-K", "10-K/A"],
             "within_tag": "latest_filed",
-            "across_tags": "first_available",
+            "across_tags": "latest_filed_then_priority",
             "period_fields": ["start", "end"],
             "duration_days": {"min": "350", "max": 380},
         }
@@ -74,7 +74,7 @@ class ContractTests(unittest.TestCase):
         selection = {
             "forms": [],
             "within_tag": "latest_filed",
-            "across_tags": "first_available",
+            "across_tags": "latest_filed_then_priority",
             "period_fields": ["start", "end"],
             "duration_days": {"min": 350, "max": 380},
         }
@@ -85,7 +85,7 @@ class ContractTests(unittest.TestCase):
         selection = {
             "forms": ["10-Q"],
             "within_tag": "latest_filed",
-            "across_tags": "first_available",
+            "across_tags": "latest_filed_then_priority",
             "period_fields": ["start", "end"],
             "duration_days": {"min": 350, "max": 380},
         }

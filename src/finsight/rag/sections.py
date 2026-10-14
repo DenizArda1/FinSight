@@ -19,7 +19,7 @@ MIN_BODY_CHARS = 200
 
 
 def find_headings(text):
-    """Require both an item number and its title; ignore bare page headers."""
+    #Require both an item number and its title; ignore bare page headers
     headings = []
     for item, title in HEADING_TITLES.items():
         title_pattern = re.escape(title).replace("'", "['’]").replace(r"\ ", r"\s+")
@@ -34,11 +34,6 @@ def find_headings(text):
 
 
 def extract_sections(text):
-    """Return three ordered source spans, rejecting missing or ambiguous sections.
-
-    Short spans between TOC headings are discarded. The minimum body size is a
-    conservative heuristic, not a general parser for every possible SEC layout.
-    """
     headings = find_headings(text)
     candidates = {item: [] for item in SECTION_TITLES}
     for heading, following in zip(headings, headings[1:]):

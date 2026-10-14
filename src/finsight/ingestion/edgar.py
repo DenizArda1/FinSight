@@ -82,7 +82,7 @@ class EdgarClient:
                 return parsed
 
             except HTTPError as error:
-                if error.code not in {429, 500, 502, 503, 504} or attempt == 3:
+                if error.code not in {403, 429, 500, 502, 503, 504} or attempt == 3:
                     raise
                 retry_after = error.headers.get("Retry-After", "")
                 time.sleep(min(60, float(retry_after)) if retry_after.isdigit() else 2 ** (attempt + 1))

@@ -59,6 +59,8 @@ class ComparisonTests(unittest.TestCase):
 
         self.assertEqual(mock_get.call_args_list, [call("AAPL", "revenue"), call("MSFT", "revenue")])
         self.assertEqual(result["common_years"], [2025])
+        self.assertEqual(result["comparison_basis"], "period_end_calendar_year")
+        self.assertIn("not identical fiscal calendars", result["notes"][0])
         self.assertEqual(result["results"][0]["records"], [expected_apple])
         self.assertEqual(result["results"][1]["records"], [expected_microsoft])
         self.assertEqual(result["results"][0]["company"]["ticker"], "AAPL")

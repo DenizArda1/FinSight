@@ -3,7 +3,7 @@ from pathlib import Path
 from src.finsight.utils.utils import load_json
 
 
-def resolve_company(ticker):
+def resolve_company(ticker: str) -> dict[str, str]:
     if not isinstance(ticker, str) or not ticker.strip():
         raise ValueError("Ticker must be a non-empty string")
 

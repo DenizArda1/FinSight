@@ -1,7 +1,126 @@
 from pathlib import Path
+import re
 
+from src.finsight.data.contracts import validate_calculations
+from src.finsight.pipeline.run_metric_pipeline import calculate_metric_rows
 from src.finsight.tools.company import resolve_company
 from src.finsight.utils.utils import load_json, load_yaml
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+
+
+def validate_financial_request(cik, years):
+    if not isinstance(cik, str) or not re.fullmatch(r"[0-9]{10}", cik):
+        raise ValueError("CIK must be a 10-digit string")
+    if type(years) is not int or not 1 <= years <= 5:
+        raise ValueError("Years must be an integer between 1 and 5")
+
+
+def get_company_facts(cik: str, concept: str, years: int = 5, unit: str = "USD") -> dict:
+    # Read annual base metrics prepared using the configured XBRL selection rules.
+    validate_financial_request(cik, years)
+    config = load_yaml(PROJECT_ROOT / "configs" / "metrics.yaml")
+    if not isinstance(concept, str) or concept not in config["metrics"]:
+        raise ValueError(f"Unknown base metric: {concept}")
+
+    if unit != config["metrics"][concept]["unit"]:
+        raise ValueError(f"Unsupported unit for {concept}: {unit}")
+
+    manifest = load_json(PROJECT_ROOT / "financial_data" / "raw" / cik / "manifest.json")
+    if str(manifest["cik"]).zfill(10) != cik:
+        raise ValueError("Company manifest CIK does not match the requested CIK")
+
+    company = {"ticker": manifest["ticker"], "cik": cik, "name": manifest["name"]}
+    period_ends = sorted({
+        filing["reportDate"] for filing in manifest["filings"] if filing["form"] == "10-K"
+    }, reverse=True)[:years]
+
+    path = PROJECT_ROOT / "financial_data" / "processed" / cik / f"{concept}.json"
+
+    if not path.is_file():
+        raise FileNotFoundError(f"Prepared base metric not found for CIK {cik}: {concept}. Run the metric preparation pipeline.")
+    records = load_json(path)
+    if not isinstance(records, list):
+        raise ValueError("Prepared metric records must be a list")
+
+    selected = [record for record in records if record["end"] in period_ends]
+    seen_ends = set()
+    for record in selected:
+        if str(record["cik"]).zfill(10) != cik or record["metric"] != concept:
+            raise ValueError("Prepared record does not match the requested company and metric")
+        if record["unit"] != unit:
+            raise ValueError("Prepared record unit does not match the requested unit")
+        if record["end"] in seen_ends:
+            raise ValueError("Multiple prepared records found for the same period end")
+        seen_ends.add(record["end"])
+
+    return {
+        "company": company,
+        "concept": concept,
+        "unit": unit,
+        "requested_years": years,
+        "requested_period_ends": period_ends,
+        "missing_period_ends": [end for end in period_ends if end not in seen_ends],
+        "records": sorted(selected, key=lambda record: record["end"], reverse=True),
+    }
+
+
+def compute_metrics(cik: str, metrics: list[str], years: int = 5) -> dict:
+    # Load authoritative inputs locally instead of accepting model-generated numbers.
+    validate_financial_request(cik, years)
+    if not isinstance(metrics, list) or not metrics or any(not isinstance(name, str) for name in metrics):
+        raise ValueError("Metrics must be a non-empty list of metric names")
+    if len(set(metrics)) != len(metrics):
+        raise ValueError("Metric names must be unique")
+    config = load_yaml(PROJECT_ROOT / "configs" / "metrics.yaml")
+    for name in metrics:
+        if name not in config["calculations"]:
+            raise ValueError(f"Unknown calculated metric: {name}")
+    definitions = {name: config["calculations"][name] for name in metrics}
+    validate_calculations(definitions, config["metrics"])
+
+    facts = {}
+    records = {}
+    results = {}
+    warnings = []
+    for name, definition in definitions.items():
+        for input_name in definition["inputs"]:
+            if input_name not in facts:
+                facts[input_name] = get_company_facts(
+                    cik, input_name, years, config["metrics"][input_name]["unit"],
+                )
+                records[input_name] = facts[input_name]["records"]
+                missing = facts[input_name]["missing_period_ends"]
+                if missing:
+                    warnings.append(f"Missing {input_name} for period ends: {', '.join(missing)}")
+
+        if definition["period_mode"] == "same_period":
+            minimum = 1
+        else:
+            minimum = 2
+            
+        if any(len(records[input_name]) < minimum for input_name in definition["inputs"]):
+            results[name] = []
+            warnings.append(f"Insufficient source records for {name}; at least {minimum} annual periods are required.")
+            continue
+        # Growth/CAGR must cover the requested window; do not silently skip missing years.
+        if definition["period_mode"] != "same_period" and any(
+            facts[input_name]["missing_period_ends"] for input_name in definition["inputs"]
+        ):
+            results[name] = []
+            warnings.append(f"Incomplete requested period coverage for {name}.")
+            continue
+
+        rows = calculate_metric_rows(name, definition, records)
+        results[name] = sorted(rows, key=lambda row: row["end"], reverse=True)
+
+    return {
+        "company": next(iter(facts.values()))["company"],
+        "requested_years": years,
+        "results": results,
+        "warnings": warnings,
+    }
 
 
 def get_metric(ticker, metric, limit=None):
@@ -82,6 +201,11 @@ def compare_metric(tickers, metric, limit=None):
     return {
         "metric": metric,
         "common_years": common_years,
+        "comparison_basis": "period_end_calendar_year",
+        "notes": [
+            "Periods are aligned by the calendar year of their end dates, not identical fiscal calendars. "
+            "Check each record's start and end dates before comparing companies."
+        ],
         "results": results,
     }
 

@@ -3,6 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+from urllib.error import HTTPError
 
 from src.finsight.ingestion.edgar import EdgarClient, filing_rows, select_filings
 
@@ -41,6 +42,20 @@ class EdgarTests(unittest.TestCase):
     def test_placeholder_contact_rejected(self):
         with self.assertRaises(ValueError):
             EdgarClient("FinSight your-email@example.com", ".")
+
+    def test_403_is_retried_with_bounded_backoff(self):
+        with tempfile.TemporaryDirectory() as directory, patch(
+            "src.finsight.ingestion.edgar.urlopen"
+        ) as request, patch("src.finsight.ingestion.edgar.time.sleep") as sleep:
+            error = HTTPError("https://data.sec.gov/test", 403, "Forbidden", {}, None)
+            request.side_effect = error
+            client = EdgarClient("FinSight contact@mydomain.test", directory)
+            with self.assertRaises(HTTPError):
+                client.fetch(error.url, Path(directory) / "facts.json", json_data=True)
+            self.assertEqual(request.call_count, 4)
+            delays = [call.args[0] for call in sleep.call_args_list]
+            for delay in (2, 4, 8):
+                self.assertIn(delay, delays)
 
 
 if __name__ == "__main__":

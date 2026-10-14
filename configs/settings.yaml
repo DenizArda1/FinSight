@@ -6,3 +6,7 @@ embedding:
 vector_store:
   path: "financial_data/indexed/chroma"
   collection_name: "filing_sections_bge_m3_v1"
+llm:
+  model: "qwen3:8b"
+  base_url: "http://localhost:11434"
+  timeout_seconds: 180

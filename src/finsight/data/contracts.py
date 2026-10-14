@@ -10,7 +10,7 @@ def validate_selection(selection):
     if selection.get("within_tag") != "latest_filed":
         raise ValueError("Unsupported within_tag policy")
     
-    if selection.get("across_tags") != "first_available":
+    if selection.get("across_tags") != "latest_filed_then_priority":
         raise ValueError("Unsupported across_tags policy")
     
     if selection.get("period_fields") != ["start", "end"]:

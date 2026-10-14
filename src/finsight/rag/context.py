@@ -1,3 +1,6 @@
+from html import escape
+
+
 def build_report_context(matches):
     if not matches:
         return ""
@@ -7,10 +10,12 @@ def build_report_context(matches):
         block = (
             f"[Source {index}]\n"
             f"Company: {metadata['ticker']}\n"
-            f"Fiscal year: {metadata['fiscal_year']}\n"
+            f"Form: {metadata['form']}\n"
+            f"Fiscal year: FY{metadata['fiscal_year']} (period end: {metadata['report_date']})\n"
+            f"Accession: {metadata['accession_number']}\n"
             f"Section: {metadata['section']}\n"
             f"URL: {metadata['source_url']}\n"
-            f"Text: {match['text']}"
+            f"<filing_excerpt>\n{escape(match['text'], quote=False)}\n</filing_excerpt>"
         )
         blocks.append(block)
     return "\n\n".join(blocks)

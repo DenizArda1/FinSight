@@ -11,7 +11,7 @@ selection:
     - start
     - end
   within_tag: latest_filed
-  across_tags: first_available
+  across_tags: latest_filed_then_priority
 
 metrics:
   revenue:
@@ -34,8 +34,23 @@ metrics:
     unit: USD
     tags: 
       - OperatingIncomeLoss
+  gross_profit:
+    description: Reported annual gross profit, when available for the requested periods
+    taxonomy: us-gaap
+    unit: USD
+    tags:
+      - GrossProfit
 
 calculations:
+  gross_margin:
+    description: Annual reported gross profit margin
+    function: calculate_margin
+    inputs:
+      - gross_profit
+      - revenue
+    unit: ratio
+    period_mode: same_period
+
   net_margin:
     description: Annual net profit margin
     function: calculate_margin
