@@ -1,13 +1,13 @@
 import unittest
 from unittest.mock import patch
 
-from src.finsight.metrics.calculations import (
+from src.metrics.calculations import (
     calculate_cagr,
     calculate_margin,
     calculate_growth,
     index_rows_by_period,
 ) 
-from src.finsight.pipeline.run_metric_pipeline import (
+from src.pipeline.run_metric_pipeline import (
     build_cagr_row,
     pair_consecutive_periods,
     process_company_calculations
@@ -121,8 +121,8 @@ class CalculationTests(unittest.TestCase):
                 "period_mode": "full_range",
             },
         }
-        with patch("src.finsight.pipeline.run_metric_pipeline.load_json") as mock_load, patch(
-            "src.finsight.pipeline.run_metric_pipeline.save_json"
+        with patch("src.pipeline.run_metric_pipeline.load_json") as mock_load, patch(
+            "src.pipeline.run_metric_pipeline.save_json"
         ) as mock_save:
             #The first calculation loads profit, then sales. Later calculations reuse sales.
             mock_load.side_effect = [profit_rows, sales_rows]
@@ -168,8 +168,8 @@ class CalculationTests(unittest.TestCase):
         for field, value, message in cases:
             with self.subTest(field=field):
                 calculations = {"net_margin": {**definition, field: value}}
-                with patch("src.finsight.pipeline.run_metric_pipeline.load_json") as mock_load, patch(
-                    "src.finsight.pipeline.run_metric_pipeline.save_json"
+                with patch("src.pipeline.run_metric_pipeline.load_json") as mock_load, patch(
+                    "src.pipeline.run_metric_pipeline.save_json"
                 ) as mock_save:
                     with self.assertRaisesRegex(ValueError, message):
                         process_company_calculations(

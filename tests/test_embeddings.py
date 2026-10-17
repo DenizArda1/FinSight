@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from src.finsight.rag.embeddings import (
+from src.rag.embeddings import (
     embed_text,
     embed_texts,
     embed_texts_in_batches,
@@ -58,7 +58,7 @@ class EmbeddingClientTests(unittest.TestCase):
             "timeout_seconds": 120,
             "batch_size": 2,
         }
-        patcher = patch("src.finsight.rag.embeddings.requests.post")
+        patcher = patch("src.rag.embeddings.requests.post")
         self.post = patcher.start()
         self.addCleanup(patcher.stop)
 

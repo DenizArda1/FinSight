@@ -3,14 +3,14 @@ from unittest.mock import patch
 
 import requests
 
-from src.finsight.llm.client import generate_response, send_chat_request
-from src.finsight.verification.grounding import verify_report_answer
+from src.llm.client import generate_response, send_chat_request
+from src.verification.grounding import verify_report_answer
 
 
 class LLMClientTests(unittest.TestCase):
     def setUp(self):
         self.config = {"model": "test-model", "base_url": "http://localhost:11434/", "timeout_seconds": 180}
-        patcher = patch("src.finsight.llm.client.requests.post")
+        patcher = patch("src.llm.client.requests.post")
         self.post = patcher.start()
         self.addCleanup(patcher.stop)
 
@@ -77,6 +77,18 @@ class LLMClientTests(unittest.TestCase):
         with self.assertRaises(requests.HTTPError):
             generate_response([], self.config)
         self.post.return_value.json.assert_not_called()
+
+    def test_generation_options_are_forwarded(self):
+        self.post.return_value.json.return_value = {"message": {"content": "Answer"}}
+        config = {**self.config, "options": {"temperature": 0, "num_ctx": 16384}}
+        generate_response([], config)
+        self.assertEqual(self.post.call_args.kwargs["json"]["options"], config["options"])
+
+    def test_truncated_model_answer_is_rejected(self):
+        for flags in ({"done": False}, {"done_reason": "length"}):
+            self.post.return_value.json.return_value = {"message": {"content": "Incomplete answer"}, **flags}
+            with self.subTest(flags=flags), self.assertRaisesRegex(ValueError, "incomplete"):
+                generate_response([], self.config)
 
 
 if __name__ == "__main__":

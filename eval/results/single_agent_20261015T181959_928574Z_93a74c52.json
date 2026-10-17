@@ -1,0 +1,846 @@
+[
+  {
+    "id": "aapl_latest_revenue_tr",
+    "question": "Apple'ın yerel verideki en son yıllık gelirini, mali yılını ve dönem bitiş tarihini söyle.",
+    "expected": {
+      "ticker": "AAPL",
+      "metric": "revenue",
+      "value": 416161000000,
+      "unit": "USD",
+      "fiscal_year": 2025,
+      "period_end": "2025-09-27"
+    },
+    "answer_language": "tr",
+    "answer": null,
+    "review": null,
+    "status": "withheld",
+    "error": null,
+    "mode": "single_agent",
+    "verification": {
+      "status": "error",
+      "supported": false,
+      "issues": [
+        "ValueError: Numbers, dates, form labels, and percentages must use source field references"
+      ],
+      "stage": "deterministic",
+      "deterministic_fields": "not_passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": "Apple Inc.'s latest annual financial data from local records shows:\n\n**Revenue**: $416.161 billion (FY2025, ending September 27, 2025)  \n**Fiscal Year**: 2025  \n**Year-End Date**: September 27, 2025  \n\nThe fiscal year is defined as a 52- or 53-week period ending on the last Saturday of September, as stated in Apple's 2023 10-K filing (search result). The latest revenue figure corresponds to the fiscal year ending September 27, 2025.",
+    "candidate": null,
+    "template": {
+      "kind": "answer",
+      "template": "Apple Inc.'s latest annual revenue is $416.161 billion, with a fiscal year of 2025 ending on September 27, 2025. This data is derived from the fiscal year definition stated in Apple's 2023 10-K filing [Source 3], and the specific revenue record from the 2025 10-K filing (accession number 0000320193-25-000079) [Source 2]."
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0000320193",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "revenue",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 416161000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 3,
+        "tool": "search_filings",
+        "arguments": {
+          "ticker": "AAPL",
+          "section": "Item 1",
+          "query": "fiscal year",
+          "top_k": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "name": "Apple Inc.",
+            "cik": "0000320193"
+          },
+          "query": "fiscal year",
+          "fiscal_year": null,
+          "section": "Item 1",
+          "matches": [
+            {
+              "chunk_id": "0000320193-23-000106:item_1:0",
+              "text": "Item 1. Business\nCompany Background\nThe Company designs, manufactures and markets smartphones, personal computers, tablets, wearables and accessories, and sells a variety of related services. The Company’s fiscal year is the 52- or 53-week period that ends on the last Saturday of September.\nProducts\niPhone\niPhone® is the Company’s line of smartphones based on its iOS operating system. The iPhone line includes iPhone 15 Pro, iPhone 15, iPhone 14, iPhone 13 and iPhone SE®.\nMac\nMac® is the Company’s line of personal computers based on its macOS® operating system. The Mac line includes laptops MacBook Air® and MacBook Pro®, as well as desktops iMac®, Mac mini®, Mac Studio® and Mac Pro®.\niPad\niPad® is the Company’s line of multipurpose tablets based on its iPadOS® operating system. The iPad line includes iPad Pro®, iPad Air®, iPad and iPad mini®.\nWearables, Home and Accessories\nWearables includes smartwatches and wireless headphones. The Company’s line of smartwatches, based on its watchOS® operating system, includes Apple Watch Ultra™ 2, Apple Watch® Series 9 and Apple Watch SE®. The Company’s line of wireless headphones includes AirPods®, AirPods Pro®, AirPods Max™ and Beats® products.\nHome includes Apple TV®, the Company’s media streaming and gaming device based on its tvOS® operating system, and HomePod® and HomePod mini®, high-fidelity wireless smart speakers.\nAccessories includes Apple-branded and third-party accessories.\nApple Inc. | 2023 Form 10-K | 1\nServices\nAdvertising",
+              "metadata": {
+                "section_start": 8620,
+                "form": "10-K",
+                "section_title": "Business",
+                "section_end": 23717,
+                "accession_number": "0000320193-23-000106",
+                "cik": "0000320193",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019323000106/aapl-20230930.htm",
+                "end": 10119,
+                "report_date": "2023-09-30",
+                "ticker": "AAPL",
+                "fiscal_year": 2023,
+                "start": 8620,
+                "section": "Item 1"
+              },
+              "distance": 0.4677349328994751
+            }
+          ]
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "model",
+        "step": 1,
+        "status": "completed",
+        "elapsed_seconds": 11.35536349999893,
+        "tool_calls": [
+          {
+            "id": "call_2blv6uxg",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "AAPL"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "tool",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        },
+        "elapsed_seconds": 0.008312583988299593
+      },
+      {
+        "type": "model",
+        "step": 2,
+        "status": "completed",
+        "elapsed_seconds": 10.099092792006559,
+        "tool_calls": [
+          {
+            "id": "call_imt3lhik",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000320193",
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          },
+          {
+            "id": "call_ztck6qwl",
+            "function": {
+              "index": 1,
+              "name": "search_filings",
+              "arguments": {
+                "ticker": "AAPL",
+                "section": "Item 1",
+                "query": "fiscal year",
+                "top_k": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "tool",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000320193",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "revenue",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 416161000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.004756084003020078
+      },
+      {
+        "type": "tool",
+        "step": 2,
+        "call_id": 3,
+        "name": "search_filings",
+        "arguments": {
+          "ticker": "AAPL",
+          "section": "Item 1",
+          "query": "fiscal year",
+          "top_k": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "name": "Apple Inc.",
+            "cik": "0000320193"
+          },
+          "query": "fiscal year",
+          "fiscal_year": null,
+          "section": "Item 1",
+          "matches": [
+            {
+              "chunk_id": "0000320193-23-000106:item_1:0",
+              "text": "Item 1. Business\nCompany Background\nThe Company designs, manufactures and markets smartphones, personal computers, tablets, wearables and accessories, and sells a variety of related services. The Company’s fiscal year is the 52- or 53-week period that ends on the last Saturday of September.\nProducts\niPhone\niPhone® is the Company’s line of smartphones based on its iOS operating system. The iPhone line includes iPhone 15 Pro, iPhone 15, iPhone 14, iPhone 13 and iPhone SE®.\nMac\nMac® is the Company’s line of personal computers based on its macOS® operating system. The Mac line includes laptops MacBook Air® and MacBook Pro®, as well as desktops iMac®, Mac mini®, Mac Studio® and Mac Pro®.\niPad\niPad® is the Company’s line of multipurpose tablets based on its iPadOS® operating system. The iPad line includes iPad Pro®, iPad Air®, iPad and iPad mini®.\nWearables, Home and Accessories\nWearables includes smartwatches and wireless headphones. The Company’s line of smartwatches, based on its watchOS® operating system, includes Apple Watch Ultra™ 2, Apple Watch® Series 9 and Apple Watch SE®. The Company’s line of wireless headphones includes AirPods®, AirPods Pro®, AirPods Max™ and Beats® products.\nHome includes Apple TV®, the Company’s media streaming and gaming device based on its tvOS® operating system, and HomePod® and HomePod mini®, high-fidelity wireless smart speakers.\nAccessories includes Apple-branded and third-party accessories.\nApple Inc. | 2023 Form 10-K | 1\nServices\nAdvertising",
+              "metadata": {
+                "section_start": 8620,
+                "form": "10-K",
+                "section_title": "Business",
+                "section_end": 23717,
+                "accession_number": "0000320193-23-000106",
+                "cik": "0000320193",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019323000106/aapl-20230930.htm",
+                "end": 10119,
+                "report_date": "2023-09-30",
+                "ticker": "AAPL",
+                "fiscal_year": 2023,
+                "start": 8620,
+                "section": "Item 1"
+              },
+              "distance": 0.4677349328994751
+            }
+          ]
+        },
+        "elapsed_seconds": 1.5127125419967342
+      },
+      {
+        "type": "model",
+        "step": 3,
+        "status": "completed",
+        "elapsed_seconds": 16.368994082993595,
+        "tool_calls": []
+      },
+      {
+        "type": "model",
+        "phase": "composition",
+        "status": "completed",
+        "content": "{\"kind\": \"answer\", \"template\": \"Apple Inc.'s latest annual revenue is $416.161 billion, with a fiscal year of 2025 ending on September 27, 2025. This data is derived from the fiscal year definition stated in Apple's 2023 10-K filing [Source 3], and the specific revenue record from the 2025 10-K filing (accession number 0000320193-25-000079) [Source 2].\" }",
+        "elapsed_seconds": 14.051331167007447
+      }
+    ],
+    "elapsed_seconds": 53.40151320899895,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "timeout_seconds": 180,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      }
+    },
+    "dataset_sha256": "1c0af437d8f7b25d6802fc93186b3eb454235e65d96cdc9445ef09bc285f109a",
+    "recorded_at": "2026-10-15T18:20:53.330290+00:00"
+  },
+  {
+    "id": "amzn_missing_gross_margin_tr",
+    "question": "Amazon'un yerel verideki en son mali yıl için brüt kâr marjını hesapla.",
+    "expected": {
+      "ticker": "AMZN",
+      "metric": "gross_margin",
+      "period_end": "2025-12-31",
+      "status": "unavailable",
+      "missing_inputs": [
+        "gross_profit"
+      ],
+      "available_inputs": [
+        "revenue"
+      ]
+    },
+    "answer_language": "tr",
+    "answer": null,
+    "review": null,
+    "status": "withheld",
+    "error": null,
+    "mode": "single_agent",
+    "verification": {
+      "status": "error",
+      "supported": false,
+      "issues": [
+        "ValueError: Numbers, dates, form labels, and percentages must use source field references"
+      ],
+      "stage": "deterministic",
+      "deterministic_fields": "not_passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": "The most recent fiscal year (FY2025) gross profit data for Amazon is not yet available in the local cache, though revenue for FY2025 is accessible. To calculate the gross profit margin, we need both **gross profit** and **revenue** values. Since the gross profit metric is missing, I will:\n\n1. Check if FY2024 gross profit data is available (latest confirmed period).\n2. Calculate the margin using FY2024 data if possible.\n\nWould you like me to proceed with FY2024 data?",
+    "candidate": null,
+    "template": {
+      "kind": "insufficient_data",
+      "template": "Amazon'un FY2025 mali yılı brüt kâr marjını hesaplayabilmek için **brüt kâr** verisi gereklidir. Ancak, FY2025 dönemine ait brüt kâr verisi [Source 2] üzerinden bulunamamıştır. [Source 3] üzerinden FY2025 gelir verisi (716,924,000,000 USD) mevcuttur ancak brüt kâr verisi eksik olduğundan marj hesaplanamamıştır. FY2024 verileri kullanmak isteyebilirsiniz mi?"
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AMZN"
+        },
+        "result": {
+          "ticker": "AMZN",
+          "name": "AMAZON COM INC",
+          "cik": "0001018724"
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0001018724",
+          "concept": "gross_profit",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "AMZN",
+            "cik": "0001018724",
+            "name": "AMAZON COM INC"
+          },
+          "concept": "gross_profit",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-12-31"
+          ],
+          "missing_period_ends": [
+            "2025-12-31"
+          ],
+          "records": []
+        }
+      },
+      {
+        "source_id": 3,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0001018724",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "AMZN",
+            "cik": "0001018724",
+            "name": "AMAZON COM INC"
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-12-31"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 1018724,
+              "metric": "revenue",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "value": 716924000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-02-06",
+              "accn": "0001018724-26-000004",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-12-31)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm"
+            }
+          ]
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "model",
+        "step": 1,
+        "status": "completed",
+        "elapsed_seconds": 21.211190624992014,
+        "tool_calls": [
+          {
+            "id": "call_yrrj308u",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "AMZN"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "tool",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AMZN"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "AMZN",
+          "name": "AMAZON COM INC",
+          "cik": "0001018724"
+        },
+        "elapsed_seconds": 0.004888082999968901
+      },
+      {
+        "type": "model",
+        "step": 2,
+        "status": "completed",
+        "elapsed_seconds": 16.484531875001267,
+        "tool_calls": [
+          {
+            "id": "call_jqwddj6i",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0001018724",
+                "concept": "gross_profit",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "tool",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0001018724",
+          "concept": "gross_profit",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AMZN",
+            "cik": "0001018724",
+            "name": "AMAZON COM INC"
+          },
+          "concept": "gross_profit",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-12-31"
+          ],
+          "missing_period_ends": [
+            "2025-12-31"
+          ],
+          "records": []
+        },
+        "elapsed_seconds": 0.007213290999061428
+      },
+      {
+        "type": "model",
+        "step": 3,
+        "status": "completed",
+        "elapsed_seconds": 15.843302624998614,
+        "tool_calls": [
+          {
+            "id": "call_w91ogri1",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0001018724",
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "tool",
+        "step": 3,
+        "call_id": 3,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0001018724",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AMZN",
+            "cik": "0001018724",
+            "name": "AMAZON COM INC"
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-12-31"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 1018724,
+              "metric": "revenue",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "value": 716924000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-02-06",
+              "accn": "0001018724-26-000004",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-12-31)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.008086000001640059
+      },
+      {
+        "type": "model",
+        "step": 4,
+        "status": "completed",
+        "elapsed_seconds": 19.812711040998693,
+        "tool_calls": []
+      },
+      {
+        "type": "model",
+        "phase": "composition",
+        "status": "completed",
+        "content": "{\"kind\": \"insufficient_data\", \"template\": \"Amazon'un FY2025 mali yılı brüt kâr marjını hesaplayabilmek için **brüt kâr** verisi gereklidir. Ancak, FY2025 dönemine ait brüt kâr verisi [Source 2] üzerinden bulunamamıştır. [Source 3] üzerinden FY2025 gelir verisi (716,924,000,000 USD) mevcuttur ancak brüt kâr verisi eksik olduğundan marj hesaplanamamıştır. FY2024 verileri kullanmak isteyebilirsiniz mi?\"}",
+        "elapsed_seconds": 15.209953917001258
+      }
+    ],
+    "elapsed_seconds": 88.58281216700561,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "timeout_seconds": 180,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      }
+    },
+    "dataset_sha256": "1c0af437d8f7b25d6802fc93186b3eb454235e65d96cdc9445ef09bc285f109a",
+    "recorded_at": "2026-10-15T18:22:21.914978+00:00"
+  },
+  {
+    "id": "aapl_latest_revenue_en",
+    "question": "What are Apple's latest annual revenue, fiscal year, and period-end date in the local data?",
+    "expected": {
+      "ticker": "AAPL",
+      "metric": "revenue",
+      "value": 416161000000,
+      "unit": "USD",
+      "fiscal_year": 2025,
+      "period_end": "2025-09-27"
+    },
+    "answer_language": "en",
+    "answer": null,
+    "review": null,
+    "status": "withheld",
+    "error": null,
+    "mode": "single_agent",
+    "verification": {
+      "status": "error",
+      "supported": false,
+      "issues": [
+        "ValueError: Numbers, dates, form labels, and percentages must use source field references"
+      ],
+      "stage": "deterministic",
+      "deterministic_fields": "not_passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": "Apple's latest annual financial data in the local records shows:\n\n**Revenue**: $416.161 billion (USD) for the fiscal year ending **2025-09-27**  \n**Fiscal Year**: 2025  \n**Period-End Date**: 2025-09-27  \n\nThis data is sourced from Apple's Form 10-K filing (access [here](https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm)), which reports revenue from contracts with customers excluding assessed tax. The fiscal year aligns with the period ending date provided in the SEC filing.",
+    "candidate": null,
+    "template": {
+      "kind": "answer",
+      "template": "Apple's latest annual financial data shows **Revenue**: {{2:records/0/value}} {{2:records/0/unit}} for the **Fiscal Year**: {{2:records/0/fiscal_year}} ending on **Period-End Date**: {{2:records/0/end}}. This information is sourced from Apple's Form 10-K filing [Source 2]."
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "get_company_facts",
+        "arguments": {
+          "years": 1,
+          "cik": "0000320193",
+          "concept": "revenue",
+          "unit": "USD"
+        },
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "revenue",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 416161000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "model",
+        "step": 1,
+        "status": "completed",
+        "elapsed_seconds": 13.94575229199836,
+        "tool_calls": [
+          {
+            "id": "call_whjmvps0",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "AAPL"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "tool",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        },
+        "elapsed_seconds": 0.013104874989949167
+      },
+      {
+        "type": "model",
+        "step": 2,
+        "status": "completed",
+        "elapsed_seconds": 10.942847917001927,
+        "tool_calls": [
+          {
+            "id": "call_lgf27ip0",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "years": 1,
+                "cik": "0000320193",
+                "concept": "revenue",
+                "unit": "USD"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "tool",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "years": 1,
+          "cik": "0000320193",
+          "concept": "revenue",
+          "unit": "USD"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "revenue",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 416161000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.007725582996499725
+      },
+      {
+        "type": "model",
+        "step": 3,
+        "status": "completed",
+        "elapsed_seconds": 14.794738541997503,
+        "tool_calls": []
+      },
+      {
+        "type": "model",
+        "phase": "composition",
+        "status": "completed",
+        "content": "{\"kind\": \"answer\", \"template\": \"Apple's latest annual financial data shows **Revenue**: {{2:records/0/value}} {{2:records/0/unit}} for the **Fiscal Year**: {{2:records/0/fiscal_year}} ending on **Period-End Date**: {{2:records/0/end}}. This information is sourced from Apple's Form 10-K filing [Source 2].\" }",
+        "elapsed_seconds": 14.040034292003838
+      }
+    ],
+    "elapsed_seconds": 53.74485333400662,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "timeout_seconds": 180,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      }
+    },
+    "dataset_sha256": "1c0af437d8f7b25d6802fc93186b3eb454235e65d96cdc9445ef09bc285f109a",
+    "recorded_at": "2026-10-15T18:23:15.661952+00:00"
+  }
+]

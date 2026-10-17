@@ -1,6 +1,6 @@
 import unittest
 
-from src.finsight.data.explore_facts import (
+from src.data.explore_facts import (
     filter_annual_records,
     group_records_by_period,
     merge_metric_tags,

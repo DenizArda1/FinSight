@@ -1,8 +1,8 @@
 import unittest
 from unittest.mock import Mock, patch
 
-from src.finsight.rag.retrieval import format_search_results, search_reports
-from src.finsight.tools.report_search import search_company_reports
+from src.rag.retrieval import format_search_results, search_reports
+from src.tools.report_search import search_company_reports
 
 
 class RetrievalTests(unittest.TestCase):
@@ -12,7 +12,7 @@ class RetrievalTests(unittest.TestCase):
             "ids": [[]], "documents": [[]], "metadatas": [[]], "distances": [[]],
         }
         self.config = {"model": "test-model"}
-        patcher = patch("src.finsight.rag.retrieval.embed_text", return_value=[1.0, 0.0])
+        patcher = patch("src.rag.retrieval.embed_text", return_value=[1.0, 0.0])
         self.embed = patcher.start()
         self.addCleanup(patcher.stop)
 
@@ -103,11 +103,11 @@ class ReportSearchToolTests(unittest.TestCase):
         settings = {"embedding": {"model": "test-model"}, "vector_store": {"path": "test"}}
         collection = Mock()
         matches = [{"chunk_id": "report:1", "metadata": {"source_url": "https://example.com/report"}}]
-        with patch("src.finsight.tools.report_search.resolve_company", return_value=company), patch(
-            "src.finsight.tools.report_search.load_yaml", return_value=settings
+        with patch("src.tools.report_search.resolve_company", return_value=company), patch(
+            "src.tools.report_search.load_yaml", return_value=settings
         ), patch(
-            "src.finsight.tools.report_search.get_vector_collection", return_value=collection
-        ), patch("src.finsight.tools.report_search.search_reports", return_value=matches) as search:
+            "src.tools.report_search.get_vector_collection", return_value=collection
+        ), patch("src.tools.report_search.search_reports", return_value=matches) as search:
             result = search_company_reports(" nvda ", "Risks?", fiscal_year=2026, top_k=3, section="Item 1A")
 
         search.assert_called_once_with(

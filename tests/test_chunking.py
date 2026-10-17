@@ -1,6 +1,6 @@
 import unittest
-from src.finsight.rag.chunking import build_document_chunks, split_text
-from src.finsight.pipeline.run_filing_pipeline import prepare_filing
+from src.rag.chunking import build_document_chunks, split_text
+from src.pipeline.run_filing_pipeline import prepare_filing
 from tests.filing_fixtures import make_report
 
 

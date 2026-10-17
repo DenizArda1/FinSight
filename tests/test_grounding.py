@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from src.finsight.verification.grounding import parse_verification_response
+from src.verification.grounding import parse_verification_response
 
 
 class VerificationResponseTests(unittest.TestCase):

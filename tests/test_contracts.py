@@ -1,6 +1,6 @@
 import unittest
 
-from src.finsight.data.contracts import validate_calculations, validate_selection
+from src.data.contracts import validate_calculations, validate_selection
 
 
 class ContractTests(unittest.TestCase):

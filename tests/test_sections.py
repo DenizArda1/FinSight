@@ -1,6 +1,6 @@
 import unittest
 
-from src.finsight.rag.sections import extract_sections
+from src.rag.sections import extract_sections
 from tests.filing_fixtures import REPORT_TEXT
 
 

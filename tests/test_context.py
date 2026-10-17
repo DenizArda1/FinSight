@@ -1,7 +1,7 @@
 from copy import deepcopy
 import unittest
 
-from src.finsight.rag.context import build_report_context
+from src.rag.context import build_report_context
 
 
 class ReportContextTests(unittest.TestCase):

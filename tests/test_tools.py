@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import call, patch
 
-from src.finsight.tools.financial_metrics import compare_metric, index_records_by_end_year
+from src.tools.financial_metrics import compare_metric, index_records_by_end_year
 
 
 class ToolTests(unittest.TestCase):
@@ -50,8 +50,8 @@ class ComparisonTests(unittest.TestCase):
         expected_apple = self.apple["records"][1]
         expected_microsoft = self.microsoft["records"][1]
 
-        with patch("src.finsight.tools.financial_metrics.get_metric") as mock_get, patch(
-            "src.finsight.tools.financial_metrics.load_yaml", 
+        with patch("src.tools.financial_metrics.get_metric") as mock_get, patch(
+            "src.tools.financial_metrics.load_yaml", 
             return_value={"calculations": {}}
         ):
             mock_get.side_effect = [self.apple, self.microsoft]
@@ -74,8 +74,8 @@ class ComparisonTests(unittest.TestCase):
                 {"end": "2023-12-31", "value": 280},
             ],
         }
-        with patch("src.finsight.tools.financial_metrics.get_metric") as mock_get, patch(
-            "src.finsight.tools.financial_metrics.load_yaml", 
+        with patch("src.tools.financial_metrics.get_metric") as mock_get, patch(
+            "src.tools.financial_metrics.load_yaml", 
             return_value={"calculations": {}}
         ):
             mock_get.side_effect = [self.apple, self.microsoft, amazon]
@@ -88,8 +88,8 @@ class ComparisonTests(unittest.TestCase):
             self.assertTrue(company_result["records"][0]["end"].startswith("2024"))
 
     def test_multiple_common_years_are_newest_first(self):
-        with patch("src.finsight.tools.financial_metrics.get_metric") as mock_get, patch (
-            "src.finsight.tools.financial_metrics.load_yaml", 
+        with patch("src.tools.financial_metrics.get_metric") as mock_get, patch (
+            "src.tools.financial_metrics.load_yaml", 
             return_value={"calculations": {}}
         ):
 
@@ -104,8 +104,8 @@ class ComparisonTests(unittest.TestCase):
 
     def test_non_overlapping_years_are_rejected(self):
         self.microsoft["records"] = [self.microsoft["records"][2]]
-        with patch("src.finsight.tools.financial_metrics.get_metric") as mock_get, patch(
-            "src.finsight.tools.financial_metrics.load_yaml", 
+        with patch("src.tools.financial_metrics.get_metric") as mock_get, patch(
+            "src.tools.financial_metrics.load_yaml", 
             return_value={"calculations": {}}
         ):
             mock_get.side_effect = [self.apple, self.microsoft]
@@ -116,8 +116,8 @@ class ComparisonTests(unittest.TestCase):
         self.apple["metric"] = "revenue_cagr"
         self.microsoft["metric"] = "revenue_cagr"
         config = {"calculations": {"revenue_cagr": {"period_mode": "full_range"}}}
-        with patch("src.finsight.tools.financial_metrics.get_metric") as mock_get, patch (
-            "src.finsight.tools.financial_metrics.load_yaml", 
+        with patch("src.tools.financial_metrics.get_metric") as mock_get, patch (
+            "src.tools.financial_metrics.load_yaml", 
             return_value=config
         ):
             mock_get.side_effect = [self.apple, self.microsoft]

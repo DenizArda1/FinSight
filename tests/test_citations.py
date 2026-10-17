@@ -1,6 +1,6 @@
 import unittest
 
-from src.finsight.verification.citations import validate_citations
+from src.verification.citations import validate_citations
 
 
 class CitationTests(unittest.TestCase):
@@ -33,6 +33,16 @@ class CitationTests(unittest.TestCase):
     def test_citation_without_any_available_sources_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "outside the available source range"):
             validate_citations("Risk [Source 1].", [])
+
+    def test_valid_citation_does_not_hide_a_malformed_one(self):
+        for citation in ("[Source -1]", "[Source1]", "[Source x]", "[source 1]", "[Source 2"):
+            with self.subTest(citation=citation), self.assertRaisesRegex(ValueError, "Malformed"):
+                validate_citations(f"Claim [Source 1]. Other claim {citation}", [{}])
+
+    def test_source_free_clarification_can_skip_required_citations(self):
+        self.assertTrue(validate_citations("Which company?", [], require_citations=False))
+        with self.assertRaises(ValueError):
+            validate_citations("Which company? [Source 1]", [], require_citations=False)
 
 
 if __name__ == "__main__":

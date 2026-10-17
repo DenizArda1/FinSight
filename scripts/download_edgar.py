@@ -1,11 +1,11 @@
-"""Run from repository root: python -m scripts.download_edgar."""
+#Run from repository root: python -m scripts.download_edgar
 
 import argparse
 import os
 from pathlib import Path
 PROJECT = Path(__file__).resolve().parents[1]
-from src.finsight.ingestion.edgar import EdgarClient
-from src.finsight.utils.utils import save_json
+from src.ingestion.edgar import EdgarClient
+from src.utils.utils import save_json
 
 
 def main():

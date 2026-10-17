@@ -1,6 +1,6 @@
 import unittest
 
-from src.finsight.rag.html_parser import extract_fiscal_year, extract_text, normalize_text
+from src.rag.html_parser import extract_fiscal_year, extract_text, normalize_text
 
 
 class HtmlParserTests(unittest.TestCase):

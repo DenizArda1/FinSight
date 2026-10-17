@@ -5,10 +5,10 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from src.finsight.tools.agentic_tools import TOOL_FUNCTIONS, TOOL_SCHEMAS
-from src.finsight.tools.dispatcher import execute_tool
-from src.finsight.tools.financial_metrics import get_company_facts
-from src.finsight.utils.utils import load_yaml, save_json, save_yaml
+from src.tools.agentic_tools import TOOL_FUNCTIONS, TOOL_SCHEMAS
+from src.tools.dispatcher import execute_tool
+from src.tools.financial_metrics import get_company_facts
+from src.utils.utils import load_yaml, save_json, save_yaml
 
 
 class FinancialAgentToolTests(unittest.TestCase):
@@ -17,7 +17,7 @@ class FinancialAgentToolTests(unittest.TestCase):
         directory = tempfile.TemporaryDirectory()
         self.addCleanup(directory.cleanup)
         self.root = Path(directory.name)
-        patcher = patch("src.finsight.tools.financial_metrics.PROJECT_ROOT", self.root)
+        patcher = patch("src.tools.financial_metrics.PROJECT_ROOT", self.root)
         patcher.start()
         self.addCleanup(patcher.stop)
         self.cik = "0000000001"
@@ -68,7 +68,7 @@ class FinancialAgentToolTests(unittest.TestCase):
         self.assertEqual(result["missing_period_ends"], ["2025-12-31"])
 
     def test_bad_cik_and_years_are_rejected_before_file_access(self):
-        with patch("src.finsight.tools.financial_metrics.load_yaml") as load:
+        with patch("src.tools.financial_metrics.load_yaml") as load:
             for cik in (None, 1, "1", "../../file", "abcdefghij"):
                 with self.subTest(cik=cik), self.assertRaises(ValueError):
                     get_company_facts(cik, "revenue")
@@ -103,7 +103,7 @@ class FinancialAgentToolTests(unittest.TestCase):
 
     def test_all_calculations_preserve_sources_without_writing_files(self):
         before = {str(path): path.read_bytes() for path in self.root.rglob("*") if path.is_file()}
-        with patch("src.finsight.tools.financial_metrics.get_company_facts", wraps=get_company_facts) as get:
+        with patch("src.tools.financial_metrics.get_company_facts", wraps=get_company_facts) as get:
             result = execute_tool("compute_metrics", {"cik": self.cik, "metrics": list(self.config["calculations"]), "years": 3})
         self.assertEqual(get.call_count, 4)
         rows = result["results"]
@@ -144,8 +144,16 @@ class FinancialAgentToolTests(unittest.TestCase):
                 execute_tool("compute_metrics", {"cik": self.cik, "metrics": metrics})
 
     def test_model_supplied_values_cannot_override_calculation_inputs(self):
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             execute_tool("compute_metrics", {"cik": self.cik, "metrics": ["net_margin"], "revenue": 999})
+
+    def test_schema_rejects_invalid_search_before_executing_tool(self):
+        with patch.dict(TOOL_FUNCTIONS, {"search_filings": unittest.mock.Mock()}) as functions:
+            search = functions["search_filings"]
+            for extra in ({"section": "Item 99"}, {"top_k": True}, {"fiscal_year": 0}, {"unknown": 1}):
+                with self.subTest(extra=extra), self.assertRaises(ValueError):
+                    execute_tool("search_filings", {"ticker": "AAPL", "query": "Risks", **extra})
+            search.assert_not_called()
 
 
 if __name__ == "__main__":

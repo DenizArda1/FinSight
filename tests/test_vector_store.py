@@ -2,7 +2,7 @@ import unittest
 from tempfile import TemporaryDirectory
 from unittest.mock import Mock, patch
 
-from src.finsight.rag.vector_store import get_vector_collection, save_embedding_records
+from src.rag.vector_store import get_vector_collection, save_embedding_records
 
 
 def make_record(chunk_id, cik="0000320193", accession="report-a", text="Report text"):

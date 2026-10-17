@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from src.finsight.pipeline.run_report_context_pipeline import answer_report_question
+from src.pipeline.run_report_context_pipeline import answer_report_question
 
 
 class ReportPipelineTests(unittest.TestCase):
@@ -18,15 +18,15 @@ class ReportPipelineTests(unittest.TestCase):
         }]
         self.config = {"model": "test-model"}
         search_patcher = patch(
-            "src.finsight.pipeline.run_report_context_pipeline.search_company_reports",
+            "src.pipeline.run_report_context_pipeline.search_company_reports",
             return_value={"matches": self.matches},
         )
         config_patcher = patch(
-            "src.finsight.pipeline.run_report_context_pipeline.load_yaml",
+            "src.pipeline.run_report_context_pipeline.load_yaml",
             return_value={"llm": self.config},
         )
         generate_patcher = patch(
-            "src.finsight.pipeline.run_report_context_pipeline.generate_response",
+            "src.pipeline.run_report_context_pipeline.generate_response",
             return_value="Sales may be affected [Source 1].",
         )
         self.search = search_patcher.start()
@@ -37,7 +37,7 @@ class ReportPipelineTests(unittest.TestCase):
         self.addCleanup(generate_patcher.stop)
         self.verification = {"supported": True, "issues": []}
         verify_patcher = patch(
-            "src.finsight.pipeline.run_report_context_pipeline.verify_report_answer",
+            "src.pipeline.run_report_context_pipeline.verify_report_answer",
             return_value=self.verification,
         )
         self.verify = verify_patcher.start()

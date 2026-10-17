@@ -1,0 +1,105 @@
+[
+  {
+    "id": "aapl_latest_revenue_tr",
+    "question": "Apple'ın yerel verideki en son yıllık gelirini, mali yılını ve dönem bitiş tarihini söyle.",
+    "expected": {
+      "ticker": "AAPL",
+      "metric": "revenue",
+      "value": 416161000000,
+      "unit": "USD",
+      "fiscal_year": 2025,
+      "period_end": "2025-09-27"
+    },
+    "answer_language": "tr",
+    "answer": "Apple'ın en son yıllık geliri (mali yıl sonu: 30 Eylül 2023) **394,3 milyar dolar**dır.  \n- **Mali yıl:** 1 Ekim 2022 – 30 Eylül 2023  \n- **Dönem bitiş tarihi:** 30 Eylül 2023  \n\nBu veriler Apple'ın 2023 mali yılı sonuçları (10 Ekim 2023 tarihinde açıklanan) temelinde belirtilmiştir.",
+    "review": {
+      "numeric_correct": false,
+      "language_correct": true,
+      "notes": [
+        "Revenue, fiscal year, and period end do not match the latest local FY2025 record.",
+        "Presents FY2023 as the latest period despite having no access to local data."
+      ]
+    },
+    "status": "completed",
+    "error": null,
+    "mode": "baseline",
+    "verification": {
+      "status": "not_run",
+      "supported": null,
+      "issues": [],
+      "reason": "Legacy run before the agent verification gate; manual review is separate."
+    },
+    "trace": null,
+    "trace_available": false
+  },
+  {
+    "id": "amzn_missing_gross_margin_tr",
+    "question": "Amazon'un yerel verideki en son mali yıl için brüt kâr marjını hesapla.",
+    "expected": {
+      "ticker": "AMZN",
+      "metric": "gross_margin",
+      "period_end": "2025-12-31",
+      "status": "unavailable",
+      "missing_inputs": [
+        "gross_profit"
+      ],
+      "available_inputs": [
+        "revenue"
+      ]
+    },
+    "answer_language": "tr",
+    "answer": "Amazon'un 2023 yılında (son mali yıl) **brüt kâr marjı** şu şekilde hesaplanır:  \n\n- **Toplam Gelir (Revenue):** $574,9 milyar  \n- **Maliyet (Cost of Sales):** $439,7 milyar  \n- **Brüt Kâr (Gross Profit):** $574,9B - $439,7B = **$135,2 milyar**  \n- **Brüt Kâr Marjı:** ($135,2 / $574,9) × 100 ≈ **23,5%**  \n\nKaynak: Amazon 2023 Q4 ve yıllık raporları (10-K dosyası).  \n\nNot: Brüt kâr marjı, şirketin satışları üzerinden maliyetlerden kalan kısmın yüzdesel ifadesidir. Bu oran, sektördeki rakiplerle (örneğin, Apple, Microsoft) karşılaştırıldığında Amazon'un genelde daha düşük brüt marjı olduğunu gösterir, çünkü daha fazla ürün ve hizmet çeşitliliği sunar.",
+    "review": {
+      "numeric_correct": false,
+      "language_correct": true,
+      "notes": [
+        "Reports a FY2023 gross margin of 23.5% instead of acknowledging unavailable local FY2025 gross_profit data.",
+        "The reported margin and source inputs are not supported by the supplied local evaluation records."
+      ]
+    },
+    "status": "completed",
+    "error": null,
+    "mode": "baseline",
+    "verification": {
+      "status": "not_run",
+      "supported": null,
+      "issues": [],
+      "reason": "Legacy run before the agent verification gate; manual review is separate."
+    },
+    "trace": null,
+    "trace_available": false
+  },
+  {
+    "id": "aapl_latest_revenue_en",
+    "question": "What are Apple's latest annual revenue, fiscal year, and period-end date in the local data?",
+    "expected": {
+      "ticker": "AAPL",
+      "metric": "revenue",
+      "value": 416161000000,
+      "unit": "USD",
+      "fiscal_year": 2025,
+      "period_end": "2025-09-27"
+    },
+    "answer_language": "en",
+    "answer": "As of my knowledge cutoff in July 2024, Apple's latest **fiscal year** is **2023**, with a **period-end date of September 30, 2023**. The **annual revenue** for fiscal year 2023 was **$394.3 billion** (reported in October 2023). \n\nFor the most recent quarter (fiscal Q3 2024, ending September 28, 2024), Apple reported revenue of **$95.8 billion** (as of October 2024). However, the full fiscal year 2024 revenue (ending September 30, 2024) is not yet available as of this writing. \n\nFor precise details, refer to Apple's **10-K filing** (annual report) or **SEC filings** for the most up-to-date data. Always verify with official sources for the latest information.",
+    "review": {
+      "numeric_correct": false,
+      "language_correct": true,
+      "notes": [
+        "Revenue, fiscal year, and period end do not match the latest local FY2025 record.",
+        "Mentions a knowledge cutoff but still substitutes historical claims for the requested local data."
+      ]
+    },
+    "status": "completed",
+    "error": null,
+    "mode": "baseline",
+    "verification": {
+      "status": "not_run",
+      "supported": null,
+      "issues": [],
+      "reason": "Legacy run before the agent verification gate; manual review is separate."
+    },
+    "trace": null,
+    "trace_available": false
+  }
+]

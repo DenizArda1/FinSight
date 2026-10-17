@@ -10,3 +10,7 @@ llm:
   model: "qwen3:8b"
   base_url: "http://localhost:11434"
   timeout_seconds: 180
+  options:
+    temperature: 0
+    num_ctx: 16384
+    num_predict: 4096

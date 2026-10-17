@@ -1,0 +1,107 @@
+[
+  {
+    "id": "aapl_latest_revenue_tr",
+    "question": "Apple'ın yerel verideki en son yıllık gelirini, mali yılını ve dönem bitiş tarihini söyle.",
+    "expected": {
+      "ticker": "AAPL",
+      "metric": "revenue",
+      "value": 416161000000,
+      "unit": "USD",
+      "fiscal_year": 2025,
+      "period_end": "2025-09-27"
+    },
+    "answer_language": "tr",
+    "answer": "Apple Inc.'s latest annual revenue, fiscal year, and year-end date from local SEC data are as follows:\n\n**Revenue**: $416.161 billion (USD)  \n**Fiscal Year**: 2025  \n**Year-End Date**: September 27, 2025  \n\nThis data is sourced from Apple's FY2025 10-K filing (accession number 0000320193-25-000079), which reports revenue from contracts with customers excluding assessed tax. The fiscal year ends on September 27, 2025, as stated in the filing.",
+    "review": {
+      "numeric_correct": true,
+      "language_correct": false,
+      "notes": [
+        "Revenue, fiscal year, and period end match the local record.",
+        "The Turkish question received an English answer."
+      ]
+    },
+    "status": "completed",
+    "error": null,
+    "verification": {
+      "status": "not_run",
+      "supported": null,
+      "issues": [],
+      "reason": "Legacy run before the agent verification gate; manual review is separate."
+    },
+    "trace": null,
+    "trace_available": false,
+    "mode": "single_agent"
+  },
+  {
+    "id": "amzn_missing_gross_margin_tr",
+    "question": "Amazon'un yerel verideki en son mali yıl için brüt kâr marjını hesapla.",
+    "expected": {
+      "ticker": "AMZN",
+      "metric": "gross_margin",
+      "period_end": "2025-12-31",
+      "status": "unavailable",
+      "missing_inputs": [
+        "gross_profit"
+      ],
+      "available_inputs": [
+        "revenue"
+      ]
+    },
+    "answer_language": "tr",
+    "answer": "Amazon'un 2025 mali yılının brüt kâr marjı hesaplanamadı çünkü yerel veri kaynaklarında brüt kâr verisi bulunamadı. Ancak 2025 mali yılı gelirleri $716,924 milyar olarak kaydedilmiştir. Brüt kâr marjının hesaplanabilmesi için brüt kâr verisi gerekir. Bu veri henüz yerel veri kaynaklarında mevcut değil.  \n\nKaynak:  \n- **Gelir**: [SEC Form 10-K, 2025](https://sec.gov/edgar/data/1018724/0001018724-26-000004/0001018724-26-000004.txt) (2026-02-06 dosyası).",
+    "review": {
+      "numeric_correct": true,
+      "language_correct": true,
+      "notes": [
+        "Correctly states that gross margin cannot be calculated because the local gross_profit record is missing for FY2025.",
+        "Correctly states that revenue is available. Using Turkish decimal notation, 716,924 billion USD matches 716924000000 USD.",
+        "The source URL has not been verified."
+      ]
+    },
+    "status": "completed",
+    "error": null,
+    "verification": {
+      "status": "not_run",
+      "supported": null,
+      "issues": [],
+      "reason": "Legacy run before the agent verification gate; manual review is separate."
+    },
+    "trace": null,
+    "trace_available": false,
+    "mode": "single_agent"
+  },
+  {
+    "id": "aapl_latest_revenue_en",
+    "question": "What are Apple's latest annual revenue, fiscal year, and period-end date in the local data?",
+    "expected": {
+      "ticker": "AAPL",
+      "metric": "revenue",
+      "value": 416161000000,
+      "unit": "USD",
+      "fiscal_year": 2025,
+      "period_end": "2025-09-27"
+    },
+    "answer_language": "en",
+    "answer": "Apple's latest annual financial data from local records shows:\n\n**Revenue**: $416.161 billion (FY2025, ending September 27, 2025)  \n**Fiscal Year**: 2025  \n**Period-End Date**: September 27, 2025  \n\nThe fiscal year and period-end date are derived from the most recent SEC filings (10-K/A) in the local database. The revenue figure reflects the full-year results for the 52-week period ending September 27, 2025.",
+    "review": {
+      "numeric_correct": true,
+      "language_correct": true,
+      "notes": [
+        "Revenue, fiscal year, and period end match the local record.",
+        "Incorrectly describes the source as 10-K/A. The selected local record is a 10-K and is not an amendment.",
+        "Correct numerical values do not imply that every factual claim is correct."
+      ]
+    },
+    "status": "completed",
+    "error": null,
+    "verification": {
+      "status": "not_run",
+      "supported": null,
+      "issues": [],
+      "reason": "Legacy run before the agent verification gate; manual review is separate."
+    },
+    "trace": null,
+    "trace_available": false,
+    "mode": "single_agent"
+  }
+]

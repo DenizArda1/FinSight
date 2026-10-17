@@ -2,7 +2,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from src.finsight.rag.filings import load_latest_filing, select_filings
+from src.rag.filings import load_latest_filing, select_filings
 
 
 class FilingTests(unittest.TestCase):
@@ -14,8 +14,8 @@ class FilingTests(unittest.TestCase):
         earlier = {**recent, "filingDate": "2025-10-01"}
         older = {**recent, "reportDate": "2024-09-28"}
         oldest = {**recent, "reportDate": "2023-09-30"}
-        with patch("src.finsight.rag.filings.resolve_company", return_value=self.company), patch(
-            "src.finsight.rag.filings.load_json", return_value={"filings": [earlier, oldest, older, recent]}
+        with patch("src.rag.filings.resolve_company", return_value=self.company), patch(
+            "src.rag.filings.load_json", return_value={"filings": [earlier, oldest, older, recent]}
         ):
             result = select_filings("AAPL", years=2)
         self.assertEqual(result["filings"], [recent, older])
@@ -39,8 +39,8 @@ class FilingTests(unittest.TestCase):
         amendment = {**latest, "form": "10-K/A", "filingDate": "2026-02-01"}
         manifest = {"filings": [older_period, amendment, latest, earlier_filing]}
 
-        with patch("src.finsight.rag.filings.resolve_company", return_value=self.company), patch(
-            "src.finsight.rag.filings.load_json", return_value=manifest
+        with patch("src.rag.filings.resolve_company", return_value=self.company), patch(
+            "src.rag.filings.load_json", return_value=manifest
         ), patch.object(Path, "read_text", autospec=True, return_value="<p>Report</p>") as read:
             result = load_latest_filing("AAPL")
 
@@ -52,8 +52,8 @@ class FilingTests(unittest.TestCase):
     def test_no_10_k_is_rejected_before_reading_html(self):
         for filings in ([], [{"form": "10-Q"}], [{"form": "10-K/A"}]):
             with self.subTest(filings=filings):
-                with patch("src.finsight.rag.filings.resolve_company", return_value=self.company), patch(
-                    "src.finsight.rag.filings.load_json", return_value={"filings": filings}
+                with patch("src.rag.filings.resolve_company", return_value=self.company), patch(
+                    "src.rag.filings.load_json", return_value={"filings": filings}
                 ), patch.object(Path, "read_text") as read:
                     with self.assertRaisesRegex(ValueError, "No 10-K filings found for AAPL"):
                         load_latest_filing("AAPL")
@@ -61,8 +61,8 @@ class FilingTests(unittest.TestCase):
 
     def test_missing_html_file_is_reported(self):
         filing = {"form": "10-K", "reportDate": "2025-09-27", "filingDate": "2025-10-31", "path": "missing.htm"}
-        with patch("src.finsight.rag.filings.resolve_company", return_value=self.company), patch(
-            "src.finsight.rag.filings.load_json", return_value={"filings": [filing]}
+        with patch("src.rag.filings.resolve_company", return_value=self.company), patch(
+            "src.rag.filings.load_json", return_value={"filings": [filing]}
         ), patch.object(Path, "read_text", side_effect=FileNotFoundError("Missing report")):
             with self.assertRaises(FileNotFoundError):
                 load_latest_filing("AAPL")

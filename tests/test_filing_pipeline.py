@@ -3,7 +3,7 @@ import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from unittest.mock import call, patch
 
-from src.finsight.pipeline.run_filing_pipeline import main, process_latest_filing, process_company_filings
+from src.pipeline.run_filing_pipeline import main, process_latest_filing, process_company_filings
 from tests.filing_fixtures import make_report, REPORT_TEXT
 
 
@@ -12,8 +12,8 @@ class FilingPipelineTests(unittest.TestCase):
         self.report = make_report()
 
     def test_successful_pipeline_saves_matching_text_and_source_linked_chunks(self):
-        with patch("src.finsight.pipeline.run_filing_pipeline.load_latest_filing", return_value=self.report), patch(
-            "src.finsight.pipeline.run_filing_pipeline.save_json"
+        with patch("src.pipeline.run_filing_pipeline.load_latest_filing", return_value=self.report), patch(
+            "src.pipeline.run_filing_pipeline.save_json"
         ) as save:
             document = process_latest_filing("AAPL")
 
@@ -38,9 +38,9 @@ class FilingPipelineTests(unittest.TestCase):
 
     def test_empty_visible_text_is_rejected_without_writing(self):
         self.report["html"] = "<head><title>Title</title></head><script>code()</script><div hidden>Hidden</div>"
-        with patch("src.finsight.pipeline.run_filing_pipeline.load_latest_filing", return_value=self.report), patch(
-            "src.finsight.pipeline.run_filing_pipeline.build_document_chunks"
-        ) as build, patch("src.finsight.pipeline.run_filing_pipeline.save_json") as save:
+        with patch("src.pipeline.run_filing_pipeline.load_latest_filing", return_value=self.report), patch(
+            "src.pipeline.run_filing_pipeline.build_document_chunks"
+        ) as build, patch("src.pipeline.run_filing_pipeline.save_json") as save:
             with self.assertRaisesRegex(ValueError, "No visible report text found for AAPL"):
                 process_latest_filing("AAPL")
 
@@ -48,27 +48,27 @@ class FilingPipelineTests(unittest.TestCase):
         save.assert_not_called()
 
     def test_chunk_failure_does_not_write_any_output(self):
-        with patch("src.finsight.pipeline.run_filing_pipeline.load_latest_filing", return_value=self.report), patch(
-            "src.finsight.pipeline.run_filing_pipeline.build_document_chunks",
+        with patch("src.pipeline.run_filing_pipeline.load_latest_filing", return_value=self.report), patch(
+            "src.pipeline.run_filing_pipeline.build_document_chunks",
             side_effect=ValueError("Chunk position error"),
-        ), patch("src.finsight.pipeline.run_filing_pipeline.save_json") as save:
+        ), patch("src.pipeline.run_filing_pipeline.save_json") as save:
             with self.assertRaisesRegex(ValueError, "Chunk position error"):
                 process_latest_filing("AAPL")
 
         save.assert_not_called()
 
     def test_empty_chunk_list_is_rejected_without_writing(self):
-        with patch("src.finsight.pipeline.run_filing_pipeline.load_latest_filing", return_value=self.report), patch(
-            "src.finsight.pipeline.run_filing_pipeline.build_document_chunks", return_value=[]
-        ), patch("src.finsight.pipeline.run_filing_pipeline.save_json") as save:
+        with patch("src.pipeline.run_filing_pipeline.load_latest_filing", return_value=self.report), patch(
+            "src.pipeline.run_filing_pipeline.build_document_chunks", return_value=[]
+        ), patch("src.pipeline.run_filing_pipeline.save_json") as save:
             with self.assertRaisesRegex(ValueError, "No text chunks produced for AAPL"):
                 process_latest_filing("AAPL")
 
         save.assert_not_called()
 
     def test_report_loading_failure_does_not_write_any_output(self):
-        with patch("src.finsight.pipeline.run_filing_pipeline.load_latest_filing", side_effect=FileNotFoundError("Missing report")), patch(
-            "src.finsight.pipeline.run_filing_pipeline.save_json"
+        with patch("src.pipeline.run_filing_pipeline.load_latest_filing", side_effect=FileNotFoundError("Missing report")), patch(
+            "src.pipeline.run_filing_pipeline.save_json"
         ) as save:
             with self.assertRaises(FileNotFoundError):
                 process_latest_filing("AAPL")
@@ -77,8 +77,8 @@ class FilingPipelineTests(unittest.TestCase):
 
     def test_missing_section_does_not_write_any_output(self):
         self.report["html"] = self.report["html"].replace("Item 1A. Risk Factors", "Risks")
-        with patch("src.finsight.pipeline.run_filing_pipeline.load_latest_filing", return_value=self.report), patch(
-            "src.finsight.pipeline.run_filing_pipeline.save_json"
+        with patch("src.pipeline.run_filing_pipeline.load_latest_filing", return_value=self.report), patch(
+            "src.pipeline.run_filing_pipeline.save_json"
         ) as save:
             with self.assertRaisesRegex(ValueError, "Expected one substantive"):
                 process_latest_filing("AAPL")
@@ -86,8 +86,8 @@ class FilingPipelineTests(unittest.TestCase):
 
     def test_missing_fiscal_year_does_not_write_any_output(self):
         self.report["html"] = self.report["html"].replace("dei:DocumentFiscalYearFocus", "dei:OtherFact")
-        with patch("src.finsight.pipeline.run_filing_pipeline.load_latest_filing", return_value=self.report), patch(
-            "src.finsight.pipeline.run_filing_pipeline.save_json"
+        with patch("src.pipeline.run_filing_pipeline.load_latest_filing", return_value=self.report), patch(
+            "src.pipeline.run_filing_pipeline.save_json"
         ) as save:
             with self.assertRaisesRegex(ValueError, "DocumentFiscalYearFocus"):
                 process_latest_filing("AAPL")
@@ -96,23 +96,23 @@ class FilingPipelineTests(unittest.TestCase):
 
 class FilingCommandTests(unittest.TestCase):
     def test_tickers_are_normalized_and_processed_once(self):
-        with patch("src.finsight.pipeline.run_filing_pipeline.process_company_filings", return_value=[]) as process, patch(
-            "src.finsight.pipeline.run_filing_pipeline.save_json"
+        with patch("src.pipeline.run_filing_pipeline.process_company_filings", return_value=[]) as process, patch(
+            "src.pipeline.run_filing_pipeline.save_json"
         ), redirect_stdout(io.StringIO()):
             main(["--tickers", " aapl,MSFT,aapl, "])
         self.assertEqual(process.call_args_list, [call("AAPL", 5, 1500, 200), call("MSFT", 5, 1500, 200)])
 
     def test_invalid_arguments_are_rejected_before_processing(self):
         for args in (["--tickers", " , "], ["--years", "0"], ["--max-chars", "200", "--overlap", "200"]):
-            with self.subTest(args=args), patch("src.finsight.pipeline.run_filing_pipeline.process_company_filings") as process, redirect_stderr(io.StringIO()):
+            with self.subTest(args=args), patch("src.pipeline.run_filing_pipeline.process_company_filings") as process, redirect_stderr(io.StringIO()):
                 with self.assertRaises(SystemExit) as error:
                     main(args)
             self.assertEqual(error.exception.code, 2)
             process.assert_not_called()
 
     def test_company_failure_is_logged_and_next_company_is_processed(self):
-        with patch("src.finsight.pipeline.run_filing_pipeline.process_company_filings", side_effect=[ValueError("Empty report"), []]) as process, patch(
-            "src.finsight.pipeline.run_filing_pipeline.save_json"
+        with patch("src.pipeline.run_filing_pipeline.process_company_filings", side_effect=[ValueError("Empty report"), []]) as process, patch(
+            "src.pipeline.run_filing_pipeline.save_json"
         ) as save, redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
             with self.assertRaises(SystemExit) as error:
                 main(["--tickers", "AAPL,MSFT"])
@@ -125,9 +125,9 @@ class FilingCommandTests(unittest.TestCase):
         report = make_report()
         filings = [report["filing"], {**report["filing"], "accessionNumber": "next-accession"}]
         document = {"filing": {"fiscal_year": 2025}, "sections": [{}, {}, {}], "chunk_count": 3, "preparation": {}}
-        with patch("src.finsight.pipeline.run_filing_pipeline.select_filings", return_value={"company": report["company"], "filings": filings}), patch(
-            "src.finsight.pipeline.run_filing_pipeline.load_filing", side_effect=[FileNotFoundError("Missing report"), report]
-        ), patch("src.finsight.pipeline.run_filing_pipeline.process_filing", return_value=document):
+        with patch("src.pipeline.run_filing_pipeline.select_filings", return_value={"company": report["company"], "filings": filings}), patch(
+            "src.pipeline.run_filing_pipeline.load_filing", side_effect=[FileNotFoundError("Missing report"), report]
+        ), patch("src.pipeline.run_filing_pipeline.process_filing", return_value=document):
             results = process_company_filings("AAPL")
         self.assertEqual([entry["status"] for entry in results], ["failed", "prepared"])
         self.assertEqual(results[0]["error"], "Missing report")
