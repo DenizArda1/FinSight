@@ -3,7 +3,7 @@ from io import StringIO
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
-from unittest.mock import patch
+from unittest.mock import AsyncMock, patch
 
 import eval.run_eval as evaluation
 from src.cli import main as cli_main, run_mcp_agent
@@ -17,6 +17,11 @@ class FailingAgent:
         raise RuntimeError("Model unavailable after tool execution")
 
 
+async def failing_mcp_agent(question, config, trace):
+    trace.append({"type": "tool_discovery", "tools": ["resolve_ticker_to_cik"]})
+    raise RuntimeError("Connection closed after discovery")
+
+
 class EvaluationTests(unittest.TestCase):
     def setUp(self):
         self.cases = [{"id": "case_a", "question": "Revenue?", "expected": {"value": 1}, "answer_language": "en"}]
@@ -24,6 +29,34 @@ class EvaluationTests(unittest.TestCase):
         silence = redirect_stdout(StringIO())
         silence.__enter__()
         self.addCleanup(silence.__exit__, None, None, None)
+
+    @patch("eval.run_eval.run_agent")
+    @patch("eval.run_eval.run_mcp_agent", new_callable=AsyncMock)
+    def test_mcp_transport_uses_application_runner_and_records_inputs(self, mcp_agent, direct):
+        mcp_agent.return_value = {"answer": "Answer", "status": "completed",
+                                  "verification": {"status": "passed"}}
+        snapshot = {"source_sha256": "snapshot"}
+        row = evaluation.run_evaluation(self.cases, self.config, transport="mcp", data_snapshot=snapshot)[0]
+        direct.assert_not_called()
+        mcp_agent.assert_awaited_once()
+        self.assertEqual(mcp_agent.await_args.args, (self.cases[0]["question"], self.config))
+        self.assertEqual(row["transport"], "mcp")
+        self.assertEqual(row["data_snapshot"], snapshot)
+        self.assertEqual(row["answer"], "Answer")
+
+    @patch("eval.run_eval.run_mcp_agent", side_effect=failing_mcp_agent)
+    def test_mcp_error_keeps_discovery_trace(self, mcp_agent):
+        row = evaluation.run_evaluation(self.cases, self.config, transport="mcp")[0]
+        self.assertEqual(row["status"], "error")
+        self.assertEqual(row["transport"], "mcp")
+        self.assertEqual(row["trace"][0]["type"], "tool_discovery")
+        self.assertIsNone(row["answer"])
+
+    def test_invalid_transport_and_mcp_baseline_are_rejected(self):
+        with self.assertRaisesRegex(ValueError, "Unknown tool transport"):
+            evaluation.run_evaluation(self.cases, self.config, transport="invalid")
+        with self.assertRaisesRegex(ValueError, "Baseline has no tools"):
+            evaluation.run_evaluation(self.cases, self.config, mode="baseline", transport="mcp")
 
     @patch("eval.run_eval.run_agent")
     @patch("eval.run_eval.run_baseline")
@@ -147,9 +180,9 @@ class EvaluationTests(unittest.TestCase):
 
 
 class CLIConnectionTests(unittest.IsolatedAsyncioTestCase):
-    @patch("src.cli.load_mcp_tool_schemas")
-    @patch("src.cli.Client")
-    @patch("src.cli.run_agent_async")
+    @patch("src.agents.runtime.load_mcp_tool_schemas")
+    @patch("src.agents.runtime.Client")
+    @patch("src.agents.runtime.run_agent_async")
     async def test_connection_is_passed_to_agent_and_closed_after_answer(self, agent, client_class, load_schemas):
         connection = client_class.return_value
         client = connection.__aenter__.return_value
@@ -160,15 +193,15 @@ class CLIConnectionTests(unittest.IsolatedAsyncioTestCase):
 
         agent.assert_awaited_once_with(
             "Question", {"model": "test-model"}, verbose=True,
-            return_details=True, mcp_client=client, tool_schemas=load_schemas.return_value,
+            return_details=True, trace=None, mcp_client=client, tool_schemas=load_schemas.return_value,
         )
         load_schemas.assert_awaited_once_with(client)
         self.assertEqual(result, agent.return_value)
         connection.__aexit__.assert_awaited_once_with(None, None, None)
 
-    @patch("src.cli.load_mcp_tool_schemas", return_value=[])
-    @patch("src.cli.Client")
-    @patch("src.cli.run_agent_async", side_effect=RuntimeError("Model unavailable"))
+    @patch("src.agents.runtime.load_mcp_tool_schemas", return_value=[])
+    @patch("src.agents.runtime.Client")
+    @patch("src.agents.runtime.run_agent_async", side_effect=RuntimeError("Model unavailable"))
     async def test_connection_is_closed_when_agent_fails(self, agent, client_class, load_schemas):
         connection = client_class.return_value
         connection.__aexit__.return_value = False
@@ -179,9 +212,9 @@ class CLIConnectionTests(unittest.IsolatedAsyncioTestCase):
         connection.__aexit__.assert_awaited_once()
         self.assertIs(connection.__aexit__.await_args.args[0], RuntimeError)
 
-    @patch("src.cli.load_mcp_tool_schemas", side_effect=ValueError("No tools exposed"))
-    @patch("src.cli.Client")
-    @patch("src.cli.run_agent_async")
+    @patch("src.agents.runtime.load_mcp_tool_schemas", side_effect=ValueError("No tools exposed"))
+    @patch("src.agents.runtime.Client")
+    @patch("src.agents.runtime.run_agent_async")
     async def test_discovery_failure_closes_connection_before_agent_runs(self, agent, client_class, load_schemas):
         connection = client_class.return_value
         connection.__aexit__.return_value = False

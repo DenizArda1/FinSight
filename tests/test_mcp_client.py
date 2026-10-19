@@ -2,7 +2,7 @@ import unittest
 from types import SimpleNamespace
 from unittest.mock import AsyncMock, call
 
-from src.mcp.client import call_mcp_tool, load_mcp_tool_schemas
+from src.mcp.client import MCPToolError, call_mcp_tool, load_mcp_tool_schemas
 
 
 class MCPClientTests(unittest.IsolatedAsyncioTestCase):
@@ -62,7 +62,7 @@ class MCPClientTests(unittest.IsolatedAsyncioTestCase):
             structured_content={"ticker": "INVALID"},
         )))
 
-        with self.assertRaisesRegex(RuntimeError, "resolve_ticker_to_cik.*Unknown ticker"):
+        with self.assertRaisesRegex(MCPToolError, "resolve_ticker_to_cik.*Unknown ticker"):
             await call_mcp_tool(client, "resolve_ticker_to_cik", {"ticker": "INVALID"})
 
     async def test_error_without_text_has_fallback_message(self):
@@ -70,7 +70,7 @@ class MCPClientTests(unittest.IsolatedAsyncioTestCase):
             is_error=True, content=[], structured_content=None,
         )))
 
-        with self.assertRaisesRegex(RuntimeError, "Unknown error"):
+        with self.assertRaisesRegex(MCPToolError, "Unknown error"):
             await call_mcp_tool(client, "search_filings", {})
 
     async def test_rejects_missing_or_non_object_structured_content(self):
@@ -80,8 +80,18 @@ class MCPClientTests(unittest.IsolatedAsyncioTestCase):
                     is_error=False, structured_content=payload,
                 )))
 
-                with self.assertRaisesRegex(ValueError, "structured object"):
+                with self.assertRaisesRegex(RuntimeError, "structured object") as raised:
                     await call_mcp_tool(client, "get_company_facts", {})
+                self.assertNotIsInstance(raised.exception, MCPToolError)
+
+    async def test_connection_failure_is_not_converted_to_a_tool_error(self):
+        failure = ConnectionError("MCP connection closed")
+        client = SimpleNamespace(call_tool=AsyncMock(side_effect=failure))
+
+        with self.assertRaises(ConnectionError) as raised:
+            await call_mcp_tool(client, "resolve_ticker_to_cik", {"ticker": "AAPL"})
+
+        self.assertIs(raised.exception, failure)
 
 
 if __name__ == "__main__":

@@ -66,6 +66,8 @@ def build_fact_catalog(evidence):
         records = []
         if source["tool"] == "resolve_ticker_to_cik":
             records.append(("", result))
+        if source["tool"] == "get_filing_section" and isinstance(result.get("metadata"), dict):
+            records.append(("metadata", result["metadata"]))
 
         for index, record in enumerate(result.get("records", [])):
             records.append((f"records/{index}", record))

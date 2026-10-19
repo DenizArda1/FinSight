@@ -42,8 +42,8 @@ class FinancialAgentToolTests(unittest.TestCase):
                  "value": row["value"] * fraction} for row in self.revenue
             ], self.processed / f"{metric}.json")
 
-    def test_all_four_schemas_match_registered_signatures_and_config(self):
-        self.assertEqual(len(TOOL_SCHEMAS), 4)
+    def test_all_schemas_match_registered_signatures_and_config(self):
+        self.assertEqual(len(TOOL_SCHEMAS), 5)
         self.assertEqual({schema["function"]["name"] for schema in TOOL_SCHEMAS}, set(TOOL_FUNCTIONS))
         json.dumps(TOOL_SCHEMAS)
         definitions = {schema["function"]["name"]: schema["function"] for schema in TOOL_SCHEMAS}

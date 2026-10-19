@@ -4,41 +4,16 @@ from pathlib import Path
 from requests import RequestException
 import asyncio
 
-from mcp import Client, StdioServerParameters
-
-from src.agents.single_agent import run_agent_async
+from src.agents.runtime import run_mcp_agent
 from src.utils.utils import load_yaml
 from src.verification.agent_answer import format_source_references
-from src.mcp.client import load_mcp_tool_schemas
 
 
 def format_request_error(error):
     if isinstance(error, ExceptionGroup):
         return " | ".join(format_request_error(item) for item in error.exceptions)
     return f"{type(error).__name__}: {error}"
-
-
-async def run_mcp_agent(question, llm_config, verbose=False):
-    project_root = Path(__file__).resolve().parents[1]
-
-    parameters = StdioServerParameters(
-        command=sys.executable,
-        args=["-m", "src.mcp.server"],
-        cwd=str(project_root),
-    )
-
-    async with Client(parameters, raise_exceptions=True) as client:
-        tool_schemas = await load_mcp_tool_schemas(client)
-
-        return await run_agent_async(
-            question,
-            llm_config,
-            verbose=verbose,
-            return_details=True,
-            mcp_client=client,
-            tool_schemas=tool_schemas,
-        )
-
+    
 def main():
     parser = argparse.ArgumentParser(
         description="Ask FinSight a financial research question."

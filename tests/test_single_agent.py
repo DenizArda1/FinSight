@@ -5,6 +5,7 @@ import unittest
 from unittest.mock import AsyncMock, call, patch
 
 from src.agents.single_agent import run_agent, run_agent_async
+from src.mcp.client import MCPToolError
 from src.tools.agentic_tools import TOOL_SCHEMAS
 
 
@@ -41,6 +42,74 @@ class SingleAgentTests(unittest.TestCase):
         self.assertEqual(run_agent("Which company?", self.config), "Please specify a company.")
         self.chat.assert_called_once()
         self.tool.assert_not_called()
+
+    @patch("src.agents.single_agent.call_mcp_tool", new_callable=AsyncMock)
+    def test_mcp_tool_error_reaches_model_before_corrected_call(self, mcp_tool):
+        recorder = RecordingChat([
+            {"role": "assistant", "tool_calls": [{"function": {
+                "name": "resolve_ticker_to_cik", "arguments": {"ticker": "INVALID"},
+            }}]},
+            {"role": "assistant", "tool_calls": [{"function": {
+                "name": "resolve_ticker_to_cik", "arguments": {"ticker": "AAPL"},
+            }}]},
+            {"role": "assistant", "content": "Resolved Apple."},
+        ])
+        self.chat.side_effect = recorder
+        mcp_tool.side_effect = [
+            MCPToolError("Unknown ticker: INVALID"), {"ticker": "AAPL", "cik": "0000320193"},
+        ]
+
+        result = asyncio.run(run_agent_async(
+            "Resolve Apple.", self.config, mcp_client=object(), return_details=True,
+        ))
+
+        error = json.loads(recorder.requests[1]["messages"][-1]["content"])["error"]
+        self.assertEqual(error, {"type": "MCPToolError", "message": "Unknown ticker: INVALID"})
+        events = [event for event in result["trace"] if event["type"] == "tool"]
+        self.assertEqual([event["status"] for event in events], ["error", "completed"])
+        self.assertEqual(result["tool_call_count"], 2)
+        self.assertEqual(result["answer"], "Resolved Apple.")
+        self.tool.assert_not_called()
+        self.finalizer.assert_called_once()
+
+    @patch("src.agents.single_agent.call_mcp_tool", new_callable=AsyncMock)
+    def test_repeated_mcp_tool_errors_still_consume_call_budget(self, mcp_tool):
+        self.chat.return_value = {"role": "assistant", "tool_calls": [{"function": {
+            "name": "resolve_ticker_to_cik", "arguments": {"ticker": "INVALID"},
+        }}]}
+        mcp_tool.side_effect = MCPToolError("Unknown ticker")
+        trace = []
+
+        with self.assertRaisesRegex(RuntimeError, "maximum number of tool calls"):
+            asyncio.run(run_agent_async(
+                "Resolve Apple.", self.config, mcp_client=object(), max_tool_calls=2, trace=trace,
+            ))
+
+        self.assertEqual(mcp_tool.await_count, 2)
+        self.assertEqual(len([event for event in trace if event["type"] == "tool"]), 2)
+        self.finalizer.assert_not_called()
+
+    @patch("src.agents.single_agent.call_mcp_tool", new_callable=AsyncMock)
+    def test_mcp_connection_and_response_failures_stop_the_run(self, mcp_tool):
+        self.chat.return_value = {"role": "assistant", "tool_calls": [{"function": {
+            "name": "resolve_ticker_to_cik", "arguments": {"ticker": "AAPL"},
+        }}]}
+        for failure in (ConnectionError("MCP connection closed"), RuntimeError("Invalid structured response")):
+            with self.subTest(failure=failure):
+                mcp_tool.reset_mock()
+                mcp_tool.side_effect = failure
+                trace = []
+
+                with self.assertRaises(type(failure)) as raised:
+                    asyncio.run(run_agent_async(
+                        "Resolve Apple.", self.config, mcp_client=object(), trace=trace,
+                    ))
+
+                self.assertIs(raised.exception, failure)
+                self.assertEqual(mcp_tool.await_count, 1)
+                self.assertEqual(trace[-1]["status"], "error")
+                self.assertEqual(trace[-1]["result"]["error"]["message"], str(failure))
+        self.finalizer.assert_not_called()
 
     @patch("src.agents.single_agent.call_mcp_tool", new_callable=AsyncMock)
     def test_mcp_results_reach_trace_and_final_verification(self, mcp_tool):

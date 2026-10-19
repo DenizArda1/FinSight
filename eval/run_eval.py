@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
 import argparse
+import asyncio
 import hashlib
 import json
 from copy import deepcopy
@@ -9,6 +10,7 @@ from time import perf_counter
 
 from src.utils.utils import load_jsonl, load_yaml, save_json
 from src.agents.single_agent import run_agent
+from src.agents.runtime import run_mcp_agent
 from src.llm.client import generate_response
 
 def validate_cases(cases):
@@ -28,7 +30,11 @@ def validate_cases(cases):
         ids.add(case["id"])
 
 
-def run_evaluation(cases, llm_config, mode="single_agent", output_path=None):
+def run_evaluation(cases, llm_config, mode="single_agent", output_path=None, transport="direct", data_snapshot=None):
+    if transport not in ("direct", "mcp"):
+        raise ValueError(f"Unknown tool transport: {transport}")
+    if mode == "baseline" and transport != "direct":
+        raise ValueError("Baseline has no tools; MCP transport does not apply")
     if mode == "single_agent":
         runner = run_agent
     elif mode == "baseline":
@@ -51,7 +57,10 @@ def run_evaluation(cases, llm_config, mode="single_agent", output_path=None):
 
         try:
             if mode == "single_agent":
-                details = runner(case["question"], llm_config, return_details=True, trace=trace)
+                if transport == "mcp":
+                    details = asyncio.run(run_mcp_agent(case["question"], llm_config, trace=trace))
+                else:
+                    details = runner(case["question"], llm_config, return_details=True, trace=trace)
                 answer = details["answer"]
                 verification = details["verification"]
                 status = details["status"]
@@ -75,6 +84,8 @@ def run_evaluation(cases, llm_config, mode="single_agent", output_path=None):
             "status": status,
             "error": error,
             "mode": mode,
+            "transport": transport if mode == "single_agent" else "none",
+            "data_snapshot": deepcopy(data_snapshot),
             "verification": verification,
             "draft": details.get("draft"),
             "candidate": details.get("candidate"),
@@ -84,7 +95,7 @@ def run_evaluation(cases, llm_config, mode="single_agent", output_path=None):
             "trace": deepcopy(trace),
             "elapsed_seconds": perf_counter() - started,
             "model": llm_config.get("model"),
-            "llm_config": {key: deepcopy(llm_config[key]) for key in ("model", "timeout_seconds", "options") if key in llm_config},
+            "llm_config": {key: deepcopy(llm_config[key]) for key in ("model", "base_url", "timeout_seconds", "options") if key in llm_config},
             "dataset_sha256": dataset_hash,
             "recorded_at": datetime.now(timezone.utc).isoformat(),
         })
@@ -119,7 +130,11 @@ def main():
         default="single_agent",
     )
     parser.add_argument("--case", action="append", dest="case_ids", help="Run a specific case ID; repeat to select more cases.")
+    parser.add_argument("--transport", choices=["direct", "mcp"], default="direct",
+                        help="Tool execution path; use mcp to evaluate the application's CLI path.")
     args = parser.parse_args()
+    if args.mode == "baseline" and args.transport != "direct":
+        parser.error("Baseline has no tools; --transport mcp does not apply")
     project_root = Path(__file__).resolve().parents[1]
 
     cases = load_jsonl(project_root / "eval" / "golden_set.jsonl")
@@ -133,9 +148,13 @@ def main():
 
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S_%fZ")
     run_id = f"{timestamp}_{uuid4().hex[:8]}"
-    output_path = project_root / "eval" / "results" / f"{args.mode}_{run_id}.json"
+    label = f"{args.mode}_{args.transport}" if args.mode == "single_agent" else args.mode
+    output_path = project_root / "eval" / "results" / f"{label}_{run_id}.json"
     print(f"Results: {output_path}", flush=True)
-    results = run_evaluation(cases, settings["llm"], mode=args.mode, output_path=output_path)
+    from eval.snapshots import capture_snapshot
+    snapshot = capture_snapshot(project_root, settings)
+    results = run_evaluation(cases, settings["llm"], mode=args.mode, output_path=output_path,
+                             transport=args.transport, data_snapshot=snapshot)
     print(f"Saved {len(results)} results to {output_path}")
 
 

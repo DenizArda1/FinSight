@@ -4,7 +4,7 @@ from copy import deepcopy
 from time import perf_counter
 import asyncio
 
-from src.mcp.client import call_mcp_tool
+from src.mcp.client import MCPToolError, call_mcp_tool
 from src.llm.client import send_chat_request
 from src.tools.agentic_tools import TOOL_SCHEMAS
 from src.tools.dispatcher import execute_tool
@@ -30,6 +30,9 @@ async def run_agent_async(question, llm_config, max_steps=6, max_tool_calls=10, 
         trace = []
     if not isinstance(trace, list) or trace:
         raise ValueError("Trace must be an empty list for a new run")
+    if mcp_client is not None:
+        trace.append({"type": "tool_discovery", "transport": "mcp", "status": "completed",
+                      "tools": deepcopy(available_tools)})
 
     started = perf_counter()
     messages = [
@@ -138,7 +141,7 @@ async def run_agent_async(question, llm_config, max_steps=6, max_tool_calls=10, 
                     }
                 }
                 event["status"] = "error"
-                if not isinstance(error, (ValueError, TypeError, FileNotFoundError)):
+                if not isinstance(error, (ValueError, TypeError, FileNotFoundError, MCPToolError)):
                     event.update({"result": result, "elapsed_seconds": perf_counter() - tool_started})
                     trace.append(event)
                     raise

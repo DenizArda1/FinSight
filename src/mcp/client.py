@@ -4,6 +4,11 @@ from pathlib import Path
 
 from mcp import Client, StdioServerParameters
 
+
+class MCPToolError(RuntimeError):
+    """A tool returned an error result over MCP."""
+
+
 async def load_mcp_tool_schemas(client: Client) -> list[dict]:
     schemas = []
     cursor = None
@@ -39,10 +44,10 @@ async def call_mcp_tool(client: Client, name: str,arguments: dict) -> dict:
         error_text = "\n".join(
             item.text for item in result.content if item.type == "text"
         )
-        raise RuntimeError(f"MCP tool '{name}' failed: {error_text or 'Unknown error'}")
+        raise MCPToolError(f"MCP tool '{name}' failed: {error_text or 'Unknown error'}")
 
     if not isinstance(result.structured_content, dict):
-        raise ValueError(f"MCP tool '{name}' did not return a structured object")
+        raise RuntimeError(f"MCP tool '{name}' did not return a structured object")
 
     return result.structured_content
 

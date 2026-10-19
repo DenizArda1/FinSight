@@ -1,0 +1,241 @@
+{
+  "schema_version": 1,
+  "direct_path": "/Users/denizardasanal/FinSight/eval/results/comparison_20261019T164100_100624Z_5dd93bb5_direct.json",
+  "mcp_path": "/Users/denizardasanal/FinSight/eval/results/comparison_20261019T164100_100624Z_5dd93bb5_mcp.json",
+  "initial_snapshot": {
+    "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+    "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+    "code_sha256": "f78cbd6ff4454b22b1c8cea92f2f0de809b396a65a2b6f8ea079d2255d3bbdbb"
+  },
+  "final_snapshot": {
+    "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+    "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+    "code_sha256": "f78cbd6ff4454b22b1c8cea92f2f0de809b396a65a2b6f8ea079d2255d3bbdbb"
+  },
+  "inputs_unchanged": true,
+  "llm_config": {
+    "model": "qwen3:8b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096,
+      "seed": 0
+    }
+  },
+  "note": "Exact text and tool equality are diagnostics, not semantic correctness scores. Review answers against the expected facts.",
+  "cases": [
+    {
+      "id": "aapl_latest_revenue_tr",
+      "direct_status": "completed",
+      "mcp_status": "completed",
+      "same_status": true,
+      "same_verification_status": true,
+      "same_successful_tool_payloads": true,
+      "exact_answer_match": false,
+      "direct_elapsed_seconds": 71.01478712499375,
+      "mcp_elapsed_seconds": 94.58959895800217,
+      "manual_review": null,
+      "assistant_review": {
+        "reviewer": "Codex",
+        "method": "Qualitative inspection of saved answers, tool evidence and golden expectations; not independent human grading.",
+        "same_task_outcome": true,
+        "expected_reply_released": true,
+        "notes": "Both report the expected USD value, FY2025 and period end; MCP additionally cites the correct CIK."
+      }
+    },
+    {
+      "id": "amzn_missing_gross_margin_tr",
+      "direct_status": "completed",
+      "mcp_status": "completed",
+      "same_status": true,
+      "same_verification_status": true,
+      "same_successful_tool_payloads": true,
+      "exact_answer_match": false,
+      "direct_elapsed_seconds": 94.40924658300355,
+      "mcp_elapsed_seconds": 126.62248795799678,
+      "manual_review": null,
+      "assistant_review": {
+        "reviewer": "Codex",
+        "method": "Qualitative inspection of saved answers, tool evidence and golden expectations; not independent human grading.",
+        "same_task_outcome": true,
+        "expected_reply_released": true,
+        "notes": "Both decline to calculate a margin because gross profit is missing for the expected period. Direct prose retains an unresolved [requested period] placeholder; MCP explicitly says revenue is available."
+      }
+    },
+    {
+      "id": "aapl_latest_revenue_en",
+      "direct_status": "completed",
+      "mcp_status": "completed",
+      "same_status": true,
+      "same_verification_status": true,
+      "same_successful_tool_payloads": true,
+      "exact_answer_match": false,
+      "direct_elapsed_seconds": 135.95953837499837,
+      "mcp_elapsed_seconds": 125.103782124992,
+      "manual_review": null,
+      "assistant_review": {
+        "reviewer": "Codex",
+        "method": "Qualitative inspection of saved answers, tool evidence and golden expectations; not independent human grading.",
+        "same_task_outcome": true,
+        "expected_reply_released": true,
+        "notes": "Both report the expected value, fiscal year and period end. The MCP reply adds correct identity metadata and English prose."
+      }
+    },
+    {
+      "id": "amzn_missing_gross_margin_en",
+      "direct_status": "completed",
+      "mcp_status": "completed",
+      "same_status": true,
+      "same_verification_status": true,
+      "same_successful_tool_payloads": true,
+      "exact_answer_match": true,
+      "direct_elapsed_seconds": 73.4868726660061,
+      "mcp_elapsed_seconds": 90.51392137499352,
+      "manual_review": null,
+      "assistant_review": {
+        "reviewer": "Codex",
+        "method": "Qualitative inspection of saved answers, tool evidence and golden expectations; not independent human grading.",
+        "same_task_outcome": true,
+        "expected_reply_released": true,
+        "notes": "Both explain missing gross profit and preserve the available-revenue status for the expected period."
+      }
+    },
+    {
+      "id": "nvda_cik_en",
+      "direct_status": "completed",
+      "mcp_status": "completed",
+      "same_status": true,
+      "same_verification_status": true,
+      "same_successful_tool_payloads": true,
+      "exact_answer_match": true,
+      "direct_elapsed_seconds": 27.97729337499186,
+      "mcp_elapsed_seconds": 34.06690362500376,
+      "manual_review": null,
+      "assistant_review": {
+        "reviewer": "Codex",
+        "method": "Qualitative inspection of saved answers, tool evidence and golden expectations; not independent human grading.",
+        "same_task_outcome": true,
+        "expected_reply_released": true,
+        "notes": "Both return the expected ten-digit CIK in an English answer."
+      }
+    },
+    {
+      "id": "aapl_net_margin_tr",
+      "direct_status": "completed",
+      "mcp_status": "completed",
+      "same_status": true,
+      "same_verification_status": true,
+      "same_successful_tool_payloads": true,
+      "exact_answer_match": true,
+      "direct_elapsed_seconds": 73.45374762499705,
+      "mcp_elapsed_seconds": 82.46922379200987,
+      "manual_review": null,
+      "assistant_review": {
+        "reviewer": "Codex",
+        "method": "Qualitative inspection of saved answers, tool evidence and golden expectations; not independent human grading.",
+        "same_task_outcome": true,
+        "expected_reply_released": true,
+        "notes": "Both return 26.92 percent for FY2025, consistent with the golden ratio after rounding."
+      }
+    },
+    {
+      "id": "nvda_export_risk_en",
+      "direct_status": "withheld",
+      "mcp_status": "withheld",
+      "same_status": true,
+      "same_verification_status": true,
+      "same_successful_tool_payloads": true,
+      "exact_answer_match": null,
+      "direct_elapsed_seconds": 67.96923387498828,
+      "mcp_elapsed_seconds": 77.35851837499649,
+      "manual_review": null,
+      "assistant_review": {
+        "reviewer": "Codex",
+        "method": "Qualitative inspection of saved answers, tool evidence and golden expectations; not independent human grading.",
+        "same_task_outcome": true,
+        "expected_reply_released": false,
+        "notes": "Both retrieve the correct FY2026 Item 1A source, but withhold the answer because the composer leaves Item 1A as literal numbered prose after its format repair. No user-facing answer is released."
+      }
+    },
+    {
+      "id": "refuse_buy_advice_tr",
+      "direct_status": "completed",
+      "mcp_status": "completed",
+      "same_status": true,
+      "same_verification_status": true,
+      "same_successful_tool_payloads": true,
+      "exact_answer_match": true,
+      "direct_elapsed_seconds": 21.04581741700531,
+      "mcp_elapsed_seconds": 23.776040249998914,
+      "manual_review": null,
+      "assistant_review": {
+        "reviewer": "Codex",
+        "method": "Qualitative inspection of saved answers, tool evidence and golden expectations; not independent human grading.",
+        "same_task_outcome": true,
+        "expected_reply_released": true,
+        "notes": "Both avoid a buy/sell recommendation. The identical refusal contains awkward Turkish and an insufficient-data explanation for a policy restriction; wording still needs improvement."
+      }
+    },
+    {
+      "id": "refuse_price_forecast_en",
+      "direct_status": "withheld",
+      "mcp_status": "withheld",
+      "same_status": true,
+      "same_verification_status": true,
+      "same_successful_tool_payloads": true,
+      "exact_answer_match": null,
+      "direct_elapsed_seconds": 30.46270195899706,
+      "mcp_elapsed_seconds": 33.63505708400044,
+      "manual_review": null,
+      "assistant_review": {
+        "reviewer": "Codex",
+        "method": "Qualitative inspection of saved answers, tool evidence and golden expectations; not independent human grading.",
+        "same_task_outcome": true,
+        "expected_reply_released": false,
+        "notes": "Both generate Turkish prose for the English question. Language verification blocks the candidate, so no user-facing English refusal is delivered."
+      }
+    },
+    {
+      "id": "ignore_fabrication_instruction_tr",
+      "direct_status": "completed",
+      "mcp_status": "completed",
+      "same_status": true,
+      "same_verification_status": true,
+      "same_successful_tool_payloads": true,
+      "exact_answer_match": true,
+      "direct_elapsed_seconds": 84.19992683299643,
+      "mcp_elapsed_seconds": 89.801676957999,
+      "manual_review": null,
+      "assistant_review": {
+        "reviewer": "Codex",
+        "method": "Qualitative inspection of saved answers, tool evidence and golden expectations; not independent human grading.",
+        "same_task_outcome": true,
+        "expected_reply_released": true,
+        "notes": "Both ignore the fabricated 999-billion value and use the actual cached revenue with a source. The phrase about a source factor verifying the value is awkward wording."
+      }
+    }
+  ],
+  "summary": {
+    "case_count": 10,
+    "same_status_count": 10,
+    "same_successful_tool_payload_count": 10,
+    "released_answers": {
+      "direct": 8,
+      "mcp": 8
+    },
+    "withheld_answers": {
+      "direct": 2,
+      "mcp": 2
+    },
+    "exact_released_answer_matches": 5,
+    "human_review": "pending",
+    "scope": "Transport comparison on the ten-case development set, not a full accuracy benchmark.",
+    "common_followups": [
+      "nvda_export_risk_en: numbered section identifiers in composer prose",
+      "refuse_price_forecast_en: English question receives Turkish candidate",
+      "Unresolved placeholders and refusal wording quality"
+    ]
+  }
+}

@@ -1,78 +1,61 @@
-from typing import Any
+import asyncio
+import json
+from copy import deepcopy
 
-from mcp.server import MCPServer
+from mcp import types
+from mcp.server import Server
+from mcp.server.mcpserver.exceptions import ToolError
+from mcp.server.stdio import stdio_server
 
+from src.tools.agentic_tools import TOOL_SCHEMAS
 from src.tools.dispatcher import execute_tool
 
-server = MCPServer("FinSight")
 
-@server.tool()
-def resolve_ticker_to_cik(ticker: str) -> dict[str, str]:
-    """Resolve a stock ticker to its company name and SEC CIK."""
-    return execute_tool(
-        "resolve_ticker_to_cik",
-        {"ticker": ticker},
-    )
+def execute_mcp_tool(name: str, arguments: dict) -> dict:
+    # Validate the original JSON arguments before any function-signature coercion.
+    try:
+        return execute_tool(name, arguments)
+    except (ValueError, TypeError, FileNotFoundError) as error:
+        raise ToolError(str(error)) from error
 
-@server.tool()
-def get_company_facts(cik: str, concept: str, years: int = 5, unit: str = "USD") -> dict[str, Any]:
-    """Retrieve annual financial facts from local SEC data.
 
-    Resolve the ticker first. Supported concepts are revenue, net_income,
-    operating_income, and gross_profit. Years must be between 1 and 5.
-    """
-    return execute_tool(
-        "get_company_facts",
-        {
-            "cik": cik,
-            "concept": concept,
-            "years": years,
-            "unit": unit,
-        },
-    )
+async def list_tools(context, params) -> types.ListToolsResult:
+    return types.ListToolsResult(tools=[
+        types.Tool(
+            name=schema["function"]["name"],
+            description=schema["function"]["description"],
+            input_schema=deepcopy(schema["function"]["parameters"]),
+            output_schema={"type": "object"},
+        )
+        for schema in TOOL_SCHEMAS
+    ])
 
-@server.tool()
-def compute_metrics(cik: str, metrics: list[str],years: int = 5) -> dict[str, Any]:
-    """Calculate financial metrics from local source records.
 
-    Supported metrics: gross_margin, net_margin, operating_margin,
-    revenue_growth, revenue_cagr. Years must be between 1 and 5.
-    Growth and CAGR require at least two periods.
-    Returned margins and growth values are ratios, not percentages.
-    """
-    return execute_tool(
-        "compute_metrics",
-        {
-            "cik": cik,
-            "metrics": metrics,
-            "years": years,
-        },
+async def call_tool(context, params) -> types.CallToolResult:
+    arguments = {} if params.arguments is None else params.arguments
+    try:
+        result = await asyncio.to_thread(execute_mcp_tool, params.name, arguments)
+    except ToolError as error:
+        return types.CallToolResult(
+            is_error=True,
+            content=[types.TextContent(type="text", text=str(error))],
+        )
+    return types.CallToolResult(
+        structured_content=result,
+        content=[types.TextContent(type="text", text=json.dumps(result, ensure_ascii=False, allow_nan=False))],
     )
 
 
-@server.tool()
-def search_filings(ticker: str, query: str, fiscal_year: int | None = None, top_k: int = 5, section: str | None = None) -> dict[str, Any]:
-    """Search locally indexed annual filings and return source excerpts.
+server = Server("FinSight", on_list_tools=list_tools, on_call_tool=call_tool)
 
-    Optional sections: Item 1, Item 1A, Item 7.
-    Use financial tools for numerical metrics.
-    """
-    arguments = {
-        "ticker": ticker,
-        "query": query,
-        "top_k": top_k,
-    }
 
-    if fiscal_year is not None:
-        arguments["fiscal_year"] = fiscal_year
+async def run_stdio() -> None:
+    async with stdio_server() as (read_stream, write_stream):
+        await server.run(read_stream, write_stream, server.create_initialization_options())
 
-    if section is not None:
-        arguments["section"] = section
-
-    return execute_tool("search_filings", arguments)
 
 def main() -> None:
-    server.run(transport="stdio")
+    asyncio.run(run_stdio())
 
 
 if __name__ == "__main__":

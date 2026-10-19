@@ -3,7 +3,9 @@
 Run from the repository root with the local Ollama service available:
 
 ```sh
-.venv/bin/python -m eval.run_eval --mode single_agent
+.venv/bin/python -m eval.run_eval --mode single_agent --transport direct
+.venv/bin/python -m eval.run_eval --mode single_agent --transport mcp
+.venv/bin/python -m eval.compare_transports
 .venv/bin/python -m eval.run_eval --mode baseline
 .venv/bin/python -m eval.run_eval --mode single_agent --case aapl_latest_revenue_tr
 .venv/bin/python -m unittest discover -s tests
@@ -88,6 +90,73 @@ Each run receives a unique filename and is checkpointed after each question.
 An existing output file is rejected. Ctrl+C preserves completed cases; the in-flight
 case is not guaranteed to be saved. Historical results without traces are marked
 explicitly; their traces and model settings are never reconstructed from guesses.
+
+## MCP transport and controlled comparisons
+
+The application CLI and MCP evaluation share `src/agents/runtime.py`.
+`--transport direct` uses the in-process dispatcher; `--transport mcp` launches the
+same stdio server used by the CLI, discovers its tools, and executes through the
+MCP client. Baseline runs have `transport=none`; requesting MCP for a tool-free
+baseline is rejected. Old eval artifacts without a transport field must not be
+presented as evidence about the current MCP path.
+
+`eval.compare_transports` runs the current golden set on both paths with identical
+settings and a fixed seed (zero unless already configured). It checkpoints each
+path separately and saves a comparison artifact. Data, configuration, source code,
+and logical Chroma contents (IDs, documents, metadata, vectors) are fingerprinted;
+the comparison checks the snapshots again after both runs. No SEC data is downloaded.
+The source fingerprint includes raw/prepared data and YAML configuration, not `.env`.
+The code fingerprint covers `src/`; model tag digests and token usage remain future work.
+
+Comparison columns distinguish status, verifier status, exact answer text, and
+successful tool payload equality. They are diagnostics, not independent correctness
+scores. Both paths can agree on a wrong answer. Manual reviews must use the golden
+expectations and actual source records; a false rejection must not be counted as a
+successful factual answer. Fixed seeds reduce variance but do not prove determinism.
+The paired runner executes direct first, then MCP. Timings include model loading,
+caching, and MCP startup effects; this fixed-order run is not a controlled latency
+benchmark between transports.
+`exact_answer_match` is null when either path withholds an answer; two null answers
+must not be counted as matching answer text.
+
+The MCP server publishes the canonical `TOOL_SCHEMAS` without regenerating them
+from Python signatures. Its SDK `Server` callbacks pass raw argument dictionaries
+to the same dispatcher as direct execution. This avoids automatic type coercion
+and silent removal of extra arguments. Tests cover bool/string years, invalid
+bounds/enums, extra fields, and a real stdio connection. The tested SDK is pinned
+to mcp 2.3.0 in requirements.txt.
+
+The fifth tool, `get_filing_section(ticker, year, section)`, reads the preparation
+manifest and existing `text.json`/`sections.json`. It returns the complete cleaned
+section with original 10-K metadata; it does not parse, embed, truncate, or download.
+Selection uses reported fiscal year, not the year of the report or filing date.
+Missing, ambiguous, or inconsistent prepared data produces an explicit error.
+Long full sections can exceed a small model's context window; targeted questions
+should use `search_filings`. Full-section source metadata participates in the
+existing answer verification and source footer.
+
+### Paired development run, 2026-10-19
+
+Artifacts: `results/comparison_20261019T164100_100624Z_5dd93bb5.json` and its two
+referenced raw result files. All ten cases had equal successful tool payloads and
+equal final status between direct and MCP. Initial/final data, index and source-code
+fingerprints matched. Each path released eight answers and withheld two; five of
+the eight released answers were textually identical. This is transport evidence,
+not a claim that ten questions were answered correctly.
+
+Both paths retrieved the correct NVIDIA FY2026 risk source but failed to render
+the answer because literal `Item 1A` remained in composer prose. Both paths also
+generated a Turkish price-forecast refusal for an English question; the language
+check withheld it. These are shared Writer/Critic regression cases for subsequent
+orchestration work. The direct Turkish missing-margin reply retained an unresolved
+placeholder; refusal and verification wording also need improvement.
+
+`assistant_review` contains Codex's qualitative artifact review. `manual_review`
+remains null: independent human grading and the broader golden set are still pending.
+The full 236-test suite passed before the final comparison-report change; its four
+comparison tests then passed, including the newly added null-answer regression.
+All 60 prepared sections were additionally checked against their source offsets
+and accession metadata without reparsing or redownloading data.
 
 ## Limits of the checks
 
