@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import patch
 
 import eval.run_eval as evaluation
-from src.cli import main as cli_main
+from src.cli import main as cli_main, run_mcp_agent
 from src.utils.utils import load_json, save_json, save_yaml
 
 
@@ -107,7 +107,7 @@ class EvaluationTests(unittest.TestCase):
             self.assertEqual(load_json(old), {"review": "Keep"})
 
     @patch("src.cli.load_yaml", return_value={"llm": {}})
-    @patch("src.cli.run_agent")
+    @patch("src.cli.run_mcp_agent")
     def test_user_cli_does_not_print_rejected_candidate(self, agent, config):
         agent.return_value = {"answer": None, "candidate": "Unsupported claim",
                               "verification": {"status": "failed", "issues": ["Wrong form."]}}
@@ -121,7 +121,7 @@ class EvaluationTests(unittest.TestCase):
         self.assertIn("Answer withheld", errors.getvalue())
 
     @patch("src.cli.load_yaml", return_value={"llm": {}})
-    @patch("src.cli.run_agent", side_effect=RuntimeError("Tool budget reached"))
+    @patch("src.cli.run_mcp_agent", side_effect=RuntimeError("Tool budget reached"))
     def test_cli_execution_failure_is_reported_without_an_answer(self, agent, config):
         output, errors = StringIO(), StringIO()
         with patch("sys.argv", ["cli", "Question"]), redirect_stdout(output), redirect_stderr(errors):
@@ -130,6 +130,67 @@ class EvaluationTests(unittest.TestCase):
         self.assertEqual(raised.exception.code, 1)
         self.assertEqual(output.getvalue(), "")
         self.assertIn("Request failed", errors.getvalue())
+
+    @patch("src.cli.load_yaml", return_value={"llm": {}})
+    @patch("src.cli.run_mcp_agent", side_effect=ExceptionGroup(
+        "MCP connection failed", [ExceptionGroup("Task failed", [OSError("Server unavailable")])],
+    ))
+    def test_user_cli_reports_grouped_connection_failure_without_an_answer(self, agent, config):
+        output, errors = StringIO(), StringIO()
+        with patch("sys.argv", ["cli", "Question"]), redirect_stdout(output), redirect_stderr(errors):
+            with self.assertRaises(SystemExit) as raised:
+                cli_main()
+        self.assertEqual(raised.exception.code, 1)
+        self.assertEqual(output.getvalue(), "")
+        self.assertIn("Request failed", errors.getvalue())
+        self.assertIn("OSError: Server unavailable", errors.getvalue())
+
+
+class CLIConnectionTests(unittest.IsolatedAsyncioTestCase):
+    @patch("src.cli.load_mcp_tool_schemas")
+    @patch("src.cli.Client")
+    @patch("src.cli.run_agent_async")
+    async def test_connection_is_passed_to_agent_and_closed_after_answer(self, agent, client_class, load_schemas):
+        connection = client_class.return_value
+        client = connection.__aenter__.return_value
+        agent.return_value = {"answer": "Verified answer"}
+        load_schemas.return_value = [{"type": "function", "function": {"name": "resolve_ticker_to_cik"}}]
+
+        result = await run_mcp_agent("Question", {"model": "test-model"}, verbose=True)
+
+        agent.assert_awaited_once_with(
+            "Question", {"model": "test-model"}, verbose=True,
+            return_details=True, mcp_client=client, tool_schemas=load_schemas.return_value,
+        )
+        load_schemas.assert_awaited_once_with(client)
+        self.assertEqual(result, agent.return_value)
+        connection.__aexit__.assert_awaited_once_with(None, None, None)
+
+    @patch("src.cli.load_mcp_tool_schemas", return_value=[])
+    @patch("src.cli.Client")
+    @patch("src.cli.run_agent_async", side_effect=RuntimeError("Model unavailable"))
+    async def test_connection_is_closed_when_agent_fails(self, agent, client_class, load_schemas):
+        connection = client_class.return_value
+        connection.__aexit__.return_value = False
+
+        with self.assertRaisesRegex(RuntimeError, "Model unavailable"):
+            await run_mcp_agent("Question", {})
+
+        connection.__aexit__.assert_awaited_once()
+        self.assertIs(connection.__aexit__.await_args.args[0], RuntimeError)
+
+    @patch("src.cli.load_mcp_tool_schemas", side_effect=ValueError("No tools exposed"))
+    @patch("src.cli.Client")
+    @patch("src.cli.run_agent_async")
+    async def test_discovery_failure_closes_connection_before_agent_runs(self, agent, client_class, load_schemas):
+        connection = client_class.return_value
+        connection.__aexit__.return_value = False
+
+        with self.assertRaisesRegex(ValueError, "No tools exposed"):
+            await run_mcp_agent("Question", {})
+
+        agent.assert_not_awaited()
+        connection.__aexit__.assert_awaited_once()
 
 
 if __name__ == "__main__":

@@ -62,16 +62,21 @@ def build_fact_catalog(evidence):
         source_id, result = source["source_id"], source["result"]
         if not isinstance(result, dict):
             continue
+
         records = []
         if source["tool"] == "resolve_ticker_to_cik":
             records.append(("", result))
+
         for index, record in enumerate(result.get("records", [])):
             records.append((f"records/{index}", record))
+
         for metric, rows in result.get("results", {}).items():
             for index, record in enumerate(rows):
                 records.append((f"results/{metric}/{index}", record))
+
         for index, match in enumerate(result.get("matches", [])):
             records.append((f"matches/{index}/metadata", match["metadata"]))
+
         for path, record in records:
             identifier = f"{source_id}:{path}" if path else f"{source_id}:company"
             template = record_template(source_id, path, record)
@@ -118,16 +123,19 @@ def composition_schema(catalog):
 def compose_template(payload, catalog):
     if not isinstance(payload, dict) or not isinstance(payload.get("text"), str):
         raise ValueError("Composition must include text")
+
     facts = payload.get("facts")
     if not isinstance(facts, list) or any(not isinstance(key, str) or key not in catalog for key in facts):
         raise ValueError("Composition must select existing fact IDs")
     if len(set(facts)) != len(facts):
         raise ValueError("Selected fact IDs must be unique")
+
     missing = {key for key, entry in catalog.items() if entry.get("availability") == "missing"}
     if payload.get("kind") == "insufficient_data" and missing and not missing.intersection(facts):
         raise ValueError("An insufficient-data answer must select a missing-data fact ID")
     if "{{" in payload["text"] or "}}" in payload["text"]:
         raise ValueError("Prose cannot insert arbitrary source fields; select fact IDs instead")
+
     prose = payload["text"].strip()
     # Accept an exact catalog ID as a citation alias, never an invented ID.
     for identifier, entry in catalog.items():
@@ -195,6 +203,7 @@ def build_agent_evidence(trace):
 def resolve_source_field(evidence, source_id, path, percent=False):
     if not 1 <= source_id <= len(evidence):
         raise ValueError(f"Unknown source: {source_id}")
+
     value = evidence[source_id - 1]["result"]
     parts = path.split("/")
     parent = None
@@ -222,7 +231,7 @@ def resolve_source_field(evidence, source_id, path, percent=False):
 
 
 def render_agent_template(payload, evidence):
-    """Insert values from exact source paths; never evaluate model-generated code."""
+    #Insert values from exact source paths; never evaluate model-generated code
     if not isinstance(payload, dict) or payload.get("kind") not in ANSWER_KINDS:
         raise ValueError("Answer must contain a supported kind")
     template = payload.get("template")
@@ -332,10 +341,12 @@ def finalize_agent_answer(question, draft, trace, llm_config):
         verdict = parse_agent_verdict(request_answer_check(
             messages, llm_config, trace, "verification", VERIFICATION_SCHEMA,
         ))
+
         result["verification"] = {
             **verdict, "status": "passed" if verdict["supported"] else "failed",
             "deterministic_fields": "passed", "method": "source_fields_and_llm_judge",
         }
+        
         if verdict["supported"]:
             result["answer"] = candidate
     except Exception as error:

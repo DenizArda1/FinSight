@@ -1,9 +1,10 @@
+import asyncio
 from copy import deepcopy
 import json
 import unittest
-from unittest.mock import call, patch
+from unittest.mock import AsyncMock, call, patch
 
-from src.agents.single_agent import run_agent
+from src.agents.single_agent import run_agent, run_agent_async
 from src.tools.agentic_tools import TOOL_SCHEMAS
 
 
@@ -40,6 +41,61 @@ class SingleAgentTests(unittest.TestCase):
         self.assertEqual(run_agent("Which company?", self.config), "Please specify a company.")
         self.chat.assert_called_once()
         self.tool.assert_not_called()
+
+    @patch("src.agents.single_agent.call_mcp_tool", new_callable=AsyncMock)
+    def test_mcp_results_reach_trace_and_final_verification(self, mcp_tool):
+        client = object()
+        company = {"ticker": "AAPL", "cik": "0000320193"}
+        facts = {"records": [{"value": 123, "source_url": "https://example.com/filing"}]}
+        self.chat.side_effect = [
+            {"role": "assistant", "tool_calls": [
+                {"function": {"name": "resolve_ticker_to_cik", "arguments": {"ticker": "AAPL"}}},
+                {"function": {"name": "get_company_facts", "arguments": {
+                    "cik": "0000320193", "concept": "revenue",
+                }}},
+            ]},
+            {"role": "assistant", "content": "Draft answer."},
+        ]
+        mcp_tool.side_effect = [company, facts]
+
+        result = asyncio.run(run_agent_async(
+            "Apple revenue?", self.config, mcp_client=client, return_details=True,
+        ))
+
+        self.tool.assert_not_called()
+        self.assertEqual(mcp_tool.await_args_list, [
+            call(client, "resolve_ticker_to_cik", {"ticker": "AAPL"}),
+            call(client, "get_company_facts", {"cik": "0000320193", "concept": "revenue"}),
+        ])
+        events = [event for event in result["trace"] if event["type"] == "tool"]
+        self.assertEqual([event["result"] for event in events], [company, facts])
+        self.finalizer.assert_called_once()
+        self.assertEqual(self.finalizer.call_args.args[2], result["trace"])
+
+    @patch("src.agents.single_agent.call_mcp_tool", new_callable=AsyncMock)
+    def test_mcp_path_blocks_unresolved_cik_and_withholds_rejected_answer(self, mcp_tool):
+        self.chat.side_effect = [
+            {"role": "assistant", "tool_calls": [{"function": {
+                "name": "get_company_facts",
+                "arguments": {"cik": "0000320193", "concept": "revenue"},
+            }}]},
+            {"role": "assistant", "content": "Unsupported answer."},
+        ]
+        self.finalizer.side_effect = None
+        self.finalizer.return_value = {
+            "answer": None, "verification": {"status": "failed"},
+        }
+
+        result = asyncio.run(run_agent_async(
+            "Apple revenue?", self.config, mcp_client=object(), return_details=True,
+        ))
+
+        mcp_tool.assert_not_awaited()
+        self.tool.assert_not_called()
+        self.assertIsNone(result["answer"])
+        self.assertEqual(result["status"], "withheld")
+        event = next(event for event in result["trace"] if event["type"] == "tool")
+        self.assertIn("Resolve the ticker", event["result"]["error"]["message"])
 
     def test_multiple_tools_are_run_before_next_model_request(self):
         tool_message = {

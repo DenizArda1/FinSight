@@ -2,7 +2,9 @@ import json
 import sys
 from copy import deepcopy
 from time import perf_counter
+import asyncio
 
+from src.mcp.client import call_mcp_tool
 from src.llm.client import send_chat_request
 from src.tools.agentic_tools import TOOL_SCHEMAS
 from src.tools.dispatcher import execute_tool
@@ -15,8 +17,9 @@ class AnswerVerificationError(RuntimeError):
         self.result = result
 
 
-def run_agent(question, llm_config, max_steps=6, max_tool_calls=10, verbose=False,return_details=False, trace=None):
+async def run_agent_async(question, llm_config, max_steps=6, max_tool_calls=10, verbose=False,return_details=False, trace=None,mcp_client=None,tool_schemas=None):
 
+    available_tools = (TOOL_SCHEMAS if tool_schemas is None else tool_schemas)
     if not isinstance(question, str) or not question.strip():
         raise ValueError("Question must be a non-empty string")
     if type(max_steps) is not int or max_steps <= 0:
@@ -51,7 +54,9 @@ def run_agent(question, llm_config, max_steps=6, max_tool_calls=10, verbose=Fals
     for step in range(1, max_steps + 1):
         request_started = perf_counter()
         try:
-            message = send_chat_request(messages, llm_config, tools=TOOL_SCHEMAS)
+            message = await asyncio.to_thread(
+                send_chat_request, messages, llm_config, tools=available_tools
+            )
         except Exception as error:
             trace.append({"type": "model", "step": step, "status": "error",
                           "error": {"type": type(error).__name__, "message": str(error)},
@@ -71,7 +76,9 @@ def run_agent(question, llm_config, max_steps=6, max_tool_calls=10, verbose=Fals
                 raise ValueError("Final answer must be a non-empty string")
             if verbose:
                 print("Composing and verifying the final answer...", file=sys.stderr)
-            result = finalize_agent_answer(question, content, trace, llm_config)
+            result = await asyncio.to_thread(
+                finalize_agent_answer, question, content, trace, llm_config
+            )
             result.update({
                 "trace": deepcopy(trace), "tool_call_count": tool_call_count,
                 "tool_selection_steps": step,
@@ -113,7 +120,10 @@ def run_agent(question, llm_config, max_steps=6, max_tool_calls=10, verbose=Fals
                             "Resolve the ticker with resolve_ticker_to_cik before requesting financial data. "
                             "The CIK must match a successful company resolution in this run."
                         )
-                result = execute_tool(name, arguments)
+                if mcp_client is None:
+                    result = execute_tool(name, arguments)
+                else:
+                    result = await call_mcp_tool(mcp_client, name, arguments)
                 json.dumps(result, ensure_ascii=False, allow_nan=False)
                 if isinstance(result, dict):
                     company = result if name == "resolve_ticker_to_cik" else result.get("company", {})
@@ -146,3 +156,16 @@ def run_agent(question, llm_config, max_steps=6, max_tool_calls=10, verbose=Fals
             })
 
     raise RuntimeError("Agent reached the maximum number of steps")
+
+def run_agent(question,llm_config, max_steps=6, max_tool_calls=10, verbose=False,return_details=False,trace=None):
+    return asyncio.run(
+        run_agent_async(
+            question=question,
+            llm_config=llm_config,
+            max_steps=max_steps,
+            max_tool_calls=max_tool_calls,
+            verbose=verbose,
+            return_details=return_details,
+            trace=trace,
+        )
+    )
