@@ -1,0 +1,86 @@
+{
+  "llm_config": {
+    "model": "qwen3:8b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "cases": [
+    {
+      "question": "Apple'ın yerel verideki en son yıllık gelirini ve mali yılını söyle.",
+      "expected_request_type": "financial",
+      "status": "completed",
+      "plan": {
+        "request_type": "mixed",
+        "tasks": [
+          {
+            "id": "task_1",
+            "agent": "financial_data",
+            "instruction": "Get Apple's latest annual revenue from local financial data sources."
+          },
+          {
+            "id": "task_2",
+            "agent": "filing_rag",
+            "instruction": "Extract Apple's fiscal year information from its latest annual report filing."
+          }
+        ]
+      },
+      "classification_matches": false,
+      "elapsed_seconds": 13.87
+    },
+    {
+      "question": "Summarize the export restriction risks in NVIDIA's latest available annual report.",
+      "expected_request_type": "filing",
+      "status": "completed",
+      "plan": {
+        "request_type": "filing",
+        "tasks": [
+          {
+            "id": "task_1",
+            "agent": "filing_rag",
+            "instruction": "Retrieve the risk factors section from NVIDIA's latest available annual report (10-K) to identify export restriction risks mentioned in the narrative."
+          }
+        ]
+      },
+      "classification_matches": true,
+      "elapsed_seconds": 7.56
+    },
+    {
+      "question": "Apple'ın yerel verideki en son yıllık gelirini ve en son yıllık raporundaki temel riskleri özetle.",
+      "expected_request_type": "mixed",
+      "status": "completed",
+      "plan": {
+        "request_type": "mixed",
+        "tasks": [
+          {
+            "id": "task_1",
+            "agent": "financial_data",
+            "instruction": "Retrieve Apple's latest annual revenue figure from its most recent fiscal year financial statements."
+          },
+          {
+            "id": "task_2",
+            "agent": "filing_rag",
+            "instruction": "Extract and summarize the key risks identified in Apple's most recent annual report (10-K) under the 'Risk Factors' section."
+          }
+        ]
+      },
+      "classification_matches": true,
+      "elapsed_seconds": 11.3
+    },
+    {
+      "question": "Should I buy Amazon stock today? Give me a price target for next year.",
+      "expected_request_type": "out_of_scope",
+      "status": "completed",
+      "plan": {
+        "request_type": "out_of_scope",
+        "tasks": []
+      },
+      "classification_matches": true,
+      "elapsed_seconds": 5.43
+    }
+  ]
+}

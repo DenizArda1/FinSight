@@ -1,0 +1,83 @@
+{
+  "llm_config": {
+    "model": "qwen3:8b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "previous_run": "eval/diagnostics/planner_live_20261020T150739_826245Z.json",
+  "change": "Clarified financial record metadata routing in planner prompt.",
+  "cases": [
+    {
+      "question": "Apple'ın yerel verideki en son yıllık gelirini ve mali yılını söyle.",
+      "expected_request_type": "financial",
+      "status": "completed",
+      "plan": {
+        "request_type": "financial",
+        "tasks": [
+          {
+            "id": "task_1",
+            "agent": "financial_data",
+            "instruction": "Get Apple's latest annual revenue and fiscal year. Include the company name, financial metric (revenue), fiscal year, and ensure the latest available data is retrieved."
+          }
+        ]
+      },
+      "classification_matches": true,
+      "elapsed_seconds": 8.6
+    },
+    {
+      "question": "Summarize the export restriction risks in NVIDIA's latest available annual report.",
+      "expected_request_type": "filing",
+      "status": "completed",
+      "plan": {
+        "request_type": "filing",
+        "tasks": [
+          {
+            "id": "task_1",
+            "agent": "filing_rag",
+            "instruction": "Retrieve the latest available annual report for NVIDIA, focusing on sections discussing export restriction risks, such as risk factors or regulatory compliance sections. Summarize the identified risks related to export restrictions."
+          }
+        ]
+      },
+      "classification_matches": true,
+      "elapsed_seconds": 9.68
+    },
+    {
+      "question": "Apple'ın yerel verideki en son yıllık gelirini ve en son yıllık raporundaki temel riskleri özetle.",
+      "expected_request_type": "mixed",
+      "status": "completed",
+      "plan": {
+        "request_type": "mixed",
+        "tasks": [
+          {
+            "id": "task_1",
+            "agent": "financial_data",
+            "instruction": "Retrieve Apple's latest annual revenue from local financial data sources, including the fiscal year, period end date, and source metadata."
+          },
+          {
+            "id": "task_2",
+            "agent": "filing_rag",
+            "instruction": "Extract and summarize the main risk factors from Apple's latest annual report, focusing on sections like 'Risk Factors' or 'Management's Discussion and Analysis'."
+          }
+        ]
+      },
+      "classification_matches": true,
+      "elapsed_seconds": 14.13
+    },
+    {
+      "question": "Should I buy Amazon stock today? Give me a price target for next year.",
+      "expected_request_type": "out_of_scope",
+      "status": "completed",
+      "plan": {
+        "request_type": "out_of_scope",
+        "tasks": []
+      },
+      "classification_matches": true,
+      "elapsed_seconds": 7.08
+    }
+  ]
+}

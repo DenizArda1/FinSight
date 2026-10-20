@@ -2,10 +2,13 @@ import inspect
 import json
 import tempfile
 import unittest
+from copy import deepcopy
 from pathlib import Path
 from unittest.mock import patch
 
-from src.tools.agentic_tools import TOOL_FUNCTIONS, TOOL_SCHEMAS
+from src.tools.agentic_tools import (
+    TOOL_FUNCTIONS, TOOL_SCHEMAS, get_agent_tool_schemas,
+)
 from src.tools.dispatcher import execute_tool
 from src.tools.financial_metrics import get_company_facts
 from src.utils.utils import load_yaml, save_json, save_yaml
@@ -154,6 +157,68 @@ class FinancialAgentToolTests(unittest.TestCase):
                 with self.subTest(extra=extra), self.assertRaises(ValueError):
                     execute_tool("search_filings", {"ticker": "AAPL", "query": "Risks", **extra})
             search.assert_not_called()
+
+
+class AgentToolSelectionTests(unittest.TestCase):
+    def test_selects_only_the_tools_for_each_agent_in_discovery_order(self):
+        expected = {
+            "financial_data": [
+                "resolve_ticker_to_cik", "get_company_facts", "compute_metrics",
+            ],
+            "filing_rag": [
+                "resolve_ticker_to_cik", "search_filings", "get_filing_section",
+            ],
+        }
+        for agent_name, names in expected.items():
+            with self.subTest(agent_name=agent_name):
+                selected = get_agent_tool_schemas(agent_name, TOOL_SCHEMAS)
+                self.assertEqual([item["function"]["name"] for item in selected], names)
+                reversed_selection = get_agent_tool_schemas(
+                    agent_name, list(reversed(TOOL_SCHEMAS)),
+                )
+                self.assertEqual(
+                    [item["function"]["name"] for item in reversed_selection],
+                    list(reversed(names)),
+                )
+
+    def test_preserves_discovered_schema_and_does_not_share_mutable_objects(self):
+        discovered = deepcopy(TOOL_SCHEMAS)
+        discovered[0]["function"]["description"] = "Description from MCP"
+        original = deepcopy(discovered)
+        selected = get_agent_tool_schemas("financial_data", discovered)
+        self.assertEqual(selected[0], discovered[0])
+        selected[0]["function"]["description"] = "Changed by caller"
+        selected[0]["function"]["parameters"]["properties"].clear()
+        self.assertEqual(discovered, original)
+
+    def test_rejects_unknown_agents(self):
+        for agent_name in ("unknown", "writer", "", None, []):
+            with self.subTest(agent_name=agent_name):
+                with self.assertRaisesRegex(ValueError, "Unknown agent"):
+                    get_agent_tool_schemas(agent_name, TOOL_SCHEMAS)
+
+    def test_missing_required_tool_is_reported(self):
+        discovered = [
+            schema for schema in TOOL_SCHEMAS
+            if schema["function"]["name"] != "compute_metrics"
+        ]
+        with self.assertRaisesRegex(ValueError, "Missing tools.*compute_metrics"):
+            get_agent_tool_schemas("financial_data", discovered)
+        self.assertEqual(len(get_agent_tool_schemas("filing_rag", discovered)), 3)
+        with self.assertRaisesRegex(ValueError, "Missing tools"):
+            get_agent_tool_schemas("financial_data", [])
+
+    def test_rejects_duplicate_selected_tools(self):
+        discovered = TOOL_SCHEMAS + [deepcopy(TOOL_SCHEMAS[0])]
+        with self.assertRaisesRegex(ValueError, "Duplicate tool schema"):
+            get_agent_tool_schemas("financial_data", discovered)
+
+    def test_rejects_malformed_schema_inputs(self):
+        for schemas in (None, {}, "tools", [None], [{}], [{"function": []}],
+                        [{"function": {"name": None}}], [{"function": {"name": " "}}]):
+            with self.subTest(schemas=schemas):
+                with self.assertRaises(ValueError):
+                    get_agent_tool_schemas("financial_data", schemas)
 
 
 if __name__ == "__main__":
