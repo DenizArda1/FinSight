@@ -248,6 +248,10 @@ def build_specialist_messages(task):
             "Retrieve annual report evidence relevant to the assigned task. "
             "Use search_filings for targeted evidence and get_filing_section "
             "when the full section is explicitly needed. "
+            "For the latest available annual report, call search_filings with latest=true "
+            "and omit fiscal_year. Do not guess a year or use an unfiltered search as proof of recency. "
+            "If you then need the full section, use the fiscal year from selected_report "
+            "in that tool result when calling get_filing_section. "
             "Preserve excerpts and their source metadata. "
         )
 

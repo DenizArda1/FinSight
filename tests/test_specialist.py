@@ -1,9 +1,12 @@
+import json
 import unittest
 from copy import deepcopy
 from unittest.mock import AsyncMock, call, patch
 
-from src.agents.specialist import execute_specialist_tool
+from src.agents.specialist import execute_specialist_tool, run_specialist
 from src.mcp.client import MCPToolError
+from src.tools.agentic_tools import AGENT_TOOL_NAMES, TOOL_SCHEMAS
+from src.verification.agent_answer import build_agent_evidence
 
 
 class SpecialistToolTests(unittest.IsolatedAsyncioTestCase):
@@ -126,6 +129,202 @@ class SpecialistToolTests(unittest.IsolatedAsyncioTestCase):
             await execute_specialist_tool(
                 "financial_data", "get_company_facts", {"cik": self.cik}, self.client, set(),
             )
+        self.call_tool.assert_not_awaited()
+
+
+def model_tool_message(name, arguments):
+    return {
+        "role": "assistant", "content": "",
+        "tool_calls": [{"function": {"name": name, "arguments": arguments}}],
+    }
+
+
+class SpecialistLoopTests(unittest.IsolatedAsyncioTestCase):
+    def setUp(self):
+        chat_patcher = patch("src.agents.specialist.send_chat_request")
+        self.chat = chat_patcher.start()
+        self.addCleanup(chat_patcher.stop)
+        tool_patcher = patch("src.agents.specialist.call_mcp_tool", new_callable=AsyncMock)
+        self.call_tool = tool_patcher.start()
+        self.addCleanup(tool_patcher.stop)
+        self.task = {"id": "task_1", "agent": "financial_data", "instruction": "Retrieve Apple revenue."}
+        self.client = object()
+        self.company = {"ticker": "AAPL", "cik": "0000320193", "name": "Apple Inc."}
+        self.resolve = model_tool_message("resolve_ticker_to_cik", {"ticker": "AAPL"})
+        self.facts = model_tool_message("get_company_facts", {
+            "cik": self.company["cik"], "concept": "revenue", "years": 1,
+        })
+        self.done = {"role": "assistant", "content": "Evidence retrieved."}
+
+    async def test_collects_raw_evidence_and_filters_tools_without_persisting_thinking(self):
+        records = {"records": [{"value": 123, "unit": "USD", "accn": "source-id"}]}
+        self.chat.side_effect = [{**self.resolve, "thinking": "private reasoning"}, self.facts, self.done]
+        self.call_tool.side_effect = [self.company, records]
+        result = await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS)
+        self.assertEqual(result["summary"], "Evidence retrieved.")
+        self.assertEqual(result["tool_call_count"], 2)
+        self.assertEqual([item["result"] for item in build_agent_evidence(result["trace"])], [self.company, records])
+        for event in result["trace"]:
+            self.assertEqual(event["task_id"], self.task["id"])
+            self.assertEqual(event["agent"], self.task["agent"])
+        self.assertNotIn("private reasoning", json.dumps(result))
+        for chat_call in self.chat.call_args_list:
+            tools = chat_call.kwargs["tools"]
+            self.assertEqual({item["function"]["name"] for item in tools}, AGENT_TOOL_NAMES["financial_data"])
+        messages = self.chat.call_args.args[0]
+        tool_messages = [message for message in messages if message["role"] == "tool"]
+        self.assertEqual(json.loads(tool_messages[-1]["content"]), records)
+        records["records"][0]["value"] = 999
+        self.assertEqual(build_agent_evidence(result["trace"])[1]["result"]["records"][0]["value"], 123)
+
+    async def test_recovers_after_permission_and_unresolved_cik_errors(self):
+        forbidden = model_tool_message("search_filings", {"ticker": "AAPL", "query": "risks"})
+        self.chat.side_effect = [forbidden, self.facts, self.resolve, self.facts, self.done]
+        self.call_tool.side_effect = [self.company, {"records": []}]
+        result = await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS)
+        self.assertEqual(result["tool_call_count"], 4)
+        self.assertEqual(self.call_tool.await_count, 2)
+        events = [event for event in result["trace"] if event["type"] == "tool"]
+        self.assertEqual([event["status"] for event in events], ["error", "error", "completed", "completed"])
+        messages = self.chat.call_args.args[0]
+        feedback = [json.loads(message["content"]) for message in messages if message["role"] == "tool"]
+        self.assertIn("not allowed", feedback[0]["error"]["message"])
+        self.assertIn("Resolve the ticker", feedback[1]["error"]["message"])
+        self.assertEqual(len(build_agent_evidence(result["trace"])), 2)
+
+    async def test_mcp_tool_error_is_returned_to_model(self):
+        self.chat.side_effect = [self.resolve, self.resolve, self.done]
+        self.call_tool.side_effect = [MCPToolError("Temporary tool error"), self.company]
+        result = await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS)
+        self.assertEqual(result["tool_call_count"], 2)
+        self.assertEqual(len(build_agent_evidence(result["trace"])), 1)
+
+    async def test_invalid_arguments_can_be_corrected(self):
+        self.chat.side_effect = [model_tool_message("resolve_ticker_to_cik", "AAPL"), self.resolve, self.done]
+        self.call_tool.return_value = self.company
+        result = await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS)
+        self.assertEqual(result["tool_call_count"], 2)
+        self.call_tool.assert_awaited_once()
+
+    async def test_processes_multiple_calls_in_order_with_a_shared_task_resolution(self):
+        message = deepcopy(self.resolve)
+        message["tool_calls"].extend(self.facts["tool_calls"])
+        self.chat.side_effect = [message, self.done]
+        self.call_tool.side_effect = [self.company, {"records": []}]
+        result = await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS)
+        self.assertEqual(result["tool_call_count"], 2)
+        self.assertEqual([item.args[1] for item in self.call_tool.await_args_list],
+                         ["resolve_ticker_to_cik", "get_company_facts"])
+
+    async def test_failed_attempts_count_towards_tool_budget(self):
+        self.chat.side_effect = [self.facts, self.resolve]
+        trace = []
+        with self.assertRaisesRegex(RuntimeError, "maximum number of tool calls"):
+            await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS, max_tool_calls=1, trace=trace)
+        self.call_tool.assert_not_awaited()
+        self.assertEqual(sum(event["type"] == "tool" for event in trace), 1)
+        self.assertEqual(trace[-1]["status"], "error")
+
+    async def test_multiple_calls_cannot_overrun_budget(self):
+        message = deepcopy(self.resolve)
+        message["tool_calls"].extend(self.facts["tool_calls"])
+        self.chat.return_value = message
+        self.call_tool.return_value = self.company
+        with self.assertRaisesRegex(RuntimeError, "maximum number of tool calls"):
+            await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS, max_tool_calls=1)
+        self.call_tool.assert_awaited_once()
+
+    async def test_can_finish_after_using_exact_tool_budget(self):
+        self.chat.side_effect = [self.resolve, self.done]
+        self.call_tool.return_value = self.company
+        result = await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS, max_tool_calls=1)
+        self.assertEqual(result["tool_call_count"], 1)
+
+    async def test_step_limit_stops_repeated_tool_requests(self):
+        self.chat.return_value = self.resolve
+        self.call_tool.return_value = self.company
+        trace = []
+        with self.assertRaisesRegex(RuntimeError, "maximum number of steps"):
+            await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS, max_steps=2, trace=trace)
+        self.assertEqual(self.chat.call_count, 2)
+        self.assertEqual(self.call_tool.await_count, 2)
+        self.assertEqual(trace[-1]["status"], "error")
+
+    async def test_connection_and_model_failures_preserve_trace_and_original_exception(self):
+        error = RuntimeError("Disconnected")
+        self.chat.return_value = self.resolve
+        self.call_tool.side_effect = error
+        trace = []
+        with self.assertRaises(RuntimeError) as raised:
+            await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS, trace=trace)
+        self.assertIs(raised.exception, error)
+        self.assertEqual(trace[-2]["type"], "tool")
+        self.assertEqual(trace[-2]["status"], "error")
+        self.assertEqual(build_agent_evidence(trace), [])
+        self.chat.side_effect = error
+        trace = []
+        with self.assertRaises(RuntimeError) as raised:
+            await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS, trace=trace)
+        self.assertIs(raised.exception, error)
+        self.assertEqual(trace[-2]["type"], "model")
+        self.assertEqual(trace[-2]["status"], "error")
+
+    async def test_malformed_model_messages_fail_without_executing_tools(self):
+        messages = [None, {"role": "tool"}, {"tool_calls": {}}, {"tool_calls": [None]},
+                    {"tool_calls": [{"function": {"name": " "}}]}, {"content": " "},
+                    model_tool_message("resolve_ticker_to_cik", {"ticker": float("nan")})]
+        for message in messages:
+            with self.subTest(message=message):
+                self.chat.return_value = message
+                trace = []
+                with self.assertRaises(ValueError):
+                    await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS, trace=trace)
+                self.assertEqual(trace[-2]["status"], "error")
+        self.call_tool.assert_not_awaited()
+
+    async def test_nonfinite_tool_results_are_not_accepted_as_evidence(self):
+        self.task["agent"] = "filing_rag"
+        self.chat.return_value = model_tool_message("search_filings", {"ticker": "AAPL", "query": "risks"})
+        for result in ({"value": float("nan")}, {"value": {1, 2}}, []):
+            with self.subTest(result=result):
+                self.call_tool.return_value = result
+                trace = []
+                with self.assertRaises(RuntimeError):
+                    await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS, trace=trace)
+                self.assertEqual(build_agent_evidence(trace), [])
+
+    async def test_summary_without_tools_does_not_become_evidence(self):
+        self.chat.return_value = self.done
+        result = await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS)
+        self.assertEqual(result["tool_call_count"], 0)
+        self.assertEqual(build_agent_evidence(result["trace"]), [])
+
+    async def test_resolution_is_not_shared_between_runs(self):
+        self.chat.side_effect = [self.resolve, self.done, self.facts, self.done]
+        self.call_tool.return_value = self.company
+        await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS)
+        second = await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS)
+        self.call_tool.assert_awaited_once()
+        self.assertEqual(build_agent_evidence(second["trace"]), [])
+
+    async def test_invalid_inputs_are_rejected_before_model_call(self):
+        for field in ("max_steps", "max_tool_calls"):
+            for value in (True, 0, -1, "2", 1.5):
+                with self.subTest(field=field, value=value):
+                    with self.assertRaises(ValueError):
+                        await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS, **{field: value})
+        for task in (None, {}, {**self.task, "instruction": " "}, {**self.task, "id": " padded"},
+                     {**self.task, "agent": "unknown"}):
+            with self.subTest(task=task):
+                with self.assertRaises(ValueError):
+                    await run_specialist(task, {}, self.client, TOOL_SCHEMAS)
+        with self.assertRaises(ValueError):
+            await run_specialist(self.task, {}, None, TOOL_SCHEMAS)
+        with self.assertRaises(ValueError):
+            await run_specialist(self.task, {}, self.client, [])
+        with self.assertRaises(ValueError):
+            await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS, trace=[{}])
+        self.chat.assert_not_called()
         self.call_tool.assert_not_awaited()
 
 

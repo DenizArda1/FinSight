@@ -27,6 +27,9 @@ class MCPServerTests(unittest.IsolatedAsyncioTestCase):
         cases.extend([
             ("resolve_ticker_to_cik", {"ticker": 123}),
             ("search_filings", {"ticker": "AAPL", "query": "Risk", "fiscal_year": True}),
+            ("search_filings", {"ticker": "AAPL", "query": "Risk", "latest": "true"}),
+            ("search_filings", {"ticker": "AAPL", "query": "Risk", "latest": 1}),
+            ("search_filings", {"ticker": "AAPL", "query": "Risk", "latest": True, "fiscal_year": 2023}),
             ("compute_metrics", {"cik": "0000320193", "metrics": ["net_margin", "net_margin"]}),
             ("get_filing_section", {"ticker": "AAPL", "year": "2025", "section": "Item 1A"}),
         ])
@@ -51,6 +54,9 @@ class MCPServerTests(unittest.IsolatedAsyncioTestCase):
                     await call_mcp_tool(client, "get_company_facts", {
                         "cik": "0000000000", "concept": "revenue", **extra,
                     })
+            for extra in ({"latest": "true"}, {"latest": 1}, {"latest": True, "fiscal_year": 2023}):
+                with self.subTest(extra=extra), self.assertRaisesRegex(MCPToolError, "Invalid arguments"):
+                    await call_mcp_tool(client, "search_filings", {"ticker": "AAPL", "query": "Risk", **extra})
 
     @patch("src.mcp.server.execute_tool")
     async def test_expected_error_is_readable_and_same_connection_can_retry(self, execute):

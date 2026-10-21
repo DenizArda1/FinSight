@@ -51,7 +51,9 @@ SEARCH_FILINGS_TOOL = {
         "description": (
             "Search locally indexed annual filing sections for source-backed "
             "business, risk, and management commentary. Returns excerpts and "
-            "source metadata. Use financial data tools for numerical metrics."
+            "source metadata. For the latest available report, set latest=true and omit fiscal_year; "
+            "the application selects the newest indexed period end. Never guess the latest year. "
+            "Use financial data tools for numerical metrics."
         ),
         "parameters": {
             "type": "object",
@@ -67,7 +69,12 @@ SEARCH_FILINGS_TOOL = {
                 "fiscal_year": {
                     "type": "integer",
                     "minimum": 1,
-                    "description": "Reported fiscal year. Omit to search all indexed years.",
+                    "description": "Explicit reported fiscal year. Do not combine with latest=true. Without either option, searches all indexed years.",
+                },
+                "latest": {
+                    "type": "boolean",
+                    "default": False,
+                    "description": "Search only the newest locally indexed report by period end. Use for latest-report requests and omit fiscal_year.",
                 },
                 "section": {
                     "type": "string",
@@ -82,6 +89,10 @@ SEARCH_FILINGS_TOOL = {
                 },
             },
             "required": ["ticker", "query"],
+            "not": {
+                "required": ["latest", "fiscal_year"],
+                "properties": {"latest": {"const": True}},
+            },
             "additionalProperties": False,
         },
     },

@@ -1,7 +1,11 @@
 import unittest
+from copy import deepcopy
+from uuid import uuid4
 from unittest.mock import Mock, patch
 
-from src.rag.retrieval import format_search_results, search_reports
+import chromadb
+
+from src.rag.retrieval import format_search_results, get_latest_report_metadata, search_reports
 from src.tools.report_search import search_company_reports
 
 
@@ -22,6 +26,8 @@ class RetrievalTests(unittest.TestCase):
             ({"ticker": " nvda "}, {"ticker": "NVDA"}),
             ({"fiscal_year": 2026}, {"fiscal_year": 2026}),
             ({"section": " Item 1A "}, {"section": "Item 1A"}),
+            ({"ticker": "AAPL", "section": "Item 1A", "accession_number": "report-id"},
+             {"$and": [{"ticker": "AAPL"}, {"section": "Item 1A"}, {"accession_number": "report-id"}]}),
             (
                 {"ticker": "NVDA", "fiscal_year": 2026},
                 {"$and": [{"ticker": "NVDA"}, {"fiscal_year": 2026}]},
@@ -60,6 +66,7 @@ class RetrievalTests(unittest.TestCase):
             {"ticker": " "}, {"ticker": 1},
             {"fiscal_year": 0}, {"fiscal_year": True}, {"fiscal_year": "2026"},
             {"top_k": 0}, {"top_k": True}, {"top_k": 1.5},
+            {"accession_number": " "}, {"accession_number": True},
         ]
 
         for arguments in cases:
@@ -112,13 +119,132 @@ class ReportSearchToolTests(unittest.TestCase):
 
         search.assert_called_once_with(
             query="Risks?", collection=collection, embedding_config=settings["embedding"],
-            top_k=3, ticker="NVDA", fiscal_year=2026, section="Item 1A",
+            top_k=3, ticker="NVDA", fiscal_year=2026, section="Item 1A", accession_number=None,
         )
         
         self.assertEqual(result, {
             "company": company, "query": "Risks?", "fiscal_year": 2026,
             "section": "Item 1A", "matches": matches,
         })
+
+
+class LatestReportTests(unittest.TestCase):
+    def setUp(self):
+        self.old = {
+            "ticker": "AAPL", "fiscal_year": 2023, "report_date": "2023-09-30",
+            "accession_number": "0000320193-23-000106", "section": "Item 1A",
+        }
+        self.new = {
+            "ticker": "AAPL", "fiscal_year": 2025, "report_date": "2025-09-27",
+            "accession_number": "0000320193-25-000079", "section": "Item 1A",
+        }
+        self.collection = Mock()
+        self.collection.get.return_value = {"metadatas": [self.new, self.old, deepcopy(self.new)]}
+
+    def test_selects_latest_period_and_deduplicates_chunks(self):
+        result = get_latest_report_metadata(self.collection, " aapl ")
+        self.assertEqual(result, {key: self.new[key] for key in ("fiscal_year", "report_date", "accession_number")})
+        self.collection.get.assert_called_once_with(where={"ticker": "AAPL"}, include=["metadatas"])
+        self.collection.query.assert_not_called()
+
+    def test_does_not_infer_fiscal_year_from_calendar_date(self):
+        self.new["ticker"] = self.old["ticker"] = "NVDA"
+        self.new["report_date"] = "2025-12-28"
+        self.new["fiscal_year"] = 2026
+        self.collection.get.return_value = {"metadatas": [self.new, self.old]}
+        result = get_latest_report_metadata(self.collection, "NVDA")
+        self.assertEqual(result["fiscal_year"], 2026)
+
+    def test_invalid_ticker_is_rejected_before_reading_collection(self):
+        for ticker in (None, 123, [], "", " \t"):
+            with self.subTest(ticker=ticker), self.assertRaises(ValueError):
+                get_latest_report_metadata(self.collection, ticker)
+        self.collection.get.assert_not_called()
+
+    def test_empty_or_missing_metadata_is_rejected(self):
+        for metadata in ([], None, {}):
+            self.collection.get.return_value = {"metadatas": metadata}
+            with self.subTest(metadata=metadata), self.assertRaises(ValueError):
+                get_latest_report_metadata(self.collection, "AAPL")
+
+    def test_invalid_index_metadata_is_rejected_instead_of_ignoring_it(self):
+        changes = [
+            {"report_date": "2025-02-30"}, {"report_date": "20250927"},
+            {"report_date": None}, {"fiscal_year": True}, {"fiscal_year": "2025"},
+            {"fiscal_year": 0}, {"accession_number": "bad"}, {"ticker": "MSFT"},
+        ]
+        for change in changes:
+            self.collection.get.return_value = {"metadatas": [self.new, {**self.old, **change}]}
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                get_latest_report_metadata(self.collection, "AAPL")
+
+    def test_conflicting_chunks_and_ambiguous_latest_reports_are_rejected(self):
+        for changed in ({**self.new, "fiscal_year": 2024},
+                        {**self.new, "accession_number": "0000320193-25-000080"}):
+            self.collection.get.return_value = {"metadatas": [self.new, changed]}
+            with self.subTest(changed=changed), self.assertRaises(ValueError):
+                get_latest_report_metadata(self.collection, "AAPL")
+
+
+class LatestReportSearchTests(unittest.TestCase):
+    def setUp(self):
+        self.company = {"ticker": "AAPL", "cik": "0000320193", "name": "Apple Inc."}
+        company_patcher = patch("src.tools.report_search.resolve_company", return_value=self.company)
+        self.resolve = company_patcher.start()
+        self.addCleanup(company_patcher.stop)
+        settings_patcher = patch("src.tools.report_search.load_yaml", return_value={"embedding": {}, "vector_store": {}})
+        settings_patcher.start()
+        self.addCleanup(settings_patcher.stop)
+        collection_patcher = patch("src.tools.report_search.get_vector_collection")
+        self.get_collection = collection_patcher.start()
+        self.addCleanup(collection_patcher.stop)
+        self.latest = {
+            "ticker": "AAPL", "fiscal_year": 2025, "report_date": "2025-09-27",
+            "accession_number": "0000320193-25-000079", "section": "Item 1A",
+        }
+
+    def test_invalid_latest_options_are_rejected_before_data_access(self):
+        for kwargs in ({"latest": "true"}, {"latest": 1}, {"latest": None},
+                       {"latest": True, "fiscal_year": 2023}):
+            with self.subTest(kwargs=kwargs), self.assertRaises(ValueError):
+                search_company_reports("AAPL", "Risks?", **kwargs)
+        self.resolve.assert_not_called()
+
+    @patch("src.rag.retrieval.embed_text", return_value=[1.0, 0.0])
+    def test_real_collection_filters_to_latest_accession_without_older_section_fallback(self, embed):
+        client = chromadb.EphemeralClient()
+        name = f"latest-test-{uuid4().hex}"
+        collection = client.create_collection(name=name, embedding_function=None)
+        self.addCleanup(client.delete_collection, name)
+        old = {**self.latest, "fiscal_year": 2023, "report_date": "2023-09-30",
+               "accession_number": "0000320193-23-000106"}
+        collection.add(
+            ids=["old-risk", "new-risk", "old-business"],
+            documents=["Old risk evidence", "New risk evidence", "Old business evidence"],
+            metadatas=[old, self.latest, {**old, "section": "Item 1"}],
+            embeddings=[[1.0, 0.0], [0.0, 1.0], [1.0, 0.0]],
+        )
+        self.get_collection.return_value = collection
+        result = search_company_reports("AAPL", "Risks?", section="Item 1A", latest=True, top_k=1)
+        self.assertEqual(result["matches"][0]["chunk_id"], "new-risk")
+        self.assertEqual(result["fiscal_year"], 2025)
+        self.assertEqual(result["selected_report"]["accession_number"], self.latest["accession_number"])
+        self.assertTrue(result["latest"])
+        missing_section = search_company_reports("AAPL", "Business?", section="Item 1", latest=True)
+        self.assertEqual(missing_section["matches"], [])
+        self.assertEqual(missing_section["selected_report"], result["selected_report"])
+        historical = search_company_reports("AAPL", "Risks?", fiscal_year=2023, section="Item 1A")
+        self.assertEqual(historical["matches"][0]["chunk_id"], "old-risk")
+        all_years = search_company_reports("AAPL", "Risks?", section="Item 1A", top_k=1)
+        self.assertEqual(all_years["matches"][0]["chunk_id"], "old-risk")
+
+    @patch("src.rag.retrieval.embed_text")
+    def test_no_indexed_reports_fails_before_embedding(self, embed):
+        self.get_collection.return_value.get.return_value = {"metadatas": []}
+        with self.assertRaisesRegex(ValueError, "No indexed reports"):
+            search_company_reports("AAPL", "Risks?", latest=True)
+        embed.assert_not_called()
+        self.get_collection.return_value.query.assert_not_called()
 
 
 if __name__ == "__main__":

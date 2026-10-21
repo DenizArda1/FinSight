@@ -1,0 +1,781 @@
+{
+  "question": "Apple'ın yerel verideki en son yıllık gelirini ve en son yıllık raporundaki temel riskleri kaynaklarıyla getir.",
+  "llm_config": {
+    "model": "qwen3:8b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "stage": "evidence_collection_only",
+  "status": "completed",
+  "state": {
+    "question": "Apple'ın yerel verideki en son yıllık gelirini ve en son yıllık raporundaki temel riskleri kaynaklarıyla getir.",
+    "plan": [
+      {
+        "id": "task_1",
+        "agent": "financial_data",
+        "instruction": "Get Apple's latest annual revenue, including fiscal year, period end, and source metadata from the annual report."
+      },
+      {
+        "id": "task_2",
+        "agent": "filing_rag",
+        "instruction": "Extract key risks from Apple's latest annual report, specifying the section(s) and source metadata."
+      }
+    ],
+    "financial_results": [
+      {
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "summary": "Retrieved Apple Inc.'s FY2025 annual revenue of $416.16 billion (USD) reported on 2025-09-27. Source: [SEC Filing](https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm). No missing periods.",
+        "trace": [
+          {
+            "type": "agent",
+            "task_id": "task_1",
+            "agent": "financial_data",
+            "status": "started"
+          },
+          {
+            "type": "model",
+            "task_id": "task_1",
+            "agent": "financial_data",
+            "step": 1,
+            "status": "completed",
+            "tool_calls": [
+              {
+                "id": "call_x5zr2j8p",
+                "function": {
+                  "index": 0,
+                  "name": "resolve_ticker_to_cik",
+                  "arguments": {
+                    "ticker": "AAPL"
+                  }
+                }
+              },
+              {
+                "id": "call_bdcte26b",
+                "function": {
+                  "index": 1,
+                  "name": "get_company_facts",
+                  "arguments": {
+                    "cik": "0000012588",
+                    "concept": "revenue",
+                    "unit": "USD",
+                    "years": 1
+                  }
+                }
+              }
+            ],
+            "elapsed_seconds": 9.67070858299985
+          },
+          {
+            "type": "tool",
+            "task_id": "task_1",
+            "agent": "financial_data",
+            "step": 1,
+            "call_id": 1,
+            "name": "resolve_ticker_to_cik",
+            "arguments": {
+              "ticker": "AAPL"
+            },
+            "status": "completed",
+            "result": {
+              "ticker": "AAPL",
+              "name": "Apple Inc.",
+              "cik": "0000320193"
+            },
+            "elapsed_seconds": 0.017625875000248925
+          },
+          {
+            "type": "tool",
+            "task_id": "task_1",
+            "agent": "financial_data",
+            "step": 1,
+            "call_id": 2,
+            "name": "get_company_facts",
+            "arguments": {
+              "cik": "0000012588",
+              "concept": "revenue",
+              "unit": "USD",
+              "years": 1
+            },
+            "status": "error",
+            "result": {
+              "error": {
+                "type": "ValueError",
+                "message": "Resolve the ticker with resolve_ticker_to_cik before requesting financial data. The CIK must match a successful company resolution in this task."
+              }
+            },
+            "elapsed_seconds": 2.2833000002719928e-05
+          },
+          {
+            "type": "model",
+            "task_id": "task_1",
+            "agent": "financial_data",
+            "step": 2,
+            "status": "completed",
+            "tool_calls": [
+              {
+                "id": "call_dsgjpm7c",
+                "function": {
+                  "index": 0,
+                  "name": "get_company_facts",
+                  "arguments": {
+                    "cik": "0000320193",
+                    "concept": "revenue",
+                    "unit": "USD",
+                    "years": 1
+                  }
+                }
+              }
+            ],
+            "elapsed_seconds": 25.540393083000254
+          },
+          {
+            "type": "tool",
+            "task_id": "task_1",
+            "agent": "financial_data",
+            "step": 2,
+            "call_id": 3,
+            "name": "get_company_facts",
+            "arguments": {
+              "cik": "0000320193",
+              "concept": "revenue",
+              "unit": "USD",
+              "years": 1
+            },
+            "status": "completed",
+            "result": {
+              "company": {
+                "ticker": "AAPL",
+                "cik": "0000320193",
+                "name": "Apple Inc."
+              },
+              "concept": "revenue",
+              "unit": "USD",
+              "requested_years": 1,
+              "requested_period_ends": [
+                "2025-09-27"
+              ],
+              "missing_period_ends": [],
+              "records": [
+                {
+                  "cik": 320193,
+                  "metric": "revenue",
+                  "start": "2024-09-29",
+                  "end": "2025-09-27",
+                  "value": 416161000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2025-10-31",
+                  "accn": "0000320193-25-000079",
+                  "is_amendment": false,
+                  "fiscal_year": 2025,
+                  "period_label": "FY2025 (period end: 2025-09-27)",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+                }
+              ]
+            },
+            "elapsed_seconds": 0.011569667000003392
+          },
+          {
+            "type": "model",
+            "task_id": "task_1",
+            "agent": "financial_data",
+            "step": 3,
+            "status": "completed",
+            "tool_calls": [],
+            "elapsed_seconds": 15.001131541999712
+          },
+          {
+            "type": "agent",
+            "task_id": "task_1",
+            "agent": "financial_data",
+            "status": "completed",
+            "elapsed_seconds": 50.24159050000026
+          }
+        ],
+        "tool_call_count": 3
+      }
+    ],
+    "filing_results": [
+      {
+        "task_id": "task_2",
+        "agent": "filing_rag",
+        "summary": "Retrieved key risks from Apple's 2025 10-K (latest report, filed 2025-09-27) under **Item 1A: Risk Factors**:\n\n1. **Regulatory Compliance Risks**  \n   - New laws on online safety, age verification, and data privacy could increase compliance costs, disrupt operations, and expose the company to fines or liability.  \n   - *Source*: [SEC Filing](https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm#item1a) (Chunk ID: 0000320193-25-000079:item_1a:55)\n\n2. **Investment and Acquisition Risks**  \n   - New business ventures, acquisitions, or strategic investments may lead to financial losses, operational disruptions, or failure to meet expected returns.  \n   - *Source*: [SEC Filing](https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm#item1a) (Chunk ID: 0000320193-25-000079:item_1a:37)\n\n3. **Macroeconomic and Industry Risks**  \n   - Global economic conditions could negatively impact consumer spending, supply chain stability, and overall business performance.  \n   - *Source*: [SEC Filing](https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm#item1a) (Chunk ID: 0000320193-25-000079:item_1a:0)\n\n4. **Credit and Liquidity Risks**  \n   - Fluctuations in credit markets, interest rates, or liquidity could affect the value of the company’s investment portfolio and trade receivables.  \n   - *Source*: [SEC Filing](https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm#item1a) (Chunk ID: 0000320193-25-000079:item_1a:60)\n\n**Limitations**: Excerpts are condensed; full Item 1A text is available via the SEC link. No numerical metrics or financial data extracted.",
+        "trace": [
+          {
+            "type": "agent",
+            "task_id": "task_2",
+            "agent": "filing_rag",
+            "status": "started"
+          },
+          {
+            "type": "model",
+            "task_id": "task_2",
+            "agent": "filing_rag",
+            "step": 1,
+            "status": "completed",
+            "tool_calls": [
+              {
+                "id": "call_kjgp59e0",
+                "function": {
+                  "index": 0,
+                  "name": "search_filings",
+                  "arguments": {
+                    "latest": true,
+                    "ticker": "AAPL",
+                    "section": "Item 1A",
+                    "query": "key risks",
+                    "top_k": 5
+                  }
+                }
+              }
+            ],
+            "elapsed_seconds": 18.134663999999702
+          },
+          {
+            "type": "tool",
+            "task_id": "task_2",
+            "agent": "filing_rag",
+            "step": 1,
+            "call_id": 1,
+            "name": "search_filings",
+            "arguments": {
+              "latest": true,
+              "ticker": "AAPL",
+              "section": "Item 1A",
+              "query": "key risks",
+              "top_k": 5
+            },
+            "status": "completed",
+            "result": {
+              "company": {
+                "ticker": "AAPL",
+                "name": "Apple Inc.",
+                "cik": "0000320193"
+              },
+              "query": "key risks",
+              "fiscal_year": 2025,
+              "section": "Item 1A",
+              "matches": [
+                {
+                  "chunk_id": "0000320193-25-000079:item_1a:55",
+                  "text": "The Company is also subject to new and changing laws and regulations regarding online safety, including enhanced protections for minors and mandatory age verification requirements. These laws and regulations can increase regulatory risks by requiring complex compliance measures and significant modifications to the Company’s products, services and operations, and may lead to operational disruptions, heightened privacy and data security risks, increased costs and potential liability and fines, all of which can have a material adverse impact on the Company’s business, financial condition, results of operations and stock price.\nFinancial Risks\nThe Company’s net sales and gross margins are subject to volatility and downward pressure due to a variety of factors.",
+                  "metadata": {
+                    "accession_number": "0000320193-25-000079",
+                    "end": 83080,
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                    "section_title": "Risk Factors",
+                    "cik": "0000320193",
+                    "ticker": "AAPL",
+                    "section_end": 92584,
+                    "report_date": "2025-09-27",
+                    "section": "Item 1A",
+                    "start": 82314,
+                    "fiscal_year": 2025,
+                    "form": "10-K",
+                    "section_start": 24541
+                  },
+                  "distance": 0.4259306788444519
+                },
+                {
+                  "chunk_id": "0000320193-25-000079:item_1a:37",
+                  "text": "The Company has invested, and in the future may invest, in new business strategies, commercial relationships and acquisitions. Such endeavors may involve significant risks and uncertainties, including distraction of management from current operations, greater-than-expected liabilities and expenses, economic, political, legal and regulatory challenges associated with operating in new businesses, regions or countries, inadequate return on capital, potential impairment of tangible and intangible assets, and significant write-offs. Some transactions, including investments and acquisitions, are exposed to additional risks, including failing to obtain required regulatory approvals on a timely basis or at all, a counterparty’s failure to perform or deliver as anticipated, or the imposition of onerous conditions that could delay or prevent the Company from completing a transaction or otherwise limit the Company’s ability to fully realize the anticipated benefits of a transaction. New business strategies and ventures are inherently risky and may not be successful. The Company’s business strategies and investments may not be successful, which could materially adversely affect the Company’s business, reputation, results of operations, financial condition and stock price.\nLegal and Regulatory Compliance Risks\nThe Company’s business, results of operations and financial condition could be adversely impacted by unfavorable results of legal proceedings or government investigations.",
+                  "metadata": {
+                    "accession_number": "0000320193-25-000079",
+                    "ticker": "AAPL",
+                    "end": 65131,
+                    "cik": "0000320193",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                    "form": "10-K",
+                    "fiscal_year": 2025,
+                    "start": 63641,
+                    "section": "Item 1A",
+                    "report_date": "2025-09-27",
+                    "section_end": 92584,
+                    "section_title": "Risk Factors",
+                    "section_start": 24541
+                  },
+                  "distance": 0.4310343265533447
+                },
+                {
+                  "chunk_id": "0000320193-25-000079:item_1a:0",
+                  "text": "Item 1A. Risk Factors\nThe following summarizes factors that could have a material adverse effect on the Company’s business, reputation, results of operations, financial condition and stock price. The Company may not be able to accurately predict, control or mitigate these risks. Statements in this section are based on the Company’s beliefs and opinions regarding matters that could materially adversely affect the Company in the future and are not representations as to whether such matters have or have not occurred previously. The risks and uncertainties described below are not exhaustive and should not be considered a complete statement of all potential risks or uncertainties that the Company faces or may face in the future.\nThis section should be read in conjunction with Part II, Item 7, “Management’s Discussion and Analysis of Financial Condition and Results of Operations” and the consolidated financial statements and accompanying notes in Part II, Item 8, “Financial Statements and Supplementary Data” of this Form 10-K.\nMacroeconomic and Industry Risks\nThe Company’s operations and performance depend significantly on global and regional economic conditions and adverse economic conditions can materially adversely affect the Company’s business, results of operations, financial condition and stock price.",
+                  "metadata": {
+                    "fiscal_year": 2025,
+                    "end": 25863,
+                    "section_start": 24541,
+                    "section": "Item 1A",
+                    "form": "10-K",
+                    "section_end": 92584,
+                    "ticker": "AAPL",
+                    "section_title": "Risk Factors",
+                    "start": 24541,
+                    "cik": "0000320193",
+                    "accession_number": "0000320193-25-000079",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                    "report_date": "2025-09-27"
+                  },
+                  "distance": 0.43994516134262085
+                },
+                {
+                  "chunk_id": "0000320193-25-000079:item_1a:36",
+                  "text": "Investment in new business strategies, commercial relationships and acquisitions could disrupt the Company’s ongoing business, present risks not originally contemplated, and materially adversely affect the Company’s business, reputation, results of operations and financial condition.",
+                  "metadata": {
+                    "cik": "0000320193",
+                    "end": 63640,
+                    "start": 63356,
+                    "fiscal_year": 2025,
+                    "form": "10-K",
+                    "accession_number": "0000320193-25-000079",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                    "ticker": "AAPL",
+                    "section_start": 24541,
+                    "report_date": "2025-09-27",
+                    "section": "Item 1A",
+                    "section_end": 92584,
+                    "section_title": "Risk Factors"
+                  },
+                  "distance": 0.44133347272872925
+                },
+                {
+                  "chunk_id": "0000320193-25-000079:item_1a:60",
+                  "text": "The Company is exposed to credit risk and fluctuations in the values of its investment portfolio.\nThe Company’s investments can be negatively affected by changes in liquidity, credit deterioration, financial results, market and economic conditions, political risk, sovereign risk, interest rate fluctuations or other factors. As a result, the value and liquidity of the Company’s cash, cash equivalents and marketable securities may fluctuate substantially. Although the Company has not realized significant losses on its cash, cash equivalents and marketable securities, future fluctuations in their value could result in significant losses and could have a material adverse impact on the Company’s results of operations, financial condition and stock price.\nThe Company is exposed to credit risk on its trade accounts receivable, vendor non-trade receivables and prepayments related to long-term supply agreements, and this risk is heightened during periods when economic conditions worsen.",
+                  "metadata": {
+                    "form": "10-K",
+                    "accession_number": "0000320193-25-000079",
+                    "section_end": 92584,
+                    "fiscal_year": 2025,
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                    "cik": "0000320193",
+                    "end": 87864,
+                    "section": "Item 1A",
+                    "section_start": 24541,
+                    "section_title": "Risk Factors",
+                    "start": 86872,
+                    "report_date": "2025-09-27",
+                    "ticker": "AAPL"
+                  },
+                  "distance": 0.4511784315109253
+                }
+              ],
+              "latest": true,
+              "selected_report": {
+                "fiscal_year": 2025,
+                "report_date": "2025-09-27",
+                "accession_number": "0000320193-25-000079"
+              }
+            },
+            "elapsed_seconds": 1.0624414999997498
+          },
+          {
+            "type": "model",
+            "task_id": "task_2",
+            "agent": "filing_rag",
+            "step": 2,
+            "status": "completed",
+            "tool_calls": [],
+            "elapsed_seconds": 31.944756875000166
+          },
+          {
+            "type": "agent",
+            "task_id": "task_2",
+            "agent": "filing_rag",
+            "status": "completed",
+            "elapsed_seconds": 51.14196270899993
+          }
+        ],
+        "tool_call_count": 1
+      }
+    ],
+    "draft": null,
+    "answer": null,
+    "verification": null,
+    "revision_count": 0,
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "mixed",
+        "plan": [
+          {
+            "id": "task_1",
+            "agent": "financial_data",
+            "instruction": "Get Apple's latest annual revenue, including fiscal year, period end, and source metadata from the annual report."
+          },
+          {
+            "id": "task_2",
+            "agent": "filing_rag",
+            "instruction": "Extract key risks from Apple's latest annual report, specifying the section(s) and source metadata."
+          }
+        ],
+        "elapsed_seconds": 16.34429254199995
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_x5zr2j8p",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "AAPL"
+              }
+            }
+          },
+          {
+            "id": "call_bdcte26b",
+            "function": {
+              "index": 1,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000012588",
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 9.67070858299985
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        },
+        "elapsed_seconds": 0.017625875000248925
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000012588",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "error",
+        "result": {
+          "error": {
+            "type": "ValueError",
+            "message": "Resolve the ticker with resolve_ticker_to_cik before requesting financial data. The CIK must match a successful company resolution in this task."
+          }
+        },
+        "elapsed_seconds": 2.2833000002719928e-05
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_dsgjpm7c",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000320193",
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 25.540393083000254
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 3,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000320193",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "revenue",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 416161000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.011569667000003392
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 3,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 15.001131541999712
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 50.24159050000026
+      },
+      {
+        "type": "agent",
+        "task_id": "task_2",
+        "agent": "filing_rag",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "filing_rag",
+        "step": 1,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_kjgp59e0",
+            "function": {
+              "index": 0,
+              "name": "search_filings",
+              "arguments": {
+                "latest": true,
+                "ticker": "AAPL",
+                "section": "Item 1A",
+                "query": "key risks",
+                "top_k": 5
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 18.134663999999702
+      },
+      {
+        "type": "tool",
+        "task_id": "task_2",
+        "agent": "filing_rag",
+        "step": 1,
+        "call_id": 1,
+        "name": "search_filings",
+        "arguments": {
+          "latest": true,
+          "ticker": "AAPL",
+          "section": "Item 1A",
+          "query": "key risks",
+          "top_k": 5
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "name": "Apple Inc.",
+            "cik": "0000320193"
+          },
+          "query": "key risks",
+          "fiscal_year": 2025,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0000320193-25-000079:item_1a:55",
+              "text": "The Company is also subject to new and changing laws and regulations regarding online safety, including enhanced protections for minors and mandatory age verification requirements. These laws and regulations can increase regulatory risks by requiring complex compliance measures and significant modifications to the Company’s products, services and operations, and may lead to operational disruptions, heightened privacy and data security risks, increased costs and potential liability and fines, all of which can have a material adverse impact on the Company’s business, financial condition, results of operations and stock price.\nFinancial Risks\nThe Company’s net sales and gross margins are subject to volatility and downward pressure due to a variety of factors.",
+              "metadata": {
+                "accession_number": "0000320193-25-000079",
+                "end": 83080,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "section_title": "Risk Factors",
+                "cik": "0000320193",
+                "ticker": "AAPL",
+                "section_end": 92584,
+                "report_date": "2025-09-27",
+                "section": "Item 1A",
+                "start": 82314,
+                "fiscal_year": 2025,
+                "form": "10-K",
+                "section_start": 24541
+              },
+              "distance": 0.4259306788444519
+            },
+            {
+              "chunk_id": "0000320193-25-000079:item_1a:37",
+              "text": "The Company has invested, and in the future may invest, in new business strategies, commercial relationships and acquisitions. Such endeavors may involve significant risks and uncertainties, including distraction of management from current operations, greater-than-expected liabilities and expenses, economic, political, legal and regulatory challenges associated with operating in new businesses, regions or countries, inadequate return on capital, potential impairment of tangible and intangible assets, and significant write-offs. Some transactions, including investments and acquisitions, are exposed to additional risks, including failing to obtain required regulatory approvals on a timely basis or at all, a counterparty’s failure to perform or deliver as anticipated, or the imposition of onerous conditions that could delay or prevent the Company from completing a transaction or otherwise limit the Company’s ability to fully realize the anticipated benefits of a transaction. New business strategies and ventures are inherently risky and may not be successful. The Company’s business strategies and investments may not be successful, which could materially adversely affect the Company’s business, reputation, results of operations, financial condition and stock price.\nLegal and Regulatory Compliance Risks\nThe Company’s business, results of operations and financial condition could be adversely impacted by unfavorable results of legal proceedings or government investigations.",
+              "metadata": {
+                "accession_number": "0000320193-25-000079",
+                "ticker": "AAPL",
+                "end": 65131,
+                "cik": "0000320193",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "form": "10-K",
+                "fiscal_year": 2025,
+                "start": 63641,
+                "section": "Item 1A",
+                "report_date": "2025-09-27",
+                "section_end": 92584,
+                "section_title": "Risk Factors",
+                "section_start": 24541
+              },
+              "distance": 0.4310343265533447
+            },
+            {
+              "chunk_id": "0000320193-25-000079:item_1a:0",
+              "text": "Item 1A. Risk Factors\nThe following summarizes factors that could have a material adverse effect on the Company’s business, reputation, results of operations, financial condition and stock price. The Company may not be able to accurately predict, control or mitigate these risks. Statements in this section are based on the Company’s beliefs and opinions regarding matters that could materially adversely affect the Company in the future and are not representations as to whether such matters have or have not occurred previously. The risks and uncertainties described below are not exhaustive and should not be considered a complete statement of all potential risks or uncertainties that the Company faces or may face in the future.\nThis section should be read in conjunction with Part II, Item 7, “Management’s Discussion and Analysis of Financial Condition and Results of Operations” and the consolidated financial statements and accompanying notes in Part II, Item 8, “Financial Statements and Supplementary Data” of this Form 10-K.\nMacroeconomic and Industry Risks\nThe Company’s operations and performance depend significantly on global and regional economic conditions and adverse economic conditions can materially adversely affect the Company’s business, results of operations, financial condition and stock price.",
+              "metadata": {
+                "fiscal_year": 2025,
+                "end": 25863,
+                "section_start": 24541,
+                "section": "Item 1A",
+                "form": "10-K",
+                "section_end": 92584,
+                "ticker": "AAPL",
+                "section_title": "Risk Factors",
+                "start": 24541,
+                "cik": "0000320193",
+                "accession_number": "0000320193-25-000079",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "report_date": "2025-09-27"
+              },
+              "distance": 0.43994516134262085
+            },
+            {
+              "chunk_id": "0000320193-25-000079:item_1a:36",
+              "text": "Investment in new business strategies, commercial relationships and acquisitions could disrupt the Company’s ongoing business, present risks not originally contemplated, and materially adversely affect the Company’s business, reputation, results of operations and financial condition.",
+              "metadata": {
+                "cik": "0000320193",
+                "end": 63640,
+                "start": 63356,
+                "fiscal_year": 2025,
+                "form": "10-K",
+                "accession_number": "0000320193-25-000079",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "ticker": "AAPL",
+                "section_start": 24541,
+                "report_date": "2025-09-27",
+                "section": "Item 1A",
+                "section_end": 92584,
+                "section_title": "Risk Factors"
+              },
+              "distance": 0.44133347272872925
+            },
+            {
+              "chunk_id": "0000320193-25-000079:item_1a:60",
+              "text": "The Company is exposed to credit risk and fluctuations in the values of its investment portfolio.\nThe Company’s investments can be negatively affected by changes in liquidity, credit deterioration, financial results, market and economic conditions, political risk, sovereign risk, interest rate fluctuations or other factors. As a result, the value and liquidity of the Company’s cash, cash equivalents and marketable securities may fluctuate substantially. Although the Company has not realized significant losses on its cash, cash equivalents and marketable securities, future fluctuations in their value could result in significant losses and could have a material adverse impact on the Company’s results of operations, financial condition and stock price.\nThe Company is exposed to credit risk on its trade accounts receivable, vendor non-trade receivables and prepayments related to long-term supply agreements, and this risk is heightened during periods when economic conditions worsen.",
+              "metadata": {
+                "form": "10-K",
+                "accession_number": "0000320193-25-000079",
+                "section_end": 92584,
+                "fiscal_year": 2025,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "cik": "0000320193",
+                "end": 87864,
+                "section": "Item 1A",
+                "section_start": 24541,
+                "section_title": "Risk Factors",
+                "start": 86872,
+                "report_date": "2025-09-27",
+                "ticker": "AAPL"
+              },
+              "distance": 0.4511784315109253
+            }
+          ],
+          "latest": true,
+          "selected_report": {
+            "fiscal_year": 2025,
+            "report_date": "2025-09-27",
+            "accession_number": "0000320193-25-000079"
+          }
+        },
+        "elapsed_seconds": 1.0624414999997498
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "filing_rag",
+        "step": 2,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 31.944756875000166
+      },
+      {
+        "type": "agent",
+        "task_id": "task_2",
+        "agent": "filing_rag",
+        "status": "completed",
+        "elapsed_seconds": 51.14196270899993
+      }
+    ],
+    "request_type": "mixed"
+  },
+  "elapsed_seconds": 118.29,
+  "checks": {
+    "latest_option_used": true,
+    "all_risk_matches_from_expected_fy2025_report": true,
+    "final_answer_not_generated": true
+  }
+}

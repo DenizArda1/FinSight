@@ -4,7 +4,7 @@ import re
 from src.tools.company import resolve_company
 from src.utils.utils import load_json, load_yaml
 from src.rag.vector_store import get_vector_collection
-from src.rag.retrieval import search_reports
+from src.rag.retrieval import get_latest_report_metadata, search_reports
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -69,7 +69,11 @@ def get_filing_section(ticker: str, year: int, section: str) -> dict:
     }
 
 
-def search_company_reports(ticker: str,query: str,fiscal_year: int | None = None, top_k: int = 5, section: str | None = None) -> dict:
+def search_company_reports(ticker: str, query: str, fiscal_year: int | None = None, top_k: int = 5, section: str | None = None, latest: bool = False) -> dict:
+    if type(latest) is not bool:
+        raise ValueError("Latest must be a boolean")
+    if latest and fiscal_year is not None:
+        raise ValueError("Use either latest=True or fiscal_year, not both")
 
     company = resolve_company(ticker)
     project_root = Path(__file__).resolve().parents[2]
@@ -77,6 +81,10 @@ def search_company_reports(ticker: str,query: str,fiscal_year: int | None = None
     settings = load_yaml(settings_path)
 
     collection = get_vector_collection(settings["vector_store"])
+    selected_report = None
+    if latest:
+        selected_report = get_latest_report_metadata(collection, company["ticker"])
+        fiscal_year = selected_report["fiscal_year"]
     matches = search_reports(
         query=query,
         collection=collection,
@@ -85,12 +93,16 @@ def search_company_reports(ticker: str,query: str,fiscal_year: int | None = None
         ticker=company["ticker"],
         fiscal_year=fiscal_year,
         section=section,
+        accession_number=selected_report["accession_number"] if selected_report else None,
     )
 
-    return {
+    result = {
         "company": company,
         "query": query,
         "fiscal_year": fiscal_year,
         "section": section,
         "matches": matches,
     }
+    if latest:
+        result.update({"latest": True, "selected_report": selected_report})
+    return result
