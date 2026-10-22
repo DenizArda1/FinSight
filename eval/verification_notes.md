@@ -1,6 +1,19 @@
 # FinSight evaluation and verification
 
-Run from the repository root with the local Ollama service available:
+Validate the question set from the repository root without starting a model:
+
+```sh
+.venv/bin/python -m eval.run_eval --validate-only
+.venv/bin/python -m eval.run_eval --validate-only --case aapl_latest_revenue_and_risks_tr
+```
+
+This checks JSON structure, unique IDs, required fields, finite JSON values and
+case selection. It summarizes categories and languages. It does not load model
+settings, capture data/index snapshots, score expected answers, or write results.
+It does not require Ollama. Validation success means the dataset is well formed,
+not that its expected answers are correct or that an agent answered it successfully.
+
+Run model evaluations only when the local Ollama service and resources are available:
 
 ```sh
 .venv/bin/python -m eval.run_eval --mode single_agent --transport direct
@@ -11,12 +24,30 @@ Run from the repository root with the local Ollama service available:
 .venv/bin/python -m unittest discover -s tests
 ```
 
-The initial dataset contains ten cases: financial facts, a calculated margin,
-company identity, missing data, a filing risk question, two out-of-scope requests,
-and a direct instruction to fabricate data. This is a development set, not a
-completed benchmark or the later full golden set. Latest-period expectations are
-bound to the current local data snapshot; review them after downloading new filings.
-The narrative case has an expected claim and source, not an exact answer string.
+The dataset now contains 25 development cases (14 English, 11 Turkish). The original
+ten cases are preserved; fifteen additions cover all four companies, net margins,
+growth, CAGR, comparison across different fiscal periods, clarification, scope
+restrictions, invented citations and the mixed revenue/risk-summary regression.
+This expanded set has been prepared and structurally validated, not run as a
+completed model benchmark. The earlier ten-case results do not cover the additions.
+
+New numerical expectations were prepared from local metric records. Margin,
+growth and CAGR expectations use independent arithmetic on those inputs rather
+than copying calculated tool output. Five annual observations span four CAGR
+intervals. New data-backed expectations include local source paths and SHA-256
+hashes under `expected.sources` (or nested financial/narrative/company entries).
+These are provenance references, not an independent audit of SEC filings. The
+offline CLI checks structure only; source hashes and numerical correctness must
+be reviewed separately after data refreshes. Latest-period expectations are bound
+to the current local data snapshot and must not be silently updated to match an
+agent's answer.
+
+The comparison case deliberately uses Apple FY2025 and Microsoft FY2026 with their
+different period ends. Narrative rubrics specify supported content and sources,
+not exact answer strings or fixed per-run source numbers. The mixed case requires
+at least two substantive risks, while allowing other supported risk topics.
+Review guidance is in [judge_prompt.md](judge_prompt.md). That document is a review
+rubric; the runner does not automatically execute it or populate manual reviews.
 
 ## Agent answer boundary
 
@@ -41,7 +72,12 @@ The narrative case has an expected claim and source, not an exact answer string.
    are normalized to their actual source IDs; invented IDs are rejected.
 5. A separate LLM call checks all claims against their cited tool sources, relevance
    to the question, missing-data statements, investment-advice restrictions and
-   language. A valid source number alone does not establish support.
+   language. It separately returns `answer_complete`: every requested part must be
+   answered or addressed with a justified limitation, refusal or clarification.
+   A valid source number alone does not establish support; correct financial fields
+   and filing metadata alone do not answer a request for a narrative risk summary.
+   `evidence_supported`, `language_matches`, and `answer_complete` must all be true
+   to release an answer. Missing/non-boolean flags or inconsistent issues fail closed.
 6. A negative verdict, invalid response, failed format repair, or verifier error
    withholds the candidate. The CLI does not print the rejected draft or candidate.
    The text-returning run_agent API raises AnswerVerificationError; return_details=True
@@ -158,13 +194,54 @@ comparison tests then passed, including the newly added null-answer regression.
 All 60 prepared sections were additionally checked against their source offsets
 and accession metadata without reparsing or redownloading data.
 
+## Multi-agent completeness diagnostics, 2026-10-21
+
+`diagnostics/full_orchestrator_live_20261021T164418_145115Z.json` captured the original
+failure: the financial answer matched its source record, while the mixed answer
+listed financial values and filing metadata without summarizing risks. Critic
+incorrectly approved that incomplete answer.
+
+Subsequent `answer_completeness_live_*` and `completeness_final_live_*` files record
+development attempts, not a success benchmark. With the explicit completeness
+verdict, the known incomplete answer was rejected. The correct financial answer
+still passed its recorded-evidence recheck. However, repeated Writer attempts
+either omitted narrative, violated prose formatting rules, or reached the model's
+generation limit. One fresh run also fetched the full section and supplied about
+80k serialized evidence characters; this indicates context pressure, not a measured
+token count or proof of truncation. RAG instructions now reserve full-section
+retrieval for explicit full-section requests.
+
+The experimental prose regex in the generation schema was removed after token-limit
+failures. Two temporary `think=false` experiments also failed to establish a reliable
+solution; production model settings were not changed. The all-structured-call
+experiment in `completeness_final_live_20261021T190248_016481Z.json` additionally exposed
+incorrect source attribution that the judge missed, despite withholding the answer
+for completeness. Its demand to include every retrieved source was too strict:
+the final prompt distinguishes requested-part coverage from exhaustive source coverage.
+
+The final code passed 129 focused tests. These are boundary/flow regressions with
+mocked model calls, not proof of model accuracy. There is no successful final live
+mixed-answer acceptance to report for this development session. Writer reliability
+and claim-to-source judge calibration remain required before CLI integration.
+
 ## Limits of the checks
+
+The multi-agent orchestrator now runs Writer then Critic after collecting specialist
+evidence. The initial draft and at most two corrections share one revision budget.
+Writer JSON/schema/rendering failures and negative Critic verdicts consume this same
+budget; they do not start independent repair loops. The Writer receives validation
+issues and the rejected response as untrusted revision context. Financial records
+and tool evidence remain unchanged, and specialists are not rerun. Model/network
+failures still stop execution; Critic errors and exhausted revisions never release
+an answer. The CLI remains on the single-agent path until explicit integration.
 
 Exact record insertion prevents the model from changing a selected financial field.
 It does not prove that the selected record answers the question, that every narrative
 claim is supported, or that every language choice is correct. Those checks still use
 a fallible local LLM. Numbers spelled out in prose and semantic contradictions also
 remain part of that model-based check. Fail-closed handling can reject valid answers.
+Completeness is also assessed by the model, not by deterministic keyword checks.
+Its approval still requires independent review of whether the question was answered.
 
 The initial baseline and legacy agent runs used older prompts/settings and only
 three cases. They are diagnostic examples, not a controlled performance comparison

@@ -24,9 +24,10 @@ VERIFICATION_SCHEMA = {
     "properties": {
         "evidence_supported": {"type": "boolean"},
         "language_matches": {"type": "boolean"},
+        "answer_complete": {"type": "boolean"},
         "issues": {"type": "array", "items": {"type": "string", "minLength": 1}},
     },
-    "required": ["evidence_supported", "language_matches", "issues"],
+    "required": ["evidence_supported", "language_matches", "answer_complete", "issues"],
 }
 
 
@@ -88,6 +89,7 @@ def build_fact_catalog(evidence):
                                    "fields": {key: value for key, value in record.items() if key in DISPLAY_FIELDS}}
         if "concept" in result:
             add_availability_facts(catalog, source_id, "", result)
+
         for concept, availability in result.get("availability", {}).items():
             add_availability_facts(catalog, source_id, f"availability/{concept}/", availability)
     return catalog
@@ -115,7 +117,12 @@ def composition_schema(catalog):
         "type": "object", "additionalProperties": False,
         "properties": {
             "kind": {"type": "string", "enum": sorted(ANSWER_KINDS)},
-            "text": {"type": "string"},
+            "text": {
+                "type": "string",
+                "description": "The substantive narrative answer, including any requested summary or explanation, "
+                               "in the user's language with [Source N] citations. Filing metadata cards do not "
+                               "include excerpt text. Keep numerical values in facts instead of this prose.",
+            },
             "facts": {"type": "array", "items": items, "uniqueItems": True, "maxItems": len(catalog)},
         },
         "required": ["kind", "text", "facts"],
@@ -247,7 +254,8 @@ def render_agent_template(payload, evidence):
         raise ValueError("Malformed source field reference")
     prose = SOURCE_REFERENCE.sub("", remainder)
     if any(character.isdigit() for character in prose) or "%" in prose:
-        raise ValueError("Numbers, dates, form labels, and percentages must use source field references")
+        raise ValueError("Keep numbers, dates, form labels, and percentages in selected facts, not prose. "
+                         "Remove repeated financial values from text and use unnumbered bullets.")
     if re.search(r"(?:https?://|www\.|\]\(|<a\b)", prose, re.IGNORECASE):
         raise ValueError("Source URLs must use source field references")
 
@@ -272,15 +280,15 @@ def parse_agent_verdict(text):
     verdict = json.loads(text)
     if not isinstance(verdict, dict):
         raise ValueError("Agent verification must be a JSON object")
-    for field in ("evidence_supported", "language_matches"):
+    for field in ("evidence_supported", "language_matches", "answer_complete"):
         if type(verdict.get(field)) is not bool:
             raise ValueError(f"{field} must be a boolean")
-    supported = verdict["evidence_supported"] and verdict["language_matches"]
+    supported = verdict["evidence_supported"] and verdict["language_matches"] and verdict["answer_complete"]
     validated = parse_verification_response(json.dumps({
         "supported": supported, "issues": verdict.get("issues"),
     }))
     return {**validated, "evidence_supported": verdict["evidence_supported"],
-            "language_matches": verdict["language_matches"]}
+            "language_matches": verdict["language_matches"], "answer_complete": verdict["answer_complete"]}
 
 
 def request_answer_check(messages, llm_config, trace, phase, response_format="json"):

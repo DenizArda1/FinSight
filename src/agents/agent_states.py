@@ -16,6 +16,8 @@ class AgentState(TypedDict):
     revision_count: int
     trace: list[dict]
     request_type: str | None
+    evidence: list[dict]
+    composition: dict | None
 
 def create_initial_state(question: str) -> AgentState:
     if not isinstance(question, str) or not question.strip():
@@ -31,5 +33,7 @@ def create_initial_state(question: str) -> AgentState:
         "verification": None,
         "revision_count": 0,
         "trace": [],
-        "request_type": None
+        "request_type": None,
+        "evidence": [],
+        "composition": None
     }

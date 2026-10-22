@@ -119,6 +119,63 @@ class EvaluationTests(unittest.TestCase):
             self.assertEqual(load_json(path), {"review": "Keep"})
         agent.assert_not_called()
 
+    def test_invalid_dataset_metadata_and_nonfinite_expectations_are_rejected(self):
+        for changes in ({"id": " case_a"}, {"category": " "}, {"category": 1},
+                        {"expected": {"value": float("nan")}},
+                        {"expected": {"inputs": [float("inf")]}}):
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                evaluation.validate_cases([{**self.cases[0], **changes}])
+
+    @patch("eval.run_eval.run_evaluation")
+    @patch("eval.snapshots.capture_snapshot")
+    @patch("eval.run_eval.load_yaml", side_effect=AssertionError("Offline validation must not load model settings"))
+    def test_validate_only_selects_cases_without_models_snapshots_or_output_files(self, config, snapshot, runner):
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "eval").mkdir()
+            dataset = root / "eval" / "golden_set.jsonl"
+            dataset.write_text(
+                '{"id":"a","question":"Revenue?","category":"numeric","expected":{"value":1},"answer_language":"en"}\n'
+                '{"id":"b","question":"Gelir?","category":"numeric","expected":{"value":1},"answer_language":"tr"}\n',
+                encoding="utf-8",
+            )
+            output = StringIO()
+            with patch.object(evaluation, "__file__", str(root / "eval" / "run_eval.py")), patch(
+                "sys.argv", ["run_eval", "--validate-only", "--case", "b"],
+            ), redirect_stdout(output):
+                evaluation.main()
+            self.assertIn("Validated 1 evaluation cases", output.getvalue())
+            self.assertIn("Languages: tr=1", output.getvalue())
+            self.assertIn("structure only", output.getvalue())
+            self.assertEqual(list(root.rglob("*")), [root / "eval", dataset])
+        runner.assert_not_called()
+        snapshot.assert_not_called()
+        config.assert_not_called()
+
+    @patch("eval.run_eval.run_evaluation")
+    @patch("eval.run_eval.load_yaml")
+    def test_validate_only_rejects_unknown_ids_and_invalid_json_before_execution(self, config, runner):
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "eval").mkdir()
+            dataset = root / "eval" / "golden_set.jsonl"
+            for content, arguments, message in (
+                ('{"id":"a","question":"Q","expected":{},"answer_language":"en"}\n',
+                 ["--case", "missing"], "Unknown case IDs"),
+                ('{bad json}\n', [], "Expecting property name"),
+            ):
+                with self.subTest(arguments=arguments):
+                    dataset.write_text(content, encoding="utf-8")
+                    errors = StringIO()
+                    with patch.object(evaluation, "__file__", str(root / "eval" / "run_eval.py")), patch(
+                        "sys.argv", ["run_eval", "--validate-only", *arguments],
+                    ), redirect_stderr(errors), self.assertRaises(SystemExit) as raised:
+                        evaluation.main()
+                    self.assertEqual(raised.exception.code, 2)
+                    self.assertIn(message, errors.getvalue())
+        runner.assert_not_called()
+        config.assert_not_called()
+
     @patch("eval.run_eval.run_baseline", return_value="Answer")
     def test_cli_generates_separate_run_files_without_overwriting_reviewed_result(self, baseline):
         with TemporaryDirectory() as directory:

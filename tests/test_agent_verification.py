@@ -24,7 +24,7 @@ class AgentVerificationTests(unittest.TestCase):
             "FY{{1:records/0/fiscal_year}}, {{1:records/0/end}}, "
             "{{1:records/0/form}} [Source 1]."
         )}
-        self.verdict = {"evidence_supported": True, "language_matches": True, "issues": []}
+        self.verdict = {"evidence_supported": True, "language_matches": True, "answer_complete": True, "issues": []}
         self.composition = {"kind": "answer", "text": "Revenue details follow.", "facts": ["1:records/0"]}
 
     def test_fields_are_rendered_from_exact_source_including_form_and_period(self):
@@ -101,7 +101,7 @@ class AgentVerificationTests(unittest.TestCase):
 
     @patch("src.verification.agent_answer.generate_response")
     def test_language_failure_withholds_candidate_and_preserves_evidence(self, generate):
-        verdict = {"evidence_supported": True, "language_matches": False, "issues": ["Wrong language."]}
+        verdict = {"evidence_supported": True, "language_matches": False, "answer_complete": True, "issues": ["Wrong language."]}
         generate.side_effect = [json.dumps(self.composition), json.dumps(verdict)]
         result = finalize_agent_answer("Gelir nedir?", "Draft", self.trace, {})
         self.assertIsNone(result["answer"])
@@ -111,7 +111,7 @@ class AgentVerificationTests(unittest.TestCase):
 
     @patch("src.verification.agent_answer.generate_response")
     def test_wrong_claim_to_source_mapping_is_withheld_even_with_valid_citations(self, generate):
-        verdict = {"evidence_supported": False, "language_matches": True,
+        verdict = {"evidence_supported": False, "language_matches": True, "answer_complete": True,
                    "issues": ["The cited revenue source does not support a risk claim."]}
         generate.side_effect = [json.dumps({"kind": "answer", "text": "Export restrictions affect sales [Source 1].", "facts": []}), json.dumps(verdict)]
         result = finalize_agent_answer("What risks?", "Draft", self.trace, {})
@@ -139,10 +139,23 @@ class AgentVerificationTests(unittest.TestCase):
 
     def test_verifier_cannot_claim_success_with_issues_or_missing_flags(self):
         for verdict in ({}, {**self.verdict, "language_matches": "true"},
+                        {key: value for key, value in self.verdict.items() if key != "answer_complete"},
+                        {**self.verdict, "answer_complete": 1},
+                        {**self.verdict, "answer_complete": False},
                         {**self.verdict, "issues": ["Wrong form."]},
                         {**self.verdict, "language_matches": False}):
             with self.subTest(verdict=verdict), self.assertRaises(ValueError):
                 parse_agent_verdict(json.dumps(verdict))
+
+    @patch("src.verification.agent_answer.generate_response")
+    def test_incomplete_answer_is_withheld_in_single_agent_path_too(self, generate):
+        verdict = {**self.verdict, "answer_complete": False, "issues": ["Requested explanation is missing."]}
+        generate.side_effect = [json.dumps(self.composition), json.dumps(verdict)]
+        result = finalize_agent_answer("Revenue and an explanation?", "Draft", self.trace, {})
+        self.assertIsNone(result["answer"])
+        self.assertEqual(result["verification"]["status"], "failed")
+        self.assertTrue(result["verification"]["evidence_supported"])
+        self.assertFalse(result["verification"]["answer_complete"])
 
     def test_fact_selection_cannot_change_values_or_inject_paths(self):
         catalog = build_fact_catalog(self.evidence)

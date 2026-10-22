@@ -6,6 +6,7 @@ import asyncio
 import hashlib
 import json
 from copy import deepcopy
+from collections import Counter
 from time import perf_counter
 
 from src.utils.utils import load_jsonl, load_yaml, save_json
@@ -25,8 +26,16 @@ def validate_cases(cases):
                 raise ValueError(f"Evaluation {field} must be non-empty text")
         if case["id"] in ids:
             raise ValueError(f"Duplicate evaluation ID: {case['id']}")
+        if case["id"] != case["id"].strip():
+            raise ValueError("Evaluation ID must not contain surrounding whitespace")
+        if "category" in case and (not isinstance(case["category"], str) or not case["category"].strip()):
+            raise ValueError("Evaluation category must be non-empty text")
         if not isinstance(case.get("expected"), dict):
             raise ValueError("Evaluation expected must be an object")
+        try:
+            json.dumps(case, allow_nan=False)
+        except (TypeError, ValueError) as error:
+            raise ValueError(f"Evaluation case {case['id']} must contain finite JSON values") from error
         ids.add(case["id"])
 
 
@@ -130,6 +139,8 @@ def main():
         default="single_agent",
     )
     parser.add_argument("--case", action="append", dest="case_ids", help="Run a specific case ID; repeat to select more cases.")
+    parser.add_argument("--validate-only", action="store_true",
+                        help="Validate and summarize the question set without model calls, snapshots, or result files.")
     parser.add_argument("--transport", choices=["direct", "mcp"], default="direct",
                         help="Tool execution path; use mcp to evaluate the application's CLI path.")
     args = parser.parse_args()
@@ -137,13 +148,24 @@ def main():
         parser.error("Baseline has no tools; --transport mcp does not apply")
     project_root = Path(__file__).resolve().parents[1]
 
-    cases = load_jsonl(project_root / "eval" / "golden_set.jsonl")
-    validate_cases(cases)
+    try:
+        cases = load_jsonl(project_root / "eval" / "golden_set.jsonl")
+        validate_cases(cases)
+    except (ValueError, OSError) as error:
+        parser.error(str(error))
     if args.case_ids:
         unknown = set(args.case_ids) - {case["id"] for case in cases}
         if unknown:
             parser.error(f"Unknown case IDs: {', '.join(sorted(unknown))}")
         cases = [case for case in cases if case["id"] in args.case_ids]
+    if args.validate_only:
+        categories = Counter(case.get("category", "uncategorized") for case in cases)
+        languages = Counter(case["answer_language"] for case in cases)
+        print(f"Validated {len(cases)} evaluation cases (structure only; expected answers were not scored).")
+        print("Categories: " + ", ".join(f"{name}={count}" for name, count in sorted(categories.items())))
+        print("Languages: " + ", ".join(f"{name}={count}" for name, count in sorted(languages.items())))
+        print("No model calls, data snapshots, or result files were created.")
+        return
     settings = load_yaml(project_root / "configs" / "settings.yaml")
 
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S_%fZ")
