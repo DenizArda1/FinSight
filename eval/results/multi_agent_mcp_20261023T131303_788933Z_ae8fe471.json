@@ -1,0 +1,142 @@
+[
+  {
+    "id": "amzn_missing_gross_margin_tr",
+    "question": "Amazon'un yerel verideki en son mali yıl için brüt kâr marjını hesapla.",
+    "expected": {
+      "ticker": "AMZN",
+      "metric": "gross_margin",
+      "period_end": "2025-12-31",
+      "status": "unavailable",
+      "missing_inputs": [
+        "gross_profit"
+      ],
+      "available_inputs": [
+        "revenue"
+      ]
+    },
+    "answer_language": "tr",
+    "answer": null,
+    "review": null,
+    "status": "error",
+    "error": {
+      "type": "ExceptionGroup",
+      "message": "unhandled errors in a TaskGroup (1 sub-exception)"
+    },
+    "mode": "multi_agent",
+    "data_snapshot": {
+      "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+      "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+      "code_sha256": "c40539c89f2e3035d51b343b96b61970e9d90ea172b4a20b5a60c3921801df42"
+    },
+    "verification": {
+      "status": "not_run",
+      "supported": null,
+      "issues": []
+    },
+    "draft": null,
+    "candidate": null,
+    "template": null,
+    "composition": null,
+    "evidence": [],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "error",
+        "error": {
+          "type": "ConnectionError",
+          "message": "HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /api/chat (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=11434): Failed to establish a new connection: [Errno 61] Connection refused\"))"
+        },
+        "elapsed_seconds": 0.00518000000010943
+      }
+    ],
+    "elapsed_seconds": 0.5488479160012503,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "base_url": "http://localhost:11434",
+      "timeout_seconds": 180,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      }
+    },
+    "dataset_sha256": "c9c87c2034a7ec5a43e59279bed5262539a758565b88d375bba478607b2f5084",
+    "recorded_at": "2026-10-23T13:13:05.515619+00:00",
+    "transport": "mcp"
+  },
+  {
+    "id": "aapl_latest_revenue_en",
+    "question": "What are Apple's latest annual revenue, fiscal year, and period-end date in the local data?",
+    "expected": {
+      "ticker": "AAPL",
+      "metric": "revenue",
+      "value": 416161000000,
+      "unit": "USD",
+      "fiscal_year": 2025,
+      "period_end": "2025-09-27"
+    },
+    "answer_language": "en",
+    "answer": null,
+    "review": null,
+    "status": "error",
+    "error": {
+      "type": "ExceptionGroup",
+      "message": "unhandled errors in a TaskGroup (1 sub-exception)"
+    },
+    "mode": "multi_agent",
+    "data_snapshot": {
+      "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+      "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+      "code_sha256": "c40539c89f2e3035d51b343b96b61970e9d90ea172b4a20b5a60c3921801df42"
+    },
+    "verification": {
+      "status": "not_run",
+      "supported": null,
+      "issues": []
+    },
+    "draft": null,
+    "candidate": null,
+    "template": null,
+    "composition": null,
+    "evidence": [],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "error",
+        "error": {
+          "type": "ConnectionError",
+          "message": "HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /api/chat (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=11434): Failed to establish a new connection: [Errno 61] Connection refused\"))"
+        },
+        "elapsed_seconds": 0.0015292080024664756
+      }
+    ],
+    "elapsed_seconds": 0.5944674169986683,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "base_url": "http://localhost:11434",
+      "timeout_seconds": 180,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      }
+    },
+    "dataset_sha256": "c9c87c2034a7ec5a43e59279bed5262539a758565b88d375bba478607b2f5084",
+    "recorded_at": "2026-10-23T13:13:06.110631+00:00",
+    "transport": "mcp"
+  }
+]

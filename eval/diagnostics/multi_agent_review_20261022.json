@@ -1,0 +1,161 @@
+{
+  "date": "2026-10-22",
+  "reviewer": "Codex, independent inspection of saved tool evidence and local source files; not the application Critic",
+  "scope": "Four targeted development cases, multi_agent over actual MCP, unchanged qwen3:8b settings. Not a full benchmark or a single-versus-multi comparison.",
+  "source_validation": "Local source files checked; no fresh external SEC audit.",
+  "model": "qwen3:8b",
+  "options": {
+    "temperature": 0,
+    "num_ctx": 16384,
+    "num_predict": 4096
+  },
+  "total_case_seconds": 518.5849433740004,
+  "released_answers": 0,
+  "cases": [
+    {
+      "case_id": "aapl_latest_revenue_and_risks_tr",
+      "result_file": "eval/results/multi_agent_mcp_20261022T182708_833140Z_64a8cfc3.json",
+      "result_file_sha256": "22276175c3bdef1a8fb0fbfebb68bfababb81f0c3c4381e0b54bbc345a26715e",
+      "classification": "answer_unavailable_due_to_writer_format_validation",
+      "released_answer_correctness": "not_applicable_no_answer_released",
+      "status": "withheld",
+      "elapsed_seconds": 166.298866000001,
+      "writer_attempts": 3,
+      "critic_calls": 0,
+      "tool_statuses": {
+        "completed": 3
+      },
+      "verification": {
+        "status": "failed",
+        "supported": false,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Remove repeated financial values from text and use unnumbered bullets."
+        ],
+        "stage": "writer_validation",
+        "deterministic_fields": "failed",
+        "method": "source_fields_and_llm_judge"
+      },
+      "review_issues": [
+        "The initial prose repeats financial numbers and dates.",
+        "All Writer attempts use localized [Kaynak N] citations, which the renderer does not recognize.",
+        "The licensing-cost risk reverses or adds a causal relationship not established by the cited fragment; the retrieved chunk starts mid-sentence."
+      ],
+      "offline_diagnostic": {
+        "change": "Replace [Kaynak N] with [Source N] in a copy of the final Writer composition.",
+        "deterministic_rendering": "passed",
+        "critic_called": false,
+        "semantic_correctness": "not_established",
+        "production_code_changed": false
+      }
+    },
+    {
+      "case_id": "aapl_latest_revenue_tr",
+      "result_file": "eval/results/multi_agent_mcp_20261022T183019_014316Z_88b699d9.json",
+      "result_file_sha256": "9950714481728e4d5a95a69ab4921190dfdfb2741925d10d5407f708aeae53ee",
+      "classification": "answer_unavailable_due_to_writer_format_validation",
+      "released_answer_correctness": "not_applicable_no_answer_released",
+      "status": "withheld",
+      "elapsed_seconds": 107.50590799999918,
+      "writer_attempts": 3,
+      "critic_calls": 0,
+      "tool_statuses": {
+        "completed": 2
+      },
+      "verification": {
+        "status": "failed",
+        "supported": false,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Remove repeated financial values from text and use unnumbered bullets."
+        ],
+        "stage": "writer_validation",
+        "deterministic_fields": "failed",
+        "method": "source_fields_and_llm_judge"
+      },
+      "review_issues": [
+        "The initial prose repeats year/date values and incorrectly says the question did not request a numerical value.",
+        "Both repairs retain localized [Kaynak N] citations; no answer is released."
+      ],
+      "offline_diagnostic": {
+        "change": "Replace [Kaynak N] with [Source N] in a copy of the final Writer composition.",
+        "deterministic_rendering": "passed",
+        "critic_called": false,
+        "semantic_correctness": "not_established",
+        "production_code_changed": false
+      }
+    },
+    {
+      "case_id": "amzn_missing_gross_margin_tr",
+      "result_file": "eval/results/multi_agent_mcp_20261022T183019_014316Z_88b699d9.json",
+      "result_file_sha256": "9950714481728e4d5a95a69ab4921190dfdfb2741925d10d5407f708aeae53ee",
+      "classification": "answer_unavailable_due_to_writer_format_validation",
+      "released_answer_correctness": "not_applicable_no_answer_released",
+      "status": "withheld",
+      "elapsed_seconds": 142.25432016600098,
+      "writer_attempts": 3,
+      "critic_calls": 0,
+      "tool_statuses": {
+        "completed": 4
+      },
+      "verification": {
+        "status": "failed",
+        "supported": false,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Remove repeated financial values from text and use unnumbered bullets."
+        ],
+        "stage": "writer_validation",
+        "deterministic_fields": "failed",
+        "method": "source_fields_and_llm_judge"
+      },
+      "review_issues": [
+        "The tools correctly report available revenue and missing gross profit for the latest period.",
+        "All Writer attempts repeat 2025 in prose despite revision feedback."
+      ]
+    },
+    {
+      "case_id": "aapl_latest_revenue_en",
+      "result_file": "eval/results/multi_agent_mcp_20261022T183445_862876Z_1ad4ea3d.json",
+      "result_file_sha256": "f9758bb62a667913b04e46f64c4fc6cec9cfe580ac877a356161342007d7e2f5",
+      "classification": "answer_unavailable_due_to_writer_format_validation",
+      "released_answer_correctness": "not_applicable_no_answer_released",
+      "status": "withheld",
+      "elapsed_seconds": 102.52584920799927,
+      "writer_attempts": 3,
+      "critic_calls": 0,
+      "tool_statuses": {
+        "completed": 2
+      },
+      "verification": {
+        "status": "failed",
+        "supported": false,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Remove repeated financial values from text and use unnumbered bullets."
+        ],
+        "stage": "writer_validation",
+        "deterministic_fields": "failed",
+        "method": "source_fields_and_llm_judge"
+      },
+      "review_issues": [
+        "The selected financial record matches the expected value and period.",
+        "Repairs remove the revenue/date but retain the 10-K form label in prose; its digit still triggers rejection."
+      ]
+    }
+  ],
+  "local_sources": [
+    {
+      "path": "financial_data/processed/0000320193/revenue.json",
+      "sha256": "c413e03018773b3303f28dc7e1bcd4ebd80c3b6bd1b5f2042f829c145f6058e9"
+    },
+    {
+      "path": "financial_data/processed/0000320193/filings/0000320193-25-000079/text.json",
+      "sha256": "bd744ef4d984ecf5a8adaf7745e5df9f2d5a42aa0a7b3fa6fda571be1c622e20"
+    },
+    {
+      "path": "financial_data/processed/0001018724/revenue.json",
+      "sha256": "bc5bdd919ba624cd04e97a5549859a0df474025856f4f2178d0f74ea4b65728b"
+    },
+    {
+      "path": "financial_data/processed/0001018724/gross_profit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  ]
+}

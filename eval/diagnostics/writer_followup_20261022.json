@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-22",
+  "reviewer": "Codex; independent inspection of saved answers against tool evidence",
+  "scope": "Three fresh MCP multi-agent runs across two code iterations, followed by offline rendering checks after citation placement cleanup. Not a benchmark.",
+  "tests": {
+    "command": ".venv/bin/python -m unittest tests.test_agent_verification tests.test_writer tests.test_critic tests.test_orchestrator tests.test_evaluation -q",
+    "passed": 101
+  },
+  "model_settings_changed": false,
+  "runs": [
+    {
+      "case_id": "aapl_latest_revenue_tr",
+      "result_file": "eval/results/multi_agent_mcp_20261022T185100_772827Z_367e21e3.json",
+      "result_file_sha256": "efaba374a4b371f598b997e1310758856d58eddf0937f4b89f047d23c1ce61cc",
+      "data_snapshot": {
+        "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+        "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+        "code_sha256": "80b9de5aa2699c9307111593239fc607dcfc5894ececefaae868df52c5964e04"
+      },
+      "elapsed_seconds": 98.528605083,
+      "classification": "released_correct_numeric_answer",
+      "review_note": "Revenue, fiscal year and period end agree with the local source record.",
+      "automatic_verification": {
+        "supported": true,
+        "issues": [],
+        "evidence_supported": true,
+        "language_matches": true,
+        "answer_complete": true,
+        "status": "passed",
+        "stage": "grounding_and_language",
+        "deterministic_fields": "passed",
+        "method": "source_fields_and_llm_judge"
+      },
+      "writer_attempts": 1,
+      "critic_calls": 1,
+      "current_renderer_replay": {
+        "status": "rendered",
+        "answer": "Apple Inc.'in en son yıllık geliri, mali yılı ve dönem bitiş tarihi aşağıda verilmiştir.\n\nAAPL | revenue: 416161000000 USD | FY2025 | 2024-09-29 → 2025-09-27 | 10-K | 0000320193-25-000079 [Source 2]",
+        "critic_called": false
+      }
+    },
+    {
+      "case_id": "aapl_latest_revenue_and_risks_tr",
+      "result_file": "eval/results/multi_agent_mcp_20261022T185328_982186Z_a6bab54d.json",
+      "result_file_sha256": "f666b5558dc2efa3f681c203db0947953277429c40063d1102aed70289e53268",
+      "data_snapshot": {
+        "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+        "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+        "code_sha256": "80b9de5aa2699c9307111593239fc607dcfc5894ececefaae868df52c5964e04"
+      },
+      "elapsed_seconds": 143.65991900000154,
+      "classification": "false_acceptance_incomplete_answer",
+      "review_note": "Critic approved citation-only risk bullets with no substantive risk descriptions.",
+      "automatic_verification": {
+        "supported": true,
+        "issues": [],
+        "evidence_supported": true,
+        "language_matches": true,
+        "answer_complete": true,
+        "status": "passed",
+        "stage": "grounding_and_language",
+        "deterministic_fields": "passed",
+        "method": "source_fields_and_llm_judge"
+      },
+      "writer_attempts": 2,
+      "critic_calls": 1,
+      "current_renderer_replay": {
+        "status": "rejected",
+        "reason": "A citation-only line is not an explanation. Write the substantive claim supported by that source on the same line, then cite it. Filing metadata cards do not display risk descriptions. For a purely numerical request fully answered by facts, use empty text instead."
+      }
+    },
+    {
+      "case_id": "aapl_latest_revenue_and_risks_tr",
+      "result_file": "eval/results/multi_agent_mcp_20261022T185719_947062Z_c5ffb639.json",
+      "result_file_sha256": "3ffd02450f67f0442fa4cb346239eadae21a64be34630c5c14cb67117ea5f130",
+      "data_snapshot": {
+        "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+        "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+        "code_sha256": "84f9e8c308766d19916474a7d1231c76b05e1241e00f231b9fecbfbde13154db"
+      },
+      "elapsed_seconds": 146.997656208001,
+      "classification": "released_substantive_answer_with_citation_placement_issue",
+      "review_note": "Revenue is correct and both risk descriptions are supported by their respective excerpts. An automatic extra Source 2 citation was appended to risk prose; removed in the subsequent deterministic renderer change.",
+      "automatic_verification": {
+        "supported": true,
+        "issues": [],
+        "evidence_supported": true,
+        "language_matches": true,
+        "answer_complete": true,
+        "status": "passed",
+        "stage": "grounding_and_language",
+        "deterministic_fields": "passed",
+        "method": "source_fields_and_llm_judge"
+      },
+      "writer_attempts": 2,
+      "critic_calls": 1,
+      "current_renderer_replay": {
+        "status": "rendered",
+        "answer": "Apple Inc.'ın en son yıllık geliri kaynaklara göre belirtilmiştir. En son yıllık raporundaki en az iki önemli risk aşağıda özetlenmiştir:\n\n- [Source 3] Lisans maliyetleri ve belirli ürünleri satamama riski, şirketin işini, marka değerini, operasyon sonuçlarını, finansal durumunu ve hisse fiyatını ciddi şekilde olumsuz etkileyebilir.\n- [Source 4] Yeni iş stratejileri, ticari ilişkiler ve alım yatırımları, şirketin devam eden işini kesintiye uğratabilir, beklenmeyen riskler oluşturabilir ve işini, marka değerini, operasyon sonuçlarını ve finansal durumunu ciddi şekilde olumsuz etkileyebilir.\n\nAAPL | revenue: 416161000000 USD | FY2025 | 2024-09-29 → 2025-09-27 | 10-K | 0000320193-25-000079 [Source 2]\n\nAAPL | FY2025 | 2025-09-27 | 10-K | 0000320193-25-000079 | Item 1A [Source 3]\n\nAAPL | FY2025 | 2025-09-27 | 10-K | 0000320193-25-000079 | Item 1A [Source 4]",
+        "critic_called": false
+      }
+    }
+  ],
+  "limitations": [
+    "No fresh end-to-end model run after the final citation-placement-only renderer change.",
+    "English numeric and Amazon missing-data cases have not yet been rerun with these changes.",
+    "Critic previously falsely accepted an incomplete answer; the deterministic guard covers citation-only lines, not all possible incomplete answers.",
+    "Risk retrieval still returns a mid-sentence excerpt. Broader context handling remains open.",
+    "Turkish wording for acquisitions and reputation could be improved."
+  ]
+}

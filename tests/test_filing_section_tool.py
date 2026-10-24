@@ -5,7 +5,7 @@ import unittest
 from unittest.mock import patch
 
 from src.tools.dispatcher import execute_tool
-from src.tools.report_search import get_filing_section
+from src.tools.report_search import get_filing_section, load_match_document
 from src.utils.utils import save_json
 from src.verification.agent_answer import build_agent_evidence, build_fact_catalog, format_source_references
 
@@ -43,6 +43,59 @@ class FilingSectionToolTests(unittest.TestCase):
         save_json({'reports': [self.entry]}, self.summary_path)
         save_json(self.document, self.directory / 'text.json')
         save_json(self.sections, self.directory / 'sections.json')
+
+    def test_match_loads_exact_report_without_changing_input(self):
+        match = {'metadata': {**self.entry, 'form': '10-K'}}
+        original = deepcopy(match)
+        document = load_match_document(match, self.root / 'financial_data/processed')
+        self.assertEqual(document, self.document)
+        self.assertEqual(match, original)
+
+    def test_invalid_match_metadata_is_rejected_before_reading(self):
+        metadata = {**self.entry, 'form': '10-K'}
+        invalid = [None, [], {}, {'metadata': []}]
+        for changes in ({'cik': '../escape'}, {'cik': 1}, {'cik': '1'},
+                        {'accession_number': '../escape'}, {'accession_number': None},
+                        {'ticker': ''}, {'form': None}, {'report_date': ''},
+                        {'source_url': None}, {'fiscal_year': True}, {'fiscal_year': 0}):
+            invalid.append({'metadata': {**metadata, **changes}})
+        with patch('src.tools.report_search.load_json') as load:
+            for match in invalid:
+                with self.subTest(match=match), self.assertRaises(ValueError):
+                    load_match_document(match, self.root / 'financial_data/processed')
+            load.assert_not_called()
+
+    def test_match_report_identity_and_metadata_mismatches_are_rejected(self):
+        match = {'metadata': {**self.entry, 'form': '10-K'}}
+        changes = (
+            ('company', 'cik', '0000000002'), ('company', 'ticker', 'OTHER'),
+            ('filing', 'accessionNumber', '0000000001-24-000001'),
+            ('filing', 'fiscal_year', 2024), ('filing', 'fiscal_year', True),
+            ('filing', 'form', '10-K/A'), ('filing', 'reportDate', '2024-12-31'),
+            ('filing', 'url', 'https://example.com/other.htm'),
+        )
+        for group, field, value in changes:
+            with self.subTest(field=field, value=value):
+                document = deepcopy(self.document)
+                document[group][field] = value
+                save_json(document, self.directory / 'text.json')
+                with self.assertRaisesRegex(ValueError, 'does not match'):
+                    load_match_document(match, self.root / 'financial_data/processed')
+
+    def test_malformed_prepared_report_is_rejected(self):
+        match = {'metadata': {**self.entry, 'form': '10-K'}}
+        for document in ([], {}, {**self.document, 'company': []},
+                         {**self.document, 'filing': None},
+                         {**self.document, 'text': ' '}, {**self.document, 'text': None}):
+            with self.subTest(document=document):
+                save_json(document, self.directory / 'text.json')
+                with self.assertRaises(ValueError):
+                    load_match_document(match, self.root / 'financial_data/processed')
+
+    def test_missing_match_report_does_not_fall_back_to_another_report(self):
+        match = {'metadata': {**self.entry, 'form': '10-K', 'accession_number': '0000000001-24-000001'}}
+        with self.assertRaises(FileNotFoundError):
+            load_match_document(match, self.root / 'financial_data/processed')
 
     def test_complete_text_and_source_metadata_use_reported_fiscal_year(self):
         result = execute_tool('get_filing_section', {'ticker': 'TEST', 'year': 2025, 'section': 'Item 1A'})

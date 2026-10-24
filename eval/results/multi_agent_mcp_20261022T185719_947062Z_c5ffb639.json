@@ -1,0 +1,600 @@
+[
+  {
+    "id": "aapl_latest_revenue_and_risks_tr",
+    "question": "Apple'ın yerel verideki en son yıllık gelirini belirt ve en son yıllık raporundaki en az iki önemli riski kaynaklarıyla özetle.",
+    "expected": {
+      "financial": {
+        "ticker": "AAPL",
+        "metric": "revenue",
+        "value": 416161000000,
+        "unit": "USD",
+        "fiscal_year": 2025,
+        "period_end": "2025-09-27",
+        "form": "10-K",
+        "accession_number": "0000320193-25-000079",
+        "sources": [
+          {
+            "path": "financial_data/processed/0000320193/revenue.json",
+            "sha256": "c413e03018773b3303f28dc7e1bcd4ebd80c3b6bd1b5f2042f829c145f6058e9"
+          }
+        ]
+      },
+      "narrative": {
+        "ticker": "AAPL",
+        "fiscal_year": 2025,
+        "section": "Item 1A",
+        "accession_number": "0000320193-25-000079",
+        "minimum_distinct_risks": 2,
+        "requires_source": true,
+        "requires_substantive_summary": true,
+        "must_not_accept": [
+          "metadata_only_answer",
+          "claim_citing_an_unrelated_excerpt"
+        ],
+        "example_supported_topics": [
+          "New strategies, business relationships and acquisitions can disrupt operations and create unexpected risks.",
+          "Industrial accidents at suppliers and contract manufacturers can disrupt operations and harm reputation."
+        ],
+        "other_supported_risks_allowed": true,
+        "must_not_require_every_retrieved_source": true,
+        "sources": [
+          {
+            "path": "financial_data/processed/0000320193/filings/0000320193-25-000079/text.json",
+            "sha256": "bd744ef4d984ecf5a8adaf7745e5df9f2d5a42aa0a7b3fa6fda571be1c622e20"
+          }
+        ]
+      }
+    },
+    "answer_language": "tr",
+    "answer": "Apple Inc.'ın en son yıllık geliri kaynaklara göre belirtilmiştir. En son yıllık raporundaki en az iki önemli risk aşağıda özetlenmiştir:\n\n- [Source 3] Lisans maliyetleri ve belirli ürünleri satamama riski, şirketin işini, marka değerini, operasyon sonuçlarını, finansal durumunu ve hisse fiyatını ciddi şekilde olumsuz etkileyebilir.\n- [Source 4] Yeni iş stratejileri, ticari ilişkiler ve alım yatırımları, şirketin devam eden işini kesintiye uğratabilir, beklenmeyen riskler oluşturabilir ve işini, marka değerini, operasyon sonuçlarını ve finansal durumunu ciddi şekilde olumsuz etkileyebilir. [Source 2]\n\nAAPL | revenue: 416161000000 USD | FY2025 | 2024-09-29 → 2025-09-27 | 10-K | 0000320193-25-000079 [Source 2]\n\nAAPL | FY2025 | 2025-09-27 | 10-K | 0000320193-25-000079 | Item 1A [Source 3]\n\nAAPL | FY2025 | 2025-09-27 | 10-K | 0000320193-25-000079 | Item 1A [Source 4]",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": {
+      "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+      "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+      "code_sha256": "84f9e8c308766d19916474a7d1231c76b05e1241e00f231b9fecbfbde13154db"
+    },
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": "Apple Inc.'ın en son yıllık geliri kaynaklara göre belirtilmiştir. En son yıllık raporundaki en az iki önemli risk aşağıda özetlenmiştir:\n\n- [Source 3] Lisans maliyetleri ve belirli ürünleri satamama riski, şirketin işini, marka değerini, operasyon sonuçlarını, finansal durumunu ve hisse fiyatını ciddi şekilde olumsuz etkileyebilir.\n- [Source 4] Yeni iş stratejileri, ticari ilişkiler ve alım yatırımları, şirketin devam eden işini kesintiye uğratabilir, beklenmeyen riskler oluşturabilir ve işini, marka değerini, operasyon sonuçlarını ve finansal durumunu ciddi şekilde olumsuz etkileyebilir. [Source 2]\n\nAAPL | revenue: 416161000000 USD | FY2025 | 2024-09-29 → 2025-09-27 | 10-K | 0000320193-25-000079 [Source 2]\n\nAAPL | FY2025 | 2025-09-27 | 10-K | 0000320193-25-000079 | Item 1A [Source 3]\n\nAAPL | FY2025 | 2025-09-27 | 10-K | 0000320193-25-000079 | Item 1A [Source 4]",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "answer",
+      "text": "Apple Inc.'ın en son yıllık geliri kaynaklara göre belirtilmiştir. En son yıllık raporundaki en az iki önemli risk aşağıda özetlenmiştir:\n\n- [Source 3] Lisans maliyetleri ve belirli ürünleri satamama riski, şirketin işini, marka değerini, operasyon sonuçlarını, finansal durumunu ve hisse fiyatını ciddi şekilde olumsuz etkileyebilir.\n- [Source 4] Yeni iş stratejileri, ticari ilişkiler ve alım yatırımları, şirketin devam eden işini kesintiye uğratabilir, beklenmeyen riskler oluşturabilir ve işini, marka değerini, operasyon sonuçlarını ve finansal durumunu ciddi şekilde olumsuz etkileyebilir.",
+      "facts": [
+        "2:records/0",
+        "3:matches/0/metadata",
+        "4:matches/0/metadata"
+      ]
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "get_company_facts",
+        "arguments": {
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1,
+          "cik": "0000320193"
+        },
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "revenue",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 416161000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 3,
+        "tool": "search_filings",
+        "arguments": {
+          "section": "Item 1A",
+          "query": "significant risks",
+          "top_k": 2,
+          "ticker": "AAPL",
+          "latest": true
+        },
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "name": "Apple Inc.",
+            "cik": "0000320193"
+          },
+          "query": "significant risks",
+          "fiscal_year": 2025,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0000320193-25-000079:item_1a:25",
+              "text": "preclude the Company from selling certain products or services and expose the Company to significant licensing costs, all of which can materially adversely affect the Company’s business, reputation, results of operations, financial condition and stock price.",
+              "metadata": {
+                "fiscal_year": 2025,
+                "form": "10-K",
+                "report_date": "2025-09-27",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "ticker": "AAPL",
+                "cik": "0000320193",
+                "start": 50611,
+                "end": 50869,
+                "accession_number": "0000320193-25-000079",
+                "section_start": 24541,
+                "section_end": 92584,
+                "section_title": "Risk Factors",
+                "section": "Item 1A"
+              },
+              "distance": 0.4591611623764038
+            }
+          ],
+          "latest": true,
+          "selected_report": {
+            "fiscal_year": 2025,
+            "report_date": "2025-09-27",
+            "accession_number": "0000320193-25-000079"
+          }
+        }
+      },
+      {
+        "source_id": 4,
+        "tool": "search_filings",
+        "arguments": {
+          "section": "Item 1A",
+          "query": "significant risks",
+          "top_k": 2,
+          "ticker": "AAPL",
+          "latest": true
+        },
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "name": "Apple Inc.",
+            "cik": "0000320193"
+          },
+          "query": "significant risks",
+          "fiscal_year": 2025,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0000320193-25-000079:item_1a:36",
+              "text": "Investment in new business strategies, commercial relationships and acquisitions could disrupt the Company’s ongoing business, present risks not originally contemplated, and materially adversely affect the Company’s business, reputation, results of operations and financial condition.",
+              "metadata": {
+                "accession_number": "0000320193-25-000079",
+                "report_date": "2025-09-27",
+                "form": "10-K",
+                "section": "Item 1A",
+                "ticker": "AAPL",
+                "fiscal_year": 2025,
+                "section_title": "Risk Factors",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "start": 63356,
+                "section_end": 92584,
+                "cik": "0000320193",
+                "section_start": 24541,
+                "end": 63640
+              },
+              "distance": 0.4720956087112427
+            }
+          ],
+          "latest": true,
+          "selected_report": {
+            "fiscal_year": 2025,
+            "report_date": "2025-09-27",
+            "accession_number": "0000320193-25-000079"
+          }
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "mixed",
+        "plan": [
+          {
+            "id": "task_1",
+            "agent": "financial_data",
+            "instruction": "Get Apple's latest annual revenue, including fiscal year, period end date, and source metadata (e.g., 10-K filing)."
+          },
+          {
+            "id": "task_2",
+            "agent": "filing_rag",
+            "instruction": "Summarize at least two significant risks from Apple's latest annual report (e.g., Risk Factors section), citing specific sections and page numbers from the filing."
+          }
+        ],
+        "elapsed_seconds": 15.157186541997362
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_9foawkfe",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "AAPL"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 11.062633583002025
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        },
+        "elapsed_seconds": 0.011775792001571972
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_tnyeee49",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 1,
+                "cik": "0000320193"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 7.3673879579982895
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1,
+          "cik": "0000320193"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "revenue",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 416161000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.006894791000377154
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 3,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 9.984661249996861
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 28.43340358400019
+      },
+      {
+        "type": "agent",
+        "task_id": "task_2",
+        "agent": "filing_rag",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "filing_rag",
+        "step": 1,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_zpc9ztel",
+            "function": {
+              "index": 0,
+              "name": "search_filings",
+              "arguments": {
+                "section": "Item 1A",
+                "query": "significant risks",
+                "top_k": 2,
+                "ticker": "AAPL",
+                "latest": true
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 10.674685374997352
+      },
+      {
+        "type": "tool",
+        "task_id": "task_2",
+        "agent": "filing_rag",
+        "step": 1,
+        "call_id": 1,
+        "name": "search_filings",
+        "arguments": {
+          "section": "Item 1A",
+          "query": "significant risks",
+          "top_k": 2,
+          "ticker": "AAPL",
+          "latest": true
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "name": "Apple Inc.",
+            "cik": "0000320193"
+          },
+          "query": "significant risks",
+          "fiscal_year": 2025,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0000320193-25-000079:item_1a:25",
+              "text": "preclude the Company from selling certain products or services and expose the Company to significant licensing costs, all of which can materially adversely affect the Company’s business, reputation, results of operations, financial condition and stock price.",
+              "metadata": {
+                "fiscal_year": 2025,
+                "form": "10-K",
+                "report_date": "2025-09-27",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "ticker": "AAPL",
+                "cik": "0000320193",
+                "start": 50611,
+                "end": 50869,
+                "accession_number": "0000320193-25-000079",
+                "section_start": 24541,
+                "section_end": 92584,
+                "section_title": "Risk Factors",
+                "section": "Item 1A"
+              },
+              "distance": 0.4591611623764038
+            },
+            {
+              "chunk_id": "0000320193-25-000079:item_1a:36",
+              "text": "Investment in new business strategies, commercial relationships and acquisitions could disrupt the Company’s ongoing business, present risks not originally contemplated, and materially adversely affect the Company’s business, reputation, results of operations and financial condition.",
+              "metadata": {
+                "accession_number": "0000320193-25-000079",
+                "report_date": "2025-09-27",
+                "form": "10-K",
+                "section": "Item 1A",
+                "ticker": "AAPL",
+                "fiscal_year": 2025,
+                "section_title": "Risk Factors",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "start": 63356,
+                "section_end": 92584,
+                "cik": "0000320193",
+                "section_start": 24541,
+                "end": 63640
+              },
+              "distance": 0.4720956087112427
+            }
+          ],
+          "latest": true,
+          "selected_report": {
+            "fiscal_year": 2025,
+            "report_date": "2025-09-27",
+            "accession_number": "0000320193-25-000079"
+          }
+        },
+        "elapsed_seconds": 0.1787040839990368
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "filing_rag",
+        "step": 2,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 19.618091833002836
+      },
+      {
+        "type": "agent",
+        "task_id": "task_2",
+        "agent": "filing_rag",
+        "status": "completed",
+        "elapsed_seconds": 30.47151495900107
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"Apple Inc.'ın en son yıllık geliri 2025 finansal yılında 416,161 milyar USD'dır. En son yıllık raporundaki en az iki önemli risk aşağıda özetlenmiştir:\\n\\n- [Source 3] Lisans maliyetleri ve belirli ürünleri satamama riski, şirketin işini, marka değerini, operasyon sonuçlarını, finansal durumunu ve hisse fiyatını ciddi şekilde olumsuz etkileyebilir.\\n- [Source 4] Yeni iş stratejileri, ticari ilişkiler ve alım yatırımları, şirketin devam eden işini kesintiye uğratabilir, beklenmeyen riskler oluşturabilir ve işini, marka değerini, operasyon sonuçlarını ve finansal durumunu ciddi şekilde olumsuz etkileyebilir.\",\"facts\":[ \"2:records/0\", \"3:matches/0/metadata\", \"4:matches/0/metadata\" ]}",
+        "elapsed_seconds": 27.72258737499942
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"2025\", \"416,161\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        },
+        "elapsed_seconds": 27.72342416600077
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"2025\", \"416,161\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n\n\"kind\":\"answer\",\"text\":\"Apple Inc.'ın en son yıllık geliri kaynaklara göre belirtilmiştir. En son yıllık raporundaki en az iki önemli risk aşağıda özetlenmiştir:\\n\\n- [Source 3] Lisans maliyetleri ve belirli ürünleri satamama riski, şirketin işini, marka değerini, operasyon sonuçlarını, finansal durumunu ve hisse fiyatını ciddi şekilde olumsuz etkileyebilir.\\n- [Source 4] Yeni iş stratejileri, ticari ilişkiler ve alım yatırımları, şirketin devam eden işini kesintiye uğratabilir, beklenmeyen riskler oluşturabilir ve işini, marka değerini, operasyon sonuçlarını ve finansal durumunu ciddi şekilde olumsuz etkileyebilir.\",\"facts\":[ \"2:records/0\", \"3:matches/0/metadata\", \"4:matches/0/metadata\" ]}",
+        "elapsed_seconds": 26.367891292000422
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 26.36922941600278
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "status": "completed",
+        "content": "{\"evidence_supported\":true,\"language_matches\":true,\"answer_complete\":true,\"issues\":[]}",
+        "elapsed_seconds": 18.215749541999685
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 18.216501457998675
+      }
+    ],
+    "elapsed_seconds": 146.997656208001,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "base_url": "http://localhost:11434",
+      "timeout_seconds": 180,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      }
+    },
+    "dataset_sha256": "9232eca96ed3096a7d927ee2e14b39b9dbed6fe72f32aeab6becf7a72f2cb3cf",
+    "recorded_at": "2026-10-22T18:59:48.141864+00:00",
+    "transport": "mcp"
+  }
+]

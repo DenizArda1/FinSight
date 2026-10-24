@@ -31,6 +31,58 @@ class AgentVerificationTests(unittest.TestCase):
         self.assertEqual(render_agent_template(self.template, self.evidence),
                          "Revenue: 416161000000 USD, FY2025, 2025-09-27, 10-K [Source 1].")
 
+    def test_turkish_citation_label_preserves_source_and_composition(self):
+        payload = {"kind": "answer", "text": "Gelir bilgileri [Kaynak 1].", "facts": ["1:records/0"]}
+        catalog = build_fact_catalog(self.evidence)
+        rendered = render_agent_template(compose_template(payload, catalog), self.evidence)
+        self.assertTrue(rendered.startswith("Gelir bilgileri [Source 1]."))
+        self.assertNotIn("[Kaynak", rendered)
+        self.assertIn("416161000000 USD", rendered)
+        self.assertEqual(payload["text"], "Gelir bilgileri [Kaynak 1].")
+        self.assertIn(self.record["accn"], format_source_references(rendered, self.evidence))
+
+    def test_localized_citations_do_not_allow_unknown_sources_or_hardcoded_values(self):
+        catalog = build_fact_catalog(self.evidence)
+        for text in ("Gelir [Kaynak 99].", "Gelir 999 USD [Kaynak 1].", "Gelir [Kaynak 0]."):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                template = compose_template({**self.composition, "text": text}, catalog)
+                render_agent_template(template, self.evidence)
+
+    def test_citation_only_lines_cannot_substitute_for_requested_content(self):
+        catalog = build_fact_catalog(self.evidence)
+        for text in ("Risks follow:\n- [Source 1]", "Riskler:\n* [Kaynak 1].",
+                     "Risks follow:\n- [1:records/0]", "[Source 1]", "Risks:\n• **[Source 1]**"):
+            with self.subTest(text=text), self.assertRaisesRegex(ValueError, "citation-only"):
+                compose_template({**self.composition, "text": text}, catalog)
+        numerical = {**self.composition, "text": ""}
+        self.assertIn("416161000000", render_agent_template(compose_template(numerical, catalog), self.evidence))
+        narrative = {**self.composition, "text": "- Gelir bilgileri [Kaynak 1]."}
+        self.assertIn("Gelir bilgileri [Source 1]", render_agent_template(compose_template(narrative, catalog), self.evidence))
+
+    def test_financial_fact_citations_are_not_appended_to_risk_prose(self):
+        trace = [*self.trace, {
+            "type": "tool", "status": "completed", "name": "search_filings", "arguments": {},
+            "result": {"matches": [{"text": "Suppliers may disrupt production.", "metadata": {"section": "Item 1A"}}]},
+        }]
+        evidence = build_agent_evidence(trace)
+        text = "Suppliers may disrupt production. [Source 2]"
+        payload = {"kind": "answer", "text": text, "facts": ["1:records/0"]}
+        answer = render_agent_template(compose_template(payload, build_fact_catalog(evidence)), evidence)
+        narrative, card = answer.split("\n\n")
+        self.assertEqual(narrative, text)
+        self.assertIn("[Source 1]", card)
+        self.assertIn("416161000000 USD", card)
+
+    def test_prose_feedback_identifies_values_but_excludes_citations_and_trusted_fields(self):
+        payload = {**self.composition, "text": "FY2025 10-K 25% [Source 1]."}
+        template = compose_template(payload, build_fact_catalog(self.evidence))
+        with self.assertRaises(ValueError) as raised:
+            render_agent_template(template, self.evidence)
+        message = str(raised.exception)
+        self.assertIn('["FY2025", "10-K", "25%"]', message)
+        self.assertNotIn("416161000000", message)
+        self.assertNotIn('"1"', message)
+
     def test_hardcoded_numbers_forms_dates_percentages_and_urls_are_rejected(self):
         for text in ("394300000000 USD", "10-K/A", "FY2023", "2023-10-28", "25%", "https://invented.test/source"):
             with self.subTest(text=text), self.assertRaises(ValueError):

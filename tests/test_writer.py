@@ -52,6 +52,15 @@ class WriterTests(unittest.IsolatedAsyncioTestCase):
         self.record["value"] = 999
         self.assertEqual(result["evidence"][0]["result"]["records"][0]["value"], 416161000000)
 
+    async def test_localized_citation_is_rendered_but_still_requires_critic(self):
+        composition = {**self.composition, "text": "Gelir bilgileri [Kaynak 1]."}
+        self.generate.return_value = json.dumps(composition)
+        await run_writer(self.state, {})
+        self.assertIn("Gelir bilgileri [Source 1].", self.state["draft"])
+        self.assertEqual(self.state["composition"], composition)
+        self.assertIsNone(self.state["answer"])
+        self.assertIsNone(self.state["verification"])
+
     async def test_ignores_failed_tools_specialist_summaries_and_previous_writer_outputs(self):
         self.state["trace"].insert(0, {
             "type": "tool", "status": "error", "name": "get_company_facts",

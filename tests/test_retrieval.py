@@ -114,13 +114,16 @@ class ReportSearchToolTests(unittest.TestCase):
             "src.tools.report_search.load_yaml", return_value=settings
         ), patch(
             "src.tools.report_search.get_vector_collection", return_value=collection
-        ), patch("src.tools.report_search.search_reports", return_value=matches) as search:
+        ), patch("src.tools.report_search.search_reports", return_value=matches) as search, patch(
+            "src.tools.report_search.expand_search_matches", return_value=matches
+        ) as expand:
             result = search_company_reports(" nvda ", "Risks?", fiscal_year=2026, top_k=3, section="Item 1A")
 
         search.assert_called_once_with(
             query="Risks?", collection=collection, embedding_config=settings["embedding"],
             top_k=3, ticker="NVDA", fiscal_year=2026, section="Item 1A", accession_number=None,
         )
+        self.assertEqual(expand.call_args.args[0], matches)
         
         self.assertEqual(result, {
             "company": company, "query": "Risks?", "fiscal_year": 2026,
@@ -211,7 +214,10 @@ class LatestReportSearchTests(unittest.TestCase):
         self.resolve.assert_not_called()
 
     @patch("src.rag.retrieval.embed_text", return_value=[1.0, 0.0])
-    def test_real_collection_filters_to_latest_accession_without_older_section_fallback(self, embed):
+    @patch("src.tools.report_search.expand_search_matches")
+    def test_real_collection_filters_to_latest_accession_without_older_section_fallback(self, expand, embed):
+        # This test isolates Chroma filtering; prepared-report expansion is tested separately.
+        expand.side_effect = lambda matches, processed_path: matches
         client = chromadb.EphemeralClient()
         name = f"latest-test-{uuid4().hex}"
         collection = client.create_collection(name=name, embedding_function=None)

@@ -1,0 +1,358 @@
+[
+  {
+    "id": "aapl_latest_revenue_en",
+    "question": "What are Apple's latest annual revenue, fiscal year, and period-end date in the local data?",
+    "expected": {
+      "ticker": "AAPL",
+      "metric": "revenue",
+      "value": 416161000000,
+      "unit": "USD",
+      "fiscal_year": 2025,
+      "period_end": "2025-09-27"
+    },
+    "answer_language": "en",
+    "answer": null,
+    "review": null,
+    "status": "withheld",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": {
+      "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+      "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+      "code_sha256": "d50badc747f7b341894cee494d5883c4a3800eda0d50ac50c39afa72d298181b"
+    },
+    "verification": {
+      "status": "failed",
+      "supported": false,
+      "issues": [
+        "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Remove repeated financial values from text and use unnumbered bullets."
+      ],
+      "stage": "writer_validation",
+      "deterministic_fields": "failed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": null,
+    "candidate": null,
+    "template": null,
+    "composition": null,
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "get_company_facts",
+        "arguments": {
+          "years": 1,
+          "cik": "0000320193",
+          "concept": "revenue",
+          "unit": "USD"
+        },
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "revenue",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 416161000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "financial",
+        "plan": [
+          {
+            "id": "task_1",
+            "agent": "financial_data",
+            "instruction": "Retrieve Apple's latest annual revenue, fiscal year, and period-end date. Ensure the period-end date is included and the fiscal year is specified. Use the latest available data without assuming a specific year."
+          }
+        ],
+        "elapsed_seconds": 12.834351749999769
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_yfsfffc4",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "AAPL"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 8.996705082998233
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        },
+        "elapsed_seconds": 0.013064957998722093
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_vuezdt17",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "years": 1,
+                "cik": "0000320193",
+                "concept": "revenue",
+                "unit": "USD"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 11.076371582999855
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "years": 1,
+          "cik": "0000320193",
+          "concept": "revenue",
+          "unit": "USD"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "revenue",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 416161000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.007414208001137013
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 3,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 16.199020583000674
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 36.292627957998775
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\"kind\": \"answer\", \"text\": \"Apple's latest annual revenue is $416.161 billion, with a fiscal year of 2025 and a period-end date of 2025-09-27. These details are sourced from the 10-K filing labeled as FY2025 (period end: 2025-09-27).\", \"facts\": [\"2:records/0\"]}",
+        "elapsed_seconds": 13.25047291699957
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Remove repeated financial values from text and use unnumbered bullets."
+        },
+        "elapsed_seconds": 13.25094029200045
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Remove repeated financial values from text and use unnumbered bullets."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n\n\"kind\": \"answer\", \"text\": \"Apple's latest annual revenue, fiscal year, and period-end date are detailed in the 10-K filing labeled as FY2025 (period end: 2025-09-27).\", \"facts\": [\"2:records/0\"]}",
+        "elapsed_seconds": 23.334729333000723
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Remove repeated financial values from text and use unnumbered bullets."
+        },
+        "elapsed_seconds": 23.335112417000346
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 2,
+        "max_revisions": 2,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Remove repeated financial values from text and use unnumbered bullets."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n\n\"kind\": \"answer\", \"text\": \"Apple's latest annual revenue, fiscal year, and period-end date are detailed in the 10-K filing. The revenue amount, fiscal year, and period-end date are included in the records.\", \"facts\": [\"2:records/0\"]}",
+        "elapsed_seconds": 16.200646000001143
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Remove repeated financial values from text and use unnumbered bullets."
+        },
+        "elapsed_seconds": 16.20102500000212
+      },
+      {
+        "type": "revision",
+        "status": "exhausted",
+        "revision_count": 2,
+        "max_revisions": 2,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Remove repeated financial values from text and use unnumbered bullets."
+        ]
+      }
+    ],
+    "elapsed_seconds": 102.52584920799927,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "base_url": "http://localhost:11434",
+      "timeout_seconds": 180,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      }
+    },
+    "dataset_sha256": "1d4864f57c0bbbfa3bbfa8204aa75cf3124908020190ab52544853d11f4d8a8f",
+    "recorded_at": "2026-10-22T18:36:29.485589+00:00",
+    "transport": "mcp"
+  }
+]

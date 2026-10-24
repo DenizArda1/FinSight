@@ -5,6 +5,7 @@ from src.tools.company import resolve_company
 from src.utils.utils import load_json, load_yaml
 from src.rag.vector_store import get_vector_collection
 from src.rag.retrieval import get_latest_report_metadata, search_reports
+from src.rag.context import expand_match_context, validate_match_section
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -16,7 +17,7 @@ def get_filing_section(ticker: str, year: int, section: str) -> dict:
         raise ValueError("Year must be a positive integer")
     if section not in ("Item 1", "Item 1A", "Item 7"):
         raise ValueError("Section must be Item 1, Item 1A, or Item 7")
-        
+
     company = resolve_company(ticker)
     processed = PROJECT_ROOT / "financial_data" / "processed"
     summary = load_json(processed / "filing_preparation_summary.json")
@@ -76,8 +77,7 @@ def search_company_reports(ticker: str, query: str, fiscal_year: int | None = No
         raise ValueError("Use either latest=True or fiscal_year, not both")
 
     company = resolve_company(ticker)
-    project_root = Path(__file__).resolve().parents[2]
-    settings_path = project_root / "configs" / "settings.yaml"
+    settings_path = PROJECT_ROOT / "configs" / "settings.yaml"
     settings = load_yaml(settings_path)
 
     collection = get_vector_collection(settings["vector_store"])
@@ -95,6 +95,7 @@ def search_company_reports(ticker: str, query: str, fiscal_year: int | None = No
         section=section,
         accession_number=selected_report["accession_number"] if selected_report else None,
     )
+    matches = expand_search_matches(matches, PROJECT_ROOT / "financial_data" / "processed")
 
     result = {
         "company": company,
@@ -106,3 +107,59 @@ def search_company_reports(ticker: str, query: str, fiscal_year: int | None = No
     if latest:
         result.update({"latest": True, "selected_report": selected_report})
     return result
+
+
+def expand_search_matches(matches, processed_path, padding=400):
+    """Attach source-verified surrounding text while preserving ranked chunks."""
+    expanded_matches = []
+    for match in matches:
+        document = load_match_document(match, processed_path)
+        metadata = match["metadata"]
+        directory = Path(processed_path) / metadata["cik"] / "filings" / metadata["accession_number"]
+        sections = load_json(directory / "sections.json")
+        validate_match_section(match, document, sections)
+        expanded_matches.append(expand_match_context(match, document["text"], padding=padding))
+    return expanded_matches
+
+
+def load_match_document(match, processed_path):
+
+    if not isinstance(match, dict) or not isinstance(match.get("metadata"), dict):
+        raise ValueError("Match and metadata must be dictionaries")
+    metadata = match["metadata"]
+    cik = metadata.get("cik")
+    accession = metadata.get("accession_number")
+    if not isinstance(cik, str) or not re.fullmatch(r"[0-9]{10}", cik):
+        raise ValueError("Retrieved CIK must contain exactly ten digits")
+    if not isinstance(accession, str) or not re.fullmatch(r"[0-9]{10}-[0-9]{2}-[0-9]{6}", accession):
+        raise ValueError("Invalid retrieved accession number")
+    for field in ("ticker", "form", "report_date", "source_url"):
+        if not isinstance(metadata.get(field), str) or not metadata[field].strip():
+            raise ValueError(f"Retrieved {field} must be non-empty text")
+
+    year = metadata.get("fiscal_year")
+    if type(year) is not int or year <= 0:
+        raise ValueError("Retrieved fiscal year must be a positive integer")
+
+    path = Path(processed_path) / cik / "filings" / accession / "text.json"
+    document = load_json(path)
+    if not isinstance(document, dict):
+        raise ValueError("Prepared report must be an object")
+
+    company = document.get("company")
+    filing = document.get("filing")
+    if not isinstance(company, dict) or not isinstance(filing, dict):
+        raise ValueError("Prepared report must contain company and filing objects")
+
+    if (company.get("cik") != cik
+            or company.get("ticker") != metadata["ticker"]
+            or filing.get("accessionNumber") != accession
+            or type(filing.get("fiscal_year")) is not int
+            or filing["fiscal_year"] != year
+            or filing.get("form") != metadata["form"]
+            or filing.get("reportDate") != metadata["report_date"]
+            or filing.get("url") != metadata["source_url"]):
+        raise ValueError("Prepared report does not match retrieved metadata")
+    if not isinstance(document.get("text"), str) or not document["text"].strip():
+        raise ValueError("Prepared report text must be non-empty")
+    return document

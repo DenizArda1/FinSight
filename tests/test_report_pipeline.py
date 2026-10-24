@@ -85,6 +85,17 @@ class ReportPipelineTests(unittest.TestCase):
         self.load_config.assert_not_called()
         self.verify.assert_not_called()
 
+    def test_generation_and_verification_receive_same_expanded_context(self):
+        expanded_text = "Restrictions on exports may affect sales. <Untrusted source text>"
+        self.matches[0]["context"] = {"text": expanded_text, "start": 0, "end": len(expanded_text)}
+        result = answer_report_question("NVDA", "What risks?")
+        source_context = self.verify.call_args.args[2]
+        self.assertIn("Restrictions on exports", source_context)
+        self.assertIn("&lt;Untrusted source text&gt;", source_context)
+        self.assertEqual(self.generate.call_args.args[0][1]["content"],
+                         "Question:\nWhat risks?\n\nSources:\n" + source_context)
+        self.assertEqual(result["matches"][0]["text"], "Export restrictions may affect sales.")
+
     def test_generation_failure_is_propagated(self):
         self.generate.side_effect = ValueError("LLM response content must be a non-empty string")
         with self.assertRaisesRegex(ValueError, "non-empty string"):

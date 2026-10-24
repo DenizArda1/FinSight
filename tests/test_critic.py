@@ -73,6 +73,54 @@ class CriticTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(state["trace"][-1]["verification_status"], "failed")
         self.generate.assert_not_called()
 
+    async def test_writer_and_critic_share_expanded_excerpt_under_same_source_id(self):
+        state = create_initial_state("What could prevent sales?")
+        match = {
+            "chunk_id": "report:1", "text": "prevent sales.", "distance": 0.1,
+            "metadata": {"ticker": "AAPL", "section": "Item 1A", "start": 31, "end": 45},
+            "context": {"text": "Failure to obtain licenses may prevent sales.", "start": 0, "end": 45},
+        }
+        state["trace"].append({
+            "type": "tool", "status": "completed", "name": "search_filings",
+            "arguments": {"ticker": "AAPL", "query": "What could prevent sales?"},
+            "result": {"company": {"ticker": "AAPL"}, "matches": [match]},
+        })
+        self.generate.side_effect = [
+            json.dumps({"kind": "answer", "text": "Failure to obtain licenses may prevent sales [Source 1].", "facts": []}),
+            json.dumps(self.approval),
+        ]
+        await run_writer(state, {})
+        await run_critic(state, {})
+        self.assertEqual(self.generate.call_count, 2)
+        writer_payload = json.loads(self.generate.call_args_list[0].args[0][1]["content"])
+        critic_payload = json.loads(self.generate.call_args_list[1].args[0][1]["content"])
+        self.assertEqual(writer_payload["tool_evidence"], critic_payload["tool_evidence"])
+        evidence = critic_payload["tool_evidence"]
+        self.assertEqual(len(evidence), 1)
+        self.assertEqual(evidence[0]["source_id"], 1)
+        self.assertEqual(evidence[0]["result"]["matches"][0], match)
+        self.assertEqual(state["answer"], state["draft"])
+
+    async def test_localized_citation_still_requires_semantic_approval(self):
+        for supported in (True, False):
+            with self.subTest(supported=supported):
+                state = deepcopy(self.state)
+                composition = {**state["composition"], "text": "Gelir bilgileri [Kaynak 1]."}
+                verdict = {
+                    **self.approval, "evidence_supported": supported,
+                    "issues": [] if supported else ["The claim is not supported by this source."],
+                }
+                self.generate.side_effect = [json.dumps(composition), json.dumps(verdict)]
+                await run_writer(state, {})
+                await run_critic(state, {})
+                self.assertEqual(state["verification"]["deterministic_fields"], "passed")
+                self.assertEqual(state["verification"]["status"], "passed" if supported else "failed")
+                self.assertIn("[Source 1]", state["draft"])
+                if supported:
+                    self.assertEqual(state["answer"], state["draft"])
+                else:
+                    self.assertIsNone(state["answer"])
+
     async def test_changed_evidence_or_trace_invalidates_writer_snapshot(self):
         for target in ("evidence", "trace"):
             with self.subTest(target=target):

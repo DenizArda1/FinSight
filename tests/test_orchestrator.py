@@ -258,6 +258,30 @@ class OrchestratorTests(unittest.IsolatedAsyncioTestCase):
         revisions = [event for event in state["trace"] if event["type"] == "revision"]
         self.assertEqual([event["status"] for event in revisions], ["scheduled"])
 
+    async def test_writer_format_repair_receives_exact_offending_span(self):
+        invalid = {**self.composition, "text": "Risk details are in the 10-K filing. [Source 3]"}
+        self.writer_response.side_effect = [
+            json.dumps(invalid), json.dumps(self.composition), json.dumps(self.approval),
+        ]
+        state = await run_orchestrator("Revenue and risks?", self.config, self.client, TOOL_SCHEMAS)
+        feedback = self.writer_response.call_args_list[1].args[0][-1]["content"]
+        self.assertIn("Forbidden prose spans", feedback)
+        self.assertIn("10-K", feedback)
+        self.assertEqual(state["revision_count"], 1)
+        self.assertEqual(state["verification"]["status"], "passed")
+        self.assertEqual(self.call_tool.await_count, 3)
+
+    async def test_citation_only_risk_bullets_are_withheld_without_calling_critic(self):
+        invalid = {**self.composition, "text": "Revenue and risks follow:\n- [Source 3]"}
+        self.writer_response.side_effect = [json.dumps(invalid)] * 3
+        state = await run_orchestrator("Revenue and risks?", self.config, self.client, TOOL_SCHEMAS)
+        self.assertIsNone(state["answer"])
+        self.assertEqual(state["verification"]["status"], "failed")
+        self.assertIn("citation-only", state["verification"]["issues"][0])
+        self.assertEqual(state["revision_count"], 2)
+        self.assertFalse(any(event.get("phase") == "critic" for event in state["trace"]))
+        self.assertEqual(self.call_tool.await_count, 3)
+
     async def test_second_revision_can_pass_but_a_third_is_never_attempted(self):
         self.writer_response.side_effect = [
             json.dumps(self.composition), json.dumps(self.rejection),

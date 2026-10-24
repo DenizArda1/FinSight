@@ -1,0 +1,918 @@
+[
+  {
+    "id": "amzn_missing_gross_margin_tr",
+    "question": "Amazon'un yerel verideki en son mali yıl için brüt kâr marjını hesapla.",
+    "expected": {
+      "ticker": "AMZN",
+      "metric": "gross_margin",
+      "period_end": "2025-12-31",
+      "status": "unavailable",
+      "missing_inputs": [
+        "gross_profit"
+      ],
+      "available_inputs": [
+        "revenue"
+      ]
+    },
+    "answer_language": "tr",
+    "answer": "Amazon'un brüt kâr marjı hesaplanamadı. [Source 3] brüt kâr verisi eksik olduğundan marj hesaplanamaz. [Source 4] brüt kâr verisinin bulunmadığından dolayı marj hesaplamasının yapılamayacağını belirtir.\n\nAMZN | revenue: 716924000000 USD | FY2025 | 2025-01-01 → 2025-12-31 | 10-K | 0001018724-26-000004 [Source 2]\n\nAMZN | gross_profit: missing | 2025-12-31 [Source 3]\n\nAMZN | gross_profit: missing | 2025-12-31 [Source 4]",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": {
+      "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+      "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+      "code_sha256": "c40539c89f2e3035d51b343b96b61970e9d90ea172b4a20b5a60c3921801df42"
+    },
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": "Amazon'un brüt kâr marjı hesaplanamadı. [Source 3] brüt kâr verisi eksik olduğundan marj hesaplanamaz. [Source 4] brüt kâr verisinin bulunmadığından dolayı marj hesaplamasının yapılamayacağını belirtir.\n\nAMZN | revenue: 716924000000 USD | FY2025 | 2025-01-01 → 2025-12-31 | 10-K | 0001018724-26-000004 [Source 2]\n\nAMZN | gross_profit: missing | 2025-12-31 [Source 3]\n\nAMZN | gross_profit: missing | 2025-12-31 [Source 4]",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "insufficient_data",
+      "text": "Amazon'un brüt kâr marjı hesaplanamadı. [Source 3] brüt kâr verisi eksik olduğundan marj hesaplanamaz. [Source 4] brüt kâr verisinin bulunmadığından dolayı marj hesaplamasının yapılamayacağını belirtir.",
+      "facts": [
+        "2:records/0",
+        "3:missing_period_ends/0",
+        "4:availability/gross_profit/missing_period_ends/0"
+      ]
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AMZN"
+        },
+        "result": {
+          "ticker": "AMZN",
+          "name": "AMAZON COM INC",
+          "cik": "0001018724"
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0001018724",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "AMZN",
+            "cik": "0001018724",
+            "name": "AMAZON COM INC"
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-12-31"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 1018724,
+              "metric": "revenue",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "value": 716924000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-02-06",
+              "accn": "0001018724-26-000004",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-12-31)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 3,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0001018724",
+          "concept": "gross_profit",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "AMZN",
+            "cik": "0001018724",
+            "name": "AMAZON COM INC"
+          },
+          "concept": "gross_profit",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-12-31"
+          ],
+          "missing_period_ends": [
+            "2025-12-31"
+          ],
+          "records": []
+        }
+      },
+      {
+        "source_id": 4,
+        "tool": "compute_metrics",
+        "arguments": {
+          "cik": "0001018724",
+          "metrics": [
+            "gross_margin"
+          ],
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "AMZN",
+            "cik": "0001018724",
+            "name": "AMAZON COM INC"
+          },
+          "requested_years": 1,
+          "results": {
+            "gross_margin": []
+          },
+          "warnings": [
+            "Missing gross_profit for period ends: 2025-12-31",
+            "Insufficient source records for gross_margin; at least 1 annual periods are required."
+          ],
+          "availability": {
+            "gross_profit": {
+              "concept": "gross_profit",
+              "missing_period_ends": [
+                "2025-12-31"
+              ],
+              "available_period_ends": []
+            },
+            "revenue": {
+              "concept": "revenue",
+              "missing_period_ends": [],
+              "available_period_ends": [
+                "2025-12-31"
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "financial",
+        "plan": [
+          {
+            "id": "task_1",
+            "agent": "financial_data",
+            "instruction": "Get Amazon's revenue and cost of goods sold (COGS) for the latest fiscal year from local records, including the fiscal year, period end date, and source metadata."
+          }
+        ],
+        "elapsed_seconds": 18.058766958001797
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_q4vlwxwk",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "AMZN"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 36.523056792000716
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AMZN"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "AMZN",
+          "name": "AMAZON COM INC",
+          "cik": "0001018724"
+        },
+        "elapsed_seconds": 0.011021291000361089
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_jlacfnmh",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0001018724",
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          },
+          {
+            "id": "call_mgse9ebg",
+            "function": {
+              "index": 1,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0001018724",
+                "concept": "gross_profit",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 21.24240849999842
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0001018724",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AMZN",
+            "cik": "0001018724",
+            "name": "AMAZON COM INC"
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-12-31"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 1018724,
+              "metric": "revenue",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "value": 716924000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-02-06",
+              "accn": "0001018724-26-000004",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-12-31)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.006345624999084976
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 3,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0001018724",
+          "concept": "gross_profit",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AMZN",
+            "cik": "0001018724",
+            "name": "AMAZON COM INC"
+          },
+          "concept": "gross_profit",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-12-31"
+          ],
+          "missing_period_ends": [
+            "2025-12-31"
+          ],
+          "records": []
+        },
+        "elapsed_seconds": 0.004241833001287887
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 3,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_jyh9z2i1",
+            "function": {
+              "index": 0,
+              "name": "compute_metrics",
+              "arguments": {
+                "cik": "0001018724",
+                "metrics": [
+                  "gross_margin"
+                ],
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 11.765394166999613
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 3,
+        "call_id": 4,
+        "name": "compute_metrics",
+        "arguments": {
+          "cik": "0001018724",
+          "metrics": [
+            "gross_margin"
+          ],
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AMZN",
+            "cik": "0001018724",
+            "name": "AMAZON COM INC"
+          },
+          "requested_years": 1,
+          "results": {
+            "gross_margin": []
+          },
+          "warnings": [
+            "Missing gross_profit for period ends: 2025-12-31",
+            "Insufficient source records for gross_margin; at least 1 annual periods are required."
+          ],
+          "availability": {
+            "gross_profit": {
+              "concept": "gross_profit",
+              "missing_period_ends": [
+                "2025-12-31"
+              ],
+              "available_period_ends": []
+            },
+            "revenue": {
+              "concept": "revenue",
+              "missing_period_ends": [],
+              "available_period_ends": [
+                "2025-12-31"
+              ]
+            }
+          }
+        },
+        "elapsed_seconds": 0.011658833998808404
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 4,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 12.73399658299968
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 82.2982068329984
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\"kind\":\"insufficient_data\",\"text\":\"Amazon'un 2025 mali yılında brüt kâr marjı hesaplanamadı, çünkü brüt kâr verisi bulunamadı.\",\"facts\":[\"2:records/0\",\"3:missing_period_ends/0\",\"4:availability/gross_profit/missing_period_ends/0\"]}",
+        "elapsed_seconds": 15.692515124999773
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"2025\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        },
+        "elapsed_seconds": 15.6931527500019
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"2025\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\"kind\":\"insufficient_data\",\"text\":\"Amazon'un brüt kâr marjı hesaplanamadı, çünkü brüt kâr verisi bulunamadı. [Source 3]\",\"facts\":[\"2:records/0\",\"3:missing_period_ends/0\",\"4:availability/gross_profit/missing_period_ends/0\"]}",
+        "elapsed_seconds": 15.910434167002677
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 15.911456457997701
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "status": "completed",
+        "content": "{\"evidence_supported\":true,\"language_matches\":true,\"answer_complete\":false,\"issues\":[\"Amazon'un brüt kâr marjı hesaplanamadı çünkü 2025-12-31 tarihli dönem için brüt kâr verisi bulunamadı ([Source 3]). Brüt kâr verisi eksik olduğundan marj hesaplanamaz.\"]}",
+        "elapsed_seconds": 15.749981375000061
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "failed",
+        "issues": [
+          "Amazon'un brüt kâr marjı hesaplanamadı çünkü 2025-12-31 tarihli dönem için brüt kâr verisi bulunamadı ([Source 3]). Brüt kâr verisi eksik olduğundan marj hesaplanamaz."
+        ],
+        "elapsed_seconds": 15.750719832998584
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 2,
+        "max_revisions": 2,
+        "issues": [
+          "Amazon'un brüt kâr marjı hesaplanamadı çünkü 2025-12-31 tarihli dönem için brüt kâr verisi bulunamadı ([Source 3]). Brüt kâr verisi eksik olduğundan marj hesaplanamaz."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n\n\"kind\": \"insufficient_data\", \"text\": \"Amazon'un brüt kâr marjı hesaplanamadı. [Source 3] brüt kâr verisi eksik olduğundan marj hesaplanamaz. [Source 4] brüt kâr verisinin bulunmadığından dolayı marj hesaplamasının yapılamayacağını belirtir.\", \"facts\": [\"2:records/0\", \"3:missing_period_ends/0\", \"4:availability/gross_profit/missing_period_ends/0\"]}",
+        "elapsed_seconds": 13.283280125000601
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 13.284257875002368
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "status": "completed",
+        "content": "{\"evidence_supported\":true,\"language_matches\":true,\"answer_complete\":true,\"issues\":[]}",
+        "elapsed_seconds": 11.805228666999028
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 11.805939665999176
+      }
+    ],
+    "elapsed_seconds": 173.37004575000174,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "base_url": "http://localhost:11434",
+      "timeout_seconds": 180,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      }
+    },
+    "dataset_sha256": "c9c87c2034a7ec5a43e59279bed5262539a758565b88d375bba478607b2f5084",
+    "recorded_at": "2026-10-23T13:16:36.076602+00:00",
+    "transport": "mcp"
+  },
+  {
+    "id": "aapl_latest_revenue_en",
+    "question": "What are Apple's latest annual revenue, fiscal year, and period-end date in the local data?",
+    "expected": {
+      "ticker": "AAPL",
+      "metric": "revenue",
+      "value": 416161000000,
+      "unit": "USD",
+      "fiscal_year": 2025,
+      "period_end": "2025-09-27"
+    },
+    "answer_language": "en",
+    "answer": "AAPL | revenue: 416161000000 USD | FY2025 | 2024-09-29 → 2025-09-27 | 10-K | 0000320193-25-000079 [Source 2]",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": {
+      "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+      "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+      "code_sha256": "c40539c89f2e3035d51b343b96b61970e9d90ea172b4a20b5a60c3921801df42"
+    },
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": "AAPL | revenue: 416161000000 USD | FY2025 | 2024-09-29 → 2025-09-27 | 10-K | 0000320193-25-000079 [Source 2]",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "answer",
+      "text": "",
+      "facts": [
+        "2:records/0"
+      ]
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0000320193",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "revenue",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 416161000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "financial",
+        "plan": [
+          {
+            "id": "task_1",
+            "agent": "financial_data",
+            "instruction": "Retrieve Apple's latest annual revenue, fiscal year, and period-end date. Ensure the period-end date is included and the fiscal year is specified. Use the latest available data without assuming a specific year."
+          }
+        ],
+        "elapsed_seconds": 11.181191291998402
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_q6mov2bq",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "AAPL"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 7.909199999998236
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        },
+        "elapsed_seconds": 0.009016209001856623
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_kqo9pv02",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000320193",
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 9.82203854099862
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000320193",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "revenue",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 416161000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.006918582999787759
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 3,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 14.770840332999796
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 32.518062457998894
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"Apple's latest annual revenue is $416,161,000,000 USD for the fiscal year 2025, with a period-end date of 2025-09-27.\",\"facts\":[ \"2:records/0\"]}",
+        "elapsed_seconds": 12.789917750000313
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"$416,161,000,000\", \"2025,\", \"2025-09-27.\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        },
+        "elapsed_seconds": 12.790370750000875
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"$416,161,000,000\", \"2025,\", \"2025-09-27.\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n\n\"kind\":\"answer\",\"text\":\"\",\"facts\":[\"2:records/0\"]}",
+        "elapsed_seconds": 15.22463825000159
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 15.2251442079978
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "status": "completed",
+        "content": "{\"evidence_supported\":true,\"language_matches\":true,\"answer_complete\":true,\"issues\":[]}",
+        "elapsed_seconds": 12.580542416999378
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 12.58114920799926
+      }
+    ],
+    "elapsed_seconds": 85.08996083400052,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "base_url": "http://localhost:11434",
+      "timeout_seconds": 180,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      }
+    },
+    "dataset_sha256": "c9c87c2034a7ec5a43e59279bed5262539a758565b88d375bba478607b2f5084",
+    "recorded_at": "2026-10-23T13:18:01.167154+00:00",
+    "transport": "mcp"
+  }
+]

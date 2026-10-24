@@ -4,7 +4,7 @@ from pathlib import Path
 from requests import RequestException
 import asyncio
 
-from src.agents.runtime import run_mcp_agent
+from src.agents.runtime import run_mcp_agent, run_mcp_orchestrator
 from src.utils.utils import load_yaml
 from src.verification.agent_answer import format_source_references
 
@@ -24,13 +24,23 @@ def main():
         action="store_true",
         help="Show tool calls and results",
     )
+    parser.add_argument(
+        "--mode",
+        choices=["single_agent", "multi_agent"],
+        default="single_agent",
+        help="Choose the agent execution mode",
+    )
     args = parser.parse_args()
 
     project_root = Path(__file__).resolve().parents[1]
     try:
         settings = load_yaml(project_root / "configs" / "settings.yaml")
+        if args.mode == "multi_agent":
+            runner = run_mcp_orchestrator
+        else:
+            runner = run_mcp_agent
         result = asyncio.run(
-            run_mcp_agent(args.question,settings["llm"],verbose=args.verbose)
+            runner(args.question,settings["llm"],verbose=args.verbose)
         )
     except (RequestException, ValueError, RuntimeError, OSError, ExceptionGroup) as error:
         print(f"Request failed ({format_request_error(error)})", file=sys.stderr)

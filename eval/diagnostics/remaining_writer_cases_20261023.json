@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-23",
+  "reviewer": "Codex, independent inspection against saved tool evidence and local files",
+  "result_file": "eval/results/multi_agent_mcp_20261023T131341_739053Z_2ab6de8f.json",
+  "result_file_sha256": "08fc5ab69e6aa8a3480d5641919b58773a32fd8cb48e95fc8de3dec9189cb60a",
+  "startup_failure_file": "eval/results/multi_agent_mcp_20261023T131303_788933Z_ae8fe471.json",
+  "startup_failure_reason": "Ollama was stopped; both Planner calls failed with connection refused at localhost:11434 before model inference. Excluded from answer-quality assessment, retained as operational failures.",
+  "model": "qwen3:8b",
+  "llm_config": {
+    "model": "qwen3:8b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "data_snapshot": {
+    "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+    "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+    "code_sha256": "c40539c89f2e3035d51b343b96b61970e9d90ea172b4a20b5a60c3921801df42"
+  },
+  "production_code_changed_this_session": false,
+  "cases": [
+    {
+      "case_id": "amzn_missing_gross_margin_tr",
+      "classification": "released_correct_answer",
+      "elapsed_seconds": 173.37004575000174,
+      "writer_attempts": 3,
+      "critic_calls": 2,
+      "notes": [
+        "Correctly explains gross margin cannot be computed because gross profit is missing, while preserving available revenue and the requested period.",
+        "One Writer-format repair removed 2025 from prose.",
+        "The Critic then rejected an apparently adequate answer as incomplete without identifying a concrete omission; independent review classifies this intermediate decision as an unjustified completeness rejection.",
+        "The final answer is correct but repetitive; the same missing input appears in two source cards."
+      ]
+    },
+    {
+      "case_id": "aapl_latest_revenue_en",
+      "classification": "released_correct_answer",
+      "elapsed_seconds": 85.08996083400052,
+      "writer_attempts": 2,
+      "critic_calls": 1,
+      "notes": [
+        "Correct revenue and fiscal period, supported by the local record. The released answer is a structured fact card with empty narrative prose; no language mismatch.",
+        "The first Writer attempt repeated numeric values; one repair selected facts with empty text."
+      ]
+    }
+  ],
+  "local_sources": [
+    {
+      "path": "financial_data/processed/0000320193/revenue.json",
+      "sha256": "c413e03018773b3303f28dc7e1bcd4ebd80c3b6bd1b5f2042f829c145f6058e9"
+    },
+    {
+      "path": "financial_data/processed/0001018724/revenue.json",
+      "sha256": "bc5bdd919ba624cd04e97a5549859a0df474025856f4f2178d0f74ea4b65728b"
+    },
+    {
+      "path": "financial_data/processed/0001018724/gross_profit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  ],
+  "scope": "Two targeted development cases, not a general accuracy benchmark. No external SEC audit. Retrieval sentence-context expansion remains unimplemented."
+}

@@ -12,6 +12,7 @@ from src.verification.grounding import parse_verification_response
 
 FIELD_REFERENCE = re.compile(r"\{\{([1-9][0-9]*):([A-Za-z0-9_/-]+)(\|percent)?\}\}")
 SOURCE_REFERENCE = re.compile(r"\[Source ([1-9][0-9]*)\]")
+TURKISH_SOURCE_REFERENCE = re.compile(r"\[Kaynak ([1-9][0-9]*)\]")
 DISPLAY_FIELDS = {
     "value", "unit", "start", "end", "fiscal_year", "period_label", "form",
     "filed", "accn", "ticker", "name", "cik", "accession_number", "report_date",
@@ -146,13 +147,22 @@ def compose_template(payload, catalog):
         raise ValueError("Prose cannot insert arbitrary source fields; select fact IDs instead")
 
     prose = payload["text"].strip()
+    # Normalize the observed localized label; source range validation still applies.
+    prose = TURKISH_SOURCE_REFERENCE.sub(r"[Source \1]", prose)
     # Accept an exact catalog ID as a citation alias, never an invented ID.
     for identifier, entry in catalog.items():
         prose = prose.replace(f"[{identifier}]", f"[Source {entry['source_id']}]")
-    if prose:
-        cited = {int(number) for number in SOURCE_REFERENCE.findall(prose)}
-        selected_sources = {catalog[key]["source_id"] for key in facts}
-        prose += "".join(f" [Source {number}]" for number in sorted(selected_sources - cited))
+    for line in prose.splitlines():
+        if SOURCE_REFERENCE.search(line) and not any(
+            character.isalnum() for character in SOURCE_REFERENCE.sub("", line)
+        ):
+            raise ValueError(
+                "A citation-only line is not an explanation. Write the substantive claim "
+                "supported by that source on the same line, then cite it. "
+                "Filing metadata cards do not display risk descriptions. "
+                "For a purely numerical request fully answered by facts, use empty text instead."
+            )
+    # Fact cards carry their own citations; do not attach their sources to unrelated prose.
     parts = [prose] if prose else []
     parts.extend(catalog[key]["template"] for key in facts)
     return {"kind": payload.get("kind"), "template": "\n\n".join(parts)}
@@ -254,8 +264,19 @@ def render_agent_template(payload, evidence):
         raise ValueError("Malformed source field reference")
     prose = SOURCE_REFERENCE.sub("", remainder)
     if any(character.isdigit() for character in prose) or "%" in prose:
-        raise ValueError("Keep numbers, dates, form labels, and percentages in selected facts, not prose. "
-                         "Remove repeated financial values from text and use unnumbered bullets.")
+        offending_spans = list(dict.fromkeys(
+            word[:80] for word in prose.split()
+            if any(character.isdigit() for character in word) or "%" in word
+        ))[:8]
+        raise ValueError(
+            "Keep numbers, dates, form labels, and percentages in selected facts, not prose. "
+            "Forbidden prose spans (untrusted text): "
+            + json.dumps(offending_spans, ensure_ascii=False)
+            + ". Remove these spans from text, including form labels such as 10-K. "
+            "Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. "
+            "For a purely numerical request fully answered by selected facts, text may be empty. "
+            "For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        )
     if re.search(r"(?:https?://|www\.|\]\(|<a\b)", prose, re.IGNORECASE):
         raise ValueError("Source URLs must use source field references")
 
