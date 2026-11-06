@@ -46,7 +46,7 @@ class FinancialAgentToolTests(unittest.TestCase):
             ], self.processed / f"{metric}.json")
 
     def test_all_schemas_match_registered_signatures_and_config(self):
-        self.assertEqual(len(TOOL_SCHEMAS), 5)
+        self.assertEqual(len(TOOL_SCHEMAS), 6)
         self.assertEqual({schema["function"]["name"] for schema in TOOL_SCHEMAS}, set(TOOL_FUNCTIONS))
         json.dumps(TOOL_SCHEMAS)
         definitions = {schema["function"]["name"]: schema["function"] for schema in TOOL_SCHEMAS}
@@ -60,9 +60,26 @@ class FinancialAgentToolTests(unittest.TestCase):
 
     def test_facts_keep_requested_periods_and_provenance(self):
         result = execute_tool("get_company_facts", {"cik": self.cik, "concept": "revenue", "years": 2})
-        self.assertEqual(result["records"], list(reversed(self.revenue[1:])))
+        self.assertEqual([{key: value for key, value in row.items() if key != "amendment_note"} for row in result["records"]], list(reversed(self.revenue[1:])))
         self.assertEqual(result["missing_period_ends"], [])
         self.assertEqual(result["company"]["ticker"], "TEST")
+
+    def test_cost_categories_are_separate_source_preserving_base_metrics(self):
+        for concept, value, tag in (
+            ("cost_of_revenue", 40, "CostOfGoodsAndServicesSold"),
+            ("operating_expenses", 20, "OperatingExpenses"),
+        ):
+            record = {**self.revenue[-1], "metric": concept, "value": value, "tag": tag}
+            save_json([record], self.processed / f"{concept}.json")
+            result = execute_tool("get_company_facts", {
+                "cik": self.cik, "concept": concept, "years": 1,
+            })
+            self.assertEqual([{key: value for key, value in row.items() if key != "amendment_note"} for row in result["records"]], [record])
+            self.assertEqual(result["missing_period_ends"], [])
+            self.assertEqual(result["definition"]["description"], self.config["metrics"][concept]["description"])
+            self.assertEqual(result["definition"]["tags"], self.config["metrics"][concept]["tags"])
+        self.assertNotIn("CostOfGoodsSold", self.config["metrics"]["cost_of_revenue"]["tags"])
+        self.assertEqual(self.config["metrics"]["operating_expenses"]["tags"], ["OperatingExpenses"])
 
     def test_missing_latest_period_is_not_replaced_with_older_record(self):
         save_json(self.revenue[:2], self.processed / "revenue.json")
@@ -163,7 +180,7 @@ class AgentToolSelectionTests(unittest.TestCase):
     def test_selects_only_the_tools_for_each_agent_in_discovery_order(self):
         expected = {
             "financial_data": [
-                "resolve_ticker_to_cik", "get_company_facts", "compute_metrics",
+                "resolve_ticker_to_cik", "get_company_facts", "compute_metrics", "compare_companies",
             ],
             "filing_rag": [
                 "resolve_ticker_to_cik", "search_filings", "get_filing_section",

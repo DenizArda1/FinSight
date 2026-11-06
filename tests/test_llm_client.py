@@ -84,11 +84,34 @@ class LLMClientTests(unittest.TestCase):
         generate_response([], config)
         self.assertEqual(self.post.call_args.kwargs["json"]["options"], config["options"])
 
+    def test_token_counts_are_preserved_without_changing_the_model_message(self):
+        message = {"content": "Answer"}
+        self.post.return_value.json.return_value = {
+            "message": message, "prompt_eval_count": 123, "eval_count": 45,
+        }
+        telemetry = {}
+        self.assertEqual(send_chat_request([], self.config, telemetry=telemetry), message)
+        self.assertEqual(telemetry, {"input_tokens": 123, "output_tokens": 45, "model": "test-model", "provider": "ollama", "estimated_cost_usd": 0.0})
+        self.assertNotIn("telemetry", self.post.call_args.kwargs["json"])
+        self.post.return_value.json.return_value = {"message": message, "prompt_eval_count": True}
+        telemetry = {}
+        generate_response([], self.config, telemetry=telemetry)
+        self.assertNotIn("input_tokens", telemetry)
+
     def test_truncated_model_answer_is_rejected(self):
         for flags in ({"done": False}, {"done_reason": "length"}):
             self.post.return_value.json.return_value = {"message": {"content": "Incomplete answer"}, **flags}
             with self.subTest(flags=flags), self.assertRaisesRegex(ValueError, "incomplete"):
                 generate_response([], self.config)
+
+    def test_thinking_control_is_explicit_and_does_not_change_shared_config(self):
+        self.post.return_value.json.return_value = {"message": {"content": "Answer"}}
+        config = {**self.config, "think": False}
+        generate_response([], config)
+        self.assertIs(self.post.call_args.kwargs["json"]["think"], False)
+        self.assertNotIn("think", self.config)
+        with self.assertRaisesRegex(ValueError, "boolean"):
+            generate_response([], {**self.config, "think": "false"})
 
 
 if __name__ == "__main__":

@@ -1,0 +1,43 @@
+{
+  "mode": "offline_prompt_projection_only",
+  "model_calls": 0,
+  "source_run": "eval/results/nvda_bilingual_multi_agent_mcp_20261024T144127_752034Z_7b4d5b7e.json",
+  "results": [
+    {
+      "id": "nvda_export_risk_en",
+      "source_ids": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "omitted_source_ids": [
+        4
+      ],
+      "included_report_text_characters": 11710,
+      "writer_prompt_characters": 22836,
+      "fact_ids": [
+        "1:matches/0/metadata",
+        "2:matches/0/metadata",
+        "3:matches/0/metadata",
+        "5:matches/0/metadata"
+      ]
+    },
+    {
+      "id": "nvda_export_risk_tr",
+      "source_ids": [
+        1,
+        2
+      ],
+      "omitted_source_ids": [
+        2
+      ],
+      "included_report_text_characters": 1286,
+      "writer_prompt_characters": 8722,
+      "fact_ids": [
+        "1:matches/0/metadata"
+      ]
+    }
+  ]
+}

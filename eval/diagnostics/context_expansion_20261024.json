@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-24",
+  "reviewer": "Codex, independent inspection against saved tool evidence and local source files",
+  "result_file": "eval/results/multi_agent_mcp_20261024T103450_988965Z_cb2fdcf2.json",
+  "result_file_sha256": "287166765c43dba07ddde9189b76a1ef00bd371a92cea0a5860c123349245d59",
+  "comparison_file": "eval/results/multi_agent_mcp_20261022T185719_947062Z_c5ffb639.json",
+  "comparison_file_sha256": "3ffd02450f67f0442fa4cb346239eadae21a64be34630c5c14cb67117ea5f130",
+  "case_id": "aapl_latest_revenue_and_risks_tr",
+  "model": "qwen3:8b",
+  "llm_config": {
+    "model": "qwen3:8b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "data_snapshot": {
+    "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+    "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+    "code_sha256": "e71a227c6055edf05299d207a7932b67429b6399892da690f3863f28a7f1e4f6"
+  },
+  "same_source_snapshot": true,
+  "same_index_snapshot": true,
+  "same_llm_config": true,
+  "elapsed_seconds": 159.8864612920006,
+  "previous_elapsed_seconds": 146.997656208001,
+  "writer_attempts": 2,
+  "critic_calls": 1,
+  "application_status": "completed",
+  "application_verification": {
+    "supported": true,
+    "issues": [],
+    "evidence_supported": true,
+    "language_matches": true,
+    "answer_complete": true,
+    "status": "passed",
+    "stage": "grounding_and_language",
+    "deterministic_fields": "passed",
+    "method": "source_fields_and_llm_judge"
+  },
+  "independent_classification": "context_integration_verified_answer_needs_causal_precision_revision",
+  "source_checks": [
+    {
+      "source_id": 3,
+      "chunk_id": "0000320193-25-000079:item_1a:25",
+      "original_bounds": [
+        50611,
+        50869
+      ],
+      "expanded_bounds": [
+        50211,
+        51269
+      ],
+      "original_length": 258,
+      "expanded_length": 1058,
+      "local_text_and_section_bounds_verified": true
+    },
+    {
+      "source_id": 4,
+      "chunk_id": "0000320193-25-000079:item_1a:36",
+      "original_bounds": [
+        63356,
+        63640
+      ],
+      "expanded_bounds": [
+        62956,
+        64040
+      ],
+      "original_length": 284,
+      "expanded_length": 1084,
+      "local_text_and_section_bounds_verified": true
+    }
+  ],
+  "findings": [
+    "The revenue card correctly reports 416161000000 USD, FY2025 and period end 2025-09-27 from the local record.",
+    "Both search matches carry expanded context that exactly matches local report text and stays inside Item 1A. No reembedding or index change was needed.",
+    "Source 3 now includes the missing condition: failure to obtain IP usage rights, or to use them on commercially reasonable terms. The answer says licensing causes sales restrictions, without stating that condition; this is causally imprecise and should be revised.",
+    "Source 4 supports disruption and unforeseen risks from new strategies, relationships and acquisitions. The Turkish wording alım yatırımları should be improved to satın almalar, and intellektüel mülkiyet to fikri mülkiyet.",
+    "The Critic accepted the answer with all checks true. Independent review does not treat this as proof of complete semantic correctness.",
+    "The first Writer draft repeated numerical values in prose and only named risk sources; deterministic validation rejected it. One repair produced substantive risk descriptions.",
+    "The unrelated Source 2 citation formerly appended to the risk paragraph is absent. Each risk keeps its own citation."
+  ],
+  "limitations": [
+    "One targeted development case, not a full benchmark or evidence of general reliability.",
+    "Several prompt and rendering changes accompany expansion; this is not a controlled ablation of padding alone.",
+    "Character padding can still start or end mid-sentence and include neighboring topics.",
+    "No external SEC audit; comparison is against local source files."
+  ],
+  "next_step": "Teach Writer and Critic to preserve source conditions and causal direction, then rerun this case. Do not encode a canned case-specific answer."
+}

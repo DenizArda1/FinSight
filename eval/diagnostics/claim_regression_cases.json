@@ -1,0 +1,69 @@
+[
+  {
+    "id": "supplier_translation",
+    "claim": "Tedarikçilerdeki üretim kesintileri ürün teslimatlarını geciktirebilir.",
+    "sources": [{"source_id": 11, "text": "We rely on third-party suppliers. Manufacturing interruptions at these suppliers may delay product deliveries."}],
+    "cited_source_ids": [11],
+    "expected_supported": true,
+    "reason": "Faithful Turkish translation of the stated possible consequence."
+  },
+  {
+    "id": "negated_incident",
+    "claim": "The incident caused a material disruption to operations.",
+    "sources": [{"source_id": 12, "text": "The incident was investigated. We have not experienced a material disruption to operations from this incident."}],
+    "cited_source_ids": [12],
+    "expected_supported": false,
+    "reason": "The claim reverses an explicit negation."
+  },
+  {
+    "id": "conditional_translation",
+    "claim": "İhracat lisansı başvuruları reddedilirse bazı ürünler sevk edilemeyebilir.",
+    "sources": [{"source_id": 13, "text": "If export license applications are denied, we may be unable to ship some products. Applications remain under review."}],
+    "cited_source_ids": [13],
+    "expected_supported": true,
+    "reason": "The translation preserves the condition and uncertainty."
+  },
+  {
+    "id": "certainty_and_scope",
+    "claim": "All shipments will stop because the export licenses have been denied.",
+    "sources": [{"source_id": 13, "text": "If export license applications are denied, we may be unable to ship some products. Applications remain under review."}],
+    "cited_source_ids": [13],
+    "expected_supported": false,
+    "reason": "Turns a possible conditional consequence into an actual denial and certain universal outcome."
+  },
+  {
+    "id": "reversed_causality",
+    "claim": "Excess inventory may cause lower customer demand.",
+    "sources": [{"source_id": 14, "text": "Lower customer demand may lead to excess inventory. We monitor demand when planning production."}],
+    "cited_source_ids": [14],
+    "expected_supported": false,
+    "reason": "The source establishes the opposite causal direction."
+  },
+  {
+    "id": "unsupported_conjunct",
+    "claim": "Supplier interruptions may delay deliveries and cause customer data breaches.",
+    "sources": [{"source_id": 15, "text": "Supplier interruptions may delay deliveries. We maintain inventory to reduce the impact of these interruptions."}],
+    "cited_source_ids": [15],
+    "expected_supported": false,
+    "reason": "The delivery clause is supported, but the data-breach clause is absent."
+  },
+  {
+    "id": "english_paraphrase",
+    "claim": "Changing certain suppliers can take time.",
+    "sources": [{"source_id": 16, "text": "Some components are obtained from sole-source suppliers. Qualifying replacement suppliers for these components may require significant time."}],
+    "cited_source_ids": [16],
+    "expected_supported": true,
+    "reason": "A less specific, faithful summary of replacement qualification time."
+  },
+  {
+    "id": "uncited_support",
+    "claim": "Severe storms may disrupt transportation.",
+    "sources": [
+      {"source_id": 17, "text": "Distribution costs may increase when fuel prices rise."},
+      {"source_id": 18, "text": "Severe storms may disrupt transportation and delay deliveries."}
+    ],
+    "cited_source_ids": [17],
+    "expected_supported": false,
+    "reason": "Support exists only in an uncited source, which must not reach the claim checker."
+  }
+]

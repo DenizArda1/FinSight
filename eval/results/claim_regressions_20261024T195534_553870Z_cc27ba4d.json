@@ -1,0 +1,379 @@
+{
+  "mode": "claim_checker_synthetic_regression",
+  "llm_config": {
+    "model": "qwen3:14b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "cases_sha256": "6067e9078b3c9f7a64579047b6d67744c3eb760405cf407af23b9ac25323dae1",
+  "code_sha256": "af498015c5fa305e24c08146afacd89471b683223eb295c60d63e1b3269ba11d",
+  "cases": [
+    {
+      "id": "supplier_translation",
+      "claim": "Tedarikçilerdeki üretim kesintileri ürün teslimatlarını geciktirebilir.",
+      "sources": [
+        {
+          "source_id": 11,
+          "text": "We rely on third-party suppliers. Manufacturing interruptions at these suppliers may delay product deliveries."
+        }
+      ],
+      "cited_source_ids": [
+        11
+      ],
+      "expected_supported": true,
+      "reason": "Faithful Turkish translation of the stated possible consequence."
+    },
+    {
+      "id": "negated_incident",
+      "claim": "The incident caused a material disruption to operations.",
+      "sources": [
+        {
+          "source_id": 12,
+          "text": "The incident was investigated. We have not experienced a material disruption to operations from this incident."
+        }
+      ],
+      "cited_source_ids": [
+        12
+      ],
+      "expected_supported": false,
+      "reason": "The claim reverses an explicit negation."
+    },
+    {
+      "id": "conditional_translation",
+      "claim": "İhracat lisansı başvuruları reddedilirse bazı ürünler sevk edilemeyebilir.",
+      "sources": [
+        {
+          "source_id": 13,
+          "text": "If export license applications are denied, we may be unable to ship some products. Applications remain under review."
+        }
+      ],
+      "cited_source_ids": [
+        13
+      ],
+      "expected_supported": true,
+      "reason": "The translation preserves the condition and uncertainty."
+    },
+    {
+      "id": "certainty_and_scope",
+      "claim": "All shipments will stop because the export licenses have been denied.",
+      "sources": [
+        {
+          "source_id": 13,
+          "text": "If export license applications are denied, we may be unable to ship some products. Applications remain under review."
+        }
+      ],
+      "cited_source_ids": [
+        13
+      ],
+      "expected_supported": false,
+      "reason": "Turns a possible conditional consequence into an actual denial and certain universal outcome."
+    },
+    {
+      "id": "reversed_causality",
+      "claim": "Excess inventory may cause lower customer demand.",
+      "sources": [
+        {
+          "source_id": 14,
+          "text": "Lower customer demand may lead to excess inventory. We monitor demand when planning production."
+        }
+      ],
+      "cited_source_ids": [
+        14
+      ],
+      "expected_supported": false,
+      "reason": "The source establishes the opposite causal direction."
+    },
+    {
+      "id": "unsupported_conjunct",
+      "claim": "Supplier interruptions may delay deliveries and cause customer data breaches.",
+      "sources": [
+        {
+          "source_id": 15,
+          "text": "Supplier interruptions may delay deliveries. We maintain inventory to reduce the impact of these interruptions."
+        }
+      ],
+      "cited_source_ids": [
+        15
+      ],
+      "expected_supported": false,
+      "reason": "The delivery clause is supported, but the data-breach clause is absent."
+    },
+    {
+      "id": "english_paraphrase",
+      "claim": "Changing certain suppliers can take time.",
+      "sources": [
+        {
+          "source_id": 16,
+          "text": "Some components are obtained from sole-source suppliers. Qualifying replacement suppliers for these components may require significant time."
+        }
+      ],
+      "cited_source_ids": [
+        16
+      ],
+      "expected_supported": true,
+      "reason": "A less specific, faithful summary of replacement qualification time."
+    },
+    {
+      "id": "uncited_support",
+      "claim": "Severe storms may disrupt transportation.",
+      "sources": [
+        {
+          "source_id": 17,
+          "text": "Distribution costs may increase when fuel prices rise."
+        },
+        {
+          "source_id": 18,
+          "text": "Severe storms may disrupt transportation and delay deliveries."
+        }
+      ],
+      "cited_source_ids": [
+        17
+      ],
+      "expected_supported": false,
+      "reason": "Support exists only in an uncited source, which must not reach the claim checker."
+    }
+  ],
+  "results": [
+    {
+      "id": "supplier_translation",
+      "expected_supported": true,
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 11,
+            "text": "Manufacturing interruptions at these suppliers may delay product deliveries."
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Tedarikçilerdeki üretim kesintileri ürün teslimatlarını geciktirebilir.",
+          "source_ids": [
+            11
+          ],
+          "content": "{\"quotes\": [{\"source_id\": 11, \"text\": \"Manufacturing interruptions at these suppliers may delay product deliveries.\"}], \"missing_details\": [], \"supported\": true}",
+          "status": "completed",
+          "elapsed_seconds": 25.438626124996517
+        }
+      ],
+      "elapsed_seconds": 25.43870487499953
+    },
+    {
+      "id": "negated_incident",
+      "expected_supported": false,
+      "verdict": {
+        "quotes": [],
+        "missing_details": [
+          "confirmation of material disruption",
+          "specific consequences or conditions causing disruption"
+        ],
+        "supported": false
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "The incident caused a material disruption to operations.",
+          "source_ids": [
+            12
+          ],
+          "content": "{\"quotes\": [{\"source_id\": 12, \"text\": \"We have not experienced a material disruption to operations from this incident.\"}], \"missing_details\": [\"confirmation of material disruption\", \"specific consequences or conditions causing disruption\"], \"supported\": false}",
+          "status": "completed",
+          "elapsed_seconds": 19.05535724999936
+        }
+      ],
+      "elapsed_seconds": 19.05552408400399
+    },
+    {
+      "id": "conditional_translation",
+      "expected_supported": true,
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 13,
+            "text": "If export license applications are denied, we may be unable to ship some products."
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "İhracat lisansı başvuruları reddedilirse bazı ürünler sevk edilemeyebilir.",
+          "source_ids": [
+            13
+          ],
+          "content": "{\"quotes\": [{\"source_id\": 13, \"text\": \"If export license applications are denied, we may be unable to ship some products.\"}], \"missing_details\": [], \"supported\": true}",
+          "status": "completed",
+          "elapsed_seconds": 18.437999583002238
+        }
+      ],
+      "elapsed_seconds": 18.438217125003575
+    },
+    {
+      "id": "certainty_and_scope",
+      "expected_supported": false,
+      "verdict": {
+        "quotes": [],
+        "missing_details": [
+          "The claim specifies 'all shipments' will stop, but the source only mentions 'some products' may be affected.",
+          "The claim states licenses have been denied, but the source says applications are 'under review' (not yet denied)"
+        ],
+        "supported": false
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "All shipments will stop because the export licenses have been denied.",
+          "source_ids": [
+            13
+          ],
+          "content": "{\"quotes\": [{\"source_id\": 13, \"text\": \"If export license applications are denied, we may be unable to ship some products.\"}, {\"source_id\": 13, \"text\": \"Applications remain under review.\"}], \"missing_details\": [\"The claim specifies 'all shipments' will stop, but the source only mentions 'some products' may be affected.\", \"The claim states licenses have been denied, but the source says applications are 'under review' (not yet denied)\"], \"supported\": false}",
+          "status": "completed",
+          "elapsed_seconds": 16.308579750002536
+        }
+      ],
+      "elapsed_seconds": 16.308689667006547
+    },
+    {
+      "id": "reversed_causality",
+      "expected_supported": false,
+      "verdict": {
+        "quotes": [],
+        "missing_details": [
+          "The claim states excess inventory causes lower demand, but the source indicates lower demand causes excess inventory. The causal direction is reversed."
+        ],
+        "supported": false
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Excess inventory may cause lower customer demand.",
+          "source_ids": [
+            14
+          ],
+          "content": "{\"quotes\": [{\"source_id\": 14, \"text\": \"Lower customer demand may lead to excess inventory\"}], \"missing_details\": [\"The claim states excess inventory causes lower demand, but the source indicates lower demand causes excess inventory. The causal direction is reversed.\"], \"supported\": false}",
+          "status": "completed",
+          "elapsed_seconds": 15.060798582999269
+        }
+      ],
+      "elapsed_seconds": 15.060945084005652
+    },
+    {
+      "id": "unsupported_conjunct",
+      "expected_supported": false,
+      "verdict": {
+        "quotes": [],
+        "missing_details": [
+          "cause customer data breaches"
+        ],
+        "supported": false
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Supplier interruptions may delay deliveries and cause customer data breaches.",
+          "source_ids": [
+            15
+          ],
+          "content": "{\"quotes\": [{\"source_id\": 15, \"text\": \"Supplier interruptions may delay deliveries.\"}], \"missing_details\": [\"cause customer data breaches\"], \"supported\": false}",
+          "status": "completed",
+          "elapsed_seconds": 13.837644040999294
+        }
+      ],
+      "elapsed_seconds": 13.837778333996539
+    },
+    {
+      "id": "english_paraphrase",
+      "expected_supported": true,
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 16,
+            "text": "Qualifying replacement suppliers for these components may require significant time."
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Changing certain suppliers can take time.",
+          "source_ids": [
+            16
+          ],
+          "content": "{\"quotes\": [{\"source_id\": 16, \"text\": \"Qualifying replacement suppliers for these components may require significant time.\"}], \"missing_details\": [], \"supported\": true}",
+          "status": "completed",
+          "elapsed_seconds": 19.432658334000735
+        }
+      ],
+      "elapsed_seconds": 19.432761374999245
+    },
+    {
+      "id": "uncited_support",
+      "expected_supported": false,
+      "verdict": {
+        "quotes": [],
+        "missing_details": [
+          "severe storms",
+          "transportation disruption"
+        ],
+        "supported": false
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Severe storms may disrupt transportation.",
+          "source_ids": [
+            17
+          ],
+          "content": "{\"quotes\": [], \"missing_details\": [\"severe storms\", \"transportation disruption\"], \"supported\": false}",
+          "status": "completed",
+          "elapsed_seconds": 15.65429054100241
+        }
+      ],
+      "elapsed_seconds": 15.654493540998374
+    }
+  ]
+}

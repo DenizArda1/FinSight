@@ -121,7 +121,7 @@ class ReportSearchToolTests(unittest.TestCase):
 
         search.assert_called_once_with(
             query="Risks?", collection=collection, embedding_config=settings["embedding"],
-            top_k=3, ticker="NVDA", fiscal_year=2026, section="Item 1A", accession_number=None,
+            top_k=3, ticker="NVDA", fiscal_year=2026, section="Item 1A", accession_number=None, report_date=None, hybrid=True,
         )
         self.assertEqual(expand.call_args.args[0], matches)
         
@@ -138,7 +138,7 @@ class LatestReportTests(unittest.TestCase):
             "accession_number": "0000320193-23-000106", "section": "Item 1A",
         }
         self.new = {
-            "ticker": "AAPL", "fiscal_year": 2025, "report_date": "2025-09-27",
+            "ticker": "AAPL", "cik": "0000320193", "fiscal_year": 2025, "report_date": "2025-09-27",
             "accession_number": "0000320193-25-000079", "section": "Item 1A",
         }
         self.collection = Mock()
@@ -191,6 +191,9 @@ class LatestReportTests(unittest.TestCase):
 
 class LatestReportSearchTests(unittest.TestCase):
     def setUp(self):
+        patcher = patch("src.rag.index_identity.verify_collection_identity", return_value={"embedding_digest": "test"})
+        patcher.start()
+        self.addCleanup(patcher.stop)
         self.company = {"ticker": "AAPL", "cik": "0000320193", "name": "Apple Inc."}
         company_patcher = patch("src.tools.report_search.resolve_company", return_value=self.company)
         self.resolve = company_patcher.start()
@@ -202,7 +205,7 @@ class LatestReportSearchTests(unittest.TestCase):
         self.get_collection = collection_patcher.start()
         self.addCleanup(collection_patcher.stop)
         self.latest = {
-            "ticker": "AAPL", "fiscal_year": 2025, "report_date": "2025-09-27",
+            "ticker": "AAPL", "cik": "0000320193", "fiscal_year": 2025, "report_date": "2025-09-27",
             "accession_number": "0000320193-25-000079", "section": "Item 1A",
         }
 

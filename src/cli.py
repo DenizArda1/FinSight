@@ -7,12 +7,14 @@ import asyncio
 from src.agents.runtime import run_mcp_agent, run_mcp_orchestrator
 from src.utils.utils import load_yaml
 from src.verification.agent_answer import format_source_references
+from src.reporting import DISCLAIMER
 
 
 def format_request_error(error):
     if isinstance(error, ExceptionGroup):
         return " | ".join(format_request_error(item) for item in error.exceptions)
-    return f"{type(error).__name__}: {error}"
+    notes = getattr(error, "__notes__", [])
+    return " | ".join([f"{type(error).__name__}: {error}", *notes])
     
 def main():
     parser = argparse.ArgumentParser(
@@ -55,6 +57,7 @@ def main():
     sources = format_source_references(result["answer"], result["evidence"])
     if sources:
         print("\n" + sources)
+    print("\n" + DISCLAIMER)
 
 
 if __name__ == "__main__":

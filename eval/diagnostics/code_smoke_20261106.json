@@ -1,0 +1,1068 @@
+{
+  "tools": [
+    "resolve_ticker_to_cik",
+    "get_company_facts",
+    "compute_metrics",
+    "search_filings",
+    "get_filing_section",
+    "compare_companies"
+  ],
+  "comparison": {
+    "companies": [
+      {
+        "ticker": "AAPL",
+        "name": "Apple Inc.",
+        "cik": "0000320193"
+      },
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT CORP",
+        "cik": "0000789019"
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA CORP",
+        "cik": "0001045810"
+      }
+    ],
+    "requested_years": 3,
+    "records": [
+      {
+        "cik": "0000320193",
+        "fiscal_year": 2025,
+        "metric": "revenue_growth",
+        "start": "2024-09-29",
+        "end": "2025-09-27",
+        "value": 0.06425511782832749,
+        "unit": "ratio",
+        "formula": "current_revenue / previous_revenue - 1",
+        "inputs": {
+          "previous_revenue": {
+            "cik": 320193,
+            "metric": "revenue",
+            "start": "2023-10-01",
+            "end": "2024-09-28",
+            "value": 391035000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2025-10-31",
+            "accn": "0000320193-25-000079",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "period_label": "FY2024 (period end: 2024-09-28)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+          },
+          "current_revenue": {
+            "cik": 320193,
+            "metric": "revenue",
+            "start": "2024-09-29",
+            "end": "2025-09-27",
+            "value": 416161000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2025-10-31",
+            "accn": "0000320193-25-000079",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "period_label": "FY2025 (period end: 2025-09-27)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+          }
+        },
+        "period_label": "FY2025 (period end: 2025-09-27)",
+        "ticker": "AAPL"
+      },
+      {
+        "cik": "0000789019",
+        "fiscal_year": 2025,
+        "metric": "revenue_growth",
+        "start": "2024-07-01",
+        "end": "2025-06-30",
+        "value": 0.14932156232406713,
+        "unit": "ratio",
+        "formula": "current_revenue / previous_revenue - 1",
+        "inputs": {
+          "previous_revenue": {
+            "cik": 789019,
+            "metric": "revenue",
+            "start": "2023-07-01",
+            "end": "2024-06-30",
+            "value": 245122000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-07-29",
+            "accn": "0001193125-26-323660",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "period_label": "FY2024 (period end: 2024-06-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+          },
+          "current_revenue": {
+            "cik": 789019,
+            "metric": "revenue",
+            "start": "2024-07-01",
+            "end": "2025-06-30",
+            "value": 281724000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-07-29",
+            "accn": "0001193125-26-323660",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "period_label": "FY2025 (period end: 2025-06-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+          }
+        },
+        "period_label": "FY2025 (period end: 2025-06-30)",
+        "ticker": "MSFT"
+      },
+      {
+        "cik": "0001045810",
+        "fiscal_year": 2025,
+        "metric": "revenue_growth",
+        "start": "2024-01-29",
+        "end": "2025-01-26",
+        "value": 1.1420340763599355,
+        "unit": "ratio",
+        "formula": "current_revenue / previous_revenue - 1",
+        "inputs": {
+          "previous_revenue": {
+            "cik": 1045810,
+            "metric": "revenue",
+            "start": "2023-01-30",
+            "end": "2024-01-28",
+            "value": 60922000000,
+            "unit": "USD",
+            "tag": "Revenues",
+            "form": "10-K",
+            "filed": "2026-02-25",
+            "accn": "0001045810-26-000021",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "period_label": "FY2024 (period end: 2024-01-28)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+          },
+          "current_revenue": {
+            "cik": 1045810,
+            "metric": "revenue",
+            "start": "2024-01-29",
+            "end": "2025-01-26",
+            "value": 130497000000,
+            "unit": "USD",
+            "tag": "Revenues",
+            "form": "10-K",
+            "filed": "2026-02-25",
+            "accn": "0001045810-26-000021",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "period_label": "FY2025 (period end: 2025-01-26)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+          }
+        },
+        "period_label": "FY2025 (period end: 2025-01-26)",
+        "ticker": "NVDA"
+      },
+      {
+        "cik": "0000320193",
+        "fiscal_year": 2024,
+        "metric": "revenue_growth",
+        "start": "2023-10-01",
+        "end": "2024-09-28",
+        "value": 0.02021994077514111,
+        "unit": "ratio",
+        "formula": "current_revenue / previous_revenue - 1",
+        "inputs": {
+          "previous_revenue": {
+            "cik": 320193,
+            "metric": "revenue",
+            "start": "2022-09-25",
+            "end": "2023-09-30",
+            "value": 383285000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2025-10-31",
+            "accn": "0000320193-25-000079",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "period_label": "FY2023 (period end: 2023-09-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+          },
+          "current_revenue": {
+            "cik": 320193,
+            "metric": "revenue",
+            "start": "2023-10-01",
+            "end": "2024-09-28",
+            "value": 391035000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2025-10-31",
+            "accn": "0000320193-25-000079",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "period_label": "FY2024 (period end: 2024-09-28)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+          }
+        },
+        "period_label": "FY2024 (period end: 2024-09-28)",
+        "ticker": "AAPL"
+      },
+      {
+        "cik": "0000789019",
+        "fiscal_year": 2024,
+        "metric": "revenue_growth",
+        "start": "2023-07-01",
+        "end": "2024-06-30",
+        "value": 0.1566996201307127,
+        "unit": "ratio",
+        "formula": "current_revenue / previous_revenue - 1",
+        "inputs": {
+          "previous_revenue": {
+            "cik": 789019,
+            "metric": "revenue",
+            "start": "2022-07-01",
+            "end": "2023-06-30",
+            "value": 211915000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2025-07-30",
+            "accn": "0000950170-25-100235",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "period_label": "FY2023 (period end: 2023-06-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm"
+          },
+          "current_revenue": {
+            "cik": 789019,
+            "metric": "revenue",
+            "start": "2023-07-01",
+            "end": "2024-06-30",
+            "value": 245122000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-07-29",
+            "accn": "0001193125-26-323660",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "period_label": "FY2024 (period end: 2024-06-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+          }
+        },
+        "period_label": "FY2024 (period end: 2024-06-30)",
+        "ticker": "MSFT"
+      },
+      {
+        "cik": "0001045810",
+        "fiscal_year": 2024,
+        "metric": "revenue_growth",
+        "start": "2023-01-30",
+        "end": "2024-01-28",
+        "value": 1.2585452658115224,
+        "unit": "ratio",
+        "formula": "current_revenue / previous_revenue - 1",
+        "inputs": {
+          "previous_revenue": {
+            "cik": 1045810,
+            "metric": "revenue",
+            "start": "2022-01-31",
+            "end": "2023-01-29",
+            "value": 26974000000,
+            "unit": "USD",
+            "tag": "Revenues",
+            "form": "10-K",
+            "filed": "2025-02-26",
+            "accn": "0001045810-25-000023",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "period_label": "FY2023 (period end: 2023-01-29)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm"
+          },
+          "current_revenue": {
+            "cik": 1045810,
+            "metric": "revenue",
+            "start": "2023-01-30",
+            "end": "2024-01-28",
+            "value": 60922000000,
+            "unit": "USD",
+            "tag": "Revenues",
+            "form": "10-K",
+            "filed": "2026-02-25",
+            "accn": "0001045810-26-000021",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "period_label": "FY2024 (period end: 2024-01-28)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+          }
+        },
+        "period_label": "FY2024 (period end: 2024-01-28)",
+        "ticker": "NVDA"
+      },
+      {
+        "cik": "0000320193",
+        "fiscal_year": 2025,
+        "start": "2024-09-29",
+        "end": "2025-09-27",
+        "value": 0.2691506412181824,
+        "unit": "ratio",
+        "metric": "net_margin",
+        "formula": "net_income / revenue",
+        "inputs": {
+          "net_income": {
+            "cik": 320193,
+            "metric": "net_income",
+            "start": "2024-09-29",
+            "end": "2025-09-27",
+            "value": 112010000000,
+            "unit": "USD",
+            "tag": "NetIncomeLoss",
+            "form": "10-K",
+            "filed": "2025-10-31",
+            "accn": "0000320193-25-000079",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "period_label": "FY2025 (period end: 2025-09-27)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+          },
+          "revenue": {
+            "cik": 320193,
+            "metric": "revenue",
+            "start": "2024-09-29",
+            "end": "2025-09-27",
+            "value": 416161000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2025-10-31",
+            "accn": "0000320193-25-000079",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "period_label": "FY2025 (period end: 2025-09-27)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+          }
+        },
+        "period_label": "FY2025 (period end: 2025-09-27)",
+        "ticker": "AAPL"
+      },
+      {
+        "cik": "0000789019",
+        "fiscal_year": 2025,
+        "start": "2024-07-01",
+        "end": "2025-06-30",
+        "value": 0.3614601524896707,
+        "unit": "ratio",
+        "metric": "net_margin",
+        "formula": "net_income / revenue",
+        "inputs": {
+          "net_income": {
+            "cik": 789019,
+            "metric": "net_income",
+            "start": "2024-07-01",
+            "end": "2025-06-30",
+            "value": 101832000000,
+            "unit": "USD",
+            "tag": "NetIncomeLoss",
+            "form": "10-K",
+            "filed": "2026-07-29",
+            "accn": "0001193125-26-323660",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "period_label": "FY2025 (period end: 2025-06-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+          },
+          "revenue": {
+            "cik": 789019,
+            "metric": "revenue",
+            "start": "2024-07-01",
+            "end": "2025-06-30",
+            "value": 281724000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-07-29",
+            "accn": "0001193125-26-323660",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "period_label": "FY2025 (period end: 2025-06-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+          }
+        },
+        "period_label": "FY2025 (period end: 2025-06-30)",
+        "ticker": "MSFT"
+      },
+      {
+        "cik": "0001045810",
+        "fiscal_year": 2025,
+        "start": "2024-01-29",
+        "end": "2025-01-26",
+        "value": 0.5584802715771244,
+        "unit": "ratio",
+        "metric": "net_margin",
+        "formula": "net_income / revenue",
+        "inputs": {
+          "net_income": {
+            "cik": 1045810,
+            "metric": "net_income",
+            "start": "2024-01-29",
+            "end": "2025-01-26",
+            "value": 72880000000,
+            "unit": "USD",
+            "tag": "NetIncomeLoss",
+            "form": "10-K",
+            "filed": "2026-02-25",
+            "accn": "0001045810-26-000021",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "period_label": "FY2025 (period end: 2025-01-26)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+          },
+          "revenue": {
+            "cik": 1045810,
+            "metric": "revenue",
+            "start": "2024-01-29",
+            "end": "2025-01-26",
+            "value": 130497000000,
+            "unit": "USD",
+            "tag": "Revenues",
+            "form": "10-K",
+            "filed": "2026-02-25",
+            "accn": "0001045810-26-000021",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "period_label": "FY2025 (period end: 2025-01-26)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+          }
+        },
+        "period_label": "FY2025 (period end: 2025-01-26)",
+        "ticker": "NVDA"
+      },
+      {
+        "cik": "0000320193",
+        "fiscal_year": 2024,
+        "start": "2023-10-01",
+        "end": "2024-09-28",
+        "value": 0.23971255769943867,
+        "unit": "ratio",
+        "metric": "net_margin",
+        "formula": "net_income / revenue",
+        "inputs": {
+          "net_income": {
+            "cik": 320193,
+            "metric": "net_income",
+            "start": "2023-10-01",
+            "end": "2024-09-28",
+            "value": 93736000000,
+            "unit": "USD",
+            "tag": "NetIncomeLoss",
+            "form": "10-K",
+            "filed": "2025-10-31",
+            "accn": "0000320193-25-000079",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "period_label": "FY2024 (period end: 2024-09-28)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+          },
+          "revenue": {
+            "cik": 320193,
+            "metric": "revenue",
+            "start": "2023-10-01",
+            "end": "2024-09-28",
+            "value": 391035000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2025-10-31",
+            "accn": "0000320193-25-000079",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "period_label": "FY2024 (period end: 2024-09-28)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+          }
+        },
+        "period_label": "FY2024 (period end: 2024-09-28)",
+        "ticker": "AAPL"
+      },
+      {
+        "cik": "0000789019",
+        "fiscal_year": 2024,
+        "start": "2023-07-01",
+        "end": "2024-06-30",
+        "value": 0.35955972944084985,
+        "unit": "ratio",
+        "metric": "net_margin",
+        "formula": "net_income / revenue",
+        "inputs": {
+          "net_income": {
+            "cik": 789019,
+            "metric": "net_income",
+            "start": "2023-07-01",
+            "end": "2024-06-30",
+            "value": 88136000000,
+            "unit": "USD",
+            "tag": "NetIncomeLoss",
+            "form": "10-K",
+            "filed": "2026-07-29",
+            "accn": "0001193125-26-323660",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "period_label": "FY2024 (period end: 2024-06-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+          },
+          "revenue": {
+            "cik": 789019,
+            "metric": "revenue",
+            "start": "2023-07-01",
+            "end": "2024-06-30",
+            "value": 245122000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-07-29",
+            "accn": "0001193125-26-323660",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "period_label": "FY2024 (period end: 2024-06-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+          }
+        },
+        "period_label": "FY2024 (period end: 2024-06-30)",
+        "ticker": "MSFT"
+      },
+      {
+        "cik": "0001045810",
+        "fiscal_year": 2024,
+        "start": "2023-01-30",
+        "end": "2024-01-28",
+        "value": 0.4884934834706674,
+        "unit": "ratio",
+        "metric": "net_margin",
+        "formula": "net_income / revenue",
+        "inputs": {
+          "net_income": {
+            "cik": 1045810,
+            "metric": "net_income",
+            "start": "2023-01-30",
+            "end": "2024-01-28",
+            "value": 29760000000,
+            "unit": "USD",
+            "tag": "NetIncomeLoss",
+            "form": "10-K",
+            "filed": "2026-02-25",
+            "accn": "0001045810-26-000021",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "period_label": "FY2024 (period end: 2024-01-28)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+          },
+          "revenue": {
+            "cik": 1045810,
+            "metric": "revenue",
+            "start": "2023-01-30",
+            "end": "2024-01-28",
+            "value": 60922000000,
+            "unit": "USD",
+            "tag": "Revenues",
+            "form": "10-K",
+            "filed": "2026-02-25",
+            "accn": "0001045810-26-000021",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "period_label": "FY2024 (period end: 2024-01-28)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+          }
+        },
+        "period_label": "FY2024 (period end: 2024-01-28)",
+        "ticker": "NVDA"
+      },
+      {
+        "cik": "0000320193",
+        "fiscal_year": 2023,
+        "start": "2022-09-25",
+        "end": "2023-09-30",
+        "value": 0.2530623426432028,
+        "unit": "ratio",
+        "metric": "net_margin",
+        "formula": "net_income / revenue",
+        "inputs": {
+          "net_income": {
+            "cik": 320193,
+            "metric": "net_income",
+            "start": "2022-09-25",
+            "end": "2023-09-30",
+            "value": 96995000000,
+            "unit": "USD",
+            "tag": "NetIncomeLoss",
+            "form": "10-K",
+            "filed": "2025-10-31",
+            "accn": "0000320193-25-000079",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "period_label": "FY2023 (period end: 2023-09-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+          },
+          "revenue": {
+            "cik": 320193,
+            "metric": "revenue",
+            "start": "2022-09-25",
+            "end": "2023-09-30",
+            "value": 383285000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2025-10-31",
+            "accn": "0000320193-25-000079",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "period_label": "FY2023 (period end: 2023-09-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+          }
+        },
+        "period_label": "FY2023 (period end: 2023-09-30)",
+        "ticker": "AAPL"
+      },
+      {
+        "cik": "0000789019",
+        "fiscal_year": 2023,
+        "start": "2022-07-01",
+        "end": "2023-06-30",
+        "value": 0.3414623787839464,
+        "unit": "ratio",
+        "metric": "net_margin",
+        "formula": "net_income / revenue",
+        "inputs": {
+          "net_income": {
+            "cik": 789019,
+            "metric": "net_income",
+            "start": "2022-07-01",
+            "end": "2023-06-30",
+            "value": 72361000000,
+            "unit": "USD",
+            "tag": "NetIncomeLoss",
+            "form": "10-K",
+            "filed": "2025-07-30",
+            "accn": "0000950170-25-100235",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "period_label": "FY2023 (period end: 2023-06-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm"
+          },
+          "revenue": {
+            "cik": 789019,
+            "metric": "revenue",
+            "start": "2022-07-01",
+            "end": "2023-06-30",
+            "value": 211915000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2025-07-30",
+            "accn": "0000950170-25-100235",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "period_label": "FY2023 (period end: 2023-06-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm"
+          }
+        },
+        "period_label": "FY2023 (period end: 2023-06-30)",
+        "ticker": "MSFT"
+      },
+      {
+        "cik": "0001045810",
+        "fiscal_year": 2023,
+        "start": "2022-01-31",
+        "end": "2023-01-29",
+        "value": 0.16193371394676356,
+        "unit": "ratio",
+        "metric": "net_margin",
+        "formula": "net_income / revenue",
+        "inputs": {
+          "net_income": {
+            "cik": 1045810,
+            "metric": "net_income",
+            "start": "2022-01-31",
+            "end": "2023-01-29",
+            "value": 4368000000,
+            "unit": "USD",
+            "tag": "NetIncomeLoss",
+            "form": "10-K",
+            "filed": "2025-02-26",
+            "accn": "0001045810-25-000023",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "period_label": "FY2023 (period end: 2023-01-29)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm"
+          },
+          "revenue": {
+            "cik": 1045810,
+            "metric": "revenue",
+            "start": "2022-01-31",
+            "end": "2023-01-29",
+            "value": 26974000000,
+            "unit": "USD",
+            "tag": "Revenues",
+            "form": "10-K",
+            "filed": "2025-02-26",
+            "accn": "0001045810-25-000023",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "period_label": "FY2023 (period end: 2023-01-29)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm"
+          }
+        },
+        "period_label": "FY2023 (period end: 2023-01-29)",
+        "ticker": "NVDA"
+      },
+      {
+        "cik": "0000320193",
+        "fiscal_year": 2025,
+        "metric": "revenue_cagr",
+        "start": "2023-09-30",
+        "end": "2025-09-27",
+        "periods": 2,
+        "value": 0.04200493918237114,
+        "unit": "ratio",
+        "formula": "(end_revenue / start_revenue) ** (1 / periods) - 1",
+        "inputs": {
+          "start_revenue": {
+            "cik": 320193,
+            "metric": "revenue",
+            "start": "2022-09-25",
+            "end": "2023-09-30",
+            "value": 383285000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2025-10-31",
+            "accn": "0000320193-25-000079",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "period_label": "FY2023 (period end: 2023-09-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+          },
+          "end_revenue": {
+            "cik": 320193,
+            "metric": "revenue",
+            "start": "2024-09-29",
+            "end": "2025-09-27",
+            "value": 416161000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2025-10-31",
+            "accn": "0000320193-25-000079",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "period_label": "FY2025 (period end: 2025-09-27)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+          }
+        },
+        "ticker": "AAPL"
+      },
+      {
+        "cik": "0000789019",
+        "fiscal_year": 2025,
+        "metric": "revenue_cagr",
+        "start": "2023-06-30",
+        "end": "2025-06-30",
+        "periods": 2,
+        "value": 0.15300468973386483,
+        "unit": "ratio",
+        "formula": "(end_revenue / start_revenue) ** (1 / periods) - 1",
+        "inputs": {
+          "start_revenue": {
+            "cik": 789019,
+            "metric": "revenue",
+            "start": "2022-07-01",
+            "end": "2023-06-30",
+            "value": 211915000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2025-07-30",
+            "accn": "0000950170-25-100235",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "period_label": "FY2023 (period end: 2023-06-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm"
+          },
+          "end_revenue": {
+            "cik": 789019,
+            "metric": "revenue",
+            "start": "2024-07-01",
+            "end": "2025-06-30",
+            "value": 281724000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-07-29",
+            "accn": "0001193125-26-323660",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "period_label": "FY2025 (period end: 2025-06-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+          }
+        },
+        "ticker": "MSFT"
+      },
+      {
+        "cik": "0001045810",
+        "fiscal_year": 2025,
+        "metric": "revenue_cagr",
+        "start": "2023-01-29",
+        "end": "2025-01-26",
+        "periods": 2,
+        "value": 1.199518338720932,
+        "unit": "ratio",
+        "formula": "(end_revenue / start_revenue) ** (1 / periods) - 1",
+        "inputs": {
+          "start_revenue": {
+            "cik": 1045810,
+            "metric": "revenue",
+            "start": "2022-01-31",
+            "end": "2023-01-29",
+            "value": 26974000000,
+            "unit": "USD",
+            "tag": "Revenues",
+            "form": "10-K",
+            "filed": "2025-02-26",
+            "accn": "0001045810-25-000023",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "period_label": "FY2023 (period end: 2023-01-29)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm"
+          },
+          "end_revenue": {
+            "cik": 1045810,
+            "metric": "revenue",
+            "start": "2024-01-29",
+            "end": "2025-01-26",
+            "value": 130497000000,
+            "unit": "USD",
+            "tag": "Revenues",
+            "form": "10-K",
+            "filed": "2026-02-25",
+            "accn": "0001045810-26-000021",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "period_label": "FY2025 (period end: 2025-01-26)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+          }
+        },
+        "ticker": "NVDA"
+      }
+    ],
+    "comparisons": [
+      {
+        "metric": "revenue_growth",
+        "common_source_end_years": [
+          2025,
+          2024,
+          2023
+        ],
+        "common_end_years": [
+          2025,
+          2024
+        ]
+      },
+      {
+        "metric": "net_margin",
+        "common_source_end_years": [
+          2025,
+          2024,
+          2023
+        ],
+        "common_end_years": [
+          2025,
+          2024,
+          2023
+        ]
+      },
+      {
+        "metric": "revenue_cagr",
+        "common_source_end_years": [
+          2025,
+          2024,
+          2023
+        ],
+        "common_end_years": [
+          2025
+        ]
+      }
+    ],
+    "warnings": [],
+    "comparison_basis": "period_end_calendar_year",
+    "notes": [
+      "Fiscal calendars differ. Compare each row's fiscal year, start and end dates. Years counts source periods; growth has one fewer interval. Missing values are never zero-filled."
+    ]
+  },
+  "search": {
+    "company": {
+      "ticker": "MSFT",
+      "name": "MICROSOFT CORP",
+      "cik": "0000789019"
+    },
+    "query": "foreign exchange rates tariffs",
+    "fiscal_year": 2026,
+    "section": "Item 7",
+    "matches": [
+      {
+        "chunk_id": "0001193125-26-323660:item_7:5",
+        "text": "Our success is highly dependent on our ability to attract and retain qualified employees. We hire a mix of university and industry talent worldwide. We compete for talented individuals globally by offering an exceptional working environment, broad customer reach, scale in resources, the ability to grow one’s career across many different products and businesses, and competitive compensation and benefits.\nOur international operations provide a significant portion of our total revenue and expenses. Many of these revenue and expenses are denominated in currencies other than the U.S. dollar. As a result, changes in foreign exchange rates may significantly affect revenue and expenses. Fluctuations in the U.S. dollar relative to certain foreign currencies increased reported revenue and did not have a material impact on reported expenses from our international operations in fiscal year 2026.\nFurther, global, regional, and local economic developments and changes in global trade policies such as restrictions on international trade, including tariffs and other controls on imports or exports, could result in increased supply chain challenges, cost volatility, and consumer and economic uncertainty which may adversely affect our results of operations.\nRefer to Risk Factors (Part I, Item 1A of this Form 10-K) for a discussion of these factors and other risks.\nSeasonality",
+        "metadata": {
+          "fiscal_year": 2026,
+          "end": 148348,
+          "accession_number": "0001193125-26-323660",
+          "filed": "2026-07-29",
+          "section_start": 141540,
+          "start": 146970,
+          "section_end": 192797,
+          "cik": "0000789019",
+          "section_title": "Management's Discussion and Analysis",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+          "ticker": "MSFT",
+          "form": "10-K",
+          "section": "Item 7",
+          "report_date": "2026-06-30",
+          "amendment_note": "Original annual filing section."
+        },
+        "distance": 0.4713318943977356,
+        "score": 0.03278688524590164,
+        "ranks": {
+          "dense": 1,
+          "bm25": 1
+        },
+        "context": {
+          "text": "anufacturers if a current vendor becomes unavailable or unable to meet our requirements. However, some of our products contain certain components for which there are very few qualified suppliers. Extended or unforeseen disruptions, or limited availability of components from these suppliers could impact our ability to operate our datacenters and manufacture devices on time to meet consumer demand.\nOur success is highly dependent on our ability to attract and retain qualified employees. We hire a mix of university and industry talent worldwide. We compete for talented individuals globally by offering an exceptional working environment, broad customer reach, scale in resources, the ability to grow one’s career across many different products and businesses, and competitive compensation and benefits.\nOur international operations provide a significant portion of our total revenue and expenses. Many of these revenue and expenses are denominated in currencies other than the U.S. dollar. As a result, changes in foreign exchange rates may significantly affect revenue and expenses. Fluctuations in the U.S. dollar relative to certain foreign currencies increased reported revenue and did not have a material impact on reported expenses from our international operations in fiscal year 2026.\nFurther, global, regional, and local economic developments and changes in global trade policies such as restrictions on international trade, including tariffs and other controls on imports or exports, could result in increased supply chain challenges, cost volatility, and consumer and economic uncertainty which may adversely affect our results of operations.\nRefer to Risk Factors (Part I, Item 1A of this Form 10-K) for a discussion of these factors and other risks.\nSeasonality\nOur revenue fluctuates quarterly and is generally higher in the fourth quarter of our fiscal year. Fourth quarter revenue is driven by a higher volume of multi-year contracts executed during the period.\nReportable Segments\nWe report our financial performance based on the following three segments: Productivity and Business Processes, Intelligent Cloud, and More Personal Computing. The segment amou",
+          "start": 146570,
+          "end": 148748
+        }
+      },
+      {
+        "chunk_id": "0001193125-26-323660:item_7:19",
+        "text": "4,385\n(349\n)\nNet gains (losses) on derivatives\n1,867\n(260\n)\nNet gains (losses) on foreign currency remeasurements\n(527\n)\n171\nOther, net\n4,722\n(4,725\n)\nTotal\n$\n10,697\n$\n(4,901\n)\nWe use derivative instruments to manage risks related to foreign currencies, interest rates, equity prices, and credit; to enhance investment returns; and to facilitate portfolio diversification. Gains and losses from changes in fair values of derivatives that are not designated as hedging instruments are primarily recognized in other income (expense), net.\nOther income (expense), net included $6.5 billion of net gains and $4.8 billion of net losses for fiscal years 2026 and 2025, respectively, from investments in OpenAI, primarily net recognized gains (losses) on our equity method investment reflected in Other, net. The net gains recorded for fiscal year 2026 primarily relate to the dilution gain from the OpenAI Recapitalization.\nFiscal Year 2026 Compared with Fiscal Year 2025",
+        "metadata": {
+          "section_start": 141540,
+          "section_title": "Management's Discussion and Analysis",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+          "filed": "2026-07-29",
+          "end": 165310,
+          "report_date": "2026-06-30",
+          "amendment_note": "Original annual filing section.",
+          "ticker": "MSFT",
+          "section_end": 192797,
+          "accession_number": "0001193125-26-323660",
+          "cik": "0000789019",
+          "start": 164345,
+          "form": "10-K",
+          "fiscal_year": 2026,
+          "section": "Item 7"
+        },
+        "distance": 0.5392153859138489,
+        "score": 0.03200204813108039,
+        "ranks": {
+          "dense": 3,
+          "bm25": 2
+        },
+        "context": {
+          "text": "l and administrative expenses increased $733 million or 10% driven by higher legal expenses and gains on divestitures in the prior period.\nOTHER INCOME (EXPENSE), NET\nThe components of other income (expense), net were as follows:\n(In millions)\nYear Ended June 30,\n2026\n2025\nInterest and dividends income\n$\n3,301\n$\n2,647\nInterest expense\n(3,051\n)\n(2,385\n)\nNet recognized gains (losses) on investments\n4,385\n(349\n)\nNet gains (losses) on derivatives\n1,867\n(260\n)\nNet gains (losses) on foreign currency remeasurements\n(527\n)\n171\nOther, net\n4,722\n(4,725\n)\nTotal\n$\n10,697\n$\n(4,901\n)\nWe use derivative instruments to manage risks related to foreign currencies, interest rates, equity prices, and credit; to enhance investment returns; and to facilitate portfolio diversification. Gains and losses from changes in fair values of derivatives that are not designated as hedging instruments are primarily recognized in other income (expense), net.\nOther income (expense), net included $6.5 billion of net gains and $4.8 billion of net losses for fiscal years 2026 and 2025, respectively, from investments in OpenAI, primarily net recognized gains (losses) on our equity method investment reflected in Other, net. The net gains recorded for fiscal year 2026 primarily relate to the dilution gain from the OpenAI Recapitalization.\nFiscal Year 2026 Compared with Fiscal Year 2025\nInterest and dividends income increased primarily due to higher portfolio balances and higher yields on debt securities. Interest expense increased primarily due to higher finance lease interest expense, offset in part by higher capitalization of debt interest expense. Net recognized gains on investments increased primarily due to higher gains on equity securities and lower impairments in the cur",
+          "start": 163945,
+          "end": 165710
+        }
+      },
+      {
+        "chunk_id": "0001193125-26-323660:item_7:20",
+        "text": "Fiscal Year 2026 Compared with Fiscal Year 2025\nInterest and dividends income increased primarily due to higher portfolio balances and higher yields on debt securities. Interest expense increased primarily due to higher finance lease interest expense, offset in part by higher capitalization of debt interest expense. Net recognized gains on investments increased primarily due to higher gains on equity securities and lower impairments in the current period. Net gains on derivatives increased primarily due to gains on equity derivatives in the current period as compared to losses in the prior period. Other, net primarily reflects net recognized gains on equity method investments, including OpenAI.\nINCOME TAXES\nEffective Tax Rate\nOur effective tax rate for fiscal years 2026 and 2025 was 19% and 18%, respectively. The increase in our effective tax rate was primarily due to changes in the mix of our earnings and tax expenses between the U.S. and foreign countries.\nOur effective tax rate was lower than the U.S. federal statutory rate, primarily due to earnings taxed at lower rates in foreign jurisdictions resulting from producing and distributing our products and services through our foreign regional operations center in Ireland.",
+        "metadata": {
+          "section_end": 192797,
+          "section_start": 141540,
+          "form": "10-K",
+          "cik": "0000789019",
+          "amendment_note": "Original annual filing section.",
+          "start": 165263,
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+          "filed": "2026-07-29",
+          "section": "Item 7",
+          "accession_number": "0001193125-26-323660",
+          "ticker": "MSFT",
+          "report_date": "2026-06-30",
+          "fiscal_year": 2026,
+          "section_title": "Management's Discussion and Analysis",
+          "end": 166505
+        },
+        "distance": 0.5296218991279602,
+        "score": 0.03200204813108039,
+        "ranks": {
+          "dense": 2,
+          "bm25": 3
+        },
+        "context": {
+          "text": "me (expense), net.\nOther income (expense), net included $6.5 billion of net gains and $4.8 billion of net losses for fiscal years 2026 and 2025, respectively, from investments in OpenAI, primarily net recognized gains (losses) on our equity method investment reflected in Other, net. The net gains recorded for fiscal year 2026 primarily relate to the dilution gain from the OpenAI Recapitalization.\nFiscal Year 2026 Compared with Fiscal Year 2025\nInterest and dividends income increased primarily due to higher portfolio balances and higher yields on debt securities. Interest expense increased primarily due to higher finance lease interest expense, offset in part by higher capitalization of debt interest expense. Net recognized gains on investments increased primarily due to higher gains on equity securities and lower impairments in the current period. Net gains on derivatives increased primarily due to gains on equity derivatives in the current period as compared to losses in the prior period. Other, net primarily reflects net recognized gains on equity method investments, including OpenAI.\nINCOME TAXES\nEffective Tax Rate\nOur effective tax rate for fiscal years 2026 and 2025 was 19% and 18%, respectively. The increase in our effective tax rate was primarily due to changes in the mix of our earnings and tax expenses between the U.S. and foreign countries.\nOur effective tax rate was lower than the U.S. federal statutory rate, primarily due to earnings taxed at lower rates in foreign jurisdictions resulting from producing and distributing our products and services through our foreign regional operations center in Ireland.\nThe mix of income before income taxes between the U.S. and foreign countries impacted our effective tax rate as a result of the geographic distribution of, and customer demand for, our products and services. In fiscal year 2026, our U.S. income before income taxes was $103.6 billion and our foreign income before income taxes was $62.3 billion. In fiscal year 2025, our U.S. income before income ta",
+          "start": 164863,
+          "end": 166905
+        }
+      }
+    ],
+    "latest": true,
+    "selected_report": {
+      "fiscal_year": 2026,
+      "report_date": "2026-06-30",
+      "accession_number": "0001193125-26-323660"
+    }
+  },
+  "section_metadata": {
+    "ticker": "MSFT",
+    "cik": "0000789019",
+    "fiscal_year": 2026,
+    "form": "10-K",
+    "accession_number": "0001193125-26-323660",
+    "report_date": "2026-06-30",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+    "section": "Item 7",
+    "section_title": "Management's Discussion and Analysis",
+    "start": 141540,
+    "end": 192797,
+    "filed": "2026-07-29",
+    "amendment_note": "Original section; later amendments without this section do not replace it."
+  }
+}

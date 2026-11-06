@@ -36,9 +36,15 @@ PLANNER_RESPONSE_SCHEMA = {
                     "instruction": {
                         "type": "string",
                         "minLength": 1,
+                        "maxLength": 400,
+                    },
+                    "fiscal_year": {
+                        "type": ["integer", "null"],
+                        "minimum": 1,
+                        "description": "The explicitly requested filing fiscal year; null for latest or unspecified periods.",
                     },
                 },
-                "required": ["id", "agent", "instruction"],
+                "required": ["id", "agent", "instruction", "fiscal_year"],
                 "additionalProperties": False,
             },
         },
@@ -74,6 +80,9 @@ def validate_plan(plan):
             raise ValueError("Task IDs must not contain leading or trailing whitespace")
         if not task["instruction"].strip():
             raise ValueError("Task instructions must not be blank")
+        fiscal_year = task.get("fiscal_year")
+        if fiscal_year is not None and (type(fiscal_year) is not int or fiscal_year <= 0):
+            raise ValueError("Task fiscal_year must be a positive integer or null")
         if task_id in seen_ids:
             raise ValueError("Task IDs must be unique")
         seen_ids.add(task_id)
@@ -87,7 +96,7 @@ def validate_plan(plan):
         raise ValueError("Mixed plans must use both financial_data and filing_rag")
 
 
-def generate_plan(question, llm_config):
+def generate_plan(question, llm_config, telemetry=None):
     #Request a structured plan and return it only after validation
     if not isinstance(question, str) or not question.strip():
         raise ValueError("Question must be a non-empty string")
@@ -98,6 +107,7 @@ def generate_plan(question, llm_config):
         messages,
         llm_config,
         response_format=PLANNER_RESPONSE_SCHEMA,
+        telemetry=telemetry,
     )
 
     try:

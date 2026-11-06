@@ -45,6 +45,9 @@ def validate_vectors(vectors, expected_count, expected_dimension=None):
 
 
 def embed_texts(texts, embedding_config):
+    if embedding_config.get("digest"):
+        from src.rag.index_identity import embedding_identity
+        embedding_identity(embedding_config)
     if not isinstance(texts, list) or not texts:
         raise ValueError("Text must be a non-empty list")
     
@@ -71,6 +74,8 @@ def embed_texts(texts, embedding_config):
 
     vectors = data.get("embeddings")
     validate_vectors(vectors, expected_count=len(texts))
+    if embedding_config.get("digest"):
+        embedding_identity(embedding_config)
     return vectors
 
 

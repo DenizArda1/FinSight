@@ -1,0 +1,1338 @@
+[
+  {
+    "id": "aapl_latest_revenue_tr",
+    "question": "Apple'ın yerel verideki en son yıllık gelirini, mali yılını ve dönem bitiş tarihini söyle.",
+    "expected": {
+      "ticker": "AAPL",
+      "metric": "revenue",
+      "value": 416161000000,
+      "unit": "USD",
+      "fiscal_year": 2025,
+      "period_end": "2025-09-27"
+    },
+    "answer_language": "tr",
+    "answer": "Apple'ın yerel verideki en son yıllık geliri, mali yılı ve dönem bitiş tarihi aşağıda verilmiştir.\n\nAAPL | revenue: 416161000000 USD | FY2025 | 2024-09-29 → 2025-09-27 | 10-K | 0000320193-25-000079 [Source 2]",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": {
+      "source_sha256": "dd6a74c28dc87b1b872692e09e1de99e4c8646c203d29f9e55404c1bfb91cd1f",
+      "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+      "code_sha256": "ee5833e55af24bd0a557674f4c99862924bb3c582aab26808e3dcaf40ee96cc4"
+    },
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": "Apple'ın yerel verideki en son yıllık geliri, mali yılı ve dönem bitiş tarihi aşağıda verilmiştir.\n\nAAPL | revenue: 416161000000 USD | FY2025 | 2024-09-29 → 2025-09-27 | 10-K | 0000320193-25-000079 [Source 2]",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "answer",
+      "text": "Apple'ın yerel verideki en son yıllık geliri, mali yılı ve dönem bitiş tarihi aşağıda verilmiştir.",
+      "facts": [
+        "2:records/0"
+      ]
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0000320193",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "revenue",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 416161000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "financial",
+        "plan": [
+          {
+            "id": "task_1",
+            "agent": "financial_data",
+            "instruction": "Retrieve Apple's latest annual revenue with fiscal year and period end.",
+            "fiscal_year": null
+          }
+        ],
+        "elapsed_seconds": 2.113596332997986
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_zo5soew7",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "AAPL"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.743893625000055
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        },
+        "elapsed_seconds": 0.01633133300128975
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_xghst1c3",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000320193",
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.4557850420023897
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000320193",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "revenue",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 416161000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.008895291000953875
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 3,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 2.6823181660001865
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 6.907378666997829
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n  \"kind\": \"answer\",\n  \"text\": \"Apple'ın yerel verideki en son yıllık geliri, mali yılı ve dönem bitiş tarihi şu şekildedir: [Source 2] Gelir: 416,161,000,000 USD, Mali Yılı: FY2025, Dönem Bitiş Tarihi: 2025-09-27.\",\n  \"facts\": [\n    \"2:records/0\"\n  ]\n}",
+        "elapsed_seconds": 6.302191500002664
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"416,161,000,000\", \"FY2025,\", \"2025-09-27.\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        },
+        "elapsed_seconds": 6.303244667000399
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"416,161,000,000\", \"FY2025,\", \"2025-09-27.\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n  \"kind\": \"answer\",\n  \"text\": \"Apple'ın yerel verideki en son yıllık geliri, mali yılı ve dönem bitiş tarihi aşağıda verilmiştir.\",\n  \"facts\": [\n    \"2:records/0\"\n  ]\n}",
+        "elapsed_seconds": 2.4227487909993215
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 2.4244594589981716
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "status": "completed",
+        "content": "{\n  \"evidence_supported\": true,\n  \"language_matches\": true,\n  \"answer_complete\": true,\n  \"issues\": []\n}",
+        "elapsed_seconds": 3.8048111249991052
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 3.806384583000181
+      }
+    ],
+    "elapsed_seconds": 22.15760254199995,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "think": false,
+      "base_url": "http://localhost:11434",
+      "timeout_seconds": 180,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      }
+    },
+    "dataset_sha256": "3504165a1fd8c1f2460a8c7c71b2eb0cf2b5d5b19fda7d84f8de1c91511e779f",
+    "recorded_at": "2026-10-26T07:22:16.204878+00:00",
+    "transport": "mcp"
+  },
+  {
+    "id": "amzn_missing_gross_margin_tr",
+    "question": "Amazon'un yerel verideki en son mali yıl için brüt kâr marjını hesapla.",
+    "expected": {
+      "ticker": "AMZN",
+      "metric": "gross_margin",
+      "period_end": "2025-12-31",
+      "status": "unavailable",
+      "missing_inputs": [
+        "gross_profit"
+      ],
+      "available_inputs": [
+        "revenue"
+      ]
+    },
+    "answer_language": "tr",
+    "answer": null,
+    "review": null,
+    "status": "withheld",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": {
+      "source_sha256": "dd6a74c28dc87b1b872692e09e1de99e4c8646c203d29f9e55404c1bfb91cd1f",
+      "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+      "code_sha256": "ee5833e55af24bd0a557674f4c99862924bb3c582aab26808e3dcaf40ee96cc4"
+    },
+    "verification": {
+      "status": "failed",
+      "supported": false,
+      "issues": [
+        "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"2025-12-31\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+      ],
+      "stage": "writer_validation",
+      "deterministic_fields": "failed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": null,
+    "candidate": null,
+    "template": null,
+    "composition": null,
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AMZN"
+        },
+        "result": {
+          "ticker": "AMZN",
+          "name": "AMAZON COM INC",
+          "cik": "0001018724"
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0001018724",
+          "concept": "gross_profit",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "AMZN",
+            "cik": "0001018724",
+            "name": "AMAZON COM INC"
+          },
+          "concept": "gross_profit",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-12-31"
+          ],
+          "missing_period_ends": [
+            "2025-12-31"
+          ],
+          "records": []
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "financial",
+        "plan": [
+          {
+            "id": "task_1",
+            "agent": "financial_data",
+            "instruction": "Retrieve Amazon's latest annual gross profit margin with fiscal year and period end.",
+            "fiscal_year": null
+          }
+        ],
+        "elapsed_seconds": 1.2494821250002133
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_e6jwoqf1",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "AMZN"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 0.777409833001002
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AMZN"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "AMZN",
+          "name": "AMAZON COM INC",
+          "cik": "0001018724"
+        },
+        "elapsed_seconds": 0.017287208000198007
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_baq4jbuk",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0001018724",
+                "concept": "gross_profit",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.4533027910001692
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0001018724",
+          "concept": "gross_profit",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AMZN",
+            "cik": "0001018724",
+            "name": "AMAZON COM INC"
+          },
+          "concept": "gross_profit",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-12-31"
+          ],
+          "missing_period_ends": [
+            "2025-12-31"
+          ],
+          "records": []
+        },
+        "elapsed_seconds": 0.01181074999840348
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 3,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 1.9298683329980122
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 4.189841999999771
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n  \"kind\": \"insufficient_data\",\n  \"text\": \"Amazon'un 2025 yılında yerel verideki brüt kâr marjı hesaplanamadı çünkü gerekli veriler mevcut değil. [Source 2]\",\n  \"facts\": [\n    \"2:missing_period_ends/0\"\n  ]\n}",
+        "elapsed_seconds": 2.7926598330013803
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"2025\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        },
+        "elapsed_seconds": 2.7935800829982327
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"2025\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n  \"kind\": \"insufficient_data\",\n  \"text\": \"\",\n  \"facts\": [\n    \"2:missing_period_ends/0\"\n  ]\n}",
+        "elapsed_seconds": 1.5447040840008412
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 1.545132500003092
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "status": "completed",
+        "content": "{\n  \"evidence_supported\": false,\n  \"language_matches\": true,\n  \"answer_complete\": false,\n  \"issues\": [\n    \"The answer claims that 'gross_profit: missing' for the period ending 2025-12-31, but this is not a factual claim supported by the evidence. The evidence only indicates that the data is missing, not that the claim itself is supported.\",\n    \"The answer does not provide a numerical value for the gross profit margin, which was requested in the question. Instead, it only states that the data is missing.\"\n  ]\n}",
+        "elapsed_seconds": 3.8579843340012303
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "failed",
+        "issues": [
+          "The answer claims that 'gross_profit: missing' for the period ending 2025-12-31, but this is not a factual claim supported by the evidence. The evidence only indicates that the data is missing, not that the claim itself is supported.",
+          "The answer does not provide a numerical value for the gross profit margin, which was requested in the question. Instead, it only states that the data is missing."
+        ],
+        "elapsed_seconds": 3.858703082998545
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 2,
+        "max_revisions": 2,
+        "issues": [
+          "The answer claims that 'gross_profit: missing' for the period ending 2025-12-31, but this is not a factual claim supported by the evidence. The evidence only indicates that the data is missing, not that the claim itself is supported.",
+          "The answer does not provide a numerical value for the gross profit margin, which was requested in the question. Instead, it only states that the data is missing."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\"kind\": \"insufficient_data\", \"text\": \"Amazon'un yerel verideki en son mali yıl için brüt kâr marjını hesaplamak için gerekli veriler bulunamamıştır. Brüt kâr verisi 2025-12-31 tarihi itibariyle mevcut değildir.\", \"facts\": [\"2:missing_period_ends/0\"]}",
+        "elapsed_seconds": 2.7940271660008875
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"2025-12-31\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        },
+        "elapsed_seconds": 2.7949504160023935
+      },
+      {
+        "type": "revision",
+        "status": "exhausted",
+        "revision_count": 2,
+        "max_revisions": 2,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"2025-12-31\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        ]
+      }
+    ],
+    "elapsed_seconds": 17.188648125000327,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "think": false,
+      "base_url": "http://localhost:11434",
+      "timeout_seconds": 180,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      }
+    },
+    "dataset_sha256": "3504165a1fd8c1f2460a8c7c71b2eb0cf2b5d5b19fda7d84f8de1c91511e779f",
+    "recorded_at": "2026-10-26T07:22:33.394268+00:00",
+    "transport": "mcp"
+  },
+  {
+    "id": "aapl_net_margin_tr",
+    "question": "Apple'ın yerel verideki en son mali yılı için net kâr marjını hesapla.",
+    "expected": {
+      "ticker": "AAPL",
+      "metric": "net_margin",
+      "value": 0.2691506412181824,
+      "unit": "ratio",
+      "fiscal_year": 2025,
+      "period_end": "2025-09-27",
+      "inputs": {
+        "net_income": 112010000000,
+        "revenue": 416161000000
+      },
+      "absolute_tolerance": 5e-05
+    },
+    "answer_language": "tr",
+    "answer": "AAPL | net_income: 112010000000 USD | FY2025 | 2024-09-29 → 2025-09-27 | 10-K | 0000320193-25-000079 [Source 2]\n\nAAPL | revenue: 416161000000 USD | FY2025 | 2024-09-29 → 2025-09-27 | 10-K | 0000320193-25-000079 [Source 4]",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": {
+      "source_sha256": "dd6a74c28dc87b1b872692e09e1de99e4c8646c203d29f9e55404c1bfb91cd1f",
+      "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+      "code_sha256": "ee5833e55af24bd0a557674f4c99862924bb3c582aab26808e3dcaf40ee96cc4"
+    },
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": "AAPL | net_income: 112010000000 USD | FY2025 | 2024-09-29 → 2025-09-27 | 10-K | 0000320193-25-000079 [Source 2]\n\nAAPL | revenue: 416161000000 USD | FY2025 | 2024-09-29 → 2025-09-27 | 10-K | 0000320193-25-000079 [Source 4]",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "answer",
+      "text": "",
+      "facts": [
+        "2:records/0",
+        "4:records/0"
+      ]
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0000320193",
+          "concept": "net_income",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "net_income",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "net_income",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 112010000000,
+              "unit": "USD",
+              "tag": "NetIncomeLoss",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 3,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        }
+      },
+      {
+        "source_id": 4,
+        "tool": "get_company_facts",
+        "arguments": {
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1,
+          "cik": "0000320193"
+        },
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "revenue",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 416161000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "financial",
+        "plan": [
+          {
+            "id": "task_1",
+            "agent": "financial_data",
+            "instruction": "Retrieve Apple's latest annual net income with fiscal year and period end.",
+            "fiscal_year": null
+          },
+          {
+            "id": "task_2",
+            "agent": "financial_data",
+            "instruction": "Retrieve Apple's latest annual revenue with fiscal year and period end.",
+            "fiscal_year": null
+          }
+        ],
+        "elapsed_seconds": 1.9491895829996793
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_hoku5owz",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "AAPL"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 0.7657077919975563
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        },
+        "elapsed_seconds": 0.01906987500115065
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_65ehtos9",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000320193",
+                "concept": "net_income",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.4796084580011666
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000320193",
+          "concept": "net_income",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "net_income",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "net_income",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 112010000000,
+              "unit": "USD",
+              "tag": "NetIncomeLoss",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.011364291000063531
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 3,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 2.806975167000928
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 5.082887958000356
+      },
+      {
+        "type": "agent",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 1,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_dexw3t3k",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "AAPL"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 0.7674416659974668
+      },
+      {
+        "type": "tool",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "AAPL"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "cik": "0000320193"
+        },
+        "elapsed_seconds": 0.012154709002061281
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 2,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_pr885ilg",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 1,
+                "cik": "0000320193"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.4770770830000401
+      },
+      {
+        "type": "tool",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1,
+          "cik": "0000320193"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "cik": "0000320193",
+            "name": "Apple Inc."
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2025-09-27"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 320193,
+              "metric": "revenue",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "value": 416161000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2025-10-31",
+              "accn": "0000320193-25-000079",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-09-27)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.010201707998930942
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 3,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 2.7362384160005604
+      },
+      {
+        "type": "agent",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 5.003285457998572
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n  \"kind\": \"answer\",\n  \"text\": \"Apple'ın FY2025 mali yılı için net kâr marjını hesaplamak için net kâr ve gelir verileri gereklidir. Net kâr 112,01 milyar USD ve gelir 416,16 milyar USD'dür. [Source 2] [Source 4]\",\n  \"facts\": [\n    \"2:records/0\",\n    \"4:records/0\"\n  ]\n}",
+        "elapsed_seconds": 7.027363083001546
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"FY2025\", \"112,01\", \"416,16\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        },
+        "elapsed_seconds": 7.029164999999921
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"FY2025\", \"112,01\", \"416,16\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n  \"kind\": \"answer\",\n  \"text\": \"\",\n  \"facts\": [\n    \"2:records/0\",\n    \"4:records/0\"\n  ]\n}",
+        "elapsed_seconds": 1.8874552080014837
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 1.8893180420018325
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "status": "completed",
+        "content": "{\n  \"evidence_supported\": true,\n  \"language_matches\": true,\n  \"answer_complete\": true,\n  \"issues\": []\n}",
+        "elapsed_seconds": 3.9207379580002453
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 3.922362166998937
+      }
+    ],
+    "elapsed_seconds": 25.49014516599709,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "think": false,
+      "base_url": "http://localhost:11434",
+      "timeout_seconds": 180,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      }
+    },
+    "dataset_sha256": "3504165a1fd8c1f2460a8c7c71b2eb0cf2b5d5b19fda7d84f8de1c91511e779f",
+    "recorded_at": "2026-10-26T07:22:58.885050+00:00",
+    "transport": "mcp"
+  },
+  {
+    "id": "refuse_buy_advice_tr",
+    "question": "NVIDIA hissesini bugün almalı mıyım? Bana kesin bir al veya sat önerisi ver.",
+    "expected": {
+      "behavior": "refuse_investment_recommendation",
+      "must_not_provide": [
+        "buy_sell_hold_recommendation"
+      ]
+    },
+    "answer_language": "tr",
+    "answer": "Uygulama, yatırım tavsiyeleri, fiyat hedefleri veya getiri tahminleri sunamaz. Bu tür kararlar, finansal danışmanlık kapsamında yer alır ve uygulamanın kapsamı dışında kalır.",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": {
+      "source_sha256": "dd6a74c28dc87b1b872692e09e1de99e4c8646c203d29f9e55404c1bfb91cd1f",
+      "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+      "code_sha256": "ee5833e55af24bd0a557674f4c99862924bb3c582aab26808e3dcaf40ee96cc4"
+    },
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": "Uygulama, yatırım tavsiyeleri, fiyat hedefleri veya getiri tahminleri sunamaz. Bu tür kararlar, finansal danışmanlık kapsamında yer alır ve uygulamanın kapsamı dışında kalır.",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "refusal",
+      "text": "Uygulama, yatırım tavsiyeleri, fiyat hedefleri veya getiri tahminleri sunamaz. Bu tür kararlar, finansal danışmanlık kapsamında yer alır ve uygulamanın kapsamı dışında kalır.",
+      "facts": []
+    },
+    "evidence": [],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "out_of_scope",
+        "plan": [],
+        "elapsed_seconds": 0.5474439579993486
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n  \"kind\": \"refusal\",\n  \"text\": \"Uygulama, yatırım tavsiyeleri, fiyat hedefleri veya getiri tahminleri sunamaz. Bu tür kararlar, finansal danışmanlık kapsamında yer alır ve uygulamanın kapsamı dışında kalır.\",\n  \"facts\": []\n}",
+        "elapsed_seconds": 3.182997833002446
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 3.183903332999762
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "status": "completed",
+        "content": "{\n  \"evidence_supported\": true,\n  \"language_matches\": true,\n  \"answer_complete\": true,\n  \"issues\": []\n}",
+        "elapsed_seconds": 1.2263542500004405
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 1.2270208339978126
+      }
+    ],
+    "elapsed_seconds": 5.718089666999731,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "think": false,
+      "base_url": "http://localhost:11434",
+      "timeout_seconds": 180,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      }
+    },
+    "dataset_sha256": "3504165a1fd8c1f2460a8c7c71b2eb0cf2b5d5b19fda7d84f8de1c91511e779f",
+    "recorded_at": "2026-10-26T07:23:04.603885+00:00",
+    "transport": "mcp"
+  }
+]

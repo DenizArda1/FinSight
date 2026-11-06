@@ -12,7 +12,10 @@ from time import perf_counter
 from src.utils.utils import load_jsonl, load_yaml, save_json
 from src.agents.single_agent import run_agent
 from src.agents.runtime import run_mcp_agent, run_mcp_orchestrator
-from src.llm.client import generate_response
+from src.llm.client import generate_response, config_for_role
+from src.llm.usage import summarize_usage
+from src.agents.runtime import model_settings
+from eval.naive_rag import run_naive_rag
 from eval.snapshots import capture_snapshot
 
 def validate_cases(cases):
@@ -43,7 +46,7 @@ def validate_cases(cases):
 def run_evaluation(cases, llm_config, mode="single_agent", output_path=None, transport="direct", data_snapshot=None):
     if transport not in ("direct", "mcp"):
         raise ValueError(f"Unknown tool transport: {transport}")
-    if mode == "baseline" and transport != "direct":
+    if mode in ("baseline", "naive_rag") and transport != "direct":
         raise ValueError("Baseline has no tools; MCP transport does not apply")
     if mode == "multi_agent" and transport != "mcp":
         raise ValueError("Multi-agent evaluation requires MCP transport")
@@ -51,6 +54,8 @@ def run_evaluation(cases, llm_config, mode="single_agent", output_path=None, tra
         runner = run_agent
     elif mode == "baseline":
         runner = run_baseline
+    elif mode == "naive_rag":
+        runner = run_naive_rag
     elif mode == "multi_agent":
         runner = run_mcp_orchestrator
     else:
@@ -87,7 +92,7 @@ def run_evaluation(cases, llm_config, mode="single_agent", output_path=None, tra
                 else:
                     status = "withheld"
             else:
-                answer = runner(case["question"], llm_config)
+                answer = runner(case["question"], llm_config, trace=trace)
                 status = "completed"
         except Exception as exc:
             status = "error"
@@ -101,6 +106,8 @@ def run_evaluation(cases, llm_config, mode="single_agent", output_path=None, tra
             "question": case["question"],
             "expected": case["expected"],
             "answer_language": case["answer_language"],
+            "category": case.get("category"),
+            "usage": summarize_usage(trace),
             "answer": answer,
             "review": None,
             "status": status,
@@ -112,11 +119,11 @@ def run_evaluation(cases, llm_config, mode="single_agent", output_path=None, tra
             "candidate": details.get("candidate"),
             "template": details.get("template"),
             "composition": details.get("composition"),
-            "evidence": details.get("evidence", []),
+            "evidence": details.get("evidence", [source for event in trace for source in event.get("evidence", [])]),
             "trace": deepcopy(trace),
             "elapsed_seconds": perf_counter() - started,
             "model": llm_config.get("model"),
-            "llm_config": {key: deepcopy(llm_config[key]) for key in ("model", "base_url", "timeout_seconds", "options") if key in llm_config},
+            "llm_config": model_settings(llm_config),
             "dataset_sha256": dataset_hash,
             "recorded_at": datetime.now(timezone.utc).isoformat(),
             "transport": transport if mode in ("single_agent", "multi_agent") else "none",
@@ -127,7 +134,7 @@ def run_evaluation(cases, llm_config, mode="single_agent", output_path=None, tra
 
     return results
 
-def run_baseline(question, llm_config):
+def run_baseline(question, llm_config, trace=None):
     messages = [
         {
             "role": "system",
@@ -142,13 +149,20 @@ def run_baseline(question, llm_config):
         {"role": "user", "content": question},
     ]
 
-    return generate_response(messages, llm_config)
+    event = {"type": "model", "phase": "baseline"}
+    started = perf_counter()
+    try:
+        return generate_response(messages, config_for_role(llm_config, "writer"), telemetry=event)
+    finally:
+        event["elapsed_seconds"] = perf_counter() - started
+        if trace is not None:
+            trace.append(event)
 
 def main():
     parser = argparse.ArgumentParser(description="Run FinSight evaluation cases.")
     parser.add_argument(
         "--mode",
-        choices=["single_agent", "multi_agent", "baseline"],
+        choices=["single_agent", "multi_agent", "baseline", "naive_rag"],
         default="single_agent",
     )
     parser.add_argument("--case", action="append", dest="case_ids", help="Run a specific case ID; repeat to select more cases.")

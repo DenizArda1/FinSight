@@ -5,12 +5,26 @@ embedding:
   batch_size: 8
 vector_store:
   path: "financial_data/indexed/chroma"
-  collection_name: "filing_sections_bge_m3_v1"
+  collection_name: "filing_sections_bge_m3_v2"
 llm:
   model: "qwen3:8b"
+  think: false
   base_url: "http://localhost:11434"
   timeout_seconds: 180
   options:
     temperature: 0
     num_ctx: 16384
     num_predict: 4096
+  roles:
+    writer:
+      provider: openai
+      model: gpt-6-luna
+      timeout_seconds: 180
+      reasoning_effort: low
+      max_output_tokens: 8192
+    critic:
+      provider: openai
+      model: gpt-6-luna
+      timeout_seconds: 180
+      reasoning_effort: low
+      max_output_tokens: 8192

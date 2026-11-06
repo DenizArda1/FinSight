@@ -1,0 +1,39 @@
+{
+  "case": {
+    "id": "research_correct_citation",
+    "pair": "research",
+    "claim": "Ek ihracat kontrolleri, NVIDIA'nın araştırma ve geliştirme ekiplerinin yol haritasını zamanında uygulamasını zorlaştırabilir.",
+    "source_id": 3,
+    "expected_evidence_supported": true,
+    "composition": {
+      "kind": "answer",
+      "text": "Ek ihracat kontrolleri, NVIDIA'nın araştırma ve geliştirme ekiplerinin yol haritasını zamanında uygulamasını zorlaştırabilir. [Source 3]",
+      "facts": []
+    }
+  },
+  "llm_config": {
+    "model": "qwen3:8b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "verdict": {
+    "quotes": [
+      {
+        "source_id": 3,
+        "text": "Additional unilateral or multilateral controls are also likely to include deemed export control limitations that negatively impact the ability of our research and development teams to execute our roadmap or other objectives in a timely manner."
+      },
+      {
+        "source_id": 3,
+        "text": "Additional export restrictions may not only impact our ability to serve overseas markets, but also provoke responses from foreign governments, including China, that negatively impact our supply chain or our ability to provide our products and services to customers in all markets worldwide, which could also substantially reduce our revenue."
+      }
+    ],
+    "missing_details": [],
+    "supported": true
+  },
+  "elapsed_seconds": 36.26371533299971
+}

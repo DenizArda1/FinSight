@@ -52,6 +52,19 @@ class WriterTests(unittest.IsolatedAsyncioTestCase):
         self.record["value"] = 999
         self.assertEqual(result["evidence"][0]["result"]["records"][0]["value"], 416161000000)
 
+    async def test_inline_financial_note_renders_without_duplicate_cards(self):
+        self.generate.return_value = json.dumps({
+            "kind": "answer", "facts": [], "text":
+            "Gelir {{1:records/0/value}} {{1:records/0/unit}} olarak raporlandı. "
+            "FY{{1:records/0/fiscal_year}} dönem bitişi {{1:records/0/end}}. [Source 1]",
+        })
+        await run_writer(self.state, {})
+        self.assertEqual(self.state["draft"],
+            "Gelir 416161000000 USD olarak raporlandı. FY2025 dönem bitişi 2025-09-27. [Source 1]")
+        self.assertIsNone(self.state["answer"])
+        payload = json.loads(self.generate.call_args.args[0][1]["content"])
+        self.assertIn("{{1:records/0/value}}", payload["fact_catalog"]["1:records/0"]["inline_fields"].values())
+
     async def test_localized_citation_is_rendered_but_still_requires_critic(self):
         composition = {**self.composition, "text": "Gelir bilgileri [Kaynak 1]."}
         self.generate.return_value = json.dumps(composition)
@@ -76,6 +89,7 @@ class WriterTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(self.state["evidence"][0]["source_id"], 1)
 
     async def test_combined_trace_assigns_distinct_sources_to_report_chunks(self):
+        self.generate.return_value = json.dumps({**self.composition, "text": "Gelir bilgileri [Source 1]."})
         self.state["trace"].append({
             "type": "tool", "status": "completed", "name": "search_filings",
             "arguments": {"ticker": "AAPL", "latest": True},
@@ -88,6 +102,42 @@ class WriterTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual([item["source_id"] for item in self.state["evidence"]], [1, 2, 3])
         self.assertEqual(self.state["evidence"][2]["result"]["matches"][0]["text"], "Second risk.")
 
+    async def test_out_of_scope_plan_constrains_writer_to_refusal(self):
+        self.state = create_initial_state("Should I buy this stock?")
+        self.state["request_type"] = "out_of_scope"
+        self.generate.return_value = json.dumps({"kind": "insufficient_data", "text": "No data.", "facts": []})
+        with self.assertRaisesRegex(ValueError, "Invalid writer response"):
+            await run_writer(self.state, {})
+        schema = self.generate.call_args.kwargs["response_format"]
+        self.assertEqual(schema["properties"]["kind"]["enum"], ["refusal"])
+
+    async def test_comparison_writer_receives_full_values_and_inline_templates(self):
+        self.state["request_type"] = "comparison"
+        self.event["result"]["records"][0].update(cik=320193, start="2024-09-29")
+        cost = deepcopy(self.event)
+        cost["result"]["records"][0].update(metric="cost_of_revenue", value=200000000000)
+        self.state["trace"].append(cost)
+        self.generate.return_value = json.dumps({
+            "kind": "answer", "text": (
+                "Gelir, satışların maliyetinden yüksektir. [Source 1] [Source 2]\n\n"
+                "Satışların maliyeti, satılan mal ve hizmetlerin maliyetini gösterir. [Source 2]\n\n"
+                "Bu karşılaştırma tek başına net kârı göstermez. [Source 1] [Source 2]"
+            ),
+            "facts": ["1:records/0", "2:records/0"],
+        })
+        await run_writer(self.state, {})
+        payload = json.loads(self.generate.call_args.args[0][1]["content"])
+        self.assertEqual(payload["tool_evidence"], self.state["evidence"])
+        self.assertIn("416161000000", json.dumps(payload))
+        self.assertIn("2025-09-27", json.dumps(payload))
+        self.assertIn("416161000000 USD", self.state["draft"])
+        self.assertIn("200000000000 USD", self.state["draft"])
+        prose = self.state["composition"]["text"]
+        self.assertEqual(len(prose.split("\n\n")), 3)
+        self.assertTrue(self.state["draft"].startswith(prose + "\n\n"))
+        self.assertEqual(self.state["evidence"][0]["result"]["records"][0]["value"], 416161000000)
+
+
     async def test_malformed_json_clears_stale_answer_and_records_failure(self):
         self.state.update(draft="Old draft", answer="Old answer", composition={"old": True},
                           verification={"supported": True}, evidence=[{"old": True}])
@@ -98,6 +148,47 @@ class WriterTests(unittest.IsolatedAsyncioTestCase):
             self.assertIsNone(self.state[field])
         self.assertNotIn({"old": True}, self.state["evidence"])
         self.assertEqual(self.state["trace"][-1]["stage"], "parse")
+
+    async def test_mixed_and_comparison_keep_financial_and_report_evidence(self):
+        for request_type in ("mixed", "comparison"):
+            with self.subTest(request_type=request_type):
+                state = deepcopy(self.state)
+                state["request_type"] = request_type
+                state["trace"][0]["result"]["records"][0].update(
+                    cik=320193, start="2024-09-29",
+                )
+                cost = deepcopy(state["trace"][0])
+                cost["result"]["records"][0].update(metric="cost_of_revenue", value=200000000000)
+                state["trace"].append(cost)
+                state["trace"].append({
+                    "type": "tool", "status": "completed", "name": "search_filings",
+                    "arguments": {"ticker": "AAPL", "latest": True},
+                    "result": {"matches": [{
+                        "text": "Currency fluctuations increased reported revenue.",
+                        "context": {"text": "Currency fluctuations increased reported revenue; expenses were not materially affected."},
+                        "metadata": {"section": "Item 7", "fiscal_year": 2025},
+                    }]},
+                })
+                original_evidence = build_agent_evidence(state["trace"])
+                self.generate.return_value = json.dumps({
+                    "kind": "answer",
+                    "text": "Gelir, satışların maliyetinden yüksektir. [Source 1] [Source 2]\n\n"
+                            "Kur dalgalanmaları raporlanan geliri artırmıştır. [Source 3]",
+                    "facts": ["1:records/0", "2:records/0"],
+                })
+                await run_writer(state, {})
+                self.assertNotIn("pattern", self.generate.call_args.kwargs["response_format"]["properties"]["text"])
+                payload = json.loads(self.generate.call_args.args[0][1]["content"])
+                self.assertEqual(payload["tool_evidence"][:2], original_evidence[:2])
+                self.assertIn("<filing_excerpt>", payload["tool_evidence"][2]["result"]["matches"][0]["text"])
+                self.assertIn("expenses were not materially affected", payload["tool_evidence"][2]["result"]["matches"][0]["text"])
+                self.assertIn("416161000000", json.dumps(payload))
+                self.assertIn("200000000000", json.dumps(payload))
+                self.assertEqual(payload["fact_catalog"]["3:matches/0/metadata"]["fields"]["section"], "Item 7")
+                self.assertEqual(state["evidence"], original_evidence)
+                self.assertIn("416161000000 USD", state["draft"])
+                self.assertIn("200000000000 USD", state["draft"])
+                self.assertIn("Kur dalgalanmaları raporlanan geliri artırmıştır. [Source 3]", state["draft"])
 
     async def test_schema_rejects_extra_fields_unknown_facts_and_invalid_types(self):
         payloads = [
@@ -118,7 +209,7 @@ class WriterTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(self.state["trace"][-1]["stage"], "schema")
 
     async def test_fabricated_numbers_citations_and_field_insertions_are_rejected(self):
-        for text in ("Revenue is 999 USD.", "Claim [Source 99].", "{{1:records/0/value}}", "https://invented.example"):
+        for text in ("Revenue is 999 USD.", "Claim [Source 99].", "{{1:records/9/value}}", "https://invented.example"):
             with self.subTest(text=text):
                 self.generate.return_value = json.dumps({**self.composition, "text": text})
                 with self.assertRaises(ValueError):
@@ -158,6 +249,7 @@ class WriterTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(self.state["trace"][-1]["status"], "error")
         self.assertIsNone(self.state["draft"])
         self.assertIsNone(self.state["answer"])
+
 
 
 if __name__ == "__main__":

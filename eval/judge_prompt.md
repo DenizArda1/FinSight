@@ -1,8 +1,6 @@
 # FinSight answer review rubric
 
-Use this rubric for independent review of saved evaluation results. It is not wired
-to an automatic judge. `review` remains null until a reviewer actually evaluates
-the result. Model verification flags are evidence about the application's decision,
+Use this rubric for independent review of saved evaluation results. It is used by `eval.score_results` for a separate automatic judge call. `review` remains null until an evaluation is executed; human labels remain separate. Model verification flags are evidence about the application's decision,
 not independent proof that the answer is correct.
 
 Read the question, expected result, released answer, verification outcome and actual

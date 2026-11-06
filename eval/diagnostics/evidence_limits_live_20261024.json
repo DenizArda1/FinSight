@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-24",
+  "reviewer": "Codex, independent inspection of the live trace and local report",
+  "result_file": "eval/results/bounded_evidence_multi_agent_mcp_20261024T175203_623503Z_868e5030.json",
+  "result_file_sha256": "43f19e78106e7a3a80b80cfd901399689e483bb095cdf8547ae3f0a943fe1647",
+  "comparison_file": "eval/results/nvda_bilingual_multi_agent_mcp_20261024T144127_752034Z_7b4d5b7e.json",
+  "case_id": "nvda_export_risk_tr",
+  "model": "qwen3:8b",
+  "llm_config": {
+    "model": "qwen3:8b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "data_snapshot": {
+    "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+    "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+    "code_sha256": "616838876dfaf0601ae2de36d6945a95230a2183943787b7a507daefd001d938"
+  },
+  "same_source_snapshot": true,
+  "same_index_snapshot": true,
+  "same_llm_config": true,
+  "application_status": "completed",
+  "verification": {
+    "supported": true,
+    "issues": [],
+    "evidence_supported": true,
+    "language_matches": true,
+    "answer_complete": true,
+    "status": "passed",
+    "stage": "grounding_and_language",
+    "deterministic_fields": "passed",
+    "method": "source_fields_and_llm_judge"
+  },
+  "independent_classification": "released_source_supported_answer_meets_minimal_expectation_but_explanation_is_generic",
+  "elapsed_seconds": 104.4392288750023,
+  "previous_elapsed_seconds": 324.06588075000036,
+  "writer_attempts": 2,
+  "critic_calls": 1,
+  "included_report_text_characters": 1286,
+  "initial_writer_prompt_characters": 8326,
+  "omitted_source_ids": [],
+  "source_checks": [
+    {
+      "source_id": 1,
+      "chunk_id": "0001045810-26-000021:item_1a:59",
+      "accession_number": "0001045810-26-000021",
+      "fiscal_year": 2026,
+      "local_text_and_section_bounds": "passed"
+    }
+  ],
+  "findings": [
+    "The released answer is Turkish and correctly cites FY2026 Item 1A of the intended local filing.",
+    "The statement that restrictions on product exports may adversely affect the business is directly supported by the selected excerpt. No unsupported financial amount or detailed causal mechanism was added.",
+    "The answer meets the current minimal expected claim but mostly paraphrases a broad risk statement; it does not explain a concrete operational mechanism.",
+    "The first Writer response repeated FY2026 and Item 1A in prose. A deterministic repair removed these labels from narrative and retained the metadata card.",
+    "Only one search_filings call was made. No full-section tool call occurred, so no source exceeded the new limits and the omission branch was not exercised by this live run.",
+    "The search used latest=True despite the fixed FY2026 request. The selected report happens to be FY2026 in this snapshot. This remains a scope-preservation issue for future data updates."
+  ],
+  "limitations": [
+    "One development run, not a reliability benchmark.",
+    "The shorter runtime is not proof of an evidence-limit speedup: this run did not retrieve a full section, unlike the earlier run.",
+    "Omitted-source safeguards have offline and unit-test coverage but were not triggered in this live case.",
+    "Local report verification only, not an external SEC audit."
+  ],
+  "production_code_changed_this_session": false,
+  "next_step": "Preserve explicit requested fiscal years in planning and tool execution, then verify against fixtures where the latest year differs from the requested year."
+}

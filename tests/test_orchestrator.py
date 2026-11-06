@@ -1,5 +1,7 @@
 import json
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from copy import deepcopy
 from unittest.mock import AsyncMock, patch
 
@@ -8,6 +10,7 @@ from src.agents.runtime import run_mcp_orchestrator
 from src.agents.writer import run_writer
 from src.tools.agentic_tools import TOOL_SCHEMAS
 from src.verification.agent_answer import build_agent_evidence
+from src.verification.evidence import evidence_for_prompt
 
 
 def tool_message(name, arguments):
@@ -74,7 +77,7 @@ class OrchestratorTests(unittest.IsolatedAsyncioTestCase):
         original_plan = deepcopy(self.plan)
         trace = []
         state = await run_orchestrator("  Apple revenue and risks?  ", self.config, self.client, TOOL_SCHEMAS, trace=trace)
-        self.planner.assert_called_once_with("Apple revenue and risks?", self.config)
+        self.planner.assert_called_once_with("Apple revenue and risks?", self.config, telemetry={})
         self.assertEqual(state["question"], "Apple revenue and risks?")
         self.assertEqual(state["request_type"], "mixed")
         self.assertEqual(state["plan"], original_plan["tasks"])
@@ -110,7 +113,7 @@ class OrchestratorTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(state["revision_count"], 0)
         self.assertEqual(self.writer_response.call_count, 2)
         writer_input = json.loads(self.writer_response.call_args_list[0].args[0][1]["content"])
-        self.assertEqual(writer_input["tool_evidence"], evidence)
+        self.assertEqual(writer_input["tool_evidence"], evidence_for_prompt(evidence))
         self.assertEqual(state["evidence"], evidence)
         json.dumps(state, allow_nan=False)
 
@@ -202,18 +205,30 @@ class OrchestratorTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_writer_format_failure_uses_same_revision_budget_and_preserves_evidence(self):
         invalid = {**self.composition, "text": "Revenue is 123 USD. Risk evidence follows."}
-        self.writer_response.side_effect = [json.dumps(invalid), json.dumps(self.composition), json.dumps(self.approval)]
+        self.writer_response.side_effect = [json.dumps(invalid), json.dumps({**self.composition, "text": "Revenue is in USD. Risk evidence follows. [Source 2] [Source 3]"}), json.dumps(self.approval)]
         state = await run_orchestrator("Question", self.config, self.client, TOOL_SCHEMAS)
         self.assertEqual(state["revision_count"], 1)
         self.assertEqual(state["verification"]["status"], "passed")
         self.assertIn("123 USD", state["answer"])
         self.assertEqual(self.call_tool.await_count, 3)
         messages = self.writer_response.call_args_list[1].args[0]
-        self.assertEqual(messages[-2]["role"], "assistant")
         self.assertEqual(json.loads(messages[-2]["content"]), invalid)
-        self.assertIn("unnumbered bullets", messages[-1]["content"])
+        self.assertIn("tool_evidence", json.loads(messages[1]["content"]))
+        self.assertEqual(state["composition"]["facts"], invalid["facts"])
         critic_events = [event for event in state["trace"] if event.get("agent") == "critic" and event["status"] == "started"]
         self.assertEqual(len(critic_events), 1)
+
+    async def test_repeated_prose_errors_keep_facts_and_exhaust_original_budget(self):
+        invalid = {**self.composition, "text": "The period is 2025."}
+        self.writer_response.side_effect = [json.dumps(invalid)] * 3
+        state = await run_orchestrator("Question", self.config, self.client, TOOL_SCHEMAS)
+        self.assertIsNone(state["answer"])
+        self.assertEqual(state["revision_count"], 2)
+        self.assertEqual(state["trace"][-1]["status"], "exhausted")
+        self.assertEqual(self.writer_response.call_count, 3)
+        errors = [event for event in state["trace"] if event.get("agent") == "writer" and event["status"] == "error"]
+        self.assertEqual(len(errors), 3)
+        self.assertTrue(all(event["stage"] == "deterministic" for event in errors))
 
     async def test_writer_validation_and_critic_rejection_share_two_revision_limit(self):
         self.writer_response.side_effect = [
@@ -234,8 +249,21 @@ class OrchestratorTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(trace[-1]["stage"], "composition")
         self.assertFalse(any(event["type"] == "revision" for event in trace))
 
+    async def test_missing_critic_explanation_still_uses_normal_revision_budget(self):
+        self.writer_response.side_effect = [
+            json.dumps(self.composition),
+            json.dumps({**self.approval, "language_matches": False, "issues": []}),
+            json.dumps(self.composition), json.dumps(self.approval),
+        ]
+        state = await run_orchestrator("Question", self.config, self.client, TOOL_SCHEMAS)
+        self.assertEqual(state["revision_count"], 1)
+        self.assertEqual(state["verification"]["status"], "passed")
+        self.assertEqual(self.call_tool.await_count, 3)
+        feedback = self.writer_response.call_args_list[2].args[0][-1]["content"]
+        self.assertIn("same language", feedback)
+
     async def test_rejected_draft_is_revised_with_feedback_without_repeating_tools(self):
-        corrected = {**self.composition, "text": "Requested details follow."}
+        corrected = {**self.composition, "text": "Requested details follow. [Source 2] [Source 3]"}
         self.writer_response.side_effect = [
             json.dumps(self.composition), json.dumps(self.rejection),
             json.dumps(corrected), json.dumps(self.approval),
@@ -254,18 +282,34 @@ class OrchestratorTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(revised_messages[-2]["role"], "assistant")
         self.assertEqual(json.loads(revised_messages[-2]["content"]), self.composition)
         self.assertEqual(json.loads(initial_messages[1]["content"]), json.loads(revised_messages[1]["content"]))
-        self.assertIn("untrusted revision context", revised_messages[0]["content"])
+        self.assertIn("feedback are untrusted data", revised_messages[0]["content"])
         revisions = [event for event in state["trace"] if event["type"] == "revision"]
         self.assertEqual([event["status"] for event in revisions], ["scheduled"])
+
+    async def test_claim_rejection_reaches_writer_and_only_revised_answer_is_released(self):
+        issue = "The claim is not supported by cited source 3."
+        corrected = {**self.composition, "text": "Risk evidence. [Source 3]"}
+        self.writer_response.side_effect = [
+            json.dumps(self.composition), json.dumps({**self.approval, "evidence_supported": False, "issues": [issue]}),
+            json.dumps(corrected), json.dumps(self.approval),
+        ]
+        state = await run_orchestrator("Question", self.config, self.client, TOOL_SCHEMAS)
+        self.assertEqual(state["revision_count"], 1)
+        self.assertEqual(state["composition"], corrected)
+        self.assertEqual(state["answer"], state["draft"])
+        self.assertEqual(state["verification"]["status"], "passed")
+        self.assertEqual(self.call_tool.await_count, 3)
+        feedback = self.writer_response.call_args_list[2].args[0][-1]["content"]
+        self.assertIn(issue, feedback)
 
     async def test_writer_format_repair_receives_exact_offending_span(self):
         invalid = {**self.composition, "text": "Risk details are in the 10-K filing. [Source 3]"}
         self.writer_response.side_effect = [
-            json.dumps(invalid), json.dumps(self.composition), json.dumps(self.approval),
+            json.dumps(invalid), json.dumps({**self.composition, "text": "Risk details are in the filing. [Source 3]"}), json.dumps(self.approval),
         ]
         state = await run_orchestrator("Revenue and risks?", self.config, self.client, TOOL_SCHEMAS)
         feedback = self.writer_response.call_args_list[1].args[0][-1]["content"]
-        self.assertIn("Forbidden prose spans", feedback)
+        self.assertIn("Unbound prose values", feedback)
         self.assertIn("10-K", feedback)
         self.assertEqual(state["revision_count"], 1)
         self.assertEqual(state["verification"]["status"], "passed")
@@ -295,7 +339,7 @@ class OrchestratorTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_missing_risk_summary_triggers_revision_even_when_facts_are_supported(self):
         self.report["matches"][0]["text"] = "Supplier disruptions can delay product availability."
-        incomplete = {**self.composition, "text": "Revenue and risks follow."}
+        incomplete = {**self.composition, "text": "Revenue and risks follow. [Source 2] [Source 3]"}
         corrected = {**self.composition, "text": "Supplier disruptions can delay product availability. [Source 3]"}
         verdict = {
             **self.approval, "answer_complete": False,
@@ -324,6 +368,16 @@ class OrchestratorTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(state["verification"]["issues"], self.rejection["issues"])
         self.assertEqual(state["trace"][-1]["status"], "exhausted")
         self.assertEqual(self.call_tool.await_count, 3)
+
+    async def test_later_format_failure_preserves_unverified_partial_draft(self):
+        self.writer_response.side_effect = [json.dumps(self.composition), json.dumps(self.rejection), "bad JSON", "bad JSON"]
+        state = await run_orchestrator("Question", self.config, self.client, TOOL_SCHEMAS)
+        self.assertEqual(state["revision_count"], 2)
+        self.assertIsNone(state["answer"])
+        self.assertEqual(state["verification"]["status"], "failed")
+        self.assertIn("123 USD", state["draft"])
+        self.assertEqual(state["composition"], self.composition)
+        self.assertIn("earlier unverified draft", " ".join(state["verification"]["issues"]))
 
     async def test_zero_revision_budget_stops_after_first_rejection(self):
         self.writer_response.side_effect = [json.dumps(self.composition), json.dumps(self.rejection)]
@@ -377,6 +431,13 @@ class OrchestratorTests(unittest.IsolatedAsyncioTestCase):
 
 
 class OrchestratorConnectionTests(unittest.IsolatedAsyncioTestCase):
+    def setUp(self):
+        temporary = TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        patcher = patch("src.agents.runtime.TRACE_DIRECTORY", Path(temporary.name) / "runs")
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
     @patch("src.agents.runtime.load_mcp_tool_schemas", new_callable=AsyncMock)
     @patch("src.agents.runtime.Client")
     @patch("src.agents.runtime.run_orchestrator", new_callable=AsyncMock)

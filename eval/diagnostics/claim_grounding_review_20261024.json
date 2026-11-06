@@ -1,0 +1,105 @@
+{
+  "status": "safety_gate_added_semantic_reliability_incomplete",
+  "raw_results": "eval/results/citation_pairs_20261024T184021_584024Z_e039adb8.json",
+  "model": "qwen3:8b",
+  "snapshot": {
+    "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+    "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+    "code_sha256": "f330b8af27c1f7d19f2db76624b385df9da7bc95978fafc243b4096576618299"
+  },
+  "test_count": 251,
+  "test_status": "passed",
+  "results": [
+    {
+      "id": "shipping_correct_citation",
+      "expected_evidence_supported": true,
+      "status": "passed",
+      "evidence_supported": true,
+      "answer_released": true,
+      "decision_matches_expected": true,
+      "issues": [],
+      "elapsed_seconds": 34.814714917003585
+    },
+    {
+      "id": "shipping_wrong_citation",
+      "expected_evidence_supported": false,
+      "status": "failed",
+      "evidence_supported": false,
+      "answer_released": false,
+      "decision_matches_expected": true,
+      "issues": [
+        "Claim \"ABD ve diğer devletlerin ihracat düzenlemeleri, NVIDIA'nın ürün sevkiyatını ve müşterilerine hizmet sunmasını olumsuz etkileyebilir.\" is not supported by cited sources [1]: product shipments; service to customers"
+      ],
+      "elapsed_seconds": 26.118128583002544
+    },
+    {
+      "id": "research_correct_citation",
+      "expected_evidence_supported": true,
+      "status": "failed",
+      "evidence_supported": false,
+      "answer_released": false,
+      "decision_matches_expected": false,
+      "issues": [
+        "Claim \"Ek ihracat kontrolleri, NVIDIA'nın araştırma ve geliştirme ekiplerinin yol haritasını zamanında uygulamasını zorlaştırabilir.\" is not supported by cited sources [3]: The source mentions 'deemed export control limitations' but the claim refers to general 'export controls'. The exact phrase about R&D teams and roadmap is present but differs in wording."
+      ],
+      "elapsed_seconds": 67.08065575000364
+    },
+    {
+      "id": "research_wrong_citation",
+      "expected_evidence_supported": false,
+      "status": "error",
+      "evidence_supported": null,
+      "answer_released": false,
+      "decision_matches_expected": false,
+      "issues": [
+        "ValueError: Claim quote does not occur verbatim in its source"
+      ],
+      "elapsed_seconds": 60.45856612500211
+    }
+  ],
+  "wrong_citation_answers_released": 0,
+  "correct_citation_answers_released": 1,
+  "semantic_decisions_matching_expected": 2,
+  "limitations": [
+    "Two development pairs are not a held-out accuracy evaluation.",
+    "One supported claim was rejected; one unsupported claim produced a verification error.",
+    "No new end-to-end Planner/Writer/MCP run was performed in this comparison.",
+    "Exact quotation validation proves textual provenance, not semantic entailment.",
+    "Uncited prose and pure financial prose still rely on the existing general Critic and deterministic field checks.",
+    "Additional report-claim model calls increase response latency."
+  ],
+  "experiments": [
+    {
+      "path": "eval/results/citation_pairs_20261024T181149_928039Z_0eb243ec.json",
+      "finding": "Baseline accepted both wrong citations."
+    },
+    {
+      "path": "eval/results/citation_pairs_20261024T181901_189768Z_cce1f2cb.json",
+      "finding": "Cited-only projection of the general Critic still accepted both wrong citations."
+    },
+    {
+      "path": "eval/results/claim_quotes_probe_20261024T182139_112120Z_b01bb425.json",
+      "finding": "Narrow quote checker rejected both wrong citations, accepted shipping, and hit output limit on correct research."
+    },
+    {
+      "path": "eval/results/claim_quotes_bounded_20261024T182553_283674Z.json",
+      "finding": "Isolated retry accepted correct research after bounding output."
+    },
+    {
+      "path": "eval/results/citation_pairs_20261024T183001_289482Z_73ce0e76.json",
+      "finding": "Integrated long-quote check rejected wrong citations; correct shipping failed exact quote validation."
+    },
+    {
+      "path": "eval/results/citation_pairs_20261024T183348_555610Z_fa0b12b4.json",
+      "finding": "Interrupted after two saved results; quote repair did not solve copying errors. Excluded as a complete comparison."
+    },
+    {
+      "path": "eval/results/citation_pairs_20261024T183705_133128Z_6b8a3d8e.json",
+      "finding": "Passage-ID experiment accepted both correct claims but also accepted wrong shipping citation; reverted."
+    },
+    {
+      "path": "eval/results/citation_pairs_20261024T184021_584024Z_e039adb8.json",
+      "finding": "Current short-quote implementation; see exact outcomes above. Not a clean four-case pass."
+    }
+  ]
+}

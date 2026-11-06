@@ -19,14 +19,16 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
         state["trace"] = trace
 
     planner_started = perf_counter()
+    planner_usage = {}
     state["trace"].append({"type": "agent", "agent": "planner", "status": "started"})
     try:
-        plan = await asyncio.to_thread(generate_plan, state["question"], llm_config)
+        plan = await asyncio.to_thread(generate_plan, state["question"], llm_config, telemetry=planner_usage)
     except Exception as error:
         state["trace"].append({
             "type": "agent", "agent": "planner", "status": "error",
             "error": {"type": type(error).__name__, "message": str(error)},
             "elapsed_seconds": perf_counter() - planner_started,
+            **planner_usage,
         })
         raise
 
@@ -40,6 +42,7 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
         "request_type": plan["request_type"],
         "plan": deepcopy(plan["tasks"]),
         "elapsed_seconds": perf_counter() - planner_started,
+        **planner_usage,
     })
 
     for task in state["plan"]:
@@ -54,6 +57,7 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
             state["trace"].extend(deepcopy(task_trace))
 
     feedback = None
+    last_candidate = None
     for revision in range(max_revisions + 1):
         state["revision_count"] = revision
         writer_response = None
@@ -70,12 +74,20 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
                 "method": "source_fields_and_llm_judge",
             }
         else:
+            last_candidate = {key: deepcopy(state[key]) for key in ("draft", "composition", "evidence")}
             await run_critic(state, llm_config)
         verification = state["verification"]
         if verification["status"] in {"passed", "error"}:
             return state
 
         if revision == max_revisions:
+            if state["draft"] is None and last_candidate is not None:
+                state.update(last_candidate)
+                # Keep the failed verification and answer=None: this is only an
+                # explicitly unverified partial draft, never a successful answer.
+                state["verification"]["issues"].append(
+                    "The last revision could not be rendered; the earlier unverified draft is retained."
+                )
             state["trace"].append({
                 "type": "revision", "status": "exhausted",
                 "revision_count": revision, "max_revisions": max_revisions,

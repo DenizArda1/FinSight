@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-25",
+  "status": "nli_integrated_compound_scope_and_writer_unresolved",
+  "ui_readiness_declared": false,
+  "user_preference": "Keep free-form summaries; continue verification before UI.",
+  "production_changes": [
+    "Pinned local NLI screening before the existing claim verifier",
+    "Literal supporting-passage selection with original offsets and source IDs",
+    "Issuer attribution from source metadata for NLI only",
+    "Protected dotted-initial sentence boundaries"
+  ],
+  "model_path": "financial_data/models/mdeberta_nli",
+  "model_manifest": "configs/nli_model.json",
+  "generation_model": "qwen3:8b",
+  "model_files_bytes": 355011595,
+  "focused_tests": {
+    "passed": 280,
+    "failed": 0
+  },
+  "initial_integrated_controls": {
+    "count": 20,
+    "matches_expected": 20,
+    "errors": 0,
+    "artifact": "eval/results/claim_regressions_20261025T175844_110810Z_c031026d.json"
+  },
+  "current_extended_fixture_count": 24,
+  "expanded_suite_complete_pass_established": false,
+  "live_run": "eval/results/nli_bilingual_multi_agent_mcp_20261025T180221_240564Z_c33104ac.json",
+  "live_results": [
+    {
+      "id": "nvda_export_risk_en",
+      "status": "withheld",
+      "seconds": 371.8383884579998,
+      "manual_review": "A wrong compound geographic claim passed both NLI and Qwen. Another post-launch claim was rejected. Final Writer attempt failed on Item 1A formatting. No answer released."
+    },
+    {
+      "id": "nvda_export_risk_tr",
+      "status": "error",
+      "seconds": 292.32500891699965,
+      "manual_review": "Writer output/token limit; no complete composition or released answer."
+    }
+  ],
+  "discarded_followups": [
+    {
+      "name": "clause projections",
+      "artifact": "eval/results/nli_compound_probe_20261025T182002Z.json",
+      "outcome": "Wrong English and Turkish compounds still accepted; clause logic removed."
+    },
+    {
+      "name": "scope-set extraction",
+      "artifact": "eval/results/scope_sets_20261025T182029_661484Z.json",
+      "outcome": "Caught wrong EN/TR scope; correct EN hit token limit; correct TR interrupted. Not integrated."
+    }
+  ],
+  "remaining": [
+    "Compound geographic-scope validation",
+    "Writer report-label formatting",
+    "Writer incomplete/token-limit responses"
+  ],
+  "report": "eval/diagnostics/nli_review_20261025.md",
+  "active_model_jobs": false
+}

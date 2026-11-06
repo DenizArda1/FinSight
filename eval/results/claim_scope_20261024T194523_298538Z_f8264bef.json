@@ -1,0 +1,194 @@
+{
+  "mode": "claim_scope_recorded_evidence",
+  "source_run": "eval/results/multi_agent_mcp_20261024T193101_949443Z_e33d5b09.json",
+  "source_sha256": "9a267aab08f1e8900848c3b0a777db8b05747ca51a2cbea5c9a7087c34397b53",
+  "code_sha256": "af498015c5fa305e24c08146afacd89471b683223eb295c60d63e1b3269ba11d",
+  "llm_config": {
+    "model": "qwen3:14b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "cases": [
+    {
+      "id": "china_scope_wrong",
+      "expected_supported": false,
+      "claim": "Customers in regions like China, Europe, Latin America, and Southeast Asia may avoid U.S. semiconductors to reduce compliance burdens."
+    },
+    {
+      "id": "china_scope_correct",
+      "expected_supported": true,
+      "claim": "Customers outside China and other impacted regions may design out certain U.S. semiconductors to reduce compliance burdens."
+    }
+  ],
+  "evidence": [
+    {
+      "source_id": 2,
+      "tool": "search_filings",
+      "arguments": {
+        "ticker": "NVDA",
+        "fiscal_year": 2026,
+        "section": "Item 1A",
+        "query": "Retrieve Item 1A from NVIDIA's FY2026 annual filing (Form 10-K) and explain the export restriction risk described in that section, citing the specific filing location.",
+        "top_k": 3
+      },
+      "result": {
+        "company": {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "cik": "0001045810"
+        },
+        "query": "Retrieve Item 1A from NVIDIA's FY2026 annual filing (Form 10-K) and explain the export restriction risk described in that section, citing the specific filing location.",
+        "fiscal_year": 2026,
+        "section": "Item 1A",
+        "matches": [
+          {
+            "chunk_id": "0001045810-26-000021:item_1a:82",
+            "text": "Export controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control. Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide. Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.\nAs a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia. Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20. At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls.",
+            "metadata": {
+              "start": 146424,
+              "form": "10-K",
+              "cik": "0001045810",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+              "section": "Item 1A",
+              "section_title": "Risk Factors",
+              "section_end": 173432,
+              "ticker": "NVDA",
+              "end": 147845,
+              "section_start": 58590,
+              "fiscal_year": 2026,
+              "report_date": "2026-01-25",
+              "accession_number": "0001045810-26-000021"
+            },
+            "distance": 0.4155656099319458,
+            "context": {
+              "text": " distributed from Hong Kong.\nExport controls restricting our ability to sell data center GPUs may also negatively impact demand for our networking products used in servers containing our GPUs. The USG may also impose export controls on our networking products, such as high-speed network interconnects, to limit the ability of downstream parties to create large clusters for frontier model training.\nExport controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control. Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide. Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.\nAs a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia. Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20. At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls.\nThe increasingly complex export controls impose complex and burdensome compliance obligations on our partners, suppliers, and customers. While we seek to strictly comply with all applicable export control regulators, reports of diversion of controlled products, even when unsubstantiated and untrue, may negatively impact our business, relationships with partners and customers, and our reputation. ",
+              "start": 146024,
+              "end": 148245
+            }
+          }
+        ]
+      }
+    },
+    {
+      "source_id": 3,
+      "tool": "search_filings",
+      "arguments": {
+        "ticker": "NVDA",
+        "fiscal_year": 2026,
+        "section": "Item 1A",
+        "query": "Retrieve Item 1A from NVIDIA's FY2026 annual filing (Form 10-K) and explain the export restriction risk described in that section, citing the specific filing location.",
+        "top_k": 3
+      },
+      "result": {
+        "company": {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "cik": "0001045810"
+        },
+        "query": "Retrieve Item 1A from NVIDIA's FY2026 annual filing (Form 10-K) and explain the export restriction risk described in that section, citing the specific filing location.",
+        "fiscal_year": 2026,
+        "section": "Item 1A",
+        "matches": [
+          {
+            "chunk_id": "0001045810-26-000021:item_1a:70",
+            "text": "25\nTable of Contents\nand financial results. Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results. Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China.\nExport controls have and could in the future disrupt our supply chain and distribution channels, negatively impacting our ability to serve demand, including in markets outside China and for our non-data center products. The possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls. Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business.",
+            "metadata": {
+              "form": "10-K",
+              "ticker": "NVDA",
+              "report_date": "2026-01-25",
+              "end": 134172,
+              "section_start": 58590,
+              "fiscal_year": 2026,
+              "start": 132988,
+              "section_end": 173432,
+              "section_title": "Risk Factors",
+              "cik": "0001045810",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+              "section": "Item 1A",
+              "accession_number": "0001045810-26-000021"
+            },
+            "distance": 0.43528997898101807,
+            "context": {
+              "text": "uld negatively and materially impact our business, revenue and financial results. Export controls and other restrictions targeting GPUs and semiconductors associated with AI, which have been imposed and are likely to be more restrictive, would further limit our ability to export our technology, products, or services, creating a competitive disadvantage for us and negatively impacting our business\n25\nTable of Contents\nand financial results. Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results. Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China.\nExport controls have and could in the future disrupt our supply chain and distribution channels, negatively impacting our ability to serve demand, including in markets outside China and for our non-data center products. The possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls. Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business.\nIncreasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results. Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges. Additional unilateral or multilateral controls are also likely to incl",
+              "start": 132588,
+              "end": 134572
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "results": [
+    {
+      "id": "china_scope_wrong",
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 2,
+            "text": "Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk"
+          },
+          {
+            "source_id": 2,
+            "text": "As a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia"
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "error": null,
+      "matches_expected": false,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Customers in regions like China, Europe, Latin America, and Southeast Asia may avoid U.S. semiconductors to reduce compliance burdens.",
+          "source_ids": [
+            2,
+            3
+          ],
+          "content": "{\"quotes\": [{\"source_id\": 2, \"text\": \"Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk\"}, {\"source_id\": 2, \"text\": \"As a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia\"}], \"missing_details\": [], \"supported\": true}",
+          "status": "completed",
+          "elapsed_seconds": 37.220449458000076
+        }
+      ],
+      "elapsed_seconds": 37.22052516700205
+    },
+    {
+      "id": "china_scope_correct",
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 2,
+            "text": "Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk,"
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Customers outside China and other impacted regions may design out certain U.S. semiconductors to reduce compliance burdens.",
+          "source_ids": [
+            2,
+            3
+          ],
+          "content": "{\"quotes\": [{\"source_id\": 2, \"text\": \"Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk,\"}], \"missing_details\": [], \"supported\": true}",
+          "status": "completed",
+          "elapsed_seconds": 28.405869792004523
+        }
+      ],
+      "elapsed_seconds": 28.40602533299534
+    }
+  ]
+}

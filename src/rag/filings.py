@@ -5,7 +5,7 @@ from src.utils.utils import load_json
 
 
 def select_filings(ticker, years=5):
-    #Select one original 10-K per report date, newest periods first
+    # Keep originals and all amendments for the latest reporting periods.
     if type(years) is not int or years <= 0:
         raise ValueError("Years must be a positive integer")
     company = resolve_company(ticker)
@@ -35,7 +35,10 @@ def select_filings(ticker, years=5):
             report_dates.add(filing["reportDate"])
         if len(selected) == years:
             break
-    return {"company": company, "filings": selected}
+    amendments = [filing for filing in manifest["filings"]
+                  if filing["form"] == "10-K/A" and filing["reportDate"] in report_dates]
+    return {"company": company, "filings": sorted(selected + amendments,
+            key=lambda filing: (filing["reportDate"], filing["filingDate"], filing.get("accessionNumber", "")), reverse=True)}
 
 
 def load_filing(company, filing):
@@ -53,4 +56,5 @@ def load_filing(company, filing):
 
 def load_latest_filing(ticker):
     selection = select_filings(ticker, years=1)
-    return load_filing(selection["company"], selection["filings"][0])
+    original = next(filing for filing in selection["filings"] if filing["form"] == "10-K")
+    return load_filing(selection["company"], original)

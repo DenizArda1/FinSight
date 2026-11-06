@@ -20,6 +20,7 @@ def make_plan(request_type, agents):
                 "id": f"task_{index}",
                 "agent": agent,
                 "instruction": "Retrieve Apple's latest annual evidence.",
+                "fiscal_year": None,
             }
             for index, agent in enumerate(agents, start=1)
         ],
@@ -27,6 +28,27 @@ def make_plan(request_type, agents):
 
 
 class PlannerValidationTests(unittest.TestCase):
+    def test_filing_tasks_require_a_structured_period(self):
+        plan = make_plan("filing", ["filing_rag"])
+        del plan["tasks"][0]["fiscal_year"]
+        with self.assertRaisesRegex(ValueError, "fiscal_year"):
+            validate_plan(plan)
+
+    def test_fixed_and_latest_periods_remain_separate_in_comparisons(self):
+        plan = make_plan("comparison", ["filing_rag", "filing_rag"])
+        plan["tasks"][0].update(fiscal_year=2026, instruction="Read NVIDIA FY2026 risks.")
+        plan["tasks"][1]["instruction"] = "Read NVIDIA latest available filing risks."
+        original = deepcopy(plan)
+        validate_plan(plan)
+        self.assertEqual(plan, original)
+
+    def test_invalid_structured_years_are_rejected(self):
+        for year in (True, False, "2026", 2026.0, 0, -1):
+            plan = make_plan("filing", ["filing_rag"])
+            plan["tasks"][0]["fiscal_year"] = year
+            with self.subTest(year=year), self.assertRaises(ValueError):
+                validate_plan(plan)
+
     def test_schema_is_valid(self):
         Draft202012Validator.check_schema(PLANNER_RESPONSE_SCHEMA)
 
@@ -114,6 +136,14 @@ class PlannerValidationTests(unittest.TestCase):
 
 class PlannerGenerationTests(unittest.TestCase):
     @patch("src.agents.planner.generate_response")
+    def test_explicit_period_is_returned_in_the_validated_task(self, generate_response):
+        plan = make_plan("filing", ["filing_rag"])
+        plan["tasks"][0].update(fiscal_year=2026, instruction="Retrieve NVIDIA FY2026 Item 1A export risks.")
+        generate_response.return_value = json.dumps(plan)
+        result = generate_plan("NVIDIA FY2026 raporundaki ihracat riskini açıkla.", {})
+        self.assertEqual(result["tasks"][0]["fiscal_year"], 2026)
+
+    @patch("src.agents.planner.generate_response")
     def test_requests_schema_and_returns_validated_plan(self, generate_response):
         plan = make_plan("financial", ["financial_data"])
         generate_response.return_value = json.dumps(plan)
@@ -126,7 +156,7 @@ class PlannerGenerationTests(unittest.TestCase):
         self.assertIs(args[1], config)
         self.assertEqual([message["role"] for message in args[0]], ["system", "user"])
         self.assertEqual(json.loads(args[0][1]["content"]), {"question": "Apple revenue?"})
-        self.assertEqual(kwargs, {"response_format": PLANNER_RESPONSE_SCHEMA})
+        self.assertEqual(kwargs, {"response_format": PLANNER_RESPONSE_SCHEMA, "telemetry": None})
 
     @patch("src.agents.planner.generate_response")
     def test_invalid_questions_do_not_call_model(self, generate_response):

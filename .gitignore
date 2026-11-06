@@ -8,6 +8,7 @@ financial_data/processed/
 financial_data/indexed/
 __pycache__/
 *.pyc
+logs/runs/
 output
 
 docs

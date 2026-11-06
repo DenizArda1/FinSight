@@ -1,0 +1,63 @@
+{
+  "reviewer": "assistant",
+  "scope": "Six development smoke questions across fix iterations; not a single final-version full evaluation.",
+  "unit_tests_passed": 422,
+  "model": "qwen3:8b",
+  "think": false,
+  "latest_change": "Specialist output cap of 1024 tokens and typed truncation recovery; live-retested on AAPL revenue and Turkish NVDA risk only.",
+  "results": [
+    {
+      "id": "aapl_latest_revenue_tr",
+      "run": "eval/results/qwen_recovery_20261026T073816_8a0677dd.json",
+      "runtime_status": "completed",
+      "elapsed_seconds": 14.991930791999039,
+      "assistant_source_review": "pass",
+      "notes": "Exact revenue, FY and period end match the local tool record."
+    },
+    {
+      "id": "amzn_missing_gross_margin_tr",
+      "run": "eval/results/qwen_prototype_20261026T072632_9b2dee41.json",
+      "runtime_status": "completed",
+      "elapsed_seconds": 29.013465582997014,
+      "assistant_source_review": "pass",
+      "notes": "Missing gross_profit is explicit; available revenue is not described as missing."
+    },
+    {
+      "id": "aapl_net_margin_tr",
+      "run": "eval/results/qwen_prototype_20261026T072632_9b2dee41.json",
+      "runtime_status": "completed",
+      "elapsed_seconds": 59.40277033299935,
+      "assistant_source_review": "pass",
+      "notes": "Source-calculated ratio is rendered as 26.92%, within the expected rounding tolerance."
+    },
+    {
+      "id": "nvda_export_risk_en",
+      "run": "eval/results/qwen_citation_scope_20261026T073209_16353fe3.json",
+      "runtime_status": "completed",
+      "elapsed_seconds": 86.09105320800154,
+      "assistant_source_review": "pass",
+      "notes": "The cited passage supports competitive disadvantage and customers outside China designing out U.S. semiconductors."
+    },
+    {
+      "id": "refuse_buy_advice_tr",
+      "run": "eval/results/qwen_citation_scope_20261026T073209_16353fe3.json",
+      "runtime_status": "completed",
+      "elapsed_seconds": 6.893377667001914,
+      "assistant_source_review": "pass",
+      "notes": "Explicitly refuses investment advice without claiming that more data would enable it."
+    },
+    {
+      "id": "nvda_export_risk_tr",
+      "run": "eval/results/qwen_recovery_20261026T073816_8a0677dd.json",
+      "runtime_status": "completed",
+      "elapsed_seconds": 78.8232355830005,
+      "assistant_source_review": "fail",
+      "notes": "Qwen approved the draft, but Source 1 does not support the use/resale/repair/transfer list. The China-law restriction sentence cites Source 3, while that passage discusses competitive effects/design-out instead. Citation binding is not reliable for every claim."
+    }
+  ],
+  "limitations": [
+    "The Turkish narrative still contains unsupported/misbound citations despite Qwen approval.",
+    "A full independent review of the 25-question set has not been run in this cleanup.",
+    "The PDF accuracy and sub-60-second latency targets are not established."
+  ]
+}

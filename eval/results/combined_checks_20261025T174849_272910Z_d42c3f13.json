@@ -1,0 +1,483 @@
+{
+  "mode": "experimental_nli_and_claim_verifier",
+  "production_changed": false,
+  "nli_run": "eval/results/nli_checks_20261025T174738_970516Z_30ccd9e8.json",
+  "llm_config": {
+    "model": "qwen3:8b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "results": [
+    {
+      "id": "china_scope_wrong",
+      "expected_supported": false,
+      "supported": false,
+      "error": null,
+      "matches_expected": true,
+      "trace": [],
+      "rejection_stage": "nli",
+      "elapsed_seconds": 1.7090005712816492e-06
+    },
+    {
+      "id": "china_scope_correct",
+      "expected_supported": true,
+      "supported": true,
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Customers outside China and other impacted regions may design out certain U.S. semiconductors to reduce compliance burdens.",
+          "source_ids": [
+            2
+          ],
+          "content": "{\"quotes\":[{\"source_id\":2,\"text\":\"Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk\"}],\"missing_details\":[],\"supported\":true}",
+          "status": "completed",
+          "elapsed_seconds": 12.830646750000597
+        }
+      ],
+      "selected_passage": {
+        "id": "2:0:5",
+        "source_id": 2,
+        "text_index": 0,
+        "start": 892,
+        "end": 1146,
+        "text": "Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.",
+        "preceding_context": "Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide.",
+        "premise": "Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide. Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.",
+        "tokens": 157,
+        "scores": {
+          "entailment": 0.9853804282316372,
+          "neutral": 0.013776863317344252,
+          "contradiction": 0.0008427084510185523
+        }
+      },
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 2,
+            "text": "Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk"
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "elapsed_seconds": 12.830713292001747
+    },
+    {
+      "id": "supplier_region_transfer_wrong",
+      "expected_supported": false,
+      "supported": false,
+      "error": null,
+      "matches_expected": true,
+      "trace": [],
+      "rejection_stage": "nli",
+      "elapsed_seconds": 7.791000825818628e-06
+    },
+    {
+      "id": "supplier_region_translation_correct",
+      "expected_supported": true,
+      "supported": true,
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Tayvan'daki tedarikçiler elektrik sıkıntısı nedeniyle teslimatları geciktirebilir.",
+          "source_ids": [
+            21
+          ],
+          "content": "{\"quotes\":[{\"source_id\":21,\"text\":\"Suppliers in Taiwan may delay deliveries because of power shortages.\"}],\"missing_details\":[],\"supported\":true}",
+          "status": "completed",
+          "elapsed_seconds": 8.279050959001324
+        }
+      ],
+      "selected_passage": {
+        "id": "21:0:1",
+        "source_id": 21,
+        "text_index": 0,
+        "start": 69,
+        "end": 135,
+        "text": "Suppliers in Japan may raise prices because of higher labor costs.",
+        "preceding_context": "Suppliers in Taiwan may delay deliveries because of power shortages.",
+        "premise": "Suppliers in Taiwan may delay deliveries because of power shortages. Suppliers in Japan may raise prices because of higher labor costs.",
+        "tokens": 57,
+        "scores": {
+          "entailment": 0.9990887189829295,
+          "neutral": 0.0007606252501610729,
+          "contradiction": 0.00015065576690950316
+        }
+      },
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 21,
+            "text": "Suppliers in Taiwan may delay deliveries because of power shortages."
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "elapsed_seconds": 8.279192959000284
+    },
+    {
+      "id": "condition_transfer_wrong",
+      "expected_supported": false,
+      "supported": false,
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "If the port closes, insurance premiums may rise.",
+          "source_ids": [
+            22
+          ],
+          "content": "{\n\n\"quotes\": [\n    {\"source_id\": 22, \"text\": \"If the port closes, shipments may be delayed.\"},\n    {\"source_id\": 22, \"text\": \"If accident rates increase, insurance premiums may rise.\"}\n],\n\"missing_details\": [\"The claim assumes port closure leads to increased accident rates, but this causal link is not established in the excerpts.\"],\n\"supported\": false\n}",
+          "status": "completed",
+          "elapsed_seconds": 8.470566875001168
+        }
+      ],
+      "selected_passage": {
+        "id": "22:0:1",
+        "source_id": 22,
+        "text_index": 0,
+        "start": 46,
+        "end": 102,
+        "text": "If accident rates increase, insurance premiums may rise.",
+        "preceding_context": "If the port closes, shipments may be delayed.",
+        "premise": "If the port closes, shipments may be delayed. If accident rates increase, insurance premiums may rise.",
+        "tokens": 41,
+        "scores": {
+          "entailment": 0.9863562875390561,
+          "neutral": 0.009293217396581004,
+          "contradiction": 0.004350495064362846
+        }
+      },
+      "verdict": {
+        "quotes": [],
+        "missing_details": [
+          "The claim assumes port closure leads to increased accident rates, but this causal link is not established in the excerpts."
+        ],
+        "supported": false
+      },
+      "elapsed_seconds": 8.47068520799985
+    },
+    {
+      "id": "condition_translation_correct",
+      "expected_supported": true,
+      "supported": true,
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Kaza oranları artarsa sigorta primleri yükselebilir.",
+          "source_ids": [
+            22
+          ],
+          "content": "{\n\n\"quotes\": [\n    {\"source_id\": 22, \"text\": \"If accident rates increase, insurance premiums may rise.\"}\n],\n\"missing_details\": [],\n\"supported\": true\n}",
+          "status": "completed",
+          "elapsed_seconds": 10.869338792001145
+        }
+      ],
+      "selected_passage": {
+        "id": "22:0:1",
+        "source_id": 22,
+        "text_index": 0,
+        "start": 46,
+        "end": 102,
+        "text": "If accident rates increase, insurance premiums may rise.",
+        "preceding_context": "If the port closes, shipments may be delayed.",
+        "premise": "If the port closes, shipments may be delayed. If accident rates increase, insurance premiums may rise.",
+        "tokens": 42,
+        "scores": {
+          "entailment": 0.9982661849848307,
+          "neutral": 0.0015710272242382545,
+          "contradiction": 0.00016278779093101508
+        }
+      },
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 22,
+            "text": "If accident rates increase, insurance premiums may rise."
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "elapsed_seconds": 10.869569250000495
+    },
+    {
+      "id": "excluded_population_wrong",
+      "expected_supported": false,
+      "supported": false,
+      "error": null,
+      "matches_expected": true,
+      "trace": [],
+      "rejection_stage": "nli",
+      "elapsed_seconds": 6.874999598949216e-06
+    },
+    {
+      "id": "excluded_population_correct",
+      "expected_supported": true,
+      "supported": true,
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+          "source_ids": [
+            23
+          ],
+          "content": "{\n\n\"quotes\": [\n    {\"source_id\": 23, \"text\": \"Customers without long-term contracts may switch suppliers when spot prices rise.\"}\n],\n\"missing_details\": [],\n\"supported\": true\n}",
+          "status": "completed",
+          "elapsed_seconds": 7.318195709000065
+        }
+      ],
+      "selected_passage": {
+        "id": "23:0:0",
+        "source_id": 23,
+        "text_index": 0,
+        "start": 0,
+        "end": 81,
+        "text": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+        "preceding_context": "",
+        "premise": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+        "tokens": 41,
+        "scores": {
+          "entailment": 0.9956459091409757,
+          "neutral": 0.0038438038059637673,
+          "contradiction": 0.0005102870530604368
+        }
+      },
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 23,
+            "text": "Customers without long-term contracts may switch suppliers when spot prices rise."
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "elapsed_seconds": 7.3185180830005265
+    },
+    {
+      "id": "supplier_translation",
+      "expected_supported": true,
+      "supported": true,
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Tedarikçilerdeki üretim kesintileri ürün teslimatlarını geciktirebilir.",
+          "source_ids": [
+            11
+          ],
+          "content": "{\n\n\"quotes\": [\n    {\"source_id\": 11, \"text\": \"We rely on third-party suppliers.\"},\n    {\"source_id\": 11, \"text\": \"Manufacturing interruptions at these suppliers may delay product deliveries.\"}\n],\n\"missing_details\": [],\n\"supported\": true\n}",
+          "status": "completed",
+          "elapsed_seconds": 9.54261866699926
+        }
+      ],
+      "selected_passage": {
+        "id": "11:0:1",
+        "source_id": 11,
+        "text_index": 0,
+        "start": 34,
+        "end": 110,
+        "text": "Manufacturing interruptions at these suppliers may delay product deliveries.",
+        "preceding_context": "We rely on third-party suppliers.",
+        "premise": "We rely on third-party suppliers. Manufacturing interruptions at these suppliers may delay product deliveries.",
+        "tokens": 48,
+        "scores": {
+          "entailment": 0.9990996061644092,
+          "neutral": 0.0007532226827636498,
+          "contradiction": 0.00014717115282715645
+        }
+      },
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 11,
+            "text": "We rely on third-party suppliers."
+          },
+          {
+            "source_id": 11,
+            "text": "Manufacturing interruptions at these suppliers may delay product deliveries."
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "elapsed_seconds": 9.542746707998958
+    },
+    {
+      "id": "negated_incident",
+      "expected_supported": false,
+      "supported": false,
+      "error": null,
+      "matches_expected": true,
+      "trace": [],
+      "rejection_stage": "nli",
+      "elapsed_seconds": 0.00021112500144226942
+    },
+    {
+      "id": "conditional_translation",
+      "expected_supported": true,
+      "supported": true,
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "İhracat lisansı başvuruları reddedilirse bazı ürünler sevk edilemeyebilir.",
+          "source_ids": [
+            13
+          ],
+          "content": "{\n\n\"quotes\": [\n    {\"source_id\": 13, \"text\": \"If export license applications are denied, we may be unable to ship some products.\"}\n],\n\"missing_details\": [],\n\"supported\": true\n}",
+          "status": "completed",
+          "elapsed_seconds": 9.53307012500045
+        }
+      ],
+      "selected_passage": {
+        "id": "13:0:0",
+        "source_id": 13,
+        "text_index": 0,
+        "start": 0,
+        "end": 82,
+        "text": "If export license applications are denied, we may be unable to ship some products.",
+        "preceding_context": "",
+        "premise": "If export license applications are denied, we may be unable to ship some products.",
+        "tokens": 41,
+        "scores": {
+          "entailment": 0.998944145186379,
+          "neutral": 0.0009462901759849214,
+          "contradiction": 0.00010956463763599306
+        }
+      },
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 13,
+            "text": "If export license applications are denied, we may be unable to ship some products."
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "elapsed_seconds": 9.533254833000683
+    },
+    {
+      "id": "certainty_and_scope",
+      "expected_supported": false,
+      "supported": false,
+      "error": null,
+      "matches_expected": true,
+      "trace": [],
+      "rejection_stage": "nli",
+      "elapsed_seconds": 4.1669991333037615e-06
+    },
+    {
+      "id": "reversed_causality",
+      "expected_supported": false,
+      "supported": false,
+      "error": null,
+      "matches_expected": true,
+      "trace": [],
+      "rejection_stage": "nli",
+      "elapsed_seconds": 6.624999514315277e-06
+    },
+    {
+      "id": "unsupported_conjunct",
+      "expected_supported": false,
+      "supported": false,
+      "error": null,
+      "matches_expected": true,
+      "trace": [],
+      "rejection_stage": "nli",
+      "elapsed_seconds": 6.125001164036803e-06
+    },
+    {
+      "id": "english_paraphrase",
+      "expected_supported": true,
+      "supported": true,
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Changing certain suppliers can take time.",
+          "source_ids": [
+            16
+          ],
+          "content": "{\"quotes\":[{\"source_id\":16,\"text\":\"Qualifying replacement suppliers for these components may require significant time\"}],\"missing_details\":[],\"supported\":true}",
+          "status": "completed",
+          "elapsed_seconds": 9.595483291999699
+        }
+      ],
+      "selected_passage": {
+        "id": "16:0:1",
+        "source_id": 16,
+        "text_index": 0,
+        "start": 57,
+        "end": 140,
+        "text": "Qualifying replacement suppliers for these components may require significant time.",
+        "preceding_context": "Some components are obtained from sole-source suppliers.",
+        "premise": "Some components are obtained from sole-source suppliers. Qualifying replacement suppliers for these components may require significant time.",
+        "tokens": 41,
+        "scores": {
+          "entailment": 0.9776962881937471,
+          "neutral": 0.020949193922483487,
+          "contradiction": 0.0013545178837692697
+        }
+      },
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 16,
+            "text": "Qualifying replacement suppliers for these components may require significant time"
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "elapsed_seconds": 9.595607208000729
+    },
+    {
+      "id": "uncited_support",
+      "expected_supported": false,
+      "supported": false,
+      "error": null,
+      "matches_expected": true,
+      "trace": [],
+      "rejection_stage": "nli",
+      "elapsed_seconds": 3.249999281251803e-06
+    }
+  ],
+  "status": "completed"
+}

@@ -1,0 +1,596 @@
+[
+  {
+    "id": "msft_revenue_costs_tr",
+    "question": "Microsoft'un en son yıllık gelir ve gider maliyetlerini karşılaştır",
+    "expected": {
+      "ticker": "MSFT",
+      "fiscal_year": 2026,
+      "period_end": "2026-06-30",
+      "metrics": {
+        "revenue": 331839000000,
+        "cost_of_revenue": 106374000000,
+        "operating_expenses": 70228000000
+      },
+      "unit": "USD",
+      "scope": "Cost of revenue and operating expenses shown separately; excludes interest and income taxes.",
+      "requires_source": true
+    },
+    "answer_language": "tr",
+    "answer": null,
+    "review": null,
+    "status": "withheld",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": {
+      "source_sha256": "f6b90d979a2466b5b5eed9c466222488b418f875bc0b732f088d97bb8905cb6f",
+      "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+      "code_sha256": "9eba494103c76f0d2b5a790b2c395d7098c9cbbd7f853f2cae5d8b737dbb6b7c"
+    },
+    "verification": {
+      "status": "failed",
+      "supported": false,
+      "issues": [
+        "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"331,839\", \"106,374\", \"70,228\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+      ],
+      "stage": "writer_validation",
+      "deterministic_fields": "failed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": null,
+    "candidate": null,
+    "template": null,
+    "composition": null,
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "MSFT"
+        },
+        "result": {
+          "ticker": "MSFT",
+          "name": "MICROSOFT CORP",
+          "cik": "0000789019"
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "get_company_facts",
+        "arguments": {
+          "unit": "USD",
+          "years": 1,
+          "cik": "0000789019",
+          "concept": "revenue"
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 331839000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 3,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0000789019",
+          "concept": "cost_of_revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "cost_of_revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "cost_of_revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 106374000000,
+              "unit": "USD",
+              "tag": "CostOfGoodsAndServicesSold",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 4,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0000789019",
+          "concept": "operating_expenses",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "operating_expenses",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "operating_expenses",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 70228000000,
+              "unit": "USD",
+              "tag": "OperatingExpenses",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "comparison",
+        "plan": [
+          {
+            "id": "task_1",
+            "agent": "financial_data",
+            "instruction": "Retrieve Microsoft's latest annual revenue, cost_of_revenue and operating_expenses for the same period.",
+            "fiscal_year": null
+          }
+        ],
+        "elapsed_seconds": 1.2817499580014555
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_rc08qndb",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "MSFT"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 0.7618444580002688
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "MSFT"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "MSFT",
+          "name": "MICROSOFT CORP",
+          "cik": "0000789019"
+        },
+        "elapsed_seconds": 0.006361499999911757
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_v9fyw05b",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "unit": "USD",
+                "years": 1,
+                "cik": "0000789019",
+                "concept": "revenue"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.4611387080003624
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "unit": "USD",
+          "years": 1,
+          "cik": "0000789019",
+          "concept": "revenue"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 331839000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.0038342079969879705
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_8t3m8qoy",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000789019",
+                "concept": "cost_of_revenue",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.1799900840014743
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 3,
+        "call_id": 3,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000789019",
+          "concept": "cost_of_revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "cost_of_revenue",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "cost_of_revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 106374000000,
+              "unit": "USD",
+              "tag": "CostOfGoodsAndServicesSold",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.009603833001165185
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 4,
+        "max_output_tokens": 1024,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_2f9cy5sj",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000789019",
+                "concept": "operating_expenses",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.2153134159998444
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 4,
+        "call_id": 4,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000789019",
+          "concept": "operating_expenses",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "operating_expenses",
+          "unit": "USD",
+          "requested_years": 1,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "operating_expenses",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 70228000000,
+              "unit": "USD",
+              "tag": "OperatingExpenses",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.010804792000271846
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 5,
+        "max_output_tokens": 1024,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 4.084627000000182
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 10.733726957998442
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n  \"kind\": \"answer\",\n  \"text\": \"Microsoft'un FY2026 (2026-06-30) dönemine ait gelir ve gider maliyetlerini karşılaştırması şu şekildedir: Gelir, 331,839 milyon USD'dir [Source 2], bu gelirin 106,374 milyon USD'si maliyet olarak kaydedilmiştir [Source 3]. İşletme giderleri ise 70,228 milyon USD'dir [Source 4].\",\n  \"facts\": [\n    \"2:records/0\",\n    \"3:records/0\",\n    \"4:records/0\"\n  ]\n}",
+        "elapsed_seconds": 7.403866583001218
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"FY2026\", \"(2026-06-30)\", \"331,839\", \"106,374\", \"70,228\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        },
+        "elapsed_seconds": 7.406167249999271
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"FY2026\", \"(2026-06-30)\", \"331,839\", \"106,374\", \"70,228\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n  \"kind\": \"answer\",\n  \"text\": \"Microsoft'un gelir ve gider maliyetlerini karşılaştırması şu şekildedir: Gelir, 331,839 milyon USD'dir [Source 2], bu gelirin 106,374 milyon USD'si maliyet olarak kaydedilmiştir [Source 3]. İşletme giderleri ise 70,228 milyon USD'dir [Source 4].\",\n  \"facts\": [\n    \"2:records/0\",\n    \"3:records/0\",\n    \"4:records/0\"\n  ]\n}",
+        "elapsed_seconds": 4.832657584000117
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"331,839\", \"106,374\", \"70,228\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        },
+        "elapsed_seconds": 4.834261167001387
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 2,
+        "max_revisions": 2,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"331,839\", \"106,374\", \"70,228\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n  \"kind\": \"answer\",\n  \"text\": \"Microsoft'un gelir ve gider maliyetlerini karşılaştırması şu şekildedir: Gelir, 331,839 milyon USD'dir [Source 2], bu gelirin 106,374 milyon USD'si maliyet olarak kaydedilmiştir [Source 3]. İşletme giderleri ise 70,228 milyon USD'dir [Source 4].\",\n  \"facts\": [\n    \"2:records/0\",\n    \"3:records/0\",\n    \"4:records/0\"\n  ]\n}",
+        "elapsed_seconds": 4.62789466599861
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"331,839\", \"106,374\", \"70,228\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        },
+        "elapsed_seconds": 4.629206042001897
+      },
+      {
+        "type": "revision",
+        "status": "exhausted",
+        "revision_count": 2,
+        "max_revisions": 2,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"331,839\", \"106,374\", \"70,228\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        ]
+      }
+    ],
+    "elapsed_seconds": 29.532165791999432,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "think": false,
+      "base_url": "http://localhost:11434",
+      "timeout_seconds": 180,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      }
+    },
+    "dataset_sha256": "0f07518e86258cb718bf0b2eb07d52b665051b42ab66157be476df9ecddd5898",
+    "recorded_at": "2026-10-26T08:04:23.507763+00:00",
+    "transport": "mcp"
+  }
+]

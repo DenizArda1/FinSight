@@ -1,0 +1,109 @@
+{
+  "date": "2026-10-24",
+  "reviewer": "Codex, independent claim-to-source inspection",
+  "result_file": "eval/results/bounded_writer_replay_20261024T150049_243003Z_ffb91551.json",
+  "result_file_sha256": "c17379095b7c928f5dc5bae85874e39daff5f19a68a3862e2cee1b18ce995be9",
+  "runner": "eval/diagnostics/run_bounded_writer_replay.py",
+  "scope": "Live Writer and Critic calls with one replayed local source; no Planner, retrieval, MCP or new embedding calls.",
+  "same_evidence_in_both_cases": true,
+  "evidence_sha256": "af24a7b7e310dcdd53a3e34f862e7af8790452c9ad69ef5ebb934b0900e4bc30",
+  "selected_chunk": "0001045810-26-000021:item_1a:82",
+  "source_context_characters": 2221,
+  "llm_config": {
+    "model": "qwen3:8b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "data_snapshot": {
+    "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+    "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+    "code_sha256": "9fd43b133a6f51aa288881ed172ee64a1f2c787be028a0f2f9e0fc8ac70bbcef"
+  },
+  "max_revisions": 2,
+  "total_elapsed_seconds": 97.46084404199064,
+  "production_code_changed_this_session": false,
+  "cases": [
+    {
+      "case_id": "nvda_export_risk_en",
+      "question": "Using only Item 1A of NVIDIA's FY2026 filing, explain an export restriction risk and cite the filing.",
+      "language": "en",
+      "application_status": "completed",
+      "verification": {
+        "supported": true,
+        "issues": [],
+        "evidence_supported": true,
+        "language_matches": true,
+        "answer_complete": true,
+        "status": "passed",
+        "stage": "grounding_and_language",
+        "deterministic_fields": "passed",
+        "method": "source_fields_and_llm_judge"
+      },
+      "elapsed_seconds": 63.75974987499649,
+      "initial_writer_prompt_characters": 10044,
+      "writer_attempts": 2,
+      "critic_calls": 1,
+      "evidence_identical_to_fixture": true,
+      "independent_classification": "released_answer_requires_semantic_revision_despite_critic_approval",
+      "findings": [
+        "The first Writer draft answered the English question in Turkish. It also included H20 and was rejected by the numeric-prose guard before Critic review.",
+        "The repair answered in English. The main export-controls, demand and competitive-disadvantage claims are supported.",
+        "The final bullet attributes relationship harm to complex compliance requirements and diversion risks. The source specifically distinguishes compliance burdens from reports of diversion, including reports that are unsubstantiated or untrue. This causal compression needs revision.",
+        "Only the introductory paragraph carries an inline citation; the subsequent bullets have no individual citations. A single source is available and its metadata card is cited, but claim-level attribution could be clearer.",
+        "Critic approved the final answer. This is not a clean independent semantic pass."
+      ]
+    },
+    {
+      "case_id": "nvda_export_risk_tr",
+      "question": "Yalnızca NVIDIA'nın FY2026 raporunun Item 1A bölümünü kullanarak bir ihracat kısıtlaması riskini açıkla ve rapora kaynak göster.",
+      "language": "tr",
+      "application_status": "completed",
+      "verification": {
+        "supported": true,
+        "issues": [],
+        "evidence_supported": true,
+        "language_matches": true,
+        "answer_complete": true,
+        "status": "passed",
+        "stage": "grounding_and_language",
+        "deterministic_fields": "passed",
+        "method": "source_fields_and_llm_judge"
+      },
+      "elapsed_seconds": 33.70109416699415,
+      "initial_writer_prompt_characters": 10071,
+      "writer_attempts": 1,
+      "critic_calls": 1,
+      "evidence_identical_to_fixture": true,
+      "independent_classification": "released_answer_requires_semantic_revision_despite_critic_approval",
+      "findings": [
+        "The first Writer draft was in Turkish and was accepted without repair.",
+        "The core claim that export controls can reduce demand and harm market position is supported.",
+        "Yerel üreticiler (local producers) is more specific than the cited foreign competitors; their being local to the affected customers is not established by this excerpt.",
+        "The final sentence says this situation increases the risk of new restrictions being imposed with product launches. The source instead says export controls increase investment risk because a product may become restricted by the time it reaches market. The answer changes the causal relationship.",
+        "Critic approved the answer without identifying these problems; this is a semantic false acceptance in the replay."
+      ]
+    }
+  ],
+  "conclusions": [
+    "Both stages produced released answers with short identical evidence, unlike the previous full runs; this does not establish that context length caused the prior failures.",
+    "Language drift occurred even with bounded evidence: the first English-case draft was Turkish.",
+    "Semantic compression, unsupported specificity and causal drift remain, and Critic approval is insufficient evidence of correctness.",
+    "The numeric-prose rule also rejects grounded product identifiers such as H20; this is a distinct formatting limitation."
+  ],
+  "limitations": [
+    "One run per language with one selected relevant excerpt; no general reliability estimate.",
+    "Compared with the full run, source selection, source count and skipped stages also changed. Runtime is not an end-to-end performance comparison.",
+    "The diagnostic runner mirrors the shared two-revision budget but is not the production orchestrator or MCP path.",
+    "No provider token telemetry was captured; prompt sizes are characters, not token measurements."
+  ],
+  "next_steps": [
+    "Bound the evidence passed to Writer and Critic in the application without removing the full-section tool or silently truncating cited text.",
+    "Evaluate claim-to-source condition and consequence checks, and language detection, against positive and negative examples before changing release criteria.",
+    "Treat grounded alphanumeric identifiers separately from financial amounts in a future targeted change."
+  ]
+}

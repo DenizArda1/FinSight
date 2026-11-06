@@ -1,0 +1,12 @@
+.git
+.env
+.venv
+venv
+financial_data
+logs
+reports
+eval/results
+__pycache__
+*.pyc
+output
+docs

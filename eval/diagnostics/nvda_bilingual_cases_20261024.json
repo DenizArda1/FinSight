@@ -1,0 +1,30 @@
+[
+  {
+    "id": "nvda_export_risk_en",
+    "category": "narrative",
+    "question": "Using only Item 1A of NVIDIA's FY2026 filing, explain an export restriction risk and cite the filing.",
+    "expected": {
+      "ticker": "NVDA",
+      "section": "Item 1A",
+      "fiscal_year": 2026,
+      "accession_number": "0001045810-26-000021",
+      "required_claim": "Restrictions on exporting products may adversely affect the business.",
+      "requires_source": true
+    },
+    "answer_language": "en"
+  },
+  {
+    "id": "nvda_export_risk_tr",
+    "category": "narrative",
+    "question": "Yalnızca NVIDIA'nın FY2026 raporunun Item 1A bölümünü kullanarak bir ihracat kısıtlaması riskini açıkla ve rapora kaynak göster.",
+    "expected": {
+      "ticker": "NVDA",
+      "section": "Item 1A",
+      "fiscal_year": 2026,
+      "accession_number": "0001045810-26-000021",
+      "required_claim": "Restrictions on exporting products may adversely affect the business.",
+      "requires_source": true
+    },
+    "answer_language": "tr"
+  }
+]

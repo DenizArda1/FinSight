@@ -1,0 +1,96 @@
+{
+  "date": "2026-10-24",
+  "reviewer": "Codex, independent claim-to-source assessment of controlled pairs",
+  "result_file": "eval/results/citation_pairs_20261024T181149_928039Z_0eb243ec.json",
+  "result_file_sha256": "584c184e67416f021d9f674b5e481d3bfcd64512ed6e1d39b650369083e41f9b",
+  "runner": "eval/diagnostics/run_citation_pairs.py",
+  "mode": "critic_only_recorded_evidence",
+  "llm_config": {
+    "model": "qwen3:8b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "data_snapshot": {
+    "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+    "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+    "code_sha256": "ec6b288911307a2e009c1b1cb2bc47d059701767c928ecc4890728b8b543ea7f"
+  },
+  "evidence_sha256": "e2dbd2d19332bbd217ea2b6d1d4dd1b9a06061fd67a8b579c0ca8c8f90040486",
+  "controls": [
+    "Question, source evidence, source numbering, model settings and empty fact selection remain identical across all four cases.",
+    "Within each pair the claim is identical; only the inline citation number changes.",
+    "All candidates pass deterministic rendering and citation-range validation before Critic calls.",
+    "Expected labels are recorded for review and are not passed to the model.",
+    "No Planner, Writer, embedding or MCP calls occur; only the production Critic is invoked with replayed source evidence."
+  ],
+  "expected_support_rationale": {
+    "shipping_correct_citation": "Source 4 explicitly describes government export regulations affecting product shipping and service delivery.",
+    "shipping_wrong_citation": "Source 1 has a broad regulatory-risk statement and a list of legal areas, without the specific government-policy shipping/services mechanism; the support exists in Source 4, not this citation.",
+    "research_correct_citation": "Source 3 explicitly discusses additional controls affecting R&D teams executing their roadmap or objectives on time.",
+    "research_wrong_citation": "Source 4 discusses shipment/services and legal penalties; it does not establish the specific R&D-team roadmap claim. That support is in Source 3."
+  },
+  "results": [
+    {
+      "case_id": "shipping_correct_citation",
+      "expected_evidence_supported": true,
+      "observed_evidence_supported": true,
+      "verification_status": "passed",
+      "answer_released": true,
+      "elapsed_seconds": 25.197177417001512,
+      "classification": "correct_acceptance",
+      "draft": "ABD ve diğer devletlerin ihracat düzenlemeleri, NVIDIA'nın ürün sevkiyatını ve müşterilerine hizmet sunmasını olumsuz etkileyebilir. [Source 4]"
+    },
+    {
+      "case_id": "shipping_wrong_citation",
+      "expected_evidence_supported": false,
+      "observed_evidence_supported": true,
+      "verification_status": "passed",
+      "answer_released": true,
+      "elapsed_seconds": 23.452706459000183,
+      "classification": "false_acceptance",
+      "draft": "ABD ve diğer devletlerin ihracat düzenlemeleri, NVIDIA'nın ürün sevkiyatını ve müşterilerine hizmet sunmasını olumsuz etkileyebilir. [Source 1]"
+    },
+    {
+      "case_id": "research_correct_citation",
+      "expected_evidence_supported": true,
+      "observed_evidence_supported": true,
+      "verification_status": "passed",
+      "answer_released": true,
+      "elapsed_seconds": 29.049865832996147,
+      "classification": "correct_acceptance",
+      "draft": "Ek ihracat kontrolleri, NVIDIA'nın araştırma ve geliştirme ekiplerinin yol haritasını zamanında uygulamasını zorlaştırabilir. [Source 3]"
+    },
+    {
+      "case_id": "research_wrong_citation",
+      "expected_evidence_supported": false,
+      "observed_evidence_supported": true,
+      "verification_status": "passed",
+      "answer_released": true,
+      "elapsed_seconds": 29.82733466699574,
+      "classification": "false_acceptance",
+      "draft": "Ek ihracat kontrolleri, NVIDIA'nın araştırma ve geliştirme ekiplerinin yol haritasını zamanında uygulamasını zorlaştırabilir. [Source 4]"
+    }
+  ],
+  "counts": {
+    "correct_citation_accepted": 2,
+    "correct_citation_cases": 2,
+    "wrong_citation_rejected": 0,
+    "wrong_citation_cases": 2,
+    "false_acceptances": 2,
+    "execution_errors": 0
+  },
+  "total_elapsed_seconds": 107.52708437599358,
+  "production_code_changed_this_session": false,
+  "conclusion": "The current Critic accepted all four candidates and failed to distinguish both citation swaps. Application approval is insufficient evidence of claim-to-cited-source support.",
+  "limitations": [
+    "Two selected development pairs, one call per case; do not generalize these counts to model-wide accuracy.",
+    "All supporting and non-supporting excerpts are visible in every call. Cross-source support leakage is a hypothesis, not an observed internal reasoning process.",
+    "The source text and expected associations were reviewed against local prepared reports, not externally audited."
+  ],
+  "next_step": "Repeat these paired claims with only their cited source available to the semantic check, preserving the original source ID. Compare false acceptance and false rejection before integrating a claim-level verifier."
+}

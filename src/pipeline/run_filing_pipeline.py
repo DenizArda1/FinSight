@@ -7,7 +7,7 @@ from src.rag.filings import load_filing, load_latest_filing, select_filings
 from src.rag.html_parser import extract_fiscal_year, extract_text
 from src.rag.sections import extract_sections
 from src.rag.chunking import build_document_chunks
-from src.utils.utils import save_json
+from src.utils.utils import save_json, load_json
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -20,9 +20,15 @@ def prepare_filing(report, max_chars=1500, overlap=200):
     ticker = report["company"]["ticker"]
     if not clean_text.strip():
         raise ValueError(f"No visible report text found for {ticker}")
+    try:
+        fiscal_year = extract_fiscal_year(report["html"])
+    except ValueError:
+        if report["filing"]["form"] != "10-K/A" or "original_fiscal_year" not in report:
+            raise
+        fiscal_year = report["original_fiscal_year"]
     document = {
         "company": report["company"],
-        "filing": {**report["filing"], "fiscal_year": extract_fiscal_year(report["html"])},
+        "filing": {**report["filing"], "fiscal_year": fiscal_year},
         "preparation": {
             "schema_version": 2,
             "html_sha256": hashlib.sha256(report["html"].encode("utf-8")).hexdigest(),
@@ -30,10 +36,10 @@ def prepare_filing(report, max_chars=1500, overlap=200):
             "overlap": overlap,
         },
         "text": clean_text,
-        "sections": extract_sections(clean_text),
+        "sections": extract_sections(clean_text, partial=report["filing"]["form"] == "10-K/A"),
     }
     chunks = build_document_chunks(document, max_chars=max_chars, overlap=overlap)
-    if not chunks:
+    if not chunks and report["filing"]["form"] != "10-K/A":
         raise ValueError(f"No text chunks produced for {ticker}")
     document["chunk_count"] = len(chunks)
     return document, chunks
@@ -61,7 +67,8 @@ def process_latest_filing(ticker):
 def process_company_filings(ticker, years=5, max_chars=1500, overlap=200):
     selection = select_filings(ticker, years=years)
     results = []
-    for filing in selection["filings"]:
+    original_years = {}
+    for filing in sorted(selection["filings"], key=lambda item: item["form"] != "10-K"):
         entry = {
             "ticker": selection["company"]["ticker"],
             "cik": selection["company"]["cik"],
@@ -69,22 +76,28 @@ def process_company_filings(ticker, years=5, max_chars=1500, overlap=200):
             "report_date": filing.get("reportDate"),
             "source_url": filing.get("url"),
             "source_path": filing.get("path"),
+            "form": filing["form"], "filed": filing.get("filingDate", ""),
         }
         try:
             report = load_filing(selection["company"], filing)
+            if filing["reportDate"] in original_years:
+                report["original_fiscal_year"] = original_years[filing["reportDate"]]
             document = process_filing(report, max_chars=max_chars, overlap=overlap)
         except (ValueError, OSError, KeyError) as error:
             entry.update({"status": "failed", "error": str(error)})
         else:
+            if filing["form"] == "10-K":
+                original_years[filing["reportDate"]] = document["filing"]["fiscal_year"]
             directory = Path(entry["cik"]) / "filings" / entry["accession_number"]
             entry.update({
-                "status": "prepared",
+                "status": "prepared" if document["chunk_count"] else "no_target_sections",
                 "fiscal_year": document["filing"]["fiscal_year"],
                 "section_count": len(document["sections"]),
                 "chunk_count": document["chunk_count"],
                 "preparation": document["preparation"],
                 "text_path": str(directory / "text.json"),
                 "sections_path": str(directory / "sections.json"),
+                "sections": [entry["section"] for entry in document["sections"]],
                 "chunks_path": str(directory / "chunks.json"),
             })
         results.append(entry)
@@ -136,9 +149,14 @@ def main(argv=None):
             if entry["status"] == "prepared":
                 detail = f"{entry['chunk_count']} chunks"
             else:
-                detail = entry["error"]
+                detail = entry.get("error", "Amendment contains no target narrative sections")
             print(f"{ticker} {entry['report_date']}: {entry['status']} ({detail})")
 
+    summary_path = PROCESSED_PATH / "filing_preparation_summary.json"
+    if summary_path.is_file():
+        previous = load_json(summary_path)
+        summary["reports"].extend(entry for entry in previous.get("reports", []) if entry["ticker"] not in tickers)
+        summary["company_errors"].extend(entry for entry in previous.get("company_errors", []) if entry["ticker"] not in tickers)
     summary["prepared_count"] = sum(entry["status"] == "prepared" for entry in summary["reports"])
     summary["failed_count"] = sum(entry["status"] == "failed" for entry in summary["reports"])
     summary_path = PROCESSED_PATH / "filing_preparation_summary.json"

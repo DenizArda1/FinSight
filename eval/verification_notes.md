@@ -1,5 +1,42 @@
 # FinSight evaluation and verification
 
+Current checkpoint (2026-10-26): see the [Qwen-only cleanup and prototype review](diagnostics/qwen_cleanup_review_20261026.md).
+
+The user requested a Qwen-only prototype and removal
+of NLI and extra semantic-verification experiments. NLI code, configuration and
+local weights, per-claim/passage model passes, and the special prose-repair loop
+have been removed. Historical results below are retained as experiment records,
+not descriptions of the active application. Shared Chroma dependencies remain.
+
+The runtime now uses deterministic source rendering plus one Qwen Critic call
+per draft, with at most two Writer revisions. BGE-M3 remains the embedding model
+for the existing index. The first Streamlit interface uses the same multi-agent
+MCP runtime, labels unverified drafts and exports verified notes into new files
+under `reports/`. This does not establish general semantic correctness.
+
+The cleanup also fixes repeated successful specialist calls, bounds planner task
+instructions, preserves calculation requests rather than reducing them to input
+lookups, and includes `think` in new evaluation configuration records. Review of
+the initial smoke caught both a false approval of an incomplete net-margin answer
+and a false rejection of an honest missing-input response; `completed` alone is
+not a passing evaluation score.
+
+Historical checkpoint (2026-10-25): the [independent NLI review](diagnostics/nli_review_20261025.md)
+records the new local NLI + LLM claim-verification path and 280 passing focused tests.
+The original 20 development controls passed, but a fresh bilingual MCP run exposed
+an accepted compound-scope error and Writer formatting/token-limit failures.
+Neither full run released an answer. Four new controls expand the fixture set to
+24; a complete pass on that expanded set is not established. UI readiness remains
+undeclared. Earlier Qwen-only experiments
+did not resolve the scope issue; their failures remain in the
+[relation-level review](diagnostics/relation_review_20261025.md).
+
+Previous checkpoint (2026-10-24): see the [pre-UI review and 8B/14B comparison](diagnostics/pre_ui_review_20261024.md).
+At that checkpoint, 267 focused tests passed. Financial and missing-input examples
+were reviewed, but the real narrative scope counterexample was unresolved. The 14B candidate
+was tested without changing production settings. Historical notes below describe
+their respective development stages, not the current integration status.
+
 Validate the question set from the repository root without starting a model:
 
 ```sh

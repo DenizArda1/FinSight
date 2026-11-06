@@ -55,6 +55,9 @@ def build_document_chunks(document, max_chars=1500, overlap=200):
                     "cik": document["company"]["cik"],
                     "accession_number": accession_number,
                     "form": document["filing"]["form"],
+                    "filed": document["filing"].get("filingDate", ""),
+                    "amendment_note": ("Replacement section from 10-K/A; other sections may remain in the original filing."
+                                       if document["filing"]["form"] == "10-K/A" else "Original annual filing section."),
                     "fiscal_year": document["filing"]["fiscal_year"],
                     "report_date": document["filing"]["reportDate"],
                     "source_url": document["filing"]["url"],

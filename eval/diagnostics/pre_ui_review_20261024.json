@@ -1,0 +1,141 @@
+{
+  "status": "comparison_complete_narrative_scope_unresolved",
+  "tests": {
+    "count": 267,
+    "result": "passed"
+  },
+  "code_sha256": "e15bca9caf652b53d1467f2ec0bdf8efc1d5ac84cf617b82256bc881f2ac9624",
+  "controlled_checks": [
+    {
+      "path": "eval/results/citation_pairs_20261024T185227_476997Z_022bf52e.json",
+      "matched": 4,
+      "total": 4,
+      "scope": "recorded evidence, Critic only"
+    },
+    {
+      "path": "eval/results/claim_regressions_20261024T185630_556170Z_60542f1c.json",
+      "matched": 8,
+      "total": 8,
+      "scope": "synthetic claim checks"
+    },
+    {
+      "path": "eval/results/claim_scope_20261024T193838_522253Z.json",
+      "matched": 0,
+      "total": 2,
+      "scope": "real geographic-scope pair; both ended in quote errors"
+    }
+  ],
+  "live_review": [
+    {
+      "id": "aapl_latest_revenue_tr",
+      "path": "eval/results/multi_agent_mcp_20261024T185802_577262Z_b70c0c0f.json",
+      "manual_status": "accepted",
+      "note": "Revenue, fiscal year, period end and Turkish prose match the retrieved record."
+    },
+    {
+      "id": "amzn_missing_gross_margin_tr",
+      "path": "eval/results/multi_agent_mcp_20261024T191847_326166Z_468da471.json",
+      "manual_status": "accepted",
+      "note": "Missing gross_profit and available revenue correctly shown; gross-margin wording preserved after prose repair."
+    },
+    {
+      "id": "nvda_export_risk_en",
+      "path": "eval/results/multi_agent_mcp_20261024T191847_326166Z_468da471.json",
+      "manual_status": "rejected",
+      "note": "Automatic approval missed an unsupported expansion from outside China to China; source-card-only citations skipped the narrow checker. The bypass was subsequently fixed."
+    },
+    {
+      "id": "nvda_export_risk_en",
+      "path": "eval/results/multi_agent_mcp_20261024T193101_949443Z_e33d5b09.json",
+      "manual_status": "withheld",
+      "note": "Extra grounding now runs. Non-verbatim quotes caused fail-closed withholding; no acceptable final narrative yet."
+    }
+  ],
+  "changes": [
+    "Separate semantic assessment from bounded quote-only repair; discard unverified quotations on rejected claims.",
+    "Prose-only Writer repair preserves selected facts and all non-numeric words.",
+    "Oversized full sections trigger a real MCP search with the same ticker, fiscal year and section; raw section retained in trace.",
+    "Literal alphanumeric report identifiers require same-line supporting citations; amounts, dates and fiscal-year labels remain restricted.",
+    "Source-card-only narratives are checked against exactly their selected source IDs.",
+    "Report paragraphs are checked sentence by sentence, with collective coverage of cited sources and an eight-sentence limit."
+  ],
+  "limitations": [
+    "The successful small control sets do not establish general model accuracy.",
+    "Live attempts used different development revisions; they are not one clean benchmark run.",
+    "8B still fails complex narrative attribution/quotation checks; UI readiness is not declared."
+  ],
+  "next": {
+    "work": "Validate actor, geographic scope and consequence together against a specific source passage; a larger model alone did not resolve the failure.",
+    "ui_readiness_declared": false
+  },
+  "model_comparison": [
+    {
+      "model": "qwen3:8b",
+      "sets": [
+        {
+          "path": "eval/results/citation_pairs_20261024T185227_476997Z_022bf52e.json",
+          "matching_expected": 4,
+          "count": 4,
+          "elapsed_seconds": 209.2859177920036,
+          "errors": 0
+        },
+        {
+          "path": "eval/results/claim_regressions_20261024T185630_556170Z_60542f1c.json",
+          "matching_expected": 8,
+          "count": 8,
+          "elapsed_seconds": 82.13575383299758,
+          "errors": 0
+        },
+        {
+          "path": "eval/results/claim_scope_20261024T193838_522253Z.json",
+          "matching_expected": 0,
+          "count": 2,
+          "elapsed_seconds": 74.58641974999045,
+          "errors": 2
+        }
+      ]
+    },
+    {
+      "model": "qwen3:14b",
+      "sets": [
+        {
+          "path": "eval/results/citation_pairs_20261024T194901_728061Z_a41a8eff.json",
+          "matching_expected": 4,
+          "count": 4,
+          "elapsed_seconds": 367.83213104200695,
+          "errors": 0
+        },
+        {
+          "path": "eval/results/claim_regressions_20261024T195534_553870Z_cc27ba4d.json",
+          "matching_expected": 8,
+          "count": 8,
+          "elapsed_seconds": 143.22711408501345,
+          "errors": 0
+        },
+        {
+          "path": "eval/results/claim_scope_20261024T194523_298538Z_f8264bef.json",
+          "matching_expected": 1,
+          "count": 2,
+          "elapsed_seconds": 65.62655049999739,
+          "errors": 0
+        }
+      ]
+    }
+  ],
+  "model_decision": {
+    "production_model": "qwen3:8b",
+    "production_settings_changed": false,
+    "installed_candidate": {
+      "model": "qwen3:14b",
+      "id": "bdbd181c33f2",
+      "download_size_gb": 9.3
+    },
+    "observed_candidate_runtime": {
+      "resident_size_gb": 11,
+      "processor": "100% GPU",
+      "context": 16384
+    },
+    "adopted": false,
+    "reason": "14B falsely approved a geographic scope expansion; correct quote copying did not establish semantic entailment."
+  }
+}

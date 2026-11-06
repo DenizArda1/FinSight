@@ -1,0 +1,38 @@
+[
+  {
+    "id": "supplier_region_transfer_wrong",
+    "claim": "Suppliers in Japan may delay deliveries because of power shortages.",
+    "sources": [{"source_id": 21, "text": "Suppliers in Taiwan may delay deliveries because of power shortages. Suppliers in Japan may raise prices because of higher labor costs."}],
+    "cited_source_ids": [21], "expected_supported": false
+  },
+  {
+    "id": "supplier_region_translation_correct",
+    "claim": "Tayvan'daki tedarikçiler elektrik sıkıntısı nedeniyle teslimatları geciktirebilir.",
+    "sources": [{"source_id": 21, "text": "Suppliers in Taiwan may delay deliveries because of power shortages. Suppliers in Japan may raise prices because of higher labor costs."}],
+    "cited_source_ids": [21], "expected_supported": true
+  },
+  {
+    "id": "condition_transfer_wrong",
+    "claim": "If the port closes, insurance premiums may rise.",
+    "sources": [{"source_id": 22, "text": "If the port closes, shipments may be delayed. If accident rates increase, insurance premiums may rise."}],
+    "cited_source_ids": [22], "expected_supported": false
+  },
+  {
+    "id": "condition_translation_correct",
+    "claim": "Kaza oranları artarsa sigorta primleri yükselebilir.",
+    "sources": [{"source_id": 22, "text": "If the port closes, shipments may be delayed. If accident rates increase, insurance premiums may rise."}],
+    "cited_source_ids": [22], "expected_supported": true
+  },
+  {
+    "id": "excluded_population_wrong",
+    "claim": "Customers with long-term contracts may switch suppliers when spot prices rise.",
+    "sources": [{"source_id": 23, "text": "Customers without long-term contracts may switch suppliers when spot prices rise. Customers with long-term contracts may negotiate different payment schedules."}],
+    "cited_source_ids": [23], "expected_supported": false
+  },
+  {
+    "id": "excluded_population_correct",
+    "claim": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+    "sources": [{"source_id": 23, "text": "Customers without long-term contracts may switch suppliers when spot prices rise. Customers with long-term contracts may negotiate different payment schedules."}],
+    "cited_source_ids": [23], "expected_supported": true
+  }
+]

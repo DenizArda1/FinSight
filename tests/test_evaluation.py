@@ -7,6 +7,7 @@ from unittest.mock import AsyncMock, patch
 
 import eval.run_eval as evaluation
 from src.cli import main as cli_main, run_mcp_agent
+from src.reporting import DISCLAIMER
 from src.utils.utils import load_json, save_json, save_yaml
 
 
@@ -334,7 +335,7 @@ class EvaluationTests(unittest.TestCase):
                     cli_main()
                 selected.assert_awaited_once_with("Question", {"model": "test-model"}, verbose=True)
                 unused.assert_not_called()
-                self.assertEqual(output.getvalue().strip(), "Mock answer")
+                self.assertEqual(output.getvalue().strip(), "Mock answer\n\n" + DISCLAIMER)
 
     @patch("src.cli.load_yaml", return_value={"llm": {}})
     @patch("src.cli.run_mcp_agent", new_callable=AsyncMock)

@@ -40,6 +40,19 @@ metrics:
     unit: USD
     tags:
       - GrossProfit
+  cost_of_revenue:
+    description: Annual cost of goods and services sold; not total expenses
+    taxonomy: us-gaap
+    unit: USD
+    tags:
+      - CostOfGoodsAndServicesSold
+      - CostOfRevenue
+  operating_expenses:
+    description: Annual operating expenses excluding cost of revenue, interest and income taxes
+    taxonomy: us-gaap
+    unit: USD
+    tags:
+      - OperatingExpenses
 
 calculations:
   gross_margin:

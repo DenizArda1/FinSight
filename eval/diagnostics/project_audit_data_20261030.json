@@ -1,0 +1,106 @@
+{
+  "companies": [
+    {
+      "ticker": "AAPL",
+      "periods": [
+        "2021-09-25",
+        "2022-09-24",
+        "2023-09-30",
+        "2024-09-28",
+        "2025-09-27"
+      ],
+      "metrics": {
+        "revenue": 5,
+        "net_income": 5,
+        "operating_income": 5,
+        "gross_profit": 5,
+        "cost_of_revenue": 5,
+        "operating_expenses": 5
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "periods": [
+        "2022-06-30",
+        "2023-06-30",
+        "2024-06-30",
+        "2025-06-30",
+        "2026-06-30"
+      ],
+      "metrics": {
+        "revenue": 5,
+        "net_income": 5,
+        "operating_income": 5,
+        "gross_profit": 5,
+        "cost_of_revenue": 5,
+        "operating_expenses": 4
+      }
+    },
+    {
+      "ticker": "AMZN",
+      "periods": [
+        "2021-12-31",
+        "2022-12-31",
+        "2023-12-31",
+        "2024-12-31",
+        "2025-12-31"
+      ],
+      "metrics": {
+        "revenue": 5,
+        "net_income": 5,
+        "operating_income": 5,
+        "gross_profit": 0,
+        "cost_of_revenue": 5,
+        "operating_expenses": 0
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "periods": [
+        "2022-01-30",
+        "2023-01-29",
+        "2024-01-28",
+        "2025-01-26",
+        "2026-01-25"
+      ],
+      "metrics": {
+        "revenue": 5,
+        "net_income": 5,
+        "operating_income": 5,
+        "gross_profit": 5,
+        "cost_of_revenue": 5,
+        "operating_expenses": 5
+      }
+    }
+  ],
+  "raw_hash_checks": 29,
+  "metric_records_checked": 109,
+  "sections_checked": 60,
+  "chunks_checked": 2702,
+  "issues": [],
+  "index": {
+    "count": 2702,
+    "missing_chunks": 0,
+    "unexpected_chunks": 0,
+    "sections": {
+      "Item 1": 614,
+      "Item 1A": 1405,
+      "Item 7": 683
+    }
+  },
+  "golden_set": {
+    "count": 26,
+    "categories": {
+      "numeric": 6,
+      "missing_data": 2,
+      "identity": 2,
+      "calculation": 5,
+      "narrative": 1,
+      "out_of_scope": 3,
+      "direct_prompt_injection": 2,
+      "comparison": 2,
+      "clarification": 2,
+      "mixed": 1
+    }
+  }
+}

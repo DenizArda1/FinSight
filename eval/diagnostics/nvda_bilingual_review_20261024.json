@@ -1,0 +1,246 @@
+{
+  "date": "2026-10-24",
+  "reviewer": "Codex, independent review of saved traces and local source files",
+  "result_file": "eval/results/nvda_bilingual_multi_agent_mcp_20261024T144127_752034Z_7b4d5b7e.json",
+  "result_file_sha256": "ccec48f178fff4c2061334a716e0893e77736ca0a77609ad85bf4e22df7eca4d",
+  "case_file": "eval/diagnostics/nvda_bilingual_cases_20261024.json",
+  "production_code_changed_this_session": false,
+  "model": "qwen3:8b",
+  "llm_config": {
+    "model": "qwen3:8b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "data_snapshot": {
+    "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+    "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+    "code_sha256": "9fd43b133a6f51aa288881ed172ee64a1f2c787be028a0f2f9e0fc8ac70bbcef"
+  },
+  "same_llm_config": true,
+  "same_data_snapshot": true,
+  "total_elapsed_seconds": 593.6463563340003,
+  "released_answers": 0,
+  "cases": [
+    {
+      "case_id": "nvda_export_risk_en",
+      "question": "Using only Item 1A of NVIDIA's FY2026 filing, explain an export restriction risk and cite the filing.",
+      "language": "en",
+      "application_status": "error",
+      "released_answer": null,
+      "elapsed_seconds": 269.58047558399994,
+      "writer_attempts": 2,
+      "critic_calls": 0,
+      "writer_initial_prompt_characters": 26654,
+      "tool_calls": [
+        {
+          "name": "search_filings",
+          "arguments": {
+            "section": "Item 1A",
+            "query": "export restriction risk",
+            "top_k": 5,
+            "ticker": "NVDA",
+            "fiscal_year": 2026
+          },
+          "status": "completed"
+        }
+      ],
+      "errors": [
+        {
+          "type": "agent",
+          "agent": "writer",
+          "status": "error",
+          "stage": "deterministic",
+          "error": {
+            "type": "ValueError",
+            "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"FY2026\", \"1A)\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+          },
+          "elapsed_seconds": 38.43450912499975
+        },
+        {
+          "type": "model",
+          "phase": "writer",
+          "status": "error",
+          "error": {
+            "type": "ValueError",
+            "message": "LLM response is incomplete or reached its token limit"
+          },
+          "elapsed_seconds": 149.62988979199872
+        },
+        {
+          "type": "agent",
+          "agent": "writer",
+          "status": "error",
+          "stage": "composition",
+          "error": {
+            "type": "ValueError",
+            "message": "LLM response is incomplete or reached its token limit"
+          },
+          "elapsed_seconds": 149.63100875000237
+        }
+      ],
+      "sources": [
+        {
+          "source_id": 1,
+          "tool": "search_filings",
+          "chunk_id": "0001045810-26-000021:item_1a:59",
+          "section": "Item 1A",
+          "fiscal_year": 2026,
+          "accession_number": "0001045810-26-000021",
+          "expanded_characters": 1043,
+          "local_source_check": "passed"
+        },
+        {
+          "source_id": 2,
+          "tool": "search_filings",
+          "chunk_id": "0001045810-26-000021:item_1a:82",
+          "section": "Item 1A",
+          "fiscal_year": 2026,
+          "accession_number": "0001045810-26-000021",
+          "expanded_characters": 2221,
+          "local_source_check": "passed"
+        },
+        {
+          "source_id": 3,
+          "tool": "search_filings",
+          "chunk_id": "0001045810-26-000021:item_1a:71",
+          "section": "Item 1A",
+          "fiscal_year": 2026,
+          "accession_number": "0001045810-26-000021",
+          "expanded_characters": 2298,
+          "local_source_check": "passed"
+        },
+        {
+          "source_id": 4,
+          "tool": "search_filings",
+          "chunk_id": "0001045810-26-000021:item_1a:69",
+          "section": "Item 1A",
+          "fiscal_year": 2026,
+          "accession_number": "0001045810-26-000021",
+          "expanded_characters": 2144,
+          "local_source_check": "passed"
+        },
+        {
+          "source_id": 5,
+          "tool": "search_filings",
+          "chunk_id": "0001045810-26-000021:item_1a:67",
+          "section": "Item 1A",
+          "fiscal_year": 2026,
+          "accession_number": "0001045810-26-000021",
+          "expanded_characters": 1893,
+          "local_source_check": "passed"
+        }
+      ],
+      "independent_classification": "execution_failure_writer_incomplete_response",
+      "findings": [
+        "The correct FY2026 Item 1A evidence was retrieved using fiscal_year=2026 and top_k=5.",
+        "Writer repeated FY2026 and Item 1A in prose. Deterministic validation rejected the numeric labels.",
+        "The repair call raised: LLM response is incomplete or reached its token limit. No answer or Critic verdict was produced.",
+        "The saved trace does not retain done_reason or token counts; the exact truncation condition cannot be distinguished from this error message."
+      ]
+    },
+    {
+      "case_id": "nvda_export_risk_tr",
+      "question": "Yalnızca NVIDIA'nın FY2026 raporunun Item 1A bölümünü kullanarak bir ihracat kısıtlaması riskini açıkla ve rapora kaynak göster.",
+      "language": "tr",
+      "application_status": "withheld",
+      "released_answer": null,
+      "elapsed_seconds": 324.06588075000036,
+      "writer_attempts": 2,
+      "critic_calls": 1,
+      "writer_initial_prompt_characters": 123917,
+      "tool_calls": [
+        {
+          "name": "search_filings",
+          "arguments": {
+            "ticker": "NVDA",
+            "latest": true,
+            "query": "export restrictions risk",
+            "section": "Item 1A",
+            "top_k": 1
+          },
+          "status": "completed"
+        },
+        {
+          "name": "get_filing_section",
+          "arguments": {
+            "section": "Item 1A",
+            "ticker": "NVDA",
+            "year": 2026
+          },
+          "status": "completed"
+        }
+      ],
+      "errors": [
+        {
+          "type": "agent",
+          "agent": "writer",
+          "status": "error",
+          "stage": "deterministic",
+          "error": {
+            "type": "ValueError",
+            "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"2026\", \"10-K\", \"1.\", \"H100/A100\", \"$4.5B\", \"H20\", \"H200\", \"2.\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+          },
+          "elapsed_seconds": 75.226251125001
+        },
+        {
+          "type": "agent",
+          "agent": "critic",
+          "status": "error",
+          "verification_status": "error",
+          "issues": [
+            "ValueError: Supported responses must not contain issues"
+          ],
+          "elapsed_seconds": 75.29268416600098
+        }
+      ],
+      "sources": [
+        {
+          "source_id": 1,
+          "tool": "search_filings",
+          "chunk_id": "0001045810-26-000021:item_1a:59",
+          "section": "Item 1A",
+          "fiscal_year": 2026,
+          "accession_number": "0001045810-26-000021",
+          "expanded_characters": 1043,
+          "local_source_check": "passed"
+        },
+        {
+          "source_id": 2,
+          "tool": "get_filing_section",
+          "section": "Item 1A",
+          "fiscal_year": 2026,
+          "accession_number": "0001045810-26-000021",
+          "full_section_characters": 114842,
+          "local_source_check": "passed"
+        }
+      ],
+      "independent_classification": "withheld_due_to_invalid_verdict_with_language_and_grounding_errors_in_draft",
+      "findings": [
+        "The search used latest=True rather than the explicitly requested fiscal_year=2026. It selected FY2026 in this snapshot, but this is not a robust implementation of a fixed-year request.",
+        "The specialist retrieved one broad excerpt, then the complete Item 1A section (114842 characters) for a targeted one-risk question.",
+        "The reconstructed initial Writer prompt contains 123917 characters versus 26654 in English. Configured num_ctx is 16384 tokens; character counts are not token counts. Actual truncation is unconfirmed because prompt-evaluation telemetry is not recorded.",
+        "Both Writer drafts were English despite the Turkish question. The first draft also falsely described the inventory-related charge as a charge imposed by the US government; the local report describes an expense NVIDIA incurred due to excess inventory and purchase obligations.",
+        "The second draft expanded beyond the requested export risk and attached every narrative citation to Source 1, a broad regulatory excerpt that does not support all of the detailed competition, litigation and governance claims. Source 2 contains the full section but was not cited for those claims.",
+        "Critic returned all approval flags true, incorrectly including language_matches=true, with a nonempty issues list praising the answer and mentioning details absent from the final draft.",
+        "Verdict consistency validation rejected the all-true/nonempty-issues response. No answer was released, but this was a format consistency rejection, not successful semantic or language detection."
+      ]
+    }
+  ],
+  "conclusion": "Neither run delivered an answer. Evidence retrieval succeeded but different retrieval strategies and input sizes confound an isolated translation comparison. Writer/verification reliability and bounded context need attention before broad quality claims.",
+  "limitations": [
+    "Two development cases, one execution each; not a general language/model benchmark.",
+    "No causal proof that input length caused language drift or the malformed verdict.",
+    "No exact input/output token telemetry was captured.",
+    "Local source verification only, not an external SEC audit."
+  ],
+  "next_step": [
+    "Run a controlled bilingual Writer/Critic comparison with identical bounded evidence to separate retrieval strategy from language behavior.",
+    "Use that evidence to design a bounded context policy and targeted-query behavior without removing the full-section tool.",
+    "Improve diagnostic recording of incomplete model responses before blindly increasing output limits."
+  ]
+}

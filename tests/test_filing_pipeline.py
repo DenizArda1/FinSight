@@ -124,7 +124,7 @@ class FilingCommandTests(unittest.TestCase):
     def test_failed_report_does_not_prevent_processing_next_report(self):
         report = make_report()
         filings = [report["filing"], {**report["filing"], "accessionNumber": "next-accession"}]
-        document = {"filing": {"fiscal_year": 2025}, "sections": [{}, {}, {}], "chunk_count": 3, "preparation": {}}
+        document = {"filing": {"fiscal_year": 2025}, "sections": [{"section": "Item 1"}, {"section": "Item 1A"}, {"section": "Item 7"}], "chunk_count": 3, "preparation": {}}
         with patch("src.pipeline.run_filing_pipeline.select_filings", return_value={"company": report["company"], "filings": filings}), patch(
             "src.pipeline.run_filing_pipeline.load_filing", side_effect=[FileNotFoundError("Missing report"), report]
         ), patch("src.pipeline.run_filing_pipeline.process_filing", return_value=document):

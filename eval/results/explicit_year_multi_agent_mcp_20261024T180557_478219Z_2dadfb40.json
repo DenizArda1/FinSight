@@ -1,0 +1,571 @@
+[
+  {
+    "id": "nvda_export_risk_tr",
+    "question": "Yalnızca NVIDIA'nın FY2026 raporunun Item 1A bölümünü kullanarak bir ihracat kısıtlaması riskini açıkla ve rapora kaynak göster.",
+    "expected": {
+      "ticker": "NVDA",
+      "section": "Item 1A",
+      "fiscal_year": 2026,
+      "accession_number": "0001045810-26-000021",
+      "required_claim": "Restrictions on exporting products may adversely affect the business.",
+      "requires_source": true
+    },
+    "answer_language": "tr",
+    "answer": "NVIDIA'nın ihracat kısıtlamaları riski şu şekilde açıklanmaktadır: \n- ABD ve diğer devletlerin ekonomik güvenlik politikaları kapsamında uyguladığı ihracat kısıtlamaları, NVIDIA'nın ürün satışı ve hizmet sağlama kapasitesini olumsuz etkileyebilir. [Source 1]\n- Bu kısıtlamalar, özellikle Çin ve diğer bölgelerde talebi azaltabilir, aşırı stok ve mali yükler oluşturabilir. [Source 2]\n- Kısıtlamalar, araştırmaları ve geliştirme ekiplerinin planlarını etkileyebilir. [Source 3]\n- İhracat yasalarına uyum eksikliği durumunda cezaların ve iş faaliyetlerinin kısıtlanmasının olabileceğini belirtmektedir. [Source 4]\n\nNVDA | FY2026 | 2026-01-25 | 10-K | 0001045810-26-000021 | Item 1A [Source 1]\n\nNVDA | FY2026 | 2026-01-25 | 10-K | 0001045810-26-000021 | Item 1A [Source 2]\n\nNVDA | FY2026 | 2026-01-25 | 10-K | 0001045810-26-000021 | Item 1A [Source 3]\n\nNVDA | FY2026 | 2026-01-25 | 10-K | 0001045810-26-000021 | Item 1A [Source 4]",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": {
+      "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+      "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+      "code_sha256": "ec6b288911307a2e009c1b1cb2bc47d059701767c928ecc4890728b8b543ea7f"
+    },
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": "NVIDIA'nın ihracat kısıtlamaları riski şu şekilde açıklanmaktadır: \n- ABD ve diğer devletlerin ekonomik güvenlik politikaları kapsamında uyguladığı ihracat kısıtlamaları, NVIDIA'nın ürün satışı ve hizmet sağlama kapasitesini olumsuz etkileyebilir. [Source 1]\n- Bu kısıtlamalar, özellikle Çin ve diğer bölgelerde talebi azaltabilir, aşırı stok ve mali yükler oluşturabilir. [Source 2]\n- Kısıtlamalar, araştırmaları ve geliştirme ekiplerinin planlarını etkileyebilir. [Source 3]\n- İhracat yasalarına uyum eksikliği durumunda cezaların ve iş faaliyetlerinin kısıtlanmasının olabileceğini belirtmektedir. [Source 4]\n\nNVDA | FY2026 | 2026-01-25 | 10-K | 0001045810-26-000021 | Item 1A [Source 1]\n\nNVDA | FY2026 | 2026-01-25 | 10-K | 0001045810-26-000021 | Item 1A [Source 2]\n\nNVDA | FY2026 | 2026-01-25 | 10-K | 0001045810-26-000021 | Item 1A [Source 3]\n\nNVDA | FY2026 | 2026-01-25 | 10-K | 0001045810-26-000021 | Item 1A [Source 4]",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "answer",
+      "text": "NVIDIA'nın ihracat kısıtlamaları riski şu şekilde açıklanmaktadır: \n- ABD ve diğer devletlerin ekonomik güvenlik politikaları kapsamında uyguladığı ihracat kısıtlamaları, NVIDIA'nın ürün satışı ve hizmet sağlama kapasitesini olumsuz etkileyebilir. [Source 1]\n- Bu kısıtlamalar, özellikle Çin ve diğer bölgelerde talebi azaltabilir, aşırı stok ve mali yükler oluşturabilir. [Source 2]\n- Kısıtlamalar, araştırmaları ve geliştirme ekiplerinin planlarını etkileyebilir. [Source 3]\n- İhracat yasalarına uyum eksikliği durumunda cezaların ve iş faaliyetlerinin kısıtlanmasının olabileceğini belirtmektedir. [Source 4]",
+      "facts": [
+        "1:matches/0/metadata",
+        "2:matches/0/metadata",
+        "3:matches/0/metadata",
+        "4:matches/0/metadata"
+      ]
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "search_filings",
+        "arguments": {
+          "ticker": "NVDA",
+          "top_k": 5,
+          "fiscal_year": 2026,
+          "query": "export restrictions risk",
+          "section": "Item 1A"
+        },
+        "result": {
+          "company": {
+            "ticker": "NVDA",
+            "name": "NVIDIA CORP",
+            "cik": "0001045810"
+          },
+          "query": "export restrictions risk",
+          "fiscal_year": 2026,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0001045810-26-000021:item_1a:59",
+              "text": "Risks Related to Regulatory, Legal, Our Stock and Other Matters\nWe are subject to complex laws, rules, regulations, and political and other actions, including restrictions on the export of our products, which may adversely impact our business.",
+              "metadata": {
+                "section_title": "Risk Factors",
+                "section_start": 58590,
+                "section_end": 173432,
+                "fiscal_year": 2026,
+                "section": "Item 1A",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+                "start": 124320,
+                "cik": "0001045810",
+                "form": "10-K",
+                "end": 124563,
+                "ticker": "NVDA",
+                "accession_number": "0001045810-26-000021",
+                "report_date": "2026-01-25"
+              },
+              "distance": 0.3575400710105896,
+              "context": {
+                "text": " business operations. In addition, the pace of growth in our operating expenses and investments may lag our revenue growth, creating volatility or periods where profitability levels may not be sustainable. Failure to meet our expectations or the expectations of our investors or security analysts is likely to cause our stock price to decline, as it has in the past, or substantial price volatility.\nRisks Related to Regulatory, Legal, Our Stock and Other Matters\nWe are subject to complex laws, rules, regulations, and political and other actions, including restrictions on the export of our products, which may adversely impact our business.\nWe are subject to laws and regulations domestically and worldwide, affecting our operations in areas including, but not limited to, IP ownership and infringement; taxes; import and export requirements and tariffs; anti-corruption, including the Foreign Corrupt Practices Act; business acquisitions; foreign exchange controls and cash repatriation restrictions; foreign ownership and investment; data",
+                "start": 123920,
+                "end": 124963
+              }
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "search_filings",
+        "arguments": {
+          "ticker": "NVDA",
+          "top_k": 5,
+          "fiscal_year": 2026,
+          "query": "export restrictions risk",
+          "section": "Item 1A"
+        },
+        "result": {
+          "company": {
+            "ticker": "NVDA",
+            "name": "NVIDIA CORP",
+            "cik": "0001045810"
+          },
+          "query": "export restrictions risk",
+          "fiscal_year": 2026,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0001045810-26-000021:item_1a:82",
+              "text": "Export controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control. Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide. Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.\nAs a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia. Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20. At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls.",
+              "metadata": {
+                "section_start": 58590,
+                "section_title": "Risk Factors",
+                "report_date": "2026-01-25",
+                "cik": "0001045810",
+                "fiscal_year": 2026,
+                "section_end": 173432,
+                "form": "10-K",
+                "section": "Item 1A",
+                "accession_number": "0001045810-26-000021",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+                "ticker": "NVDA",
+                "end": 147845,
+                "start": 146424
+              },
+              "distance": 0.3679710030555725,
+              "context": {
+                "text": " distributed from Hong Kong.\nExport controls restricting our ability to sell data center GPUs may also negatively impact demand for our networking products used in servers containing our GPUs. The USG may also impose export controls on our networking products, such as high-speed network interconnects, to limit the ability of downstream parties to create large clusters for frontier model training.\nExport controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control. Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide. Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.\nAs a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia. Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20. At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls.\nThe increasingly complex export controls impose complex and burdensome compliance obligations on our partners, suppliers, and customers. While we seek to strictly comply with all applicable export control regulators, reports of diversion of controlled products, even when unsubstantiated and untrue, may negatively impact our business, relationships with partners and customers, and our reputation. ",
+                "start": 146024,
+                "end": 148245
+              }
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 3,
+        "tool": "search_filings",
+        "arguments": {
+          "ticker": "NVDA",
+          "top_k": 5,
+          "fiscal_year": 2026,
+          "query": "export restrictions risk",
+          "section": "Item 1A"
+        },
+        "result": {
+          "company": {
+            "ticker": "NVDA",
+            "name": "NVIDIA CORP",
+            "cik": "0001045810"
+          },
+          "query": "export restrictions risk",
+          "fiscal_year": 2026,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0001045810-26-000021:item_1a:71",
+              "text": "Increasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results. Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges. Additional unilateral or multilateral controls are also likely to include deemed export control limitations that negatively impact the ability of our research and development teams to execute our roadmap or other objectives in a timely manner. Additional export restrictions may not only impact our ability to serve overseas markets, but also provoke responses from foreign governments, including China, that negatively impact our supply chain or our ability to provide our products and services to customers in all markets worldwide, which could also substantially reduce our revenue. Regulators in China have inquired about our sales and efforts to supply the China market and our fulfillment of the commitments we entered at the close of our Mellanox acquisition. On September 15, 2025, China’s antitrust regulators published their preliminary finding that our compliance with applicable U.S. export controls, which required us to offer degraded products to the Chinese market, discriminated unfairly against customers in the China market and therefore violated the terms of China’s approval of our Mellanox acquisition. If regulators conclude that we have failed to",
+              "metadata": {
+                "fiscal_year": 2026,
+                "start": 134173,
+                "form": "10-K",
+                "section_title": "Risk Factors",
+                "report_date": "2026-01-25",
+                "section_start": 58590,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+                "accession_number": "0001045810-26-000021",
+                "cik": "0001045810",
+                "end": 135671,
+                "section_end": 173432,
+                "section": "Item 1A",
+                "ticker": "NVDA"
+              },
+              "distance": 0.38349300622940063,
+              "context": {
+                "text": "e possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls. Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business.\nIncreasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results. Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges. Additional unilateral or multilateral controls are also likely to include deemed export control limitations that negatively impact the ability of our research and development teams to execute our roadmap or other objectives in a timely manner. Additional export restrictions may not only impact our ability to serve overseas markets, but also provoke responses from foreign governments, including China, that negatively impact our supply chain or our ability to provide our products and services to customers in all markets worldwide, which could also substantially reduce our revenue. Regulators in China have inquired about our sales and efforts to supply the China market and our fulfillment of the commitments we entered at the close of our Mellanox acquisition. On September 15, 2025, China’s antitrust regulators published their preliminary finding that our compliance with applicable U.S. export controls, which required us to offer degraded products to the Chinese market, discriminated unfairly against customers in the China market and therefore violated the terms of China’s approval of our Mellanox acquisition. If regulators conclude that we have failed to fulfill the terms of our Mellanox acquisition or we have violated any applicable law in China, we could be subject to financial penalties, restrictions on our ability to conduct our business, restrictions or other orders regarding our networking business, products, and services, or otherwise impact our operations in China, any of which could have a material and adverse impact on our business, ope",
+                "start": 133773,
+                "end": 136071
+              }
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 4,
+        "tool": "search_filings",
+        "arguments": {
+          "ticker": "NVDA",
+          "top_k": 5,
+          "fiscal_year": 2026,
+          "query": "export restrictions risk",
+          "section": "Item 1A"
+        },
+        "result": {
+          "company": {
+            "ticker": "NVDA",
+            "name": "NVIDIA CORP",
+            "cik": "0001045810"
+          },
+          "query": "export restrictions risk",
+          "fiscal_year": 2026,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0001045810-26-000021:item_1a:67",
+              "text": "Government actions, including trade protection and national and economic security policies of U.S. and foreign government bodies, such as tariffs, import or export regulations, including deemed export restrictions and restrictions on the activities of U.S. persons, trade and economic sanctions, decrees, quotas or other trade barriers and restrictions could affect our ability to ship products, provide services to our customers and employees, do business without an export license with entities on the U.S. Department of Commerce’s U.S. Entity List or other USG restricted parties lists (which is expected to change from time to time), and generally fulfill our contractual obligations and have a material adverse effect on our business. If we were ever found to have violated export control laws or sanctions of the U.S. or similar applicable non-U.S. laws, even if the violation occurred without our knowledge, we may be subject to various penalties available under the laws, any of which could have a material and adverse impact on our business, operating results and financial condition.",
+              "metadata": {
+                "start": 129162,
+                "fiscal_year": 2026,
+                "form": "10-K",
+                "section_end": 173432,
+                "accession_number": "0001045810-26-000021",
+                "end": 130255,
+                "report_date": "2026-01-25",
+                "section": "Item 1A",
+                "section_start": 58590,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+                "section_title": "Risk Factors",
+                "ticker": "NVDA",
+                "cik": "0001045810"
+              },
+              "distance": 0.3847477436065674,
+              "context": {
+                "text": "ion of or increase to import duties or tariffs, restrictions and controls on imports or exports, or other retaliatory actions, which could have an adverse effect on our business plans or impact the timing of our shipments. Additionally, changes in the public perception of governments in the regions where we operate or plan to operate could negatively impact our business and results of operations.\nGovernment actions, including trade protection and national and economic security policies of U.S. and foreign government bodies, such as tariffs, import or export regulations, including deemed export restrictions and restrictions on the activities of U.S. persons, trade and economic sanctions, decrees, quotas or other trade barriers and restrictions could affect our ability to ship products, provide services to our customers and employees, do business without an export license with entities on the U.S. Department of Commerce’s U.S. Entity List or other USG restricted parties lists (which is expected to change from time to time), and generally fulfill our contractual obligations and have a material adverse effect on our business. If we were ever found to have violated export control laws or sanctions of the U.S. or similar applicable non-U.S. laws, even if the violation occurred without our knowledge, we may be subject to various penalties available under the laws, any of which could have a material and adverse impact on our business, operating results and financial condition.\nFor example, in response to the war in Ukraine, the United States and other jurisdictions imposed economic sanctions and export control measures which blocked the passage of our products, services and support into Russia, Belarus, and certain regions of Ukraine. In fiscal year 2023, we stopped direct sales to Russia and closed business operations in Russia. Concurrently, the war in Ukraine has im",
+                "start": 128762,
+                "end": 130655
+              }
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 5,
+        "tool": "search_filings",
+        "arguments": {
+          "ticker": "NVDA",
+          "top_k": 5,
+          "fiscal_year": 2026,
+          "query": "export restrictions risk",
+          "section": "Item 1A"
+        },
+        "result": {
+          "content_limit": {
+            "reason": "total_report_text_limit",
+            "original_text_characters": 3488,
+            "max_source_characters": 6000,
+            "max_total_characters": 12000,
+            "original_result_sha256": "3d25705c4bbfd7022a6dc8df990cd5f63578ceedc443c25db4edf77cf2101f75"
+          }
+        },
+        "content_omitted": true
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "filing",
+        "plan": [
+          {
+            "id": "task_1",
+            "agent": "filing_rag",
+            "instruction": "NVIDIA'nın FY2026 raporunun Item 1A bölümünden 'ihracat kısıtlaması riski' konusunu açıklayan metni bulun ve rapora kaynak göster. (Company: NVIDIA, Fiscal Year: 2026, Section: Item 1A)'}]}</think></think></think></think></think>{",
+            "fiscal_year": 2026
+          }
+        ],
+        "elapsed_seconds": 9.874772374998429
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "step": 1,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_rlke8drq",
+            "function": {
+              "index": 0,
+              "name": "search_filings",
+              "arguments": {
+                "ticker": "NVDA",
+                "top_k": 5,
+                "fiscal_year": 2026,
+                "query": "export restrictions risk",
+                "section": "Item 1A"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 13.565753165996284
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "step": 1,
+        "call_id": 1,
+        "name": "search_filings",
+        "arguments": {
+          "ticker": "NVDA",
+          "top_k": 5,
+          "fiscal_year": 2026,
+          "query": "export restrictions risk",
+          "section": "Item 1A"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "NVDA",
+            "name": "NVIDIA CORP",
+            "cik": "0001045810"
+          },
+          "query": "export restrictions risk",
+          "fiscal_year": 2026,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0001045810-26-000021:item_1a:59",
+              "text": "Risks Related to Regulatory, Legal, Our Stock and Other Matters\nWe are subject to complex laws, rules, regulations, and political and other actions, including restrictions on the export of our products, which may adversely impact our business.",
+              "metadata": {
+                "section_title": "Risk Factors",
+                "section_start": 58590,
+                "section_end": 173432,
+                "fiscal_year": 2026,
+                "section": "Item 1A",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+                "start": 124320,
+                "cik": "0001045810",
+                "form": "10-K",
+                "end": 124563,
+                "ticker": "NVDA",
+                "accession_number": "0001045810-26-000021",
+                "report_date": "2026-01-25"
+              },
+              "distance": 0.3575400710105896,
+              "context": {
+                "text": " business operations. In addition, the pace of growth in our operating expenses and investments may lag our revenue growth, creating volatility or periods where profitability levels may not be sustainable. Failure to meet our expectations or the expectations of our investors or security analysts is likely to cause our stock price to decline, as it has in the past, or substantial price volatility.\nRisks Related to Regulatory, Legal, Our Stock and Other Matters\nWe are subject to complex laws, rules, regulations, and political and other actions, including restrictions on the export of our products, which may adversely impact our business.\nWe are subject to laws and regulations domestically and worldwide, affecting our operations in areas including, but not limited to, IP ownership and infringement; taxes; import and export requirements and tariffs; anti-corruption, including the Foreign Corrupt Practices Act; business acquisitions; foreign exchange controls and cash repatriation restrictions; foreign ownership and investment; data",
+                "start": 123920,
+                "end": 124963
+              }
+            },
+            {
+              "chunk_id": "0001045810-26-000021:item_1a:82",
+              "text": "Export controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control. Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide. Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.\nAs a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia. Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20. At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls.",
+              "metadata": {
+                "section_start": 58590,
+                "section_title": "Risk Factors",
+                "report_date": "2026-01-25",
+                "cik": "0001045810",
+                "fiscal_year": 2026,
+                "section_end": 173432,
+                "form": "10-K",
+                "section": "Item 1A",
+                "accession_number": "0001045810-26-000021",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+                "ticker": "NVDA",
+                "end": 147845,
+                "start": 146424
+              },
+              "distance": 0.3679710030555725,
+              "context": {
+                "text": " distributed from Hong Kong.\nExport controls restricting our ability to sell data center GPUs may also negatively impact demand for our networking products used in servers containing our GPUs. The USG may also impose export controls on our networking products, such as high-speed network interconnects, to limit the ability of downstream parties to create large clusters for frontier model training.\nExport controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control. Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide. Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.\nAs a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia. Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20. At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls.\nThe increasingly complex export controls impose complex and burdensome compliance obligations on our partners, suppliers, and customers. While we seek to strictly comply with all applicable export control regulators, reports of diversion of controlled products, even when unsubstantiated and untrue, may negatively impact our business, relationships with partners and customers, and our reputation. ",
+                "start": 146024,
+                "end": 148245
+              }
+            },
+            {
+              "chunk_id": "0001045810-26-000021:item_1a:71",
+              "text": "Increasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results. Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges. Additional unilateral or multilateral controls are also likely to include deemed export control limitations that negatively impact the ability of our research and development teams to execute our roadmap or other objectives in a timely manner. Additional export restrictions may not only impact our ability to serve overseas markets, but also provoke responses from foreign governments, including China, that negatively impact our supply chain or our ability to provide our products and services to customers in all markets worldwide, which could also substantially reduce our revenue. Regulators in China have inquired about our sales and efforts to supply the China market and our fulfillment of the commitments we entered at the close of our Mellanox acquisition. On September 15, 2025, China’s antitrust regulators published their preliminary finding that our compliance with applicable U.S. export controls, which required us to offer degraded products to the Chinese market, discriminated unfairly against customers in the China market and therefore violated the terms of China’s approval of our Mellanox acquisition. If regulators conclude that we have failed to",
+              "metadata": {
+                "fiscal_year": 2026,
+                "start": 134173,
+                "form": "10-K",
+                "section_title": "Risk Factors",
+                "report_date": "2026-01-25",
+                "section_start": 58590,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+                "accession_number": "0001045810-26-000021",
+                "cik": "0001045810",
+                "end": 135671,
+                "section_end": 173432,
+                "section": "Item 1A",
+                "ticker": "NVDA"
+              },
+              "distance": 0.38349300622940063,
+              "context": {
+                "text": "e possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls. Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business.\nIncreasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results. Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges. Additional unilateral or multilateral controls are also likely to include deemed export control limitations that negatively impact the ability of our research and development teams to execute our roadmap or other objectives in a timely manner. Additional export restrictions may not only impact our ability to serve overseas markets, but also provoke responses from foreign governments, including China, that negatively impact our supply chain or our ability to provide our products and services to customers in all markets worldwide, which could also substantially reduce our revenue. Regulators in China have inquired about our sales and efforts to supply the China market and our fulfillment of the commitments we entered at the close of our Mellanox acquisition. On September 15, 2025, China’s antitrust regulators published their preliminary finding that our compliance with applicable U.S. export controls, which required us to offer degraded products to the Chinese market, discriminated unfairly against customers in the China market and therefore violated the terms of China’s approval of our Mellanox acquisition. If regulators conclude that we have failed to fulfill the terms of our Mellanox acquisition or we have violated any applicable law in China, we could be subject to financial penalties, restrictions on our ability to conduct our business, restrictions or other orders regarding our networking business, products, and services, or otherwise impact our operations in China, any of which could have a material and adverse impact on our business, ope",
+                "start": 133773,
+                "end": 136071
+              }
+            },
+            {
+              "chunk_id": "0001045810-26-000021:item_1a:67",
+              "text": "Government actions, including trade protection and national and economic security policies of U.S. and foreign government bodies, such as tariffs, import or export regulations, including deemed export restrictions and restrictions on the activities of U.S. persons, trade and economic sanctions, decrees, quotas or other trade barriers and restrictions could affect our ability to ship products, provide services to our customers and employees, do business without an export license with entities on the U.S. Department of Commerce’s U.S. Entity List or other USG restricted parties lists (which is expected to change from time to time), and generally fulfill our contractual obligations and have a material adverse effect on our business. If we were ever found to have violated export control laws or sanctions of the U.S. or similar applicable non-U.S. laws, even if the violation occurred without our knowledge, we may be subject to various penalties available under the laws, any of which could have a material and adverse impact on our business, operating results and financial condition.",
+              "metadata": {
+                "start": 129162,
+                "fiscal_year": 2026,
+                "form": "10-K",
+                "section_end": 173432,
+                "accession_number": "0001045810-26-000021",
+                "end": 130255,
+                "report_date": "2026-01-25",
+                "section": "Item 1A",
+                "section_start": 58590,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+                "section_title": "Risk Factors",
+                "ticker": "NVDA",
+                "cik": "0001045810"
+              },
+              "distance": 0.3847477436065674,
+              "context": {
+                "text": "ion of or increase to import duties or tariffs, restrictions and controls on imports or exports, or other retaliatory actions, which could have an adverse effect on our business plans or impact the timing of our shipments. Additionally, changes in the public perception of governments in the regions where we operate or plan to operate could negatively impact our business and results of operations.\nGovernment actions, including trade protection and national and economic security policies of U.S. and foreign government bodies, such as tariffs, import or export regulations, including deemed export restrictions and restrictions on the activities of U.S. persons, trade and economic sanctions, decrees, quotas or other trade barriers and restrictions could affect our ability to ship products, provide services to our customers and employees, do business without an export license with entities on the U.S. Department of Commerce’s U.S. Entity List or other USG restricted parties lists (which is expected to change from time to time), and generally fulfill our contractual obligations and have a material adverse effect on our business. If we were ever found to have violated export control laws or sanctions of the U.S. or similar applicable non-U.S. laws, even if the violation occurred without our knowledge, we may be subject to various penalties available under the laws, any of which could have a material and adverse impact on our business, operating results and financial condition.\nFor example, in response to the war in Ukraine, the United States and other jurisdictions imposed economic sanctions and export control measures which blocked the passage of our products, services and support into Russia, Belarus, and certain regions of Ukraine. In fiscal year 2023, we stopped direct sales to Russia and closed business operations in Russia. Concurrently, the war in Ukraine has im",
+                "start": 128762,
+                "end": 130655
+              }
+            },
+            {
+              "chunk_id": "0001045810-26-000021:item_1a:69",
+              "text": "Such restrictions could include additional unilateral or multilateral export controls on certain products or technology, including but not limited to AI technologies. As geopolitical tensions have increased, semiconductors associated with AI, including GPUs and related products, are increasingly the focus of export control restrictions proposed by stakeholders in the U.S. and its allies. The United States has imposed unilateral worldwide controls restricting GPUs and associated products, and it is likely that additional unilateral or multilateral controls will be adopted. Such controls have been and may again be very broad in scope and application, prohibit us from exporting our products to any or all customers in one or more markets, and could negatively impact our manufacturing, testing and warehousing locations and options, or could impose other conditions that limit our ability to serve demand abroad and could negatively and materially impact our business, revenue and financial results. Export controls and other restrictions targeting GPUs and semiconductors associated with AI, which have been imposed and are likely to be more restrictive, would further limit our ability to export our technology, products, or services, creating a competitive disadvantage for us and negatively impacting our business\n25\nTable of Contents",
+              "metadata": {
+                "fiscal_year": 2026,
+                "section_end": 173432,
+                "cik": "0001045810",
+                "section_start": 58590,
+                "form": "10-K",
+                "report_date": "2026-01-25",
+                "section_title": "Risk Factors",
+                "section": "Item 1A",
+                "ticker": "NVDA",
+                "end": 133008,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+                "start": 131664,
+                "accession_number": "0001045810-26-000021"
+              },
+              "distance": 0.38855814933776855,
+              "context": {
+                "text": "l or multilateral restrictions on products that can be used for training, modifying, tuning, and deploying LLMs and other AI applications. Such restrictions have limited and could in the future limit the ability of downstream customers and users worldwide to acquire, deploy and use systems that include our products, software, and services, and negatively impact our business and financial results.\nSuch restrictions could include additional unilateral or multilateral export controls on certain products or technology, including but not limited to AI technologies. As geopolitical tensions have increased, semiconductors associated with AI, including GPUs and related products, are increasingly the focus of export control restrictions proposed by stakeholders in the U.S. and its allies. The United States has imposed unilateral worldwide controls restricting GPUs and associated products, and it is likely that additional unilateral or multilateral controls will be adopted. Such controls have been and may again be very broad in scope and application, prohibit us from exporting our products to any or all customers in one or more markets, and could negatively impact our manufacturing, testing and warehousing locations and options, or could impose other conditions that limit our ability to serve demand abroad and could negatively and materially impact our business, revenue and financial results. Export controls and other restrictions targeting GPUs and semiconductors associated with AI, which have been imposed and are likely to be more restrictive, would further limit our ability to export our technology, products, or services, creating a competitive disadvantage for us and negatively impacting our business\n25\nTable of Contents\nand financial results. Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results. Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI clou",
+                "start": 131264,
+                "end": 133408
+              }
+            }
+          ]
+        },
+        "elapsed_seconds": 0.7088335000007646
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "step": 2,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 38.99475662500481
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "status": "completed",
+        "elapsed_seconds": 53.26942420800333
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"NVIDIA'nın FY2026 raporunun Item 1A bölümünde ihracat kısıtlamaları riski şu şekilde açıklanmaktadır: [Source 1] ve [Source 2] raporda, ABD ve diğer devletlerin ekonomik güvenlik politikaları kapsamında uyguladığı ihracat kısıtlamalarının, NVIDIA'nın ürün satışı ve hizmet sağlama kapasitesini olumsuz etkileyebileceğini belirtmektedir. Bu kısıtlamalar, özellikle Çin ve diğer bölgelerde talebi azaltabilir, aşırı stok ve mali yükler oluşturabilir. [Source 3] ekstra olarak, bu kısıtlamaların araştırmaları ve geliştirme ekiplerinin planlarını etkileyebileceğini ve Çin yönetiminin NVIDIA'nın ihracat politikalarını denetlediğini ifade etmektedir. [Source 4] ise, ihracat yasalarına uyum eksikliği durumunda cezaların ve iş faaliyetlerinin kısıtlanmasının olabileceğini vurgulamaktadır. Bu riskler, NVIDIA'nın küresel pazar stratejilerini ve finansal sonuçlarını doğrudan etkileyebilir.\",\"facts\":[\"1:matches/0/metadata\",\"2:matches/0/metadata\",\"3:matches/0/metadata\",\"4:matches/0/metadata\"]}",
+        "elapsed_seconds": 38.50262700000167
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"FY2026\", \"1A\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        },
+        "elapsed_seconds": 38.50480504200095
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"FY2026\", \"1A\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n\n\"kind\":\"answer\",\"text\":\"NVIDIA'nın ihracat kısıtlamaları riski şu şekilde açıklanmaktadır: \\n- ABD ve diğer devletlerin ekonomik güvenlik politikaları kapsamında uyguladığı ihracat kısıtlamaları, NVIDIA'nın ürün satışı ve hizmet sağlama kapasitesini olumsuz etkileyebilir. [Source 1]\\n- Bu kısıtlamalar, özellikle Çin ve diğer bölgelerde talebi azaltabilir, aşırı stok ve mali yükler oluşturabilir. [Source 2]\\n- Kısıtlamalar, araştırmaları ve geliştirme ekiplerinin planlarını etkileyebilir. [Source 3]\\n- İhracat yasalarına uyum eksikliği durumunda cezaların ve iş faaliyetlerinin kısıtlanmasının olabileceğini belirtmektedir. [Source 4]\",\"facts\":[\"1:matches/0/metadata\",\"2:matches/0/metadata\",\"3:matches/0/metadata\",\"4:matches/0/metadata\"]}",
+        "elapsed_seconds": 45.98160329199891
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 45.98415691700211
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "status": "completed",
+        "content": "{\"evidence_supported\":true,\"language_matches\":true,\"answer_complete\":true,\"issues\":[]}",
+        "elapsed_seconds": 40.48017112499656
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 40.48479624999891
+      }
+    ],
+    "elapsed_seconds": 188.7219206669979,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "base_url": "http://localhost:11434",
+      "timeout_seconds": 180,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      }
+    },
+    "dataset_sha256": "5ba55ba835af05239c1f9fbd2fb0e78925d61dd76bad7953c8e517b17b945ed1",
+    "recorded_at": "2026-10-24T18:09:06.200175+00:00",
+    "transport": "mcp"
+  }
+]

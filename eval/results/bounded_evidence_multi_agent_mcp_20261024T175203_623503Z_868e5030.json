@@ -1,0 +1,314 @@
+[
+  {
+    "id": "nvda_export_risk_tr",
+    "question": "Yalnızca NVIDIA'nın FY2026 raporunun Item 1A bölümünü kullanarak bir ihracat kısıtlaması riskini açıkla ve rapora kaynak göster.",
+    "expected": {
+      "ticker": "NVDA",
+      "section": "Item 1A",
+      "fiscal_year": 2026,
+      "accession_number": "0001045810-26-000021",
+      "required_claim": "Restrictions on exporting products may adversely affect the business.",
+      "requires_source": true
+    },
+    "answer_language": "tr",
+    "answer": "NVIDIA, ürün ihracatına dair kısıtlamaların işine olumsuz etki edebileceğini belirtmektedir. Bu risk, düzenleyici, yasal ve diğer faktörlerin kompleks yapısının bir parçasıdır. [Source 1]\n\nNVDA | FY2026 | 2026-01-25 | 10-K | 0001045810-26-000021 | Item 1A [Source 1]",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": {
+      "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+      "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+      "code_sha256": "616838876dfaf0601ae2de36d6945a95230a2183943787b7a507daefd001d938"
+    },
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": "NVIDIA, ürün ihracatına dair kısıtlamaların işine olumsuz etki edebileceğini belirtmektedir. Bu risk, düzenleyici, yasal ve diğer faktörlerin kompleks yapısının bir parçasıdır. [Source 1]\n\nNVDA | FY2026 | 2026-01-25 | 10-K | 0001045810-26-000021 | Item 1A [Source 1]",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "answer",
+      "text": "NVIDIA, ürün ihracatına dair kısıtlamaların işine olumsuz etki edebileceğini belirtmektedir. Bu risk, düzenleyici, yasal ve diğer faktörlerin kompleks yapısının bir parçasıdır. [Source 1]",
+      "facts": [
+        "1:matches/0/metadata"
+      ]
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "search_filings",
+        "arguments": {
+          "ticker": "NVDA",
+          "latest": true,
+          "query": "export restrictions risk",
+          "section": "Item 1A",
+          "top_k": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "NVDA",
+            "name": "NVIDIA CORP",
+            "cik": "0001045810"
+          },
+          "query": "export restrictions risk",
+          "fiscal_year": 2026,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0001045810-26-000021:item_1a:59",
+              "text": "Risks Related to Regulatory, Legal, Our Stock and Other Matters\nWe are subject to complex laws, rules, regulations, and political and other actions, including restrictions on the export of our products, which may adversely impact our business.",
+              "metadata": {
+                "section_title": "Risk Factors",
+                "ticker": "NVDA",
+                "report_date": "2026-01-25",
+                "accession_number": "0001045810-26-000021",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+                "section_start": 58590,
+                "section_end": 173432,
+                "fiscal_year": 2026,
+                "start": 124320,
+                "form": "10-K",
+                "section": "Item 1A",
+                "cik": "0001045810",
+                "end": 124563
+              },
+              "distance": 0.3575400710105896,
+              "context": {
+                "text": " business operations. In addition, the pace of growth in our operating expenses and investments may lag our revenue growth, creating volatility or periods where profitability levels may not be sustainable. Failure to meet our expectations or the expectations of our investors or security analysts is likely to cause our stock price to decline, as it has in the past, or substantial price volatility.\nRisks Related to Regulatory, Legal, Our Stock and Other Matters\nWe are subject to complex laws, rules, regulations, and political and other actions, including restrictions on the export of our products, which may adversely impact our business.\nWe are subject to laws and regulations domestically and worldwide, affecting our operations in areas including, but not limited to, IP ownership and infringement; taxes; import and export requirements and tariffs; anti-corruption, including the Foreign Corrupt Practices Act; business acquisitions; foreign exchange controls and cash repatriation restrictions; foreign ownership and investment; data",
+                "start": 123920,
+                "end": 124963
+              }
+            }
+          ],
+          "latest": true,
+          "selected_report": {
+            "fiscal_year": 2026,
+            "report_date": "2026-01-25",
+            "accession_number": "0001045810-26-000021"
+          }
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "filing",
+        "plan": [
+          {
+            "id": "task_1",
+            "agent": "filing_rag",
+            "instruction": "NVIDIA'nın FY2026 raporunun Item 1A bölümünden 'ihracat kısıtlaması riski' riskini açıklayan metni çıkar ve rapora kaynak göster. Sadece bu bölümün içeriğini kullanarak, riskin tanımlamasını, potansiyel etkilerini ve şirketin bu riskle nasıl başa çıktığını belirle. Kaynak gösterimlerde raporun sayfa numarası veya bölüm başlığı gibi detayları içermelidir."
+          }
+        ],
+        "elapsed_seconds": 17.912464959001227
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "step": 1,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_ttt17kpn",
+            "function": {
+              "index": 0,
+              "name": "search_filings",
+              "arguments": {
+                "ticker": "NVDA",
+                "latest": true,
+                "query": "export restrictions risk",
+                "section": "Item 1A",
+                "top_k": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 11.769067291999818
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "step": 1,
+        "call_id": 1,
+        "name": "search_filings",
+        "arguments": {
+          "ticker": "NVDA",
+          "latest": true,
+          "query": "export restrictions risk",
+          "section": "Item 1A",
+          "top_k": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "NVDA",
+            "name": "NVIDIA CORP",
+            "cik": "0001045810"
+          },
+          "query": "export restrictions risk",
+          "fiscal_year": 2026,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0001045810-26-000021:item_1a:59",
+              "text": "Risks Related to Regulatory, Legal, Our Stock and Other Matters\nWe are subject to complex laws, rules, regulations, and political and other actions, including restrictions on the export of our products, which may adversely impact our business.",
+              "metadata": {
+                "section_title": "Risk Factors",
+                "ticker": "NVDA",
+                "report_date": "2026-01-25",
+                "accession_number": "0001045810-26-000021",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+                "section_start": 58590,
+                "section_end": 173432,
+                "fiscal_year": 2026,
+                "start": 124320,
+                "form": "10-K",
+                "section": "Item 1A",
+                "cik": "0001045810",
+                "end": 124563
+              },
+              "distance": 0.3575400710105896,
+              "context": {
+                "text": " business operations. In addition, the pace of growth in our operating expenses and investments may lag our revenue growth, creating volatility or periods where profitability levels may not be sustainable. Failure to meet our expectations or the expectations of our investors or security analysts is likely to cause our stock price to decline, as it has in the past, or substantial price volatility.\nRisks Related to Regulatory, Legal, Our Stock and Other Matters\nWe are subject to complex laws, rules, regulations, and political and other actions, including restrictions on the export of our products, which may adversely impact our business.\nWe are subject to laws and regulations domestically and worldwide, affecting our operations in areas including, but not limited to, IP ownership and infringement; taxes; import and export requirements and tariffs; anti-corruption, including the Foreign Corrupt Practices Act; business acquisitions; foreign exchange controls and cash repatriation restrictions; foreign ownership and investment; data",
+                "start": 123920,
+                "end": 124963
+              }
+            }
+          ],
+          "latest": true,
+          "selected_report": {
+            "fiscal_year": 2026,
+            "report_date": "2026-01-25",
+            "accession_number": "0001045810-26-000021"
+          }
+        },
+        "elapsed_seconds": 4.586099917003594
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "step": 2,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 20.735851125005865
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "status": "completed",
+        "elapsed_seconds": 37.09106783400057
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"NVIDIA, FY2026 raporunun Item 1A bölümünde, ürün ihracatına dair kısıtlamaların işine olumsuz etki edebileceğini belirtmektedir. Bu risk, düzenleyici, yasal ve diğer faktörlerin kompleks yapısının bir parçasıdır.\",\"facts\":[\"1:matches/0/metadata\"]}",
+        "elapsed_seconds": 15.008844292002323
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"FY2026\", \"1A\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        },
+        "elapsed_seconds": 15.010063665999041
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "issues": [
+          "Keep numbers, dates, form labels, and percentages in selected facts, not prose. Forbidden prose spans (untrusted text): [\"FY2026\", \"1A\"]. Remove these spans from text, including form labels such as 10-K. Keep the corresponding fact IDs in facts; do not change source values or spell numbers out. For a purely numerical request fully answered by selected facts, text may be empty. For a narrative request, preserve the substantive explanation and valid [Source N] citations."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "status": "completed",
+        "content": "{\n\n\"kind\":\"answer\",\"text\":\"NVIDIA, ürün ihracatına dair kısıtlamaların işine olumsuz etki edebileceğini belirtmektedir. Bu risk, düzenleyici, yasal ve diğer faktörlerin kompleks yapısının bir parçasıdır. [Source 1]\",\"facts\":[\"1:matches/0/metadata\"]}",
+        "elapsed_seconds": 20.146507875004318
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 20.148141375000705
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "status": "completed",
+        "content": "{\"evidence_supported\":true,\"language_matches\":true,\"answer_complete\":true,\"issues\":[]}",
+        "elapsed_seconds": 13.669701457998599
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 13.670558582998638
+      }
+    ],
+    "elapsed_seconds": 104.4392288750023,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "base_url": "http://localhost:11434",
+      "timeout_seconds": 180,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      }
+    },
+    "dataset_sha256": "5ba55ba835af05239c1f9fbd2fb0e78925d61dd76bad7953c8e517b17b945ed1",
+    "recorded_at": "2026-10-24T17:53:48.062792+00:00",
+    "transport": "mcp"
+  }
+]

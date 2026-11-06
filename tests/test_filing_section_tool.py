@@ -136,6 +136,11 @@ class FilingSectionToolTests(unittest.TestCase):
             get_filing_section('TEST', 2025, 'Item 1A')
 
     def test_section_source_is_available_to_answer_verification(self):
+        self.text = 'A short complete risk section.'
+        self.document['text'] = 'Intro\n' + self.text + 'Next section'
+        self.sections[0].update(text=self.text, end=6 + len(self.text))
+        save_json(self.document, self.directory / 'text.json')
+        save_json(self.sections, self.directory / 'sections.json')
         result = get_filing_section('TEST', 2025, 'Item 1A')
         evidence = build_agent_evidence([{
             'type': 'tool', 'status': 'completed', 'name': 'get_filing_section',
@@ -146,6 +151,17 @@ class FilingSectionToolTests(unittest.TestCase):
         self.assertNotIn('text', catalog['1:metadata']['fields'])
         self.assertIn(self.url, format_source_references('Risk [Source 1]', evidence))
         self.assertEqual(evidence[0]['result']['text'], self.text)
+
+    def test_large_section_tool_stays_complete_but_answer_evidence_is_limited(self):
+        result = get_filing_section('TEST', 2025, 'Item 1A')
+        evidence = build_agent_evidence([{
+            'type': 'tool', 'status': 'completed', 'name': 'get_filing_section',
+            'arguments': {'ticker': 'TEST', 'year': 2025, 'section': 'Item 1A'}, 'result': result,
+        }])
+        self.assertEqual(result['text'], self.text)
+        self.assertTrue(evidence[0]['content_omitted'])
+        self.assertEqual(build_fact_catalog(evidence), {})
+        self.assertNotIn('text', evidence[0]['result'])
 
 
 if __name__ == '__main__':

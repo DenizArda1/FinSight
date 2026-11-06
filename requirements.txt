@@ -2,6 +2,8 @@ PyYAML
 beautifulsoup4
 langchain-text-splitters==1.1.3
 requests
+python-dotenv>=1,<2
 chromadb
 jsonschema>=4,<5
 mcp==2.3.0
+streamlit==1.66.1

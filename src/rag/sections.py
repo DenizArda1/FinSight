@@ -33,8 +33,25 @@ def find_headings(text):
     return sorted(headings, key=lambda heading: heading["start"])
 
 
-def extract_sections(text):
+def extract_sections(text, partial=False):
     headings = find_headings(text)
+    if partial:
+        # An amendment can end after a replacement section or continue into any
+        # other Item. Never concatenate content from different accessions.
+        boundaries = list(re.finditer(r"(?im)^[ \t]*item\s+(\d+[a-z]?)\b[^\n]*", text))
+        found = []
+        for heading in headings:
+            if heading["item"] not in SECTION_TITLES:
+                continue
+            end = next((match.start() for match in boundaries if match.start() > heading["end"]
+                        and match[1].upper() != heading["item"]), len(text))
+            body = text[heading["end"]:end].strip()
+            if body and not body.isdigit():
+                found.append({"section": f"Item {heading['item']}", "title": SECTION_TITLES[heading["item"]],
+                              "start": heading["start"], "end": end, "text": text[heading["start"]:end]})
+        if len({entry["section"] for entry in found}) != len(found):
+            raise ValueError("Ambiguous replacement sections in amendment")
+        return found
     candidates = {item: [] for item in SECTION_TITLES}
     for heading, following in zip(headings, headings[1:]):
         item = heading["item"]

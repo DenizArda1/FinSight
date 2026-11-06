@@ -4,12 +4,42 @@ from copy import deepcopy
 from unittest.mock import AsyncMock, call, patch
 
 from src.agents.specialist import execute_specialist_tool, run_specialist
+from src.llm.client import IncompleteResponseError
 from src.mcp.client import MCPToolError
 from src.tools.agentic_tools import AGENT_TOOL_NAMES, TOOL_SCHEMAS
 from src.verification.agent_answer import build_agent_evidence
 
 
 class SpecialistToolTests(unittest.IsolatedAsyncioTestCase):
+    async def test_requested_filing_year_rejects_latest_missing_wrong_or_coerced_years(self):
+        cases = [
+            ("search_filings", {}),
+            ("search_filings", {"latest": True}),
+            ("search_filings", {"fiscal_year": 2027}),
+            ("search_filings", {"fiscal_year": "2026"}),
+            ("search_filings", {"fiscal_year": 2026.0}),
+            ("search_filings", {"fiscal_year": 2026, "latest": True}),
+            ("search_filings", {"fiscal_year": 2026, "latest": 0}),
+            ("get_filing_section", {}),
+            ("get_filing_section", {"year": 2027}),
+            ("get_filing_section", {"year": "2026"}),
+            ("get_filing_section", {"year": True}),
+        ]
+        for tool, arguments in cases:
+            with self.subTest(tool=tool, arguments=arguments), self.assertRaisesRegex(ValueError, "2026"):
+                await execute_specialist_tool("filing_rag", tool, arguments, self.client, set(), requested_fiscal_year=2026)
+        self.call_tool.assert_not_awaited()
+
+    async def test_requested_year_is_forwarded_without_rewriting_arguments(self):
+        self.call_tool.return_value = {"matches": []}
+        for tool, args in (("search_filings", {"ticker": "NVDA", "query": "Risk", "fiscal_year": 2026}),
+                           ("get_filing_section", {"ticker": "NVDA", "year": 2026, "section": "Item 1A"})):
+            original = deepcopy(args)
+            result = await execute_specialist_tool("filing_rag", tool, args, self.client, set(), requested_fiscal_year=2026)
+            self.call_tool.assert_awaited_with(self.client, tool, original)
+            self.assertEqual(args, original)
+            self.assertEqual(result, {"matches": []})
+
     def setUp(self):
         patcher = patch("src.agents.specialist.call_mcp_tool", new_callable=AsyncMock)
         self.call_tool = patcher.start()
@@ -140,6 +170,38 @@ def model_tool_message(name, arguments):
 
 
 class SpecialistLoopTests(unittest.IsolatedAsyncioTestCase):
+    async def test_oversized_section_gets_scoped_search_without_losing_raw_source(self):
+        task = {"id": "risk", "agent": "filing_rag", "instruction": "Explain export risks.", "fiscal_year": 2026}
+        arguments = {"ticker": "NVDA", "year": 2026, "section": "Item 1A"}
+        section = {"text": "Long source paragraph. " * 400, "metadata": {"section": "Item 1A", "fiscal_year": 2026}}
+        matches = {"matches": [{"text": "Export restrictions may delay shipments.", "metadata": {"section": "Item 1A"}}]}
+        self.chat.side_effect = [model_tool_message("get_filing_section", arguments), self.done]
+        self.call_tool.side_effect = [section, matches]
+        result = await run_specialist(task, {}, self.client, TOOL_SCHEMAS)
+        self.assertEqual(result["tool_call_count"], 2)
+        self.call_tool.assert_awaited_with(self.client, "search_filings", {
+            "ticker": "NVDA", "fiscal_year": 2026, "section": "Item 1A",
+            "query": task["instruction"], "top_k": 3,
+        })
+        events = [event for event in result["trace"] if event["type"] == "tool"]
+        self.assertEqual(events[0]["result"], section)
+        self.assertEqual(events[1]["origin"], "section_context_fallback")
+        messages = self.chat.call_args_list[1].args[0]
+        section_reply = next(message for message in messages if message.get("tool_name") == "get_filing_section")
+        self.assertNotIn(section["text"], section_reply["content"])
+        self.assertIn("content_limit", section_reply["content"])
+        evidence = build_agent_evidence(result["trace"])
+        self.assertTrue(evidence[0]["content_omitted"])
+        self.assertEqual(evidence[1]["result"], matches)
+
+    async def test_section_search_fallback_obeys_tool_call_budget(self):
+        task = {"id": "risk", "agent": "filing_rag", "instruction": "Explain risks.", "fiscal_year": 2026}
+        self.chat.return_value = model_tool_message("get_filing_section", {"ticker": "NVDA", "year": 2026, "section": "Item 1A"})
+        self.call_tool.return_value = {"text": "Long section. " * 600, "metadata": {}}
+        with self.assertRaisesRegex(RuntimeError, "maximum number of tool calls"):
+            await run_specialist(task, {}, self.client, TOOL_SCHEMAS, max_tool_calls=1)
+        self.call_tool.assert_awaited_once()
+
     def setUp(self):
         chat_patcher = patch("src.agents.specialist.send_chat_request")
         self.chat = chat_patcher.start()
@@ -247,8 +309,35 @@ class SpecialistLoopTests(unittest.IsolatedAsyncioTestCase):
         with self.assertRaisesRegex(RuntimeError, "maximum number of steps"):
             await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS, max_steps=2, trace=trace)
         self.assertEqual(self.chat.call_count, 2)
-        self.assertEqual(self.call_tool.await_count, 2)
+        self.assertEqual(self.call_tool.await_count, 1)
         self.assertEqual(trace[-1]["status"], "error")
+
+    async def test_repeated_successful_retrieval_returns_original_evidence_without_another_call(self):
+        self.chat.side_effect = [self.resolve, self.facts, self.facts]
+        self.call_tool.side_effect = [self.company, {"records": []}]
+        result = await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS)
+        self.assertEqual(self.call_tool.await_count, 2)
+        self.assertEqual(result["tool_call_count"], 2)
+        self.assertEqual(result["trace"][-1]["stop_reason"], "repeated_requests")
+        evidence = build_agent_evidence(result["trace"])
+        self.assertEqual(len(evidence), 2)
+        self.assertEqual(evidence[-1]["result"], {"records": []})
+
+    async def test_truncated_summary_preserves_collected_evidence_for_writer_review(self):
+        self.chat.side_effect = [self.resolve, self.facts, IncompleteResponseError("Output limit")]
+        self.call_tool.side_effect = [self.company, {"records": []}]
+        config = {"options": {"num_predict": 4096}}
+        result = await run_specialist(self.task, config, self.client, TOOL_SCHEMAS)
+        self.assertEqual(result["trace"][-1]["stop_reason"], "model_output_limit")
+        self.assertEqual(len(build_agent_evidence(result["trace"])), 2)
+        self.assertEqual(config["options"]["num_predict"], 4096)
+        self.assertEqual(self.chat.call_args.args[1]["options"]["num_predict"], 1024)
+
+    async def test_truncation_without_retrieved_data_still_fails(self):
+        self.chat.side_effect = [self.resolve, IncompleteResponseError("Output limit")]
+        self.call_tool.return_value = self.company
+        with self.assertRaises(IncompleteResponseError):
+            await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS)
 
     async def test_connection_and_model_failures_preserve_trace_and_original_exception(self):
         error = RuntimeError("Disconnected")

@@ -1,0 +1,27 @@
+{
+  "question": "Yalnızca NVIDIA'nın FY2026 raporunun Item 1A bölümünü kullanarak bir ihracat kısıtlaması riskini açıkla ve rapora kaynak göster.",
+  "mode": "planner_only",
+  "llm_config": {
+    "model": "qwen3:8b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "plan": {
+    "request_type": "filing",
+    "tasks": [
+      {
+        "id": "task_1",
+        "agent": "filing_rag",
+        "instruction": "NVIDIA'nın FY2026 raporunun Item 1A bölümünden 'ihracat kısıtlaması riski' konusunu açıklayan metni bulun ve rapora kaynak göster. (Company: NVIDIA, Fiscal Year: 2026, Section: Item 1A)'}]}</think></think></think></think></think>{",
+        "fiscal_year": 2026
+      }
+    ]
+  },
+  "requested_year_preserved": true,
+  "elapsed_seconds": 10.641406667004048
+}

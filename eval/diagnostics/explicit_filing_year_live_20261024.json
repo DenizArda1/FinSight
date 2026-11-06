@@ -1,0 +1,110 @@
+{
+  "date": "2026-10-24",
+  "reviewer": "Codex, independent claim-to-source review against saved evidence and local files",
+  "result_file": "eval/results/explicit_year_multi_agent_mcp_20261024T180557_478219Z_2dadfb40.json",
+  "result_file_sha256": "e52bd57e58ba2a1c2a2fa396b69a7244ca288afb9be9da191b44ec3a0515b0f6",
+  "comparison_file": "eval/results/bounded_evidence_multi_agent_mcp_20261024T175203_623503Z_868e5030.json",
+  "case_id": "nvda_export_risk_tr",
+  "llm_config": {
+    "model": "qwen3:8b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "data_snapshot": {
+    "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+    "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+    "code_sha256": "ec6b288911307a2e009c1b1cb2bc47d059701767c928ecc4890728b8b543ea7f"
+  },
+  "same_source_snapshot": true,
+  "same_index_snapshot": true,
+  "same_llm_config": true,
+  "elapsed_seconds": 188.7219206669979,
+  "writer_attempts": 2,
+  "critic_calls": 1,
+  "application_status": "completed",
+  "application_verification": {
+    "supported": true,
+    "issues": [],
+    "evidence_supported": true,
+    "language_matches": true,
+    "answer_complete": true,
+    "status": "passed",
+    "stage": "grounding_and_language",
+    "deterministic_fields": "passed",
+    "method": "source_fields_and_llm_judge"
+  },
+  "independent_classification": "period_and_budget_checks_passed_citation_grounding_requires_revision",
+  "plan": [
+    {
+      "id": "task_1",
+      "agent": "filing_rag",
+      "instruction": "NVIDIA'nın FY2026 raporunun Item 1A bölümünden 'ihracat kısıtlaması riski' konusunu açıklayan metni bulun ve rapora kaynak göster. (Company: NVIDIA, Fiscal Year: 2026, Section: Item 1A)'}]}</think></think></think></think></think>{",
+      "fiscal_year": 2026
+    }
+  ],
+  "tool_calls": [
+    {
+      "name": "search_filings",
+      "arguments": {
+        "ticker": "NVDA",
+        "top_k": 5,
+        "fiscal_year": 2026,
+        "query": "export restrictions risk",
+        "section": "Item 1A"
+      },
+      "status": "completed"
+    }
+  ],
+  "period_scope_preserved": true,
+  "included_report_text_characters": 11710,
+  "initial_writer_prompt_characters": 22871,
+  "omitted_source_ids": [
+    5
+  ],
+  "omitted_sources_cited": false,
+  "source_checks": [
+    {
+      "source_id": 1,
+      "chunk_id": "0001045810-26-000021:item_1a:59",
+      "local_source_check": "passed"
+    },
+    {
+      "source_id": 2,
+      "chunk_id": "0001045810-26-000021:item_1a:82",
+      "local_source_check": "passed"
+    },
+    {
+      "source_id": 3,
+      "chunk_id": "0001045810-26-000021:item_1a:71",
+      "local_source_check": "passed"
+    },
+    {
+      "source_id": 4,
+      "chunk_id": "0001045810-26-000021:item_1a:67",
+      "local_source_check": "passed"
+    }
+  ],
+  "findings": [
+    "The Planner produced fiscal_year=2026; the actual MCP search used fiscal_year=2026 without latest. Every returned match belongs to the intended FY2026 filing.",
+    "Five chunks were retrieved. Source 5 was omitted from Writer/Critic evidence by the total report-text budget; IDs remained stable and the omitted source was not cited.",
+    "The answer is Turkish. Its first draft repeated fiscal/section labels in prose; one deterministic repair removed them.",
+    "The first narrative bullet cites Source 1 for US/foreign economic-security policies affecting product sales and service delivery. Source 1 contains only the broad regulatory-risk statement; these detailed mechanisms are explicitly in Source 4. This is a claim-to-source attribution problem even though the information exists elsewhere in the evidence set.",
+    "The second bullet about reduced demand, excess inventory and financial burdens is supported by Source 2. The third about R&D execution is supported by Source 3.",
+    "The fourth bullet cites Source 4 for penalties and business restrictions after noncompliance. Penalties are explicit there, but specific restrictions on business operations are not; Source 3 discusses such restrictions in a different China/Mellanox regulatory context. Keep the conditions and source attribution distinct.",
+    "Critic approved all flags and did not identify these grounding weaknesses. This run is not a clean independent answer-quality pass.",
+    "The Planner instruction still contains stray closing/thinking-tag-like text and Turkish wording. The structured year and tool invocation were correct despite that separate quality issue."
+  ],
+  "production_code_changed_this_session": false,
+  "limitations": [
+    "One development run, not a general reliability benchmark.",
+    "The local index currently has FY2026 as latest for this company. The newer-versus-requested-year distinction is covered by the earlier FY2027/FY2026 integration fixture.",
+    "Search top_k increased from one in the previous run to five here, so duration is not a controlled performance comparison.",
+    "Only local sources were inspected; no external SEC audit."
+  ],
+  "next_step": "Add focused claim-to-source evaluation cases with correct and deliberately mismatched source IDs, and use them to improve semantic verification without treating valid citation numbers as proof of support."
+}

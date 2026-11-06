@@ -6,6 +6,7 @@ from time import perf_counter
 from jsonschema import Draft202012Validator, ValidationError
 
 from src.agents.agent_states import AgentState
+from src.agents.revisions import numbered_paragraphs, targeted_review_schema
 from src.llm.prompts import build_agent_verification_messages
 from src.verification.agent_answer import (
     build_agent_evidence,
@@ -19,7 +20,7 @@ from src.verification.agent_answer import (
 )
 
 
-async def run_critic(state: AgentState, llm_config) -> AgentState:
+async def run_critic(state: AgentState, llm_config, *, locate_repairs=False) -> AgentState:
 
     state["answer"] = None
     state["verification"] = None
@@ -43,8 +44,8 @@ async def run_critic(state: AgentState, llm_config) -> AgentState:
             if evidence != state["evidence"]:
                 raise ValueError("Writer evidence does not match successful tool results")
             catalog = build_fact_catalog(evidence)
-            Draft202012Validator(composition_schema(catalog)).validate(composition)
-            template = compose_template(composition, catalog)
+            Draft202012Validator(composition_schema(catalog, state["request_type"], evidence=evidence)).validate(composition)
+            template = compose_template(composition, catalog, request_type=state["request_type"])
             expected_draft = render_agent_template(template, evidence)
             if draft != expected_draft:
                 raise ValueError("Draft does not match the source-rendered composition")
@@ -62,12 +63,32 @@ async def run_critic(state: AgentState, llm_config) -> AgentState:
         messages = build_agent_verification_messages(
             state["question"], draft, evidence, composition["kind"], composition["text"],
         )
+        schema = VERIFICATION_SCHEMA
+        if locate_repairs:
+            # Render each paragraph with the same source-field rules as the full note.
+            paragraphs = numbered_paragraphs(composition["text"])
+            for paragraph in paragraphs:
+                part = {**composition, "text": paragraph["text"], "facts": []}
+                paragraph["text"] = render_agent_template(compose_template(part, catalog), evidence)
+            messages = build_agent_verification_messages(
+                state["question"], draft, evidence, composition["kind"], composition["text"], paragraphs,
+            )
+            schema = targeted_review_schema(VERIFICATION_SCHEMA, paragraphs, evidence)
         text = await asyncio.to_thread(
-            request_answer_check, messages, llm_config, state["trace"], "critic", VERIFICATION_SCHEMA,
+            request_answer_check, messages, llm_config, state["trace"], "critic", schema,
         )
 
-        Draft202012Validator(VERIFICATION_SCHEMA).validate(json.loads(text))
+        raw_verdict = json.loads(text)
+        Draft202012Validator(schema).validate(raw_verdict)
         verdict = parse_agent_verdict(text)
+        if locate_repairs:
+            targets = raw_verdict["repair_targets"]
+            ids = [target["paragraph_id"] for target in targets]
+            if len(ids) != len(set(ids)):
+                raise ValueError("Critic returned duplicate paragraph targets")
+            if verdict["supported"] and targets:
+                raise ValueError("An approved answer cannot contain repair targets")
+            verdict["repair_targets"] = targets
         state["verification"] = {
             **verdict, "status": "passed" if verdict["supported"] else "failed",
             "stage": stage, "deterministic_fields": deterministic_fields,

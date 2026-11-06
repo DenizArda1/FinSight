@@ -60,12 +60,20 @@ def get_company_facts(cik: str, concept: str, years: int = 5, unit: str = "USD")
         if record["end"] in seen_ends:
             raise ValueError("Multiple prepared records found for the same period end")
         seen_ends.add(record["end"])
+        record["amendment_note"] = (
+            "Latest filed annual value selected from 10-K/A; this can amend an earlier reported value."
+            if record.get("is_amendment") or record.get("form") == "10-K/A"
+            else "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority."
+        )
         if record.get("accn") in filing_urls:
             record["source_url"] = filing_urls[record["accn"]]
 
     return {
         "company": company,
         "concept": concept,
+        "definition": {key: config["metrics"][concept][key]
+                       for key in ("description", "taxonomy", "unit", "tags")
+                       if key in config["metrics"][concept]},
         "unit": unit,
         "requested_years": years,
         "requested_period_ends": period_ends,
@@ -234,3 +242,73 @@ def index_records_by_end_year(records):
             raise ValueError("Year is already in dictionary")
         records_by_year[year] = record
     return records_by_year
+
+
+def compare_companies(tickers: list[str], metrics: list[str], years: int = 3) -> dict:
+    """Compare source-backed rows on common period-end years, retaining fiscal dates."""
+    if not isinstance(tickers, list) or not 2 <= len(tickers) <= 5:
+        raise ValueError("Compare between two and five companies")
+    companies = [resolve_company(ticker) for ticker in tickers]
+    if len({company["cik"] for company in companies}) != len(companies):
+        raise ValueError("Companies must be unique")
+    validate_financial_request(companies[0]["cik"], years)
+    config = load_yaml(PROJECT_ROOT / "configs" / "metrics.yaml")
+    allowed = set(config["metrics"]) | set(config["calculations"])
+    if (not isinstance(metrics, list) or not metrics
+            or any(not isinstance(metric, str) or metric not in allowed for metric in metrics)
+            or len(set(metrics)) != len(metrics)):
+        raise ValueError("Metrics must be unique names from the metric contract")
+    records, comparisons, warnings = [], [], []
+    for metric in metrics:
+        definition = config["calculations"].get(metric)
+        inputs = definition["inputs"] if definition else [metric]
+        company_facts = []
+        calendar_sets = []
+        for company in companies:
+            facts = {name: get_company_facts(company["cik"], name, 5, config["metrics"][name]["unit"])
+                     for name in inputs}
+            first = next(iter(facts.values()))
+            ends = first.get("requested_period_ends", [row["end"] for row in first["records"]] + first.get("missing_period_ends", []))
+            calendar_sets.append({int(end[:4]) for end in ends})
+            company_facts.append(facts)
+        source_years = sorted(set.intersection(*calendar_sets), reverse=True)[:years]
+        if len(source_years) < years:
+            warnings.append(f"{metric}: only {len(source_years)} common source periods available; requested {years}")
+        series = []
+        for company, facts in zip(companies, company_facts, strict=True):
+            selected = {name: [row for row in fact["records"] if int(row["end"][:4]) in source_years]
+                        for name, fact in facts.items()}
+            missing = False
+            for name, rows in selected.items():
+                gaps = set(source_years) - {int(row["end"][:4]) for row in rows}
+                if gaps:
+                    missing = True
+                    warnings.append(f"{company['ticker']} {name}: missing common period-end years {sorted(gaps)}")
+            if definition:
+                if definition["period_mode"] != "same_period" and (missing or len(source_years) < 2):
+                    rows = []
+                else:
+                    rows = calculate_metric_rows(metric, definition, selected)
+            else:
+                rows = selected[metric]
+            series.append(index_records_by_end_year(rows))
+        common = sorted(set.intersection(*(set(index) for index in series)), reverse=True)
+        metric_records = []
+        for year in common:
+            aligned = [index[year] for index in series]
+            if len({row["unit"] for row in aligned}) != 1:
+                raise ValueError(f"Incompatible units for {metric}")
+            for company, row in zip(companies, aligned, strict=True):
+                metric_records.append({**row, "ticker": company["ticker"], "cik": company["cik"]})
+        if not metric_records:
+            warnings.append(f"{metric}: no comparable records across all requested companies")
+        records.extend(metric_records)
+        comparisons.append({"metric": metric, "common_source_end_years": source_years,
+                            "common_end_years": sorted({int(row['end'][:4]) for row in metric_records}, reverse=True)})
+    return {
+        "companies": companies, "requested_years": years, "records": records,
+        "comparisons": comparisons, "warnings": warnings,
+        "comparison_basis": "period_end_calendar_year",
+        "notes": ["Fiscal calendars differ. Compare each row's fiscal year, start and end dates. "
+                  "Years counts source periods; growth has one fewer interval. Missing values are never zero-filled."],
+    }

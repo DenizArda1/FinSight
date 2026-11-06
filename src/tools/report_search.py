@@ -1,5 +1,6 @@
 from pathlib import Path
 import re
+import os
 
 from src.tools.company import resolve_company
 from src.utils.utils import load_json, load_yaml
@@ -19,7 +20,7 @@ def get_filing_section(ticker: str, year: int, section: str) -> dict:
         raise ValueError("Section must be Item 1, Item 1A, or Item 7")
 
     company = resolve_company(ticker)
-    processed = PROJECT_ROOT / "financial_data" / "processed"
+    processed = Path(os.environ.get("FINSIGHT_PROCESSED_PATH", PROJECT_ROOT / "financial_data" / "processed"))
     summary = load_json(processed / "filing_preparation_summary.json")
     reports = [report for report in summary["reports"]
                if report.get("cik") == company["cik"]
@@ -27,9 +28,21 @@ def get_filing_section(ticker: str, year: int, section: str) -> dict:
                and report.get("status") == "prepared"]
     if not reports:
         raise ValueError(f"No prepared filing for {company['ticker']} FY{year}")
-    if len(reports) != 1:
-        raise ValueError(f"Multiple prepared filings for {company['ticker']} FY{year}; selection is ambiguous")
-    report = reports[0]
+    periods = {report["report_date"] for report in reports}
+    if len(periods) != 1:
+        raise ValueError(f"Multiple reporting periods for {company['ticker']} FY{year}")
+    candidates = []
+    if len({report["accession_number"] for report in reports}) != len(reports):
+        raise ValueError("Duplicate prepared filings; selection is ambiguous")
+    for report in reports:
+        if not isinstance(report.get("accession_number"), str) or not re.fullmatch(r"[0-9]{10}-[0-9]{2}-[0-9]{6}", report["accession_number"]):
+            raise ValueError("Invalid prepared filing accession number")
+        entries = load_json(processed / company["cik"] / "filings" / report["accession_number"] / "sections.json")
+        if any(entry.get("section") == section for entry in entries):
+            candidates.append(report)
+    if not candidates:
+        raise ValueError(f"No prepared {section} section for {company['ticker']} FY{year}")
+    report = max(candidates, key=lambda item: (item.get("filed", ""), item["accession_number"]))
     accession = report["accession_number"]
     if not isinstance(accession, str) or not re.fullmatch(r"[0-9]{10}-[0-9]{2}-[0-9]{6}", accession):
         raise ValueError("Invalid prepared filing accession number")
@@ -42,7 +55,7 @@ def get_filing_section(ticker: str, year: int, section: str) -> dict:
             or filing["fiscal_year"] != year
             or filing["reportDate"] != report["report_date"]
             or filing["url"] != report["source_url"]
-            or filing["form"] != "10-K"):
+            or filing["form"] not in {"10-K", "10-K/A"}):
         raise ValueError("Prepared filing metadata does not match the requested report")
     sections = load_json(directory / "sections.json")
     selected = [entry for entry in sections if entry.get("section") == section]
@@ -66,6 +79,9 @@ def get_filing_section(ticker: str, year: int, section: str) -> dict:
             "accession_number": accession, "report_date": filing["reportDate"],
             "source_url": filing["url"], "section": section,
             "section_title": entry["title"], "start": start, "end": end,
+            "filed": filing.get("filingDate", ""),
+            "amendment_note": ("Replacement section from 10-K/A." if filing["form"] == "10-K/A"
+                               else "Original section; later amendments without this section do not replace it."),
         },
     }
 
@@ -78,7 +94,7 @@ def search_company_reports(ticker: str, query: str, fiscal_year: int | None = No
 
     company = resolve_company(ticker)
     settings_path = PROJECT_ROOT / "configs" / "settings.yaml"
-    settings = load_yaml(settings_path)
+    settings = load_yaml(os.environ.get("FINSIGHT_SETTINGS_PATH", settings_path))
 
     collection = get_vector_collection(settings["vector_store"])
     selected_report = None
@@ -93,9 +109,11 @@ def search_company_reports(ticker: str, query: str, fiscal_year: int | None = No
         ticker=company["ticker"],
         fiscal_year=fiscal_year,
         section=section,
-        accession_number=selected_report["accession_number"] if selected_report else None,
+        accession_number=None,
+        report_date=selected_report["report_date"] if selected_report else None,
+        hybrid=True,
     )
-    matches = expand_search_matches(matches, PROJECT_ROOT / "financial_data" / "processed")
+    matches = expand_search_matches(matches, Path(os.environ.get("FINSIGHT_PROCESSED_PATH", PROJECT_ROOT / "financial_data" / "processed")))
 
     result = {
         "company": company,

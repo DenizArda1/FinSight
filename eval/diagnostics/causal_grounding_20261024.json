@@ -1,0 +1,90 @@
+{
+  "date": "2026-10-24",
+  "reviewer": "Codex, independent inspection of saved trace and local source files",
+  "result_file": "eval/results/multi_agent_mcp_20261024T103957_562801Z_0fc74c57.json",
+  "result_file_sha256": "0e0c0ce4e1e845b0e6ed9f64c2776aad756eb61ae3feac68d1d427d653d1849c",
+  "comparison_file": "eval/results/multi_agent_mcp_20261024T103450_988965Z_cb2fdcf2.json",
+  "comparison_file_sha256": "287166765c43dba07ddde9189b76a1ef00bd371a92cea0a5860c123349245d59",
+  "case_id": "aapl_latest_revenue_and_risks_tr",
+  "model": "qwen3:8b",
+  "llm_config": {
+    "model": "qwen3:8b",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "data_snapshot": {
+    "source_sha256": "ff2f9c6f1b4249c19c05da9bd96ce197e12d2c29f031164efc19fefbaad58282",
+    "index_sha256": "924bc401cf4b30f5b74db674b764b6c7c8d552a869f451c8b83c02547d853d41",
+    "code_sha256": "9fd43b133a6f51aa288881ed172ee64a1f2c787be028a0f2f9e0fc8ac70bbcef"
+  },
+  "same_source_snapshot": true,
+  "same_index_snapshot": true,
+  "same_llm_config": true,
+  "same_tool_evidence": true,
+  "changes": [
+    "Writer: preserve material conditions, causal direction, negation and uncertainty, including during repair.",
+    "Critic: identify changed triggers or consequences and report the answer wording, source ID and changed condition; accept faithful paraphrases.",
+    "No case-specific answer, glossary, model-setting change or reindexing was added.",
+    "An existing user edit to a runtime comment was preserved; it changes no execution behavior."
+  ],
+  "elapsed_seconds": 214.19731191600295,
+  "previous_elapsed_seconds": 159.8864612920006,
+  "writer_attempts": 3,
+  "critic_calls": 2,
+  "application_status": "completed",
+  "application_verification": {
+    "supported": true,
+    "issues": [],
+    "evidence_supported": true,
+    "language_matches": true,
+    "answer_complete": true,
+    "status": "passed",
+    "stage": "grounding_and_language",
+    "deterministic_fields": "passed",
+    "method": "source_fields_and_llm_judge"
+  },
+  "critic_responses": [
+    "{\"evidence_supported\":false,\"language_matches\":true,\"answer_complete\":true,\"issues\":[\"Answer cites [Source 3] for a risk about \\\"yerel veri kullanımına ilişkin telif hakkı sorunları\\\" (local data usage copyright issues), but the actual text from Source 3 ([Source 3] match) discusses third-party intellectual property rights, not local data usage. The causal relationship and trigger in the answer's first risk claim do not match the source's content about third-party IP licensing risks. The answer incorrectly attributes the risk to local data issues instead of third-party IP rights. The second risk about new business strategies is correctly cited to [Source 4].\"]}",
+    "{\n\n  \"evidence_supported\": true,\n  \"language_matches\": true,\n  \"answer_complete\": true,\n  \"issues\": []\n}"
+  ],
+  "independent_classification": "causal_repair_observed_terminology_issue_remains",
+  "source_checks": [
+    {
+      "source_id": 3,
+      "chunk_id": "0000320193-25-000079:item_1a:25",
+      "local_text_and_section_bounds_verified": true
+    },
+    {
+      "source_id": 4,
+      "chunk_id": "0000320193-25-000079:item_1a:36",
+      "local_text_and_section_bounds_verified": true
+    }
+  ],
+  "findings": [
+    "Revenue remains correct: 416161000000 USD, FY2025, period end 2025-09-27.",
+    "The first Writer response repeated numbers in prose and introduced an unsupported risk about local data usage copyright issues. Deterministic validation rejected the numbers.",
+    "The first revision removed the numbers but retained the unsupported local-data risk. Critic rejected that claim and correctly identified the third-party IP source mismatch.",
+    "The second revision restored the condition that licenses cannot be obtained. It describes product/service modification and licensing-cost exposure as risks; the second Critic accepted it.",
+    "The final summary does not include every source consequence or alternative condition; the user asked for a concise summary, not exhaustive coverage.",
+    "Acquisitions is still rendered as alım-satım yatırımları, which can imply trading or sales rather than company acquisitions. This semantic translation issue remains despite Critic approval. Prefer şirket satın almaları.",
+    "Intellektüel mülkiyet is awkward terminology; fikri mülkiyet is preferable.",
+    "The unrelated revenue citation remains absent from the risk prose."
+  ],
+  "validation": {
+    "existing_focused_tests_passed": 102,
+    "prompt_diff_whitespace_check": "passed"
+  },
+  "limitations": [
+    "One development case; no general reliability or speed claim.",
+    "This run demonstrates detection of a new unsupported claim, not a replay proving rejection of the exact previous ambiguous answer.",
+    "Both Writer and Critic prompts changed; their individual contributions are not isolated.",
+    "All available revisions were used; initial-answer reliability remains limited.",
+    "The original rejected local-data claim may reflect model variability; do not infer the prompt change caused it."
+  ],
+  "next_step": "Evaluate bilingual terminology and risk summaries on additional companies before claiming broad improvement; preserve source meaning across translation."
+}

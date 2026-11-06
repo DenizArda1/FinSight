@@ -1,0 +1,1783 @@
+{
+  "mode": "experimental_independent_nli",
+  "production_changed": false,
+  "status": "completed",
+  "model": {
+    "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+    "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+    "files": {
+      "config.json": {
+        "bytes": 1066,
+        "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+      },
+      "tokenizer.json": {
+        "bytes": 16331396,
+        "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+      },
+      "onnx/model_quantized.onnx": {
+        "bytes": 338679133,
+        "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+      }
+    }
+  },
+  "threshold": 0.8,
+  "provider": [
+    "CPUExecutionProvider"
+  ],
+  "onnxruntime_version": "1.31.0",
+  "max_tokens": 512,
+  "id2label": {
+    "0": "entailment",
+    "1": "neutral",
+    "2": "contradiction"
+  },
+  "code_sha256": "b562bf3fbc41ad85c0322014678409c098b2d46bf0372cfdb4c3250203e6f027",
+  "cases": [
+    {
+      "id": "china_scope_wrong",
+      "expected_supported": false,
+      "claim": "Customers in regions like China, Europe, Latin America, and Southeast Asia may avoid U.S. semiconductors to reduce compliance burdens.",
+      "sources": [
+        {
+          "source_id": 2,
+          "metadata": [
+            {
+              "start": 146424,
+              "form": "10-K",
+              "cik": "0001045810",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+              "section": "Item 1A",
+              "section_title": "Risk Factors",
+              "section_end": 173432,
+              "ticker": "NVDA",
+              "end": 147845,
+              "section_start": 58590,
+              "fiscal_year": 2026,
+              "report_date": "2026-01-25",
+              "accession_number": "0001045810-26-000021"
+            }
+          ],
+          "texts": [
+            " distributed from Hong Kong.\nExport controls restricting our ability to sell data center GPUs may also negatively impact demand for our networking products used in servers containing our GPUs. The USG may also impose export controls on our networking products, such as high-speed network interconnects, to limit the ability of downstream parties to create large clusters for frontier model training.\nExport controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control. Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide. Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.\nAs a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia. Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20. At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls.\nThe increasingly complex export controls impose complex and burdensome compliance obligations on our partners, suppliers, and customers. While we seek to strictly comply with all applicable export control regulators, reports of diversion of controlled products, even when unsubstantiated and untrue, may negatively impact our business, relationships with partners and customers, and our reputation. "
+          ]
+        },
+        {
+          "source_id": 3,
+          "metadata": [
+            {
+              "form": "10-K",
+              "ticker": "NVDA",
+              "report_date": "2026-01-25",
+              "end": 134172,
+              "section_start": 58590,
+              "fiscal_year": 2026,
+              "start": 132988,
+              "section_end": 173432,
+              "section_title": "Risk Factors",
+              "cik": "0001045810",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+              "section": "Item 1A",
+              "accession_number": "0001045810-26-000021"
+            }
+          ],
+          "texts": [
+            "uld negatively and materially impact our business, revenue and financial results. Export controls and other restrictions targeting GPUs and semiconductors associated with AI, which have been imposed and are likely to be more restrictive, would further limit our ability to export our technology, products, or services, creating a competitive disadvantage for us and negatively impacting our business\n25\nTable of Contents\nand financial results. Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results. Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China.\nExport controls have and could in the future disrupt our supply chain and distribution channels, negatively impacting our ability to serve demand, including in markets outside China and for our non-data center products. The possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls. Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business.\nIncreasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results. Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges. Additional unilateral or multilateral controls are also likely to incl"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "china_scope_correct",
+      "expected_supported": true,
+      "claim": "Customers outside China and other impacted regions may design out certain U.S. semiconductors to reduce compliance burdens.",
+      "sources": [
+        {
+          "source_id": 2,
+          "metadata": [
+            {
+              "start": 146424,
+              "form": "10-K",
+              "cik": "0001045810",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+              "section": "Item 1A",
+              "section_title": "Risk Factors",
+              "section_end": 173432,
+              "ticker": "NVDA",
+              "end": 147845,
+              "section_start": 58590,
+              "fiscal_year": 2026,
+              "report_date": "2026-01-25",
+              "accession_number": "0001045810-26-000021"
+            }
+          ],
+          "texts": [
+            " distributed from Hong Kong.\nExport controls restricting our ability to sell data center GPUs may also negatively impact demand for our networking products used in servers containing our GPUs. The USG may also impose export controls on our networking products, such as high-speed network interconnects, to limit the ability of downstream parties to create large clusters for frontier model training.\nExport controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control. Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide. Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.\nAs a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia. Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20. At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls.\nThe increasingly complex export controls impose complex and burdensome compliance obligations on our partners, suppliers, and customers. While we seek to strictly comply with all applicable export control regulators, reports of diversion of controlled products, even when unsubstantiated and untrue, may negatively impact our business, relationships with partners and customers, and our reputation. "
+          ]
+        },
+        {
+          "source_id": 3,
+          "metadata": [
+            {
+              "form": "10-K",
+              "ticker": "NVDA",
+              "report_date": "2026-01-25",
+              "end": 134172,
+              "section_start": 58590,
+              "fiscal_year": 2026,
+              "start": 132988,
+              "section_end": 173432,
+              "section_title": "Risk Factors",
+              "cik": "0001045810",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+              "section": "Item 1A",
+              "accession_number": "0001045810-26-000021"
+            }
+          ],
+          "texts": [
+            "uld negatively and materially impact our business, revenue and financial results. Export controls and other restrictions targeting GPUs and semiconductors associated with AI, which have been imposed and are likely to be more restrictive, would further limit our ability to export our technology, products, or services, creating a competitive disadvantage for us and negatively impacting our business\n25\nTable of Contents\nand financial results. Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results. Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China.\nExport controls have and could in the future disrupt our supply chain and distribution channels, negatively impacting our ability to serve demand, including in markets outside China and for our non-data center products. The possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls. Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business.\nIncreasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results. Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges. Additional unilateral or multilateral controls are also likely to incl"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supplier_region_transfer_wrong",
+      "claim": "Suppliers in Japan may delay deliveries because of power shortages.",
+      "expected_supported": false,
+      "sources": [
+        {
+          "source_id": 21,
+          "texts": [
+            "Suppliers in Taiwan may delay deliveries because of power shortages. Suppliers in Japan may raise prices because of higher labor costs."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supplier_region_translation_correct",
+      "claim": "Tayvan'daki tedarikçiler elektrik sıkıntısı nedeniyle teslimatları geciktirebilir.",
+      "expected_supported": true,
+      "sources": [
+        {
+          "source_id": 21,
+          "texts": [
+            "Suppliers in Taiwan may delay deliveries because of power shortages. Suppliers in Japan may raise prices because of higher labor costs."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "condition_transfer_wrong",
+      "claim": "If the port closes, insurance premiums may rise.",
+      "expected_supported": false,
+      "sources": [
+        {
+          "source_id": 22,
+          "texts": [
+            "If the port closes, shipments may be delayed. If accident rates increase, insurance premiums may rise."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "condition_translation_correct",
+      "claim": "Kaza oranları artarsa sigorta primleri yükselebilir.",
+      "expected_supported": true,
+      "sources": [
+        {
+          "source_id": 22,
+          "texts": [
+            "If the port closes, shipments may be delayed. If accident rates increase, insurance premiums may rise."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "excluded_population_wrong",
+      "claim": "Customers with long-term contracts may switch suppliers when spot prices rise.",
+      "expected_supported": false,
+      "sources": [
+        {
+          "source_id": 23,
+          "texts": [
+            "Customers without long-term contracts may switch suppliers when spot prices rise. Customers with long-term contracts may negotiate different payment schedules."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "excluded_population_correct",
+      "claim": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+      "expected_supported": true,
+      "sources": [
+        {
+          "source_id": 23,
+          "texts": [
+            "Customers without long-term contracts may switch suppliers when spot prices rise. Customers with long-term contracts may negotiate different payment schedules."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "supplier_translation",
+      "claim": "Tedarikçilerdeki üretim kesintileri ürün teslimatlarını geciktirebilir.",
+      "expected_supported": true,
+      "sources": [
+        {
+          "source_id": 11,
+          "texts": [
+            "We rely on third-party suppliers. Manufacturing interruptions at these suppliers may delay product deliveries."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "negated_incident",
+      "claim": "The incident caused a material disruption to operations.",
+      "expected_supported": false,
+      "sources": [
+        {
+          "source_id": 12,
+          "texts": [
+            "The incident was investigated. We have not experienced a material disruption to operations from this incident."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "conditional_translation",
+      "claim": "İhracat lisansı başvuruları reddedilirse bazı ürünler sevk edilemeyebilir.",
+      "expected_supported": true,
+      "sources": [
+        {
+          "source_id": 13,
+          "texts": [
+            "If export license applications are denied, we may be unable to ship some products. Applications remain under review."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "certainty_and_scope",
+      "claim": "All shipments will stop because the export licenses have been denied.",
+      "expected_supported": false,
+      "sources": [
+        {
+          "source_id": 13,
+          "texts": [
+            "If export license applications are denied, we may be unable to ship some products. Applications remain under review."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reversed_causality",
+      "claim": "Excess inventory may cause lower customer demand.",
+      "expected_supported": false,
+      "sources": [
+        {
+          "source_id": 14,
+          "texts": [
+            "Lower customer demand may lead to excess inventory. We monitor demand when planning production."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unsupported_conjunct",
+      "claim": "Supplier interruptions may delay deliveries and cause customer data breaches.",
+      "expected_supported": false,
+      "sources": [
+        {
+          "source_id": 15,
+          "texts": [
+            "Supplier interruptions may delay deliveries. We maintain inventory to reduce the impact of these interruptions."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "english_paraphrase",
+      "claim": "Changing certain suppliers can take time.",
+      "expected_supported": true,
+      "sources": [
+        {
+          "source_id": 16,
+          "texts": [
+            "Some components are obtained from sole-source suppliers. Qualifying replacement suppliers for these components may require significant time."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uncited_support",
+      "claim": "Severe storms may disrupt transportation.",
+      "expected_supported": false,
+      "sources": [
+        {
+          "source_id": 17,
+          "texts": [
+            "Distribution costs may increase when fuel prices rise."
+          ]
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "id": "china_scope_wrong",
+      "expected_supported": false,
+      "passages": [
+        {
+          "id": "2:0:0",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 1,
+          "end": 28,
+          "text": "distributed from Hong Kong.",
+          "preceding_context": "",
+          "premise": "distributed from Hong Kong.",
+          "tokens": 43,
+          "scores": {
+            "entailment": 0.0024069931854076897,
+            "neutral": 0.992687422718432,
+            "contradiction": 0.004905584096160238
+          }
+        },
+        {
+          "id": "2:0:1",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 29,
+          "end": 192,
+          "text": "Export controls restricting our ability to sell data center GPUs may also negatively impact demand for our networking products used in servers containing our GPUs.",
+          "preceding_context": "distributed from Hong Kong.",
+          "premise": "distributed from Hong Kong. Export controls restricting our ability to sell data center GPUs may also negatively impact demand for our networking products used in servers containing our GPUs.",
+          "tokens": 81,
+          "scores": {
+            "entailment": 0.0028243652535563557,
+            "neutral": 0.9950631740767774,
+            "contradiction": 0.002112460669666298
+          }
+        },
+        {
+          "id": "2:0:2",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 193,
+          "end": 399,
+          "text": "The USG may also impose export controls on our networking products, such as high-speed network interconnects, to limit the ability of downstream parties to create large clusters for frontier model training.",
+          "preceding_context": "Export controls restricting our ability to sell data center GPUs may also negatively impact demand for our networking products used in servers containing our GPUs.",
+          "premise": "Export controls restricting our ability to sell data center GPUs may also negatively impact demand for our networking products used in servers containing our GPUs. The USG may also impose export controls on our networking products, such as high-speed network interconnects, to limit the ability of downstream parties to create large clusters for frontier model training.",
+          "tokens": 123,
+          "scores": {
+            "entailment": 0.0015132880793776392,
+            "neutral": 0.9957154954351166,
+            "contradiction": 0.0027712164855058907
+          }
+        },
+        {
+          "id": "2:0:3",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 400,
+          "end": 612,
+          "text": "Export controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control.",
+          "preceding_context": "The USG may also impose export controls on our networking products, such as high-speed network interconnects, to limit the ability of downstream parties to create large clusters for frontier model training.",
+          "premise": "The USG may also impose export controls on our networking products, such as high-speed network interconnects, to limit the ability of downstream parties to create large clusters for frontier model training. Export controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control.",
+          "tokens": 134,
+          "scores": {
+            "entailment": 0.004249368730865797,
+            "neutral": 0.9857140921904061,
+            "contradiction": 0.010036539078728219
+          }
+        },
+        {
+          "id": "2:0:4",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 613,
+          "end": 891,
+          "text": "Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide.",
+          "preceding_context": "Export controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control.",
+          "premise": "Export controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control. Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide.",
+          "tokens": 154,
+          "scores": {
+            "entailment": 0.036931357287894914,
+            "neutral": 0.9329352980369477,
+            "contradiction": 0.03013334467515728
+          }
+        },
+        {
+          "id": "2:0:5",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 892,
+          "end": 1146,
+          "text": "Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.",
+          "preceding_context": "Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide.",
+          "premise": "Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide. Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.",
+          "tokens": 162,
+          "scores": {
+            "entailment": 0.01971516800078999,
+            "neutral": 0.9551270599866476,
+            "contradiction": 0.02515777201256238
+          }
+        },
+        {
+          "id": "2:0:6",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 1147,
+          "end": 1366,
+          "text": "As a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia.",
+          "preceding_context": "Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.",
+          "premise": "Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results. As a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia.",
+          "tokens": 145,
+          "scores": {
+            "entailment": 0.0804829140893538,
+            "neutral": 0.9168094116488874,
+            "contradiction": 0.002707674261758654
+          }
+        },
+        {
+          "id": "2:0:7",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 1367,
+          "end": 1679,
+          "text": "Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20.",
+          "preceding_context": "As a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia.",
+          "premise": "As a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia. Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20.",
+          "tokens": 163,
+          "scores": {
+            "entailment": 0.03743682357377473,
+            "neutral": 0.9560870347404645,
+            "contradiction": 0.006476141685760791
+          }
+        },
+        {
+          "id": "2:0:8",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 1680,
+          "end": 1821,
+          "text": "At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls.",
+          "preceding_context": "Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20.",
+          "premise": "Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20. At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls.",
+          "tokens": 150,
+          "scores": {
+            "entailment": 0.0012539795358327555,
+            "neutral": 0.99361895188162,
+            "contradiction": 0.0051270685825473465
+          }
+        },
+        {
+          "id": "2:0:9",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 1822,
+          "end": 1958,
+          "text": "The increasingly complex export controls impose complex and burdensome compliance obligations on our partners, suppliers, and customers.",
+          "preceding_context": "At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls.",
+          "premise": "At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls. The increasingly complex export controls impose complex and burdensome compliance obligations on our partners, suppliers, and customers.",
+          "tokens": 105,
+          "scores": {
+            "entailment": 0.0014361155375851018,
+            "neutral": 0.9972474065615666,
+            "contradiction": 0.001316477900848466
+          }
+        },
+        {
+          "id": "2:0:10",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 1959,
+          "end": 2220,
+          "text": "While we seek to strictly comply with all applicable export control regulators, reports of diversion of controlled products, even when unsubstantiated and untrue, may negatively impact our business, relationships with partners and customers, and our reputation.",
+          "preceding_context": "The increasingly complex export controls impose complex and burdensome compliance obligations on our partners, suppliers, and customers.",
+          "premise": "The increasingly complex export controls impose complex and burdensome compliance obligations on our partners, suppliers, and customers. While we seek to strictly comply with all applicable export control regulators, reports of diversion of controlled products, even when unsubstantiated and untrue, may negatively impact our business, relationships with partners and customers, and our reputation.",
+          "tokens": 127,
+          "scores": {
+            "entailment": 0.002093740016168845,
+            "neutral": 0.9925109684440161,
+            "contradiction": 0.005395291539814869
+          }
+        },
+        {
+          "id": "3:0:0",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 0,
+          "end": 81,
+          "text": "uld negatively and materially impact our business, revenue and financial results.",
+          "preceding_context": "",
+          "premise": "uld negatively and materially impact our business, revenue and financial results.",
+          "tokens": 57,
+          "scores": {
+            "entailment": 0.0018335938896920424,
+            "neutral": 0.9958858208409935,
+            "contradiction": 0.002280585269314416
+          }
+        },
+        {
+          "id": "3:0:1",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 82,
+          "end": 399,
+          "text": "Export controls and other restrictions targeting GPUs and semiconductors associated with AI, which have been imposed and are likely to be more restrictive, would further limit our ability to export our technology, products, or services, creating a competitive disadvantage for us and negatively impacting our business",
+          "preceding_context": "uld negatively and materially impact our business, revenue and financial results.",
+          "premise": "uld negatively and materially impact our business, revenue and financial results. Export controls and other restrictions targeting GPUs and semiconductors associated with AI, which have been imposed and are likely to be more restrictive, would further limit our ability to export our technology, products, or services, creating a competitive disadvantage for us and negatively impacting our business",
+          "tokens": 133,
+          "scores": {
+            "entailment": 0.0014316852596843253,
+            "neutral": 0.9972172059265775,
+            "contradiction": 0.001351108813738074
+          }
+        },
+        {
+          "id": "3:0:2",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 400,
+          "end": 402,
+          "text": "25",
+          "preceding_context": "Export controls and other restrictions targeting GPUs and semiconductors associated with AI, which have been imposed and are likely to be more restrictive, would further limit our ability to export our technology, products, or services, creating a competitive disadvantage for us and negatively impacting our business",
+          "premise": "Export controls and other restrictions targeting GPUs and semiconductors associated with AI, which have been imposed and are likely to be more restrictive, would further limit our ability to export our technology, products, or services, creating a competitive disadvantage for us and negatively impacting our business 25",
+          "tokens": 114,
+          "scores": {
+            "entailment": 0.0010520863906774687,
+            "neutral": 0.9969762258005287,
+            "contradiction": 0.001971687808793716
+          }
+        },
+        {
+          "id": "3:0:3",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 403,
+          "end": 420,
+          "text": "Table of Contents",
+          "preceding_context": "25",
+          "premise": "25 Table of Contents",
+          "tokens": 42,
+          "scores": {
+            "entailment": 0.002688362992212395,
+            "neutral": 0.9941605439695281,
+            "contradiction": 0.0031510930382596626
+          }
+        },
+        {
+          "id": "3:0:4",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 421,
+          "end": 443,
+          "text": "and financial results.",
+          "preceding_context": "Table of Contents",
+          "premise": "Table of Contents and financial results.",
+          "tokens": 46,
+          "scores": {
+            "entailment": 0.004751470547247308,
+            "neutral": 0.9852985549038887,
+            "contradiction": 0.009949974548863975
+          }
+        },
+        {
+          "id": "3:0:5",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 444,
+          "end": 720,
+          "text": "Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results.",
+          "preceding_context": "and financial results.",
+          "premise": "and financial results. Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results.",
+          "tokens": 105,
+          "scores": {
+            "entailment": 0.00290228655442036,
+            "neutral": 0.99221667802915,
+            "contradiction": 0.004881035416429691
+          }
+        },
+        {
+          "id": "3:0:6",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 721,
+          "end": 962,
+          "text": "Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China.",
+          "preceding_context": "Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results.",
+          "premise": "Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results. Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China.",
+          "tokens": 156,
+          "scores": {
+            "entailment": 0.0066170291484637205,
+            "neutral": 0.980411327589374,
+            "contradiction": 0.012971643262162295
+          }
+        },
+        {
+          "id": "3:0:7",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 963,
+          "end": 1182,
+          "text": "Export controls have and could in the future disrupt our supply chain and distribution channels, negatively impacting our ability to serve demand, including in markets outside China and for our non-data center products.",
+          "preceding_context": "Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China.",
+          "premise": "Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China. Export controls have and could in the future disrupt our supply chain and distribution channels, negatively impacting our ability to serve demand, including in markets outside China and for our non-data center products.",
+          "tokens": 142,
+          "scores": {
+            "entailment": 0.0027683178876881822,
+            "neutral": 0.9934507205228085,
+            "contradiction": 0.0037809615895035334
+          }
+        },
+        {
+          "id": "3:0:8",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 1183,
+          "end": 1414,
+          "text": "The possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls.",
+          "preceding_context": "Export controls have and could in the future disrupt our supply chain and distribution channels, negatively impacting our ability to serve demand, including in markets outside China and for our non-data center products.",
+          "premise": "Export controls have and could in the future disrupt our supply chain and distribution channels, negatively impacting our ability to serve demand, including in markets outside China and for our non-data center products. The possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls.",
+          "tokens": 136,
+          "scores": {
+            "entailment": 0.004954267328477139,
+            "neutral": 0.9893525503381847,
+            "contradiction": 0.005693182333338307
+          }
+        },
+        {
+          "id": "3:0:9",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 1415,
+          "end": 1584,
+          "text": "Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business.",
+          "preceding_context": "The possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls.",
+          "premise": "The possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls. Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business.",
+          "tokens": 125,
+          "scores": {
+            "entailment": 0.0030034951889318525,
+            "neutral": 0.993735728952335,
+            "contradiction": 0.003260775858733261
+          }
+        },
+        {
+          "id": "3:0:10",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 1585,
+          "end": 1777,
+          "text": "Increasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results.",
+          "preceding_context": "Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business.",
+          "premise": "Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business. Increasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results.",
+          "tokens": 116,
+          "scores": {
+            "entailment": 0.0013081755235448823,
+            "neutral": 0.9969371349534585,
+            "contradiction": 0.001754689522996599
+          }
+        },
+        {
+          "id": "3:0:11",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 1778,
+          "end": 1913,
+          "text": "Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges.",
+          "preceding_context": "Increasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results.",
+          "premise": "Increasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results. Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges.",
+          "tokens": 113,
+          "scores": {
+            "entailment": 0.001643066918939383,
+            "neutral": 0.992980948107435,
+            "contradiction": 0.005375984973625516
+          }
+        },
+        {
+          "id": "3:0:12",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 1914,
+          "end": 1984,
+          "text": "Additional unilateral or multilateral controls are also likely to incl",
+          "preceding_context": "Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges.",
+          "premise": "Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges. Additional unilateral or multilateral controls are also likely to incl",
+          "tokens": 87,
+          "scores": {
+            "entailment": 0.0020484643586672975,
+            "neutral": 0.9921899332557482,
+            "contradiction": 0.0057616023855845645
+          }
+        }
+      ],
+      "supported": false,
+      "matches_expected": true,
+      "error": null,
+      "best_passage_id": "2:0:6",
+      "best_scores": {
+        "entailment": 0.0804829140893538,
+        "neutral": 0.9168094116488874,
+        "contradiction": 0.002707674261758654
+      },
+      "elapsed_seconds": 0.699328874999992
+    },
+    {
+      "id": "china_scope_correct",
+      "expected_supported": true,
+      "passages": [
+        {
+          "id": "2:0:0",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 1,
+          "end": 28,
+          "text": "distributed from Hong Kong.",
+          "preceding_context": "",
+          "premise": "distributed from Hong Kong.",
+          "tokens": 38,
+          "scores": {
+            "entailment": 0.005391160286407102,
+            "neutral": 0.9848364074039656,
+            "contradiction": 0.009772432309627394
+          }
+        },
+        {
+          "id": "2:0:1",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 29,
+          "end": 192,
+          "text": "Export controls restricting our ability to sell data center GPUs may also negatively impact demand for our networking products used in servers containing our GPUs.",
+          "preceding_context": "distributed from Hong Kong.",
+          "premise": "distributed from Hong Kong. Export controls restricting our ability to sell data center GPUs may also negatively impact demand for our networking products used in servers containing our GPUs.",
+          "tokens": 76,
+          "scores": {
+            "entailment": 0.006988972688477459,
+            "neutral": 0.9878941404982572,
+            "contradiction": 0.005116886813265328
+          }
+        },
+        {
+          "id": "2:0:2",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 193,
+          "end": 399,
+          "text": "The USG may also impose export controls on our networking products, such as high-speed network interconnects, to limit the ability of downstream parties to create large clusters for frontier model training.",
+          "preceding_context": "Export controls restricting our ability to sell data center GPUs may also negatively impact demand for our networking products used in servers containing our GPUs.",
+          "premise": "Export controls restricting our ability to sell data center GPUs may also negatively impact demand for our networking products used in servers containing our GPUs. The USG may also impose export controls on our networking products, such as high-speed network interconnects, to limit the ability of downstream parties to create large clusters for frontier model training.",
+          "tokens": 118,
+          "scores": {
+            "entailment": 0.0025951793350594255,
+            "neutral": 0.9894101268371396,
+            "contradiction": 0.007994693827800959
+          }
+        },
+        {
+          "id": "2:0:3",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 400,
+          "end": 612,
+          "text": "Export controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control.",
+          "preceding_context": "The USG may also impose export controls on our networking products, such as high-speed network interconnects, to limit the ability of downstream parties to create large clusters for frontier model training.",
+          "premise": "The USG may also impose export controls on our networking products, such as high-speed network interconnects, to limit the ability of downstream parties to create large clusters for frontier model training. Export controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control.",
+          "tokens": 129,
+          "scores": {
+            "entailment": 0.02328428342751642,
+            "neutral": 0.9429039526268186,
+            "contradiction": 0.0338117639456651
+          }
+        },
+        {
+          "id": "2:0:4",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 613,
+          "end": 891,
+          "text": "Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide.",
+          "preceding_context": "Export controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control.",
+          "premise": "Export controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control. Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide.",
+          "tokens": 149,
+          "scores": {
+            "entailment": 0.9784577157242845,
+            "neutral": 0.020007399704561397,
+            "contradiction": 0.001534884571154093
+          }
+        },
+        {
+          "id": "2:0:5",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 892,
+          "end": 1146,
+          "text": "Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.",
+          "preceding_context": "Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide.",
+          "premise": "Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide. Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.",
+          "tokens": 157,
+          "scores": {
+            "entailment": 0.9853804282316372,
+            "neutral": 0.013776863317344252,
+            "contradiction": 0.0008427084510185523
+          }
+        },
+        {
+          "id": "2:0:6",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 1147,
+          "end": 1366,
+          "text": "As a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia.",
+          "preceding_context": "Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.",
+          "premise": "Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results. As a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia.",
+          "tokens": 140,
+          "scores": {
+            "entailment": 0.00445392923943093,
+            "neutral": 0.9825857430694088,
+            "contradiction": 0.012960327691160074
+          }
+        },
+        {
+          "id": "2:0:7",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 1367,
+          "end": 1679,
+          "text": "Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20.",
+          "preceding_context": "As a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia.",
+          "premise": "As a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia. Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20.",
+          "tokens": 158,
+          "scores": {
+            "entailment": 0.0034987588903490014,
+            "neutral": 0.9798920251455132,
+            "contradiction": 0.016609215964137673
+          }
+        },
+        {
+          "id": "2:0:8",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 1680,
+          "end": 1821,
+          "text": "At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls.",
+          "preceding_context": "Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20.",
+          "premise": "Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20. At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls.",
+          "tokens": 145,
+          "scores": {
+            "entailment": 0.0032712937955502596,
+            "neutral": 0.981821649729058,
+            "contradiction": 0.014907056475391709
+          }
+        },
+        {
+          "id": "2:0:9",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 1822,
+          "end": 1958,
+          "text": "The increasingly complex export controls impose complex and burdensome compliance obligations on our partners, suppliers, and customers.",
+          "preceding_context": "At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls.",
+          "premise": "At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls. The increasingly complex export controls impose complex and burdensome compliance obligations on our partners, suppliers, and customers.",
+          "tokens": 100,
+          "scores": {
+            "entailment": 0.0007616709342573506,
+            "neutral": 0.9971990088184802,
+            "contradiction": 0.002039320247262275
+          }
+        },
+        {
+          "id": "2:0:10",
+          "source_id": 2,
+          "text_index": 0,
+          "start": 1959,
+          "end": 2220,
+          "text": "While we seek to strictly comply with all applicable export control regulators, reports of diversion of controlled products, even when unsubstantiated and untrue, may negatively impact our business, relationships with partners and customers, and our reputation.",
+          "preceding_context": "The increasingly complex export controls impose complex and burdensome compliance obligations on our partners, suppliers, and customers.",
+          "premise": "The increasingly complex export controls impose complex and burdensome compliance obligations on our partners, suppliers, and customers. While we seek to strictly comply with all applicable export control regulators, reports of diversion of controlled products, even when unsubstantiated and untrue, may negatively impact our business, relationships with partners and customers, and our reputation.",
+          "tokens": 122,
+          "scores": {
+            "entailment": 0.0005269050048016946,
+            "neutral": 0.9977747001150676,
+            "contradiction": 0.0016983948801307068
+          }
+        },
+        {
+          "id": "3:0:0",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 0,
+          "end": 81,
+          "text": "uld negatively and materially impact our business, revenue and financial results.",
+          "preceding_context": "",
+          "premise": "uld negatively and materially impact our business, revenue and financial results.",
+          "tokens": 52,
+          "scores": {
+            "entailment": 0.002095224937351276,
+            "neutral": 0.9920452957721114,
+            "contradiction": 0.005859479290537397
+          }
+        },
+        {
+          "id": "3:0:1",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 82,
+          "end": 399,
+          "text": "Export controls and other restrictions targeting GPUs and semiconductors associated with AI, which have been imposed and are likely to be more restrictive, would further limit our ability to export our technology, products, or services, creating a competitive disadvantage for us and negatively impacting our business",
+          "preceding_context": "uld negatively and materially impact our business, revenue and financial results.",
+          "premise": "uld negatively and materially impact our business, revenue and financial results. Export controls and other restrictions targeting GPUs and semiconductors associated with AI, which have been imposed and are likely to be more restrictive, would further limit our ability to export our technology, products, or services, creating a competitive disadvantage for us and negatively impacting our business",
+          "tokens": 128,
+          "scores": {
+            "entailment": 0.004048102692554137,
+            "neutral": 0.9894749640416156,
+            "contradiction": 0.006476933265830213
+          }
+        },
+        {
+          "id": "3:0:2",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 400,
+          "end": 402,
+          "text": "25",
+          "preceding_context": "Export controls and other restrictions targeting GPUs and semiconductors associated with AI, which have been imposed and are likely to be more restrictive, would further limit our ability to export our technology, products, or services, creating a competitive disadvantage for us and negatively impacting our business",
+          "premise": "Export controls and other restrictions targeting GPUs and semiconductors associated with AI, which have been imposed and are likely to be more restrictive, would further limit our ability to export our technology, products, or services, creating a competitive disadvantage for us and negatively impacting our business 25",
+          "tokens": 109,
+          "scores": {
+            "entailment": 0.003673160231698348,
+            "neutral": 0.977250749693015,
+            "contradiction": 0.01907609007528666
+          }
+        },
+        {
+          "id": "3:0:3",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 403,
+          "end": 420,
+          "text": "Table of Contents",
+          "preceding_context": "25",
+          "premise": "25 Table of Contents",
+          "tokens": 37,
+          "scores": {
+            "entailment": 0.005085952607056653,
+            "neutral": 0.9804457001405579,
+            "contradiction": 0.014468347252385539
+          }
+        },
+        {
+          "id": "3:0:4",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 421,
+          "end": 443,
+          "text": "and financial results.",
+          "preceding_context": "Table of Contents",
+          "premise": "Table of Contents and financial results.",
+          "tokens": 41,
+          "scores": {
+            "entailment": 0.008901511089704137,
+            "neutral": 0.9613605080750528,
+            "contradiction": 0.02973798083524316
+          }
+        },
+        {
+          "id": "3:0:5",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 444,
+          "end": 720,
+          "text": "Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results.",
+          "preceding_context": "and financial results.",
+          "premise": "and financial results. Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results.",
+          "tokens": 100,
+          "scores": {
+            "entailment": 0.007205662872316057,
+            "neutral": 0.9846374944559344,
+            "contradiction": 0.008156842671749636
+          }
+        },
+        {
+          "id": "3:0:6",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 721,
+          "end": 962,
+          "text": "Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China.",
+          "preceding_context": "Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results.",
+          "premise": "Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results. Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China.",
+          "tokens": 151,
+          "scores": {
+            "entailment": 0.0050463761215337345,
+            "neutral": 0.9871918153998355,
+            "contradiction": 0.007761808478630714
+          }
+        },
+        {
+          "id": "3:0:7",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 963,
+          "end": 1182,
+          "text": "Export controls have and could in the future disrupt our supply chain and distribution channels, negatively impacting our ability to serve demand, including in markets outside China and for our non-data center products.",
+          "preceding_context": "Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China.",
+          "premise": "Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China. Export controls have and could in the future disrupt our supply chain and distribution channels, negatively impacting our ability to serve demand, including in markets outside China and for our non-data center products.",
+          "tokens": 137,
+          "scores": {
+            "entailment": 0.0011169203939784761,
+            "neutral": 0.9947691435689862,
+            "contradiction": 0.00411393603703536
+          }
+        },
+        {
+          "id": "3:0:8",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 1183,
+          "end": 1414,
+          "text": "The possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls.",
+          "preceding_context": "Export controls have and could in the future disrupt our supply chain and distribution channels, negatively impacting our ability to serve demand, including in markets outside China and for our non-data center products.",
+          "premise": "Export controls have and could in the future disrupt our supply chain and distribution channels, negatively impacting our ability to serve demand, including in markets outside China and for our non-data center products. The possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls.",
+          "tokens": 131,
+          "scores": {
+            "entailment": 0.0012577577191105675,
+            "neutral": 0.9916187711385362,
+            "contradiction": 0.007123471142353198
+          }
+        },
+        {
+          "id": "3:0:9",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 1415,
+          "end": 1584,
+          "text": "Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business.",
+          "preceding_context": "The possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls.",
+          "premise": "The possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls. Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business.",
+          "tokens": 120,
+          "scores": {
+            "entailment": 0.0007484327327603971,
+            "neutral": 0.996495054710292,
+            "contradiction": 0.0027565125569476057
+          }
+        },
+        {
+          "id": "3:0:10",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 1585,
+          "end": 1777,
+          "text": "Increasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results.",
+          "preceding_context": "Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business.",
+          "premise": "Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business. Increasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results.",
+          "tokens": 111,
+          "scores": {
+            "entailment": 0.0005785535405428197,
+            "neutral": 0.9963559451896853,
+            "contradiction": 0.0030655012697718064
+          }
+        },
+        {
+          "id": "3:0:11",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 1778,
+          "end": 1913,
+          "text": "Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges.",
+          "preceding_context": "Increasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results.",
+          "premise": "Increasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results. Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges.",
+          "tokens": 108,
+          "scores": {
+            "entailment": 0.001339668372011238,
+            "neutral": 0.9891602506849729,
+            "contradiction": 0.009500080943015882
+          }
+        },
+        {
+          "id": "3:0:12",
+          "source_id": 3,
+          "text_index": 0,
+          "start": 1914,
+          "end": 1984,
+          "text": "Additional unilateral or multilateral controls are also likely to incl",
+          "preceding_context": "Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges.",
+          "premise": "Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges. Additional unilateral or multilateral controls are also likely to incl",
+          "tokens": 82,
+          "scores": {
+            "entailment": 0.003143417396820288,
+            "neutral": 0.9848760625730172,
+            "contradiction": 0.011980520030162521
+          }
+        }
+      ],
+      "supported": true,
+      "matches_expected": true,
+      "error": null,
+      "best_passage_id": "2:0:5",
+      "best_scores": {
+        "entailment": 0.9853804282316372,
+        "neutral": 0.013776863317344252,
+        "contradiction": 0.0008427084510185523
+      },
+      "elapsed_seconds": 0.6371534169993538
+    },
+    {
+      "id": "supplier_region_transfer_wrong",
+      "expected_supported": false,
+      "passages": [
+        {
+          "id": "21:0:0",
+          "source_id": 21,
+          "text_index": 0,
+          "start": 0,
+          "end": 68,
+          "text": "Suppliers in Taiwan may delay deliveries because of power shortages.",
+          "preceding_context": "",
+          "premise": "Suppliers in Taiwan may delay deliveries because of power shortages.",
+          "tokens": 37,
+          "scores": {
+            "entailment": 0.001616057495605504,
+            "neutral": 0.07024681957233872,
+            "contradiction": 0.9281371229320559
+          }
+        },
+        {
+          "id": "21:0:1",
+          "source_id": 21,
+          "text_index": 0,
+          "start": 69,
+          "end": 135,
+          "text": "Suppliers in Japan may raise prices because of higher labor costs.",
+          "preceding_context": "Suppliers in Taiwan may delay deliveries because of power shortages.",
+          "premise": "Suppliers in Taiwan may delay deliveries because of power shortages. Suppliers in Japan may raise prices because of higher labor costs.",
+          "tokens": 55,
+          "scores": {
+            "entailment": 0.08057169589331578,
+            "neutral": 0.04423489797894167,
+            "contradiction": 0.8751934061277424
+          }
+        }
+      ],
+      "supported": false,
+      "matches_expected": true,
+      "error": null,
+      "best_passage_id": "21:0:1",
+      "best_scores": {
+        "entailment": 0.08057169589331578,
+        "neutral": 0.04423489797894167,
+        "contradiction": 0.8751934061277424
+      },
+      "elapsed_seconds": 0.02606424999976298
+    },
+    {
+      "id": "supplier_region_translation_correct",
+      "expected_supported": true,
+      "passages": [
+        {
+          "id": "21:0:0",
+          "source_id": 21,
+          "text_index": 0,
+          "start": 0,
+          "end": 68,
+          "text": "Suppliers in Taiwan may delay deliveries because of power shortages.",
+          "preceding_context": "",
+          "premise": "Suppliers in Taiwan may delay deliveries because of power shortages.",
+          "tokens": 39,
+          "scores": {
+            "entailment": 0.9988550903739849,
+            "neutral": 0.0009935475440464637,
+            "contradiction": 0.0001513620819686766
+          }
+        },
+        {
+          "id": "21:0:1",
+          "source_id": 21,
+          "text_index": 0,
+          "start": 69,
+          "end": 135,
+          "text": "Suppliers in Japan may raise prices because of higher labor costs.",
+          "preceding_context": "Suppliers in Taiwan may delay deliveries because of power shortages.",
+          "premise": "Suppliers in Taiwan may delay deliveries because of power shortages. Suppliers in Japan may raise prices because of higher labor costs.",
+          "tokens": 57,
+          "scores": {
+            "entailment": 0.9990887189829295,
+            "neutral": 0.0007606252501610729,
+            "contradiction": 0.00015065576690950316
+          }
+        }
+      ],
+      "supported": true,
+      "matches_expected": true,
+      "error": null,
+      "best_passage_id": "21:0:1",
+      "best_scores": {
+        "entailment": 0.9990887189829295,
+        "neutral": 0.0007606252501610729,
+        "contradiction": 0.00015065576690950316
+      },
+      "elapsed_seconds": 0.026639542000339134
+    },
+    {
+      "id": "condition_transfer_wrong",
+      "expected_supported": false,
+      "passages": [
+        {
+          "id": "22:0:0",
+          "source_id": 22,
+          "text_index": 0,
+          "start": 0,
+          "end": 45,
+          "text": "If the port closes, shipments may be delayed.",
+          "preceding_context": "",
+          "premise": "If the port closes, shipments may be delayed.",
+          "tokens": 28,
+          "scores": {
+            "entailment": 0.009750683188238624,
+            "neutral": 0.947132627067049,
+            "contradiction": 0.043116689744712514
+          }
+        },
+        {
+          "id": "22:0:1",
+          "source_id": 22,
+          "text_index": 0,
+          "start": 46,
+          "end": 102,
+          "text": "If accident rates increase, insurance premiums may rise.",
+          "preceding_context": "If the port closes, shipments may be delayed.",
+          "premise": "If the port closes, shipments may be delayed. If accident rates increase, insurance premiums may rise.",
+          "tokens": 41,
+          "scores": {
+            "entailment": 0.9863562875390561,
+            "neutral": 0.009293217396581004,
+            "contradiction": 0.004350495064362846
+          }
+        }
+      ],
+      "supported": true,
+      "matches_expected": false,
+      "error": null,
+      "best_passage_id": "22:0:1",
+      "best_scores": {
+        "entailment": 0.9863562875390561,
+        "neutral": 0.009293217396581004,
+        "contradiction": 0.004350495064362846
+      },
+      "elapsed_seconds": 0.022095082998930593
+    },
+    {
+      "id": "condition_translation_correct",
+      "expected_supported": true,
+      "passages": [
+        {
+          "id": "22:0:0",
+          "source_id": 22,
+          "text_index": 0,
+          "start": 0,
+          "end": 45,
+          "text": "If the port closes, shipments may be delayed.",
+          "preceding_context": "",
+          "premise": "If the port closes, shipments may be delayed.",
+          "tokens": 29,
+          "scores": {
+            "entailment": 0.06357097225425698,
+            "neutral": 0.9355276042333768,
+            "contradiction": 0.000901423512366275
+          }
+        },
+        {
+          "id": "22:0:1",
+          "source_id": 22,
+          "text_index": 0,
+          "start": 46,
+          "end": 102,
+          "text": "If accident rates increase, insurance premiums may rise.",
+          "preceding_context": "If the port closes, shipments may be delayed.",
+          "premise": "If the port closes, shipments may be delayed. If accident rates increase, insurance premiums may rise.",
+          "tokens": 42,
+          "scores": {
+            "entailment": 0.9982661849848307,
+            "neutral": 0.0015710272242382545,
+            "contradiction": 0.00016278779093101508
+          }
+        }
+      ],
+      "supported": true,
+      "matches_expected": true,
+      "error": null,
+      "best_passage_id": "22:0:1",
+      "best_scores": {
+        "entailment": 0.9982661849848307,
+        "neutral": 0.0015710272242382545,
+        "contradiction": 0.00016278779093101508
+      },
+      "elapsed_seconds": 0.022350458000801154
+    },
+    {
+      "id": "excluded_population_wrong",
+      "expected_supported": false,
+      "passages": [
+        {
+          "id": "23:0:0",
+          "source_id": 23,
+          "text_index": 0,
+          "start": 0,
+          "end": 81,
+          "text": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+          "preceding_context": "",
+          "premise": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+          "tokens": 40,
+          "scores": {
+            "entailment": 0.21383838204765504,
+            "neutral": 0.3074419372838478,
+            "contradiction": 0.47871968066849707
+          }
+        },
+        {
+          "id": "23:0:1",
+          "source_id": 23,
+          "text_index": 0,
+          "start": 82,
+          "end": 159,
+          "text": "Customers with long-term contracts may negotiate different payment schedules.",
+          "preceding_context": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+          "premise": "Customers without long-term contracts may switch suppliers when spot prices rise. Customers with long-term contracts may negotiate different payment schedules.",
+          "tokens": 57,
+          "scores": {
+            "entailment": 0.060058010774951334,
+            "neutral": 0.10509103284720937,
+            "contradiction": 0.8348509563778392
+          }
+        }
+      ],
+      "supported": false,
+      "matches_expected": true,
+      "error": null,
+      "best_passage_id": "23:0:0",
+      "best_scores": {
+        "entailment": 0.21383838204765504,
+        "neutral": 0.3074419372838478,
+        "contradiction": 0.47871968066849707
+      },
+      "elapsed_seconds": 0.026361333000750165
+    },
+    {
+      "id": "excluded_population_correct",
+      "expected_supported": true,
+      "passages": [
+        {
+          "id": "23:0:0",
+          "source_id": 23,
+          "text_index": 0,
+          "start": 0,
+          "end": 81,
+          "text": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+          "preceding_context": "",
+          "premise": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+          "tokens": 41,
+          "scores": {
+            "entailment": 0.9956459091409757,
+            "neutral": 0.0038438038059637673,
+            "contradiction": 0.0005102870530604368
+          }
+        },
+        {
+          "id": "23:0:1",
+          "source_id": 23,
+          "text_index": 0,
+          "start": 82,
+          "end": 159,
+          "text": "Customers with long-term contracts may negotiate different payment schedules.",
+          "preceding_context": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+          "premise": "Customers without long-term contracts may switch suppliers when spot prices rise. Customers with long-term contracts may negotiate different payment schedules.",
+          "tokens": 58,
+          "scores": {
+            "entailment": 0.9818398457976235,
+            "neutral": 0.01237440015396953,
+            "contradiction": 0.005785754048406962
+          }
+        }
+      ],
+      "supported": true,
+      "matches_expected": true,
+      "error": null,
+      "best_passage_id": "23:0:0",
+      "best_scores": {
+        "entailment": 0.9956459091409757,
+        "neutral": 0.0038438038059637673,
+        "contradiction": 0.0005102870530604368
+      },
+      "elapsed_seconds": 0.026225833000353305
+    },
+    {
+      "id": "supplier_translation",
+      "expected_supported": true,
+      "passages": [
+        {
+          "id": "11:0:0",
+          "source_id": 11,
+          "text_index": 0,
+          "start": 0,
+          "end": 33,
+          "text": "We rely on third-party suppliers.",
+          "preceding_context": "",
+          "premise": "We rely on third-party suppliers.",
+          "tokens": 32,
+          "scores": {
+            "entailment": 0.0005085502013328299,
+            "neutral": 0.9993191518694481,
+            "contradiction": 0.00017229792921911205
+          }
+        },
+        {
+          "id": "11:0:1",
+          "source_id": 11,
+          "text_index": 0,
+          "start": 34,
+          "end": 110,
+          "text": "Manufacturing interruptions at these suppliers may delay product deliveries.",
+          "preceding_context": "We rely on third-party suppliers.",
+          "premise": "We rely on third-party suppliers. Manufacturing interruptions at these suppliers may delay product deliveries.",
+          "tokens": 48,
+          "scores": {
+            "entailment": 0.9990996061644092,
+            "neutral": 0.0007532226827636498,
+            "contradiction": 0.00014717115282715645
+          }
+        }
+      ],
+      "supported": true,
+      "matches_expected": true,
+      "error": null,
+      "best_passage_id": "11:0:1",
+      "best_scores": {
+        "entailment": 0.9990996061644092,
+        "neutral": 0.0007532226827636498,
+        "contradiction": 0.00014717115282715645
+      },
+      "elapsed_seconds": 0.021862249999685446
+    },
+    {
+      "id": "negated_incident",
+      "expected_supported": false,
+      "passages": [
+        {
+          "id": "12:0:0",
+          "source_id": 12,
+          "text_index": 0,
+          "start": 0,
+          "end": 30,
+          "text": "The incident was investigated.",
+          "preceding_context": "",
+          "premise": "The incident was investigated.",
+          "tokens": 21,
+          "scores": {
+            "entailment": 0.00196657118327656,
+            "neutral": 0.9969997415918225,
+            "contradiction": 0.0010336872249008249
+          }
+        },
+        {
+          "id": "12:0:1",
+          "source_id": 12,
+          "text_index": 0,
+          "start": 31,
+          "end": 110,
+          "text": "We have not experienced a material disruption to operations from this incident.",
+          "preceding_context": "The incident was investigated.",
+          "premise": "The incident was investigated. We have not experienced a material disruption to operations from this incident.",
+          "tokens": 37,
+          "scores": {
+            "entailment": 0.006439633184576068,
+            "neutral": 0.04491542545033783,
+            "contradiction": 0.9486449413650861
+          }
+        }
+      ],
+      "supported": false,
+      "matches_expected": true,
+      "error": null,
+      "best_passage_id": "12:0:1",
+      "best_scores": {
+        "entailment": 0.006439633184576068,
+        "neutral": 0.04491542545033783,
+        "contradiction": 0.9486449413650861
+      },
+      "elapsed_seconds": 0.019523875000231783
+    },
+    {
+      "id": "conditional_translation",
+      "expected_supported": true,
+      "passages": [
+        {
+          "id": "13:0:0",
+          "source_id": 13,
+          "text_index": 0,
+          "start": 0,
+          "end": 82,
+          "text": "If export license applications are denied, we may be unable to ship some products.",
+          "preceding_context": "",
+          "premise": "If export license applications are denied, we may be unable to ship some products.",
+          "tokens": 41,
+          "scores": {
+            "entailment": 0.998944145186379,
+            "neutral": 0.0009462901759849214,
+            "contradiction": 0.00010956463763599306
+          }
+        },
+        {
+          "id": "13:0:1",
+          "source_id": 13,
+          "text_index": 0,
+          "start": 83,
+          "end": 116,
+          "text": "Applications remain under review.",
+          "preceding_context": "If export license applications are denied, we may be unable to ship some products.",
+          "premise": "If export license applications are denied, we may be unable to ship some products. Applications remain under review.",
+          "tokens": 47,
+          "scores": {
+            "entailment": 0.9982931565137019,
+            "neutral": 0.0016300570702184269,
+            "contradiction": 7.678641607957765e-05
+          }
+        }
+      ],
+      "supported": true,
+      "matches_expected": true,
+      "error": null,
+      "best_passage_id": "13:0:0",
+      "best_scores": {
+        "entailment": 0.998944145186379,
+        "neutral": 0.0009462901759849214,
+        "contradiction": 0.00010956463763599306
+      },
+      "elapsed_seconds": 0.024645333000080427
+    },
+    {
+      "id": "certainty_and_scope",
+      "expected_supported": false,
+      "passages": [
+        {
+          "id": "13:0:0",
+          "source_id": 13,
+          "text_index": 0,
+          "start": 0,
+          "end": 82,
+          "text": "If export license applications are denied, we may be unable to ship some products.",
+          "preceding_context": "",
+          "premise": "If export license applications are denied, we may be unable to ship some products.",
+          "tokens": 37,
+          "scores": {
+            "entailment": 0.026562720782245603,
+            "neutral": 0.49242177900776646,
+            "contradiction": 0.481015500209988
+          }
+        },
+        {
+          "id": "13:0:1",
+          "source_id": 13,
+          "text_index": 0,
+          "start": 83,
+          "end": 116,
+          "text": "Applications remain under review.",
+          "preceding_context": "If export license applications are denied, we may be unable to ship some products.",
+          "premise": "If export license applications are denied, we may be unable to ship some products. Applications remain under review.",
+          "tokens": 43,
+          "scores": {
+            "entailment": 0.006887526934177729,
+            "neutral": 0.2984400714225012,
+            "contradiction": 0.694672401643321
+          }
+        }
+      ],
+      "supported": false,
+      "matches_expected": true,
+      "error": null,
+      "best_passage_id": "13:0:0",
+      "best_scores": {
+        "entailment": 0.026562720782245603,
+        "neutral": 0.49242177900776646,
+        "contradiction": 0.481015500209988
+      },
+      "elapsed_seconds": 0.023202124999443186
+    },
+    {
+      "id": "reversed_causality",
+      "expected_supported": false,
+      "passages": [
+        {
+          "id": "14:0:0",
+          "source_id": 14,
+          "text_index": 0,
+          "start": 0,
+          "end": 51,
+          "text": "Lower customer demand may lead to excess inventory.",
+          "preceding_context": "",
+          "premise": "Lower customer demand may lead to excess inventory.",
+          "tokens": 27,
+          "scores": {
+            "entailment": 0.3189886834934338,
+            "neutral": 0.014922661929620811,
+            "contradiction": 0.6660886545769454
+          }
+        },
+        {
+          "id": "14:0:1",
+          "source_id": 14,
+          "text_index": 0,
+          "start": 52,
+          "end": 95,
+          "text": "We monitor demand when planning production.",
+          "preceding_context": "Lower customer demand may lead to excess inventory.",
+          "premise": "Lower customer demand may lead to excess inventory. We monitor demand when planning production.",
+          "tokens": 36,
+          "scores": {
+            "entailment": 0.456082745137957,
+            "neutral": 0.02195808553792262,
+            "contradiction": 0.5219591693241205
+          }
+        }
+      ],
+      "supported": false,
+      "matches_expected": true,
+      "error": null,
+      "best_passage_id": "14:0:1",
+      "best_scores": {
+        "entailment": 0.456082745137957,
+        "neutral": 0.02195808553792262,
+        "contradiction": 0.5219591693241205
+      },
+      "elapsed_seconds": 0.021028999999543885
+    },
+    {
+      "id": "unsupported_conjunct",
+      "expected_supported": false,
+      "passages": [
+        {
+          "id": "15:0:0",
+          "source_id": 15,
+          "text_index": 0,
+          "start": 0,
+          "end": 44,
+          "text": "Supplier interruptions may delay deliveries.",
+          "preceding_context": "",
+          "premise": "Supplier interruptions may delay deliveries.",
+          "tokens": 31,
+          "scores": {
+            "entailment": 0.00038521355492638216,
+            "neutral": 0.999254033048688,
+            "contradiction": 0.0003607533963856439
+          }
+        },
+        {
+          "id": "15:0:1",
+          "source_id": 15,
+          "text_index": 0,
+          "start": 45,
+          "end": 111,
+          "text": "We maintain inventory to reduce the impact of these interruptions.",
+          "preceding_context": "Supplier interruptions may delay deliveries.",
+          "premise": "Supplier interruptions may delay deliveries. We maintain inventory to reduce the impact of these interruptions.",
+          "tokens": 46,
+          "scores": {
+            "entailment": 0.0005016653753619747,
+            "neutral": 0.9988232335394465,
+            "contradiction": 0.0006751010851916489
+          }
+        }
+      ],
+      "supported": false,
+      "matches_expected": true,
+      "error": null,
+      "best_passage_id": "15:0:1",
+      "best_scores": {
+        "entailment": 0.0005016653753619747,
+        "neutral": 0.9988232335394465,
+        "contradiction": 0.0006751010851916489
+      },
+      "elapsed_seconds": 0.02324708299966005
+    },
+    {
+      "id": "english_paraphrase",
+      "expected_supported": true,
+      "passages": [
+        {
+          "id": "16:0:0",
+          "source_id": 16,
+          "text_index": 0,
+          "start": 0,
+          "end": 56,
+          "text": "Some components are obtained from sole-source suppliers.",
+          "preceding_context": "",
+          "premise": "Some components are obtained from sole-source suppliers.",
+          "tokens": 25,
+          "scores": {
+            "entailment": 0.006874955453859169,
+            "neutral": 0.9906510839193101,
+            "contradiction": 0.002473960626830568
+          }
+        },
+        {
+          "id": "16:0:1",
+          "source_id": 16,
+          "text_index": 0,
+          "start": 57,
+          "end": 140,
+          "text": "Qualifying replacement suppliers for these components may require significant time.",
+          "preceding_context": "Some components are obtained from sole-source suppliers.",
+          "premise": "Some components are obtained from sole-source suppliers. Qualifying replacement suppliers for these components may require significant time.",
+          "tokens": 41,
+          "scores": {
+            "entailment": 0.9776962881937471,
+            "neutral": 0.020949193922483487,
+            "contradiction": 0.0013545178837692697
+          }
+        }
+      ],
+      "supported": true,
+      "matches_expected": true,
+      "error": null,
+      "best_passage_id": "16:0:1",
+      "best_scores": {
+        "entailment": 0.9776962881937471,
+        "neutral": 0.020949193922483487,
+        "contradiction": 0.0013545178837692697
+      },
+      "elapsed_seconds": 0.026753624999400927
+    },
+    {
+      "id": "uncited_support",
+      "expected_supported": false,
+      "passages": [
+        {
+          "id": "17:0:0",
+          "source_id": 17,
+          "text_index": 0,
+          "start": 0,
+          "end": 54,
+          "text": "Distribution costs may increase when fuel prices rise.",
+          "preceding_context": "",
+          "premise": "Distribution costs may increase when fuel prices rise.",
+          "tokens": 26,
+          "scores": {
+            "entailment": 0.008008328943399737,
+            "neutral": 0.962226330934122,
+            "contradiction": 0.02976534012247814
+          }
+        }
+      ],
+      "supported": false,
+      "matches_expected": true,
+      "error": null,
+      "best_passage_id": "17:0:0",
+      "best_scores": {
+        "entailment": 0.008008328943399737,
+        "neutral": 0.962226330934122,
+        "contradiction": 0.02976534012247814
+      },
+      "elapsed_seconds": 0.009888208000120358
+    }
+  ]
+}

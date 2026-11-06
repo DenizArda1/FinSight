@@ -1,0 +1,67 @@
+{
+  "pricing_source": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+  "pricing_date": "2026-11-06",
+  "note": "Standard token-only estimate, excluding tax; output includes reasoning. Each request is below the long-context threshold.",
+  "cases": [
+    {
+      "case": "Microsoft mixed",
+      "trace": "logs/runs/20261106T153855702337Z_e2f7fdcc.json",
+      "input_tokens": 12788,
+      "cached_input_tokens": 0,
+      "output_tokens": 353,
+      "estimated_usd": 0.0014553,
+      "verification": {
+        "supported": true,
+        "issues": [],
+        "evidence_supported": true,
+        "language_matches": true,
+        "answer_complete": true,
+        "status": "passed",
+        "stage": "grounding_and_language",
+        "deterministic_fields": "passed",
+        "method": "source_fields_and_llm_judge"
+      },
+      "revisions": 0
+    },
+    {
+      "case": "Apple'ın yerel verideki en son yıllık gelirini, mali yılını ve dönem bitiş tarihini söyle.",
+      "trace": "/Users/denizardasanal/FinSight/logs/runs/20261106T153921158226Z_08e5d8ec.json",
+      "input_tokens": 2344,
+      "cached_input_tokens": 0,
+      "output_tokens": 120,
+      "estimated_usd": 0.0002944,
+      "verification": {
+        "supported": true,
+        "issues": [],
+        "evidence_supported": true,
+        "language_matches": true,
+        "answer_complete": true,
+        "status": "passed",
+        "stage": "grounding_and_language",
+        "deterministic_fields": "passed",
+        "method": "source_fields_and_llm_judge"
+      },
+      "revisions": 0
+    },
+    {
+      "case": "Amazon'un yerel verideki en son mali yıl için brüt kâr marjını hesapla.",
+      "trace": "/Users/denizardasanal/FinSight/logs/runs/20261106T153948025732Z_533176ef.json",
+      "input_tokens": 4474,
+      "cached_input_tokens": 0,
+      "output_tokens": 158,
+      "estimated_usd": 0.0005264000000000001,
+      "verification": {
+        "supported": true,
+        "issues": [],
+        "evidence_supported": true,
+        "language_matches": true,
+        "answer_complete": true,
+        "status": "passed",
+        "stage": "grounding_and_language",
+        "deterministic_fields": "passed",
+        "method": "source_fields_and_llm_judge"
+      },
+      "revisions": 0
+    }
+  ]
+}

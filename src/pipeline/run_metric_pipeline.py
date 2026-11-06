@@ -44,6 +44,7 @@ def build_margin_rows(matches, margin_type, income_type, revenue_type="revenue")
         margin = calculate_margin(income_record["value"],revenue_record["value"])
         margin_rows.append({
             "cik": revenue_record["cik"],
+            **({"fiscal_year": revenue_record["fiscal_year"]} if "fiscal_year" in revenue_record else {}),
             "start": period[0],
             "end": period[1],
             "value": margin,
@@ -63,6 +64,7 @@ def build_growth_rows(pairs, metric_name="revenue_growth", input_type="revenue")
         growth = calculate_growth(previous_record["value"],current_record["value"])
         growth_rows.append({
             "cik": current_record["cik"],
+            **({"fiscal_year": current_record["fiscal_year"]} if "fiscal_year" in current_record else {}),
             "metric": metric_name,
             "start": current_record["start"],
             "end": current_record["end"],
@@ -89,6 +91,7 @@ def build_cagr_row(revenue_rows, metric_name="revenue_cagr", input_type="revenue
 
     return ({
         "cik": first_record["cik"],
+        **({"fiscal_year": last_record["fiscal_year"]} if "fiscal_year" in last_record else {}),
         "metric": metric_name,
         "start": first_record["end"],
         "end": last_record["end"],

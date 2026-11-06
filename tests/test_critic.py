@@ -98,7 +98,9 @@ class CriticTests(unittest.IsolatedAsyncioTestCase):
         evidence = critic_payload["tool_evidence"]
         self.assertEqual(len(evidence), 1)
         self.assertEqual(evidence[0]["source_id"], 1)
-        self.assertEqual(evidence[0]["result"]["matches"][0], match)
+        self.assertEqual(evidence[0]["result"]["matches"][0]["text"],
+                         "<filing_excerpt>\nFailure to obtain licenses may prevent sales.\n</filing_excerpt>")
+        self.assertEqual(state["evidence"][0]["result"]["matches"][0], match)
         self.assertEqual(state["answer"], state["draft"])
 
     async def test_localized_citation_still_requires_semantic_approval(self):
@@ -159,15 +161,12 @@ class CriticTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(state["verification"]["supported"])
                 self.assertIsNone(state["answer"])
 
-    async def test_malformed_or_inconsistent_verdict_is_error_not_approval(self):
+    async def test_malformed_verdict_is_error_not_approval(self):
         payloads = [
             None, [], {}, {**self.approval, "evidence_supported": "true"},
             {key: value for key, value in self.approval.items() if key != "answer_complete"},
             {**self.approval, "answer_complete": "true"},
-            {**self.approval, "answer_complete": False},
             {**self.approval, "language_matches": 1}, {**self.approval, "extra": True},
-            {**self.approval, "issues": ["Contradiction"]},
-            {**self.approval, "evidence_supported": False},
             {**self.approval, "evidence_supported": False, "issues": [" "]},
         ]
         for response in ["not JSON", *[json.dumps(payload) for payload in payloads]]:
@@ -181,6 +180,17 @@ class CriticTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(state["verification"]["deterministic_fields"], "passed")
                 self.assertIsNone(state["answer"])
                 self.assertEqual(state["trace"][-1]["status"], "error")
+
+    async def test_inconsistent_verdict_is_revisable_failure_not_approval(self):
+        for changes in ({"answer_complete": False}, {"language_matches": False},
+                        {"evidence_supported": False}, {"issues": ["Contradiction"]}):
+            with self.subTest(changes=changes):
+                state = deepcopy(self.state)
+                self.generate.return_value = json.dumps({**self.approval, **changes})
+                await run_critic(state, {})
+                self.assertEqual(state["verification"]["status"], "failed")
+                self.assertTrue(state["verification"]["issues"])
+                self.assertIsNone(state["answer"])
 
     async def test_model_failure_is_recorded_and_never_releases_stale_answer(self):
         self.state["answer"] = "Stale answer"
@@ -232,6 +242,18 @@ class CriticTests(unittest.IsolatedAsyncioTestCase):
         await run_critic(state, {})
         self.assertEqual(state["verification"]["status"], "failed")
         self.assertIsNone(state["answer"])
+        self.generate.assert_not_called()
+
+    async def test_comparison_fact_cards_cannot_pass_without_an_explanation(self):
+        self.state["request_type"] = "comparison"
+        self.state["composition"]["text"] = ""
+        catalog = build_fact_catalog(self.state["evidence"])
+        self.state["draft"] = render_agent_template(
+            compose_template(self.state["composition"], catalog), self.state["evidence"],
+        )
+        await run_critic(self.state, {})
+        self.assertEqual(self.state["verification"]["status"], "failed")
+        self.assertIsNone(self.state["answer"])
         self.generate.assert_not_called()
 
     async def test_writer_then_critic_preserves_draft_and_releases_it_only_after_approval(self):

@@ -1,5 +1,7 @@
 import re
 
+SOURCE_REFERENCE = re.compile(r"\[Source ([1-9][0-9]*)\]")
+
 
 def validate_citations(answer, matches, require_citations=True):
     if not isinstance(answer, str):

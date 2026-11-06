@@ -1,0 +1,80 @@
+{
+  "llm_config": {
+    "model": "qwen3:8b",
+    "think": true,
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "cases": [
+    {
+      "id": "fx_correct",
+      "question": "Microsoft kur etkisini nasıl açıklıyor?",
+      "answer": "Kur dalgalanmaları uluslararası operasyonların raporlanan gelirini artırmış, raporlanan giderleri üzerinde önemli bir etki yaratmamıştır. [Source 1]",
+      "source": "Fluctuations in the U.S. dollar relative to certain foreign currencies increased reported revenue and did not have a material impact on reported expenses from our international operations in fiscal year 2026.",
+      "expected_supported": true,
+      "verdict": {
+        "supported": true,
+        "issues": [],
+        "evidence_supported": true,
+        "language_matches": true,
+        "answer_complete": true
+      },
+      "matches_expectation": true
+    },
+    {
+      "id": "fx_wrong_direction",
+      "question": "Microsoft kur etkisini nasıl açıklıyor?",
+      "answer": "Doların değer kazanması, uluslararası operasyonların raporlanan gelirini artırmıştır. [Source 1]",
+      "source": "Fluctuations in the U.S. dollar relative to certain foreign currencies increased reported revenue and did not have a material impact on reported expenses from our international operations in fiscal year 2026.",
+      "expected_supported": false,
+      "verdict": {
+        "supported": false,
+        "issues": [
+          "Answer assumes dollar appreciation instead of fluctuations",
+          "Omits mention of expenses not materially affecting international operations"
+        ],
+        "evidence_supported": true,
+        "language_matches": true,
+        "answer_complete": false
+      },
+      "matches_expectation": true
+    },
+    {
+      "id": "tariffs_correct",
+      "question": "Microsoft ticaret politikalarının etkisini nasıl açıklıyor?",
+      "answer": "ABD'nin gümrük tarifeleri ve değişen yapay zekâ ihracat kontrol politikaları operasyonel maliyetleri artırmış ve ürün sürekliliği konusunda belirsizlik yaratmıştır. [Source 1]",
+      "source": "U.S. tariffs, shifting AI export controls policies, and disagreements among governments on sanctions policies toward third countries, has and may continue to increase operational costs, create uncertainty in the continuity of our products, and accelerate sovereignty initiatives among international partners and customers.",
+      "expected_supported": true,
+      "verdict": {
+        "supported": true,
+        "issues": [],
+        "evidence_supported": true,
+        "language_matches": true,
+        "answer_complete": true
+      },
+      "matches_expectation": true
+    },
+    {
+      "id": "tariffs_wrong_actor",
+      "question": "Microsoft ticaret politikalarının etkisini nasıl açıklıyor?",
+      "answer": "ABD'ye karşı uygulanan gümrük tarifeleri Microsoft'un operasyonel maliyetlerini artırmıştır. [Source 1]",
+      "source": "U.S. tariffs, shifting AI export controls policies, and disagreements among governments on sanctions policies toward third countries, has and may continue to increase operational costs, create uncertainty in the continuity of our products, and accelerate sovereignty initiatives among international partners and customers.",
+      "expected_supported": false,
+      "verdict": {
+        "supported": false,
+        "issues": [
+          "ABD'ye karşı uygulanan gümrük tarifeleri"
+        ],
+        "evidence_supported": true,
+        "language_matches": true,
+        "answer_complete": true
+      },
+      "matches_expectation": true
+    }
+  ]
+}

@@ -2,9 +2,13 @@ from datetime import date
 import re
 
 from src.rag.embeddings import embed_text
+from src.rag.hybrid import bm25_rank, reciprocal_rank_fusion
+from src.rag.versions import active_records, version_filter
 
 
-def search_reports(query, collection, embedding_config, top_k=5, ticker=None, fiscal_year=None, section=None, accession_number=None):
+def search_reports(query, collection, embedding_config, top_k=5, ticker=None, fiscal_year=None, section=None, accession_number=None, hybrid=False, report_date=None):
+    if not isinstance(query, str) or not query.strip():
+        raise ValueError("Query must be a non-empty string")
     if type(top_k) is not int or top_k <= 0:
         raise ValueError("top_k must be a positive integer")
     if ticker is not None:
@@ -31,6 +35,9 @@ def search_reports(query, collection, embedding_config, top_k=5, ticker=None, fi
     if accession_number is not None:
         filters.append({"accession_number": accession_number})
 
+    if report_date is not None:
+        filters.append({"report_date": report_date})
+
     if not filters:
         where = None
     elif len(filters) == 1:
@@ -38,14 +45,33 @@ def search_reports(query, collection, embedding_config, top_k=5, ticker=None, fi
     else:
         where = {"$and": filters}
 
+    lexical = []
+    if hybrid:
+        from src.rag.index_identity import verify_collection_identity
+        identity = verify_collection_identity(collection, embedding_config)
+        embedding_config = {**embedding_config, "digest": identity["embedding_digest"]}
+        stored = collection.get(where=where, include=["documents", "metadatas"])
+        records = active_records([
+            {"chunk_id": chunk_id, "text": text, "metadata": metadata}
+            for chunk_id, text, metadata in zip(stored["ids"], stored["documents"], stored["metadatas"], strict=True)
+        ])
+        if not records:
+            return []
+        active_filter = version_filter(records)
+        where = {"$and": [where, active_filter]} if where else active_filter
+        candidate_count = min(len(records), max(top_k * 4, 20))
+        lexical = bm25_rank(query, records, candidate_count)
+    else:
+        candidate_count = top_k
     query_vector = embed_text(query, embedding_config)
     results = collection.query(
         query_embeddings=[query_vector],
-        n_results=top_k,
+        n_results=candidate_count,
         where=where,
         include=["documents", "metadatas", "distances"],
     )
-    return format_search_results(results)
+    dense = format_search_results(results)
+    return reciprocal_rank_fusion(dense, lexical, top_k) if hybrid else dense
 
 
 def format_search_results(results):
@@ -113,6 +139,9 @@ def get_latest_report_metadata(collection, ticker):
 
     latest_date = max(report["report_date"] for report in reports.values())
     latest_reports = [report for report in reports.values() if report["report_date"] == latest_date]
-    if len(latest_reports) != 1:
-        raise ValueError(f"Multiple indexed reports share the latest period end for {ticker}")
-    return latest_reports[0]
+    if len(latest_reports) > 1 and any(not metadata.get("filed") for metadata in metadatas if metadata["report_date"] == latest_date):
+        raise ValueError("Multiple report versions lack filing dates; rebuild metadata before selecting amendments")
+    if len({report["fiscal_year"] for report in latest_reports}) != 1:
+        raise ValueError(f"Conflicting fiscal years for the latest period end for {ticker}")
+    # This identifies the period only. Section selection resolves partial amendments.
+    return max(latest_reports, key=lambda report: report["accession_number"])

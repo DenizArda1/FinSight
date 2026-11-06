@@ -1,0 +1,1998 @@
+{
+  "mode": "claim_checker_extended_regression",
+  "llm_config": {
+    "model": "qwen3:8b",
+    "claim_nli": {
+      "model_path": "financial_data/models/mdeberta_nli"
+    },
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 180,
+    "options": {
+      "temperature": 0,
+      "num_ctx": 16384,
+      "num_predict": 4096
+    }
+  },
+  "cases_sha256": "e29b4ec62e25bb8ec6371179461e106db2b3299a517fee9d98e9544794e57c8d",
+  "code_sha256": "681239a4f052ac59d47059b3246740df3ef3d2bfa437946652092b60e2cdca1e",
+  "cases": [
+    {
+      "id": "china_scope_wrong",
+      "expected_supported": false,
+      "claim": "Customers in regions like China, Europe, Latin America, and Southeast Asia may avoid U.S. semiconductors to reduce compliance burdens.",
+      "sources": [
+        {
+          "source_id": 2,
+          "text": " distributed from Hong Kong.\nExport controls restricting our ability to sell data center GPUs may also negatively impact demand for our networking products used in servers containing our GPUs. The USG may also impose export controls on our networking products, such as high-speed network interconnects, to limit the ability of downstream parties to create large clusters for frontier model training.\nExport controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control. Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide. Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.\nAs a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia. Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20. At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls.\nThe increasingly complex export controls impose complex and burdensome compliance obligations on our partners, suppliers, and customers. While we seek to strictly comply with all applicable export control regulators, reports of diversion of controlled products, even when unsubstantiated and untrue, may negatively impact our business, relationships with partners and customers, and our reputation. ",
+          "metadata": {
+            "start": 146424,
+            "form": "10-K",
+            "cik": "0001045810",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "section": "Item 1A",
+            "section_title": "Risk Factors",
+            "section_end": 173432,
+            "ticker": "NVDA",
+            "end": 147845,
+            "section_start": 58590,
+            "fiscal_year": 2026,
+            "report_date": "2026-01-25",
+            "accession_number": "0001045810-26-000021"
+          }
+        },
+        {
+          "source_id": 3,
+          "text": "uld negatively and materially impact our business, revenue and financial results. Export controls and other restrictions targeting GPUs and semiconductors associated with AI, which have been imposed and are likely to be more restrictive, would further limit our ability to export our technology, products, or services, creating a competitive disadvantage for us and negatively impacting our business\n25\nTable of Contents\nand financial results. Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results. Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China.\nExport controls have and could in the future disrupt our supply chain and distribution channels, negatively impacting our ability to serve demand, including in markets outside China and for our non-data center products. The possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls. Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business.\nIncreasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results. Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges. Additional unilateral or multilateral controls are also likely to incl",
+          "metadata": {
+            "form": "10-K",
+            "ticker": "NVDA",
+            "report_date": "2026-01-25",
+            "end": 134172,
+            "section_start": 58590,
+            "fiscal_year": 2026,
+            "start": 132988,
+            "section_end": 173432,
+            "section_title": "Risk Factors",
+            "cik": "0001045810",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "section": "Item 1A",
+            "accession_number": "0001045810-26-000021"
+          }
+        }
+      ],
+      "cited_source_ids": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "china_scope_correct",
+      "expected_supported": true,
+      "claim": "Customers outside China and other impacted regions may design out certain U.S. semiconductors to reduce compliance burdens.",
+      "sources": [
+        {
+          "source_id": 2,
+          "text": " distributed from Hong Kong.\nExport controls restricting our ability to sell data center GPUs may also negatively impact demand for our networking products used in servers containing our GPUs. The USG may also impose export controls on our networking products, such as high-speed network interconnects, to limit the ability of downstream parties to create large clusters for frontier model training.\nExport controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control. Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide. Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.\nAs a result, export controls have in the past and may in the future negatively impact demand for our products and services not only in China, but also in other markets, such as Europe, Latin America, and Southeast Asia. Export controls increase the risk of investing in U.S. advanced semiconductor products, because by the time a new product is ready for market, it may be subject to new unilateral export controls restricting its sale, resulting in excess inventory and purchase obligations as we recently experienced with the H20. At the same time, such controls may increase investment in foreign competitors, which would be less likely to be restricted by U.S. controls.\nThe increasingly complex export controls impose complex and burdensome compliance obligations on our partners, suppliers, and customers. While we seek to strictly comply with all applicable export control regulators, reports of diversion of controlled products, even when unsubstantiated and untrue, may negatively impact our business, relationships with partners and customers, and our reputation. ",
+          "metadata": {
+            "start": 146424,
+            "form": "10-K",
+            "cik": "0001045810",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "section": "Item 1A",
+            "section_title": "Risk Factors",
+            "section_end": 173432,
+            "ticker": "NVDA",
+            "end": 147845,
+            "section_start": 58590,
+            "fiscal_year": 2026,
+            "report_date": "2026-01-25",
+            "accession_number": "0001045810-26-000021"
+          }
+        },
+        {
+          "source_id": 3,
+          "text": "uld negatively and materially impact our business, revenue and financial results. Export controls and other restrictions targeting GPUs and semiconductors associated with AI, which have been imposed and are likely to be more restrictive, would further limit our ability to export our technology, products, or services, creating a competitive disadvantage for us and negatively impacting our business\n25\nTable of Contents\nand financial results. Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results. Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China.\nExport controls have and could in the future disrupt our supply chain and distribution channels, negatively impacting our ability to serve demand, including in markets outside China and for our non-data center products. The possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls. Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business.\nIncreasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results. Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges. Additional unilateral or multilateral controls are also likely to incl",
+          "metadata": {
+            "form": "10-K",
+            "ticker": "NVDA",
+            "report_date": "2026-01-25",
+            "end": 134172,
+            "section_start": 58590,
+            "fiscal_year": 2026,
+            "start": 132988,
+            "section_end": 173432,
+            "section_title": "Risk Factors",
+            "cik": "0001045810",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "section": "Item 1A",
+            "accession_number": "0001045810-26-000021"
+          }
+        }
+      ],
+      "cited_source_ids": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "supplier_region_transfer_wrong",
+      "claim": "Suppliers in Japan may delay deliveries because of power shortages.",
+      "expected_supported": false,
+      "sources": [
+        {
+          "source_id": 21,
+          "text": "Suppliers in Taiwan may delay deliveries because of power shortages. Suppliers in Japan may raise prices because of higher labor costs.",
+          "metadata": {
+            "fixture": true
+          }
+        }
+      ],
+      "cited_source_ids": [
+        21
+      ]
+    },
+    {
+      "id": "supplier_region_translation_correct",
+      "claim": "Tayvan'daki tedarikçiler elektrik sıkıntısı nedeniyle teslimatları geciktirebilir.",
+      "expected_supported": true,
+      "sources": [
+        {
+          "source_id": 21,
+          "text": "Suppliers in Taiwan may delay deliveries because of power shortages. Suppliers in Japan may raise prices because of higher labor costs.",
+          "metadata": {
+            "fixture": true
+          }
+        }
+      ],
+      "cited_source_ids": [
+        21
+      ]
+    },
+    {
+      "id": "condition_transfer_wrong",
+      "claim": "If the port closes, insurance premiums may rise.",
+      "expected_supported": false,
+      "sources": [
+        {
+          "source_id": 22,
+          "text": "If the port closes, shipments may be delayed. If accident rates increase, insurance premiums may rise.",
+          "metadata": {
+            "fixture": true
+          }
+        }
+      ],
+      "cited_source_ids": [
+        22
+      ]
+    },
+    {
+      "id": "condition_translation_correct",
+      "claim": "Kaza oranları artarsa sigorta primleri yükselebilir.",
+      "expected_supported": true,
+      "sources": [
+        {
+          "source_id": 22,
+          "text": "If the port closes, shipments may be delayed. If accident rates increase, insurance premiums may rise.",
+          "metadata": {
+            "fixture": true
+          }
+        }
+      ],
+      "cited_source_ids": [
+        22
+      ]
+    },
+    {
+      "id": "excluded_population_wrong",
+      "claim": "Customers with long-term contracts may switch suppliers when spot prices rise.",
+      "expected_supported": false,
+      "sources": [
+        {
+          "source_id": 23,
+          "text": "Customers without long-term contracts may switch suppliers when spot prices rise. Customers with long-term contracts may negotiate different payment schedules.",
+          "metadata": {
+            "fixture": true
+          }
+        }
+      ],
+      "cited_source_ids": [
+        23
+      ]
+    },
+    {
+      "id": "excluded_population_correct",
+      "claim": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+      "expected_supported": true,
+      "sources": [
+        {
+          "source_id": 23,
+          "text": "Customers without long-term contracts may switch suppliers when spot prices rise. Customers with long-term contracts may negotiate different payment schedules.",
+          "metadata": {
+            "fixture": true
+          }
+        }
+      ],
+      "cited_source_ids": [
+        23
+      ]
+    },
+    {
+      "id": "supplier_translation",
+      "claim": "Tedarikçilerdeki üretim kesintileri ürün teslimatlarını geciktirebilir.",
+      "expected_supported": true,
+      "sources": [
+        {
+          "source_id": 11,
+          "text": "We rely on third-party suppliers. Manufacturing interruptions at these suppliers may delay product deliveries.",
+          "metadata": {
+            "fixture": true
+          }
+        }
+      ],
+      "cited_source_ids": [
+        11
+      ]
+    },
+    {
+      "id": "negated_incident",
+      "claim": "The incident caused a material disruption to operations.",
+      "expected_supported": false,
+      "sources": [
+        {
+          "source_id": 12,
+          "text": "The incident was investigated. We have not experienced a material disruption to operations from this incident.",
+          "metadata": {
+            "fixture": true
+          }
+        }
+      ],
+      "cited_source_ids": [
+        12
+      ]
+    },
+    {
+      "id": "conditional_translation",
+      "claim": "İhracat lisansı başvuruları reddedilirse bazı ürünler sevk edilemeyebilir.",
+      "expected_supported": true,
+      "sources": [
+        {
+          "source_id": 13,
+          "text": "If export license applications are denied, we may be unable to ship some products. Applications remain under review.",
+          "metadata": {
+            "fixture": true
+          }
+        }
+      ],
+      "cited_source_ids": [
+        13
+      ]
+    },
+    {
+      "id": "certainty_and_scope",
+      "claim": "All shipments will stop because the export licenses have been denied.",
+      "expected_supported": false,
+      "sources": [
+        {
+          "source_id": 13,
+          "text": "If export license applications are denied, we may be unable to ship some products. Applications remain under review.",
+          "metadata": {
+            "fixture": true
+          }
+        }
+      ],
+      "cited_source_ids": [
+        13
+      ]
+    },
+    {
+      "id": "reversed_causality",
+      "claim": "Excess inventory may cause lower customer demand.",
+      "expected_supported": false,
+      "sources": [
+        {
+          "source_id": 14,
+          "text": "Lower customer demand may lead to excess inventory. We monitor demand when planning production.",
+          "metadata": {
+            "fixture": true
+          }
+        }
+      ],
+      "cited_source_ids": [
+        14
+      ]
+    },
+    {
+      "id": "unsupported_conjunct",
+      "claim": "Supplier interruptions may delay deliveries and cause customer data breaches.",
+      "expected_supported": false,
+      "sources": [
+        {
+          "source_id": 15,
+          "text": "Supplier interruptions may delay deliveries. We maintain inventory to reduce the impact of these interruptions.",
+          "metadata": {
+            "fixture": true
+          }
+        }
+      ],
+      "cited_source_ids": [
+        15
+      ]
+    },
+    {
+      "id": "english_paraphrase",
+      "claim": "Changing certain suppliers can take time.",
+      "expected_supported": true,
+      "sources": [
+        {
+          "source_id": 16,
+          "text": "Some components are obtained from sole-source suppliers. Qualifying replacement suppliers for these components may require significant time.",
+          "metadata": {
+            "fixture": true
+          }
+        }
+      ],
+      "cited_source_ids": [
+        16
+      ]
+    },
+    {
+      "id": "uncited_support",
+      "claim": "Severe storms may disrupt transportation.",
+      "expected_supported": false,
+      "sources": [
+        {
+          "source_id": 17,
+          "text": "Distribution costs may increase when fuel prices rise.",
+          "metadata": {
+            "fixture": true
+          }
+        }
+      ],
+      "cited_source_ids": [
+        17
+      ]
+    },
+    {
+      "id": "shipping_correct_citation",
+      "claim": "ABD ve diğer devletlerin ihracat düzenlemeleri, NVIDIA'nın ürün sevkiyatını ve müşterilerine hizmet sunmasını olumsuz etkileyebilir.",
+      "sources": [
+        {
+          "source_id": 4,
+          "text": "ion of or increase to import duties or tariffs, restrictions and controls on imports or exports, or other retaliatory actions, which could have an adverse effect on our business plans or impact the timing of our shipments. Additionally, changes in the public perception of governments in the regions where we operate or plan to operate could negatively impact our business and results of operations.\nGovernment actions, including trade protection and national and economic security policies of U.S. and foreign government bodies, such as tariffs, import or export regulations, including deemed export restrictions and restrictions on the activities of U.S. persons, trade and economic sanctions, decrees, quotas or other trade barriers and restrictions could affect our ability to ship products, provide services to our customers and employees, do business without an export license with entities on the U.S. Department of Commerce’s U.S. Entity List or other USG restricted parties lists (which is expected to change from time to time), and generally fulfill our contractual obligations and have a material adverse effect on our business. If we were ever found to have violated export control laws or sanctions of the U.S. or similar applicable non-U.S. laws, even if the violation occurred without our knowledge, we may be subject to various penalties available under the laws, any of which could have a material and adverse impact on our business, operating results and financial condition.\nFor example, in response to the war in Ukraine, the United States and other jurisdictions imposed economic sanctions and export control measures which blocked the passage of our products, services and support into Russia, Belarus, and certain regions of Ukraine. In fiscal year 2023, we stopped direct sales to Russia and closed business operations in Russia. Concurrently, the war in Ukraine has im",
+          "metadata": {
+            "start": 129162,
+            "fiscal_year": 2026,
+            "form": "10-K",
+            "section_end": 173432,
+            "accession_number": "0001045810-26-000021",
+            "end": 130255,
+            "report_date": "2026-01-25",
+            "section": "Item 1A",
+            "section_start": 58590,
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "section_title": "Risk Factors",
+            "ticker": "NVDA",
+            "cik": "0001045810"
+          }
+        }
+      ],
+      "expected_supported": true,
+      "cited_source_ids": [
+        4
+      ]
+    },
+    {
+      "id": "shipping_wrong_citation",
+      "claim": "ABD ve diğer devletlerin ihracat düzenlemeleri, NVIDIA'nın ürün sevkiyatını ve müşterilerine hizmet sunmasını olumsuz etkileyebilir.",
+      "sources": [
+        {
+          "source_id": 1,
+          "text": " business operations. In addition, the pace of growth in our operating expenses and investments may lag our revenue growth, creating volatility or periods where profitability levels may not be sustainable. Failure to meet our expectations or the expectations of our investors or security analysts is likely to cause our stock price to decline, as it has in the past, or substantial price volatility.\nRisks Related to Regulatory, Legal, Our Stock and Other Matters\nWe are subject to complex laws, rules, regulations, and political and other actions, including restrictions on the export of our products, which may adversely impact our business.\nWe are subject to laws and regulations domestically and worldwide, affecting our operations in areas including, but not limited to, IP ownership and infringement; taxes; import and export requirements and tariffs; anti-corruption, including the Foreign Corrupt Practices Act; business acquisitions; foreign exchange controls and cash repatriation restrictions; foreign ownership and investment; data",
+          "metadata": {
+            "section_title": "Risk Factors",
+            "section_start": 58590,
+            "section_end": 173432,
+            "fiscal_year": 2026,
+            "section": "Item 1A",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "start": 124320,
+            "cik": "0001045810",
+            "form": "10-K",
+            "end": 124563,
+            "ticker": "NVDA",
+            "accession_number": "0001045810-26-000021",
+            "report_date": "2026-01-25"
+          }
+        }
+      ],
+      "expected_supported": false,
+      "cited_source_ids": [
+        1
+      ]
+    },
+    {
+      "id": "research_correct_citation",
+      "claim": "Ek ihracat kontrolleri, NVIDIA'nın araştırma ve geliştirme ekiplerinin yol haritasını zamanında uygulamasını zorlaştırabilir.",
+      "sources": [
+        {
+          "source_id": 3,
+          "text": "e possibility of additional export controls has negatively impacted and may in the future negatively impact demand for our products, benefiting competitors that offer alternatives less likely to be restricted by further controls. Repeated changes in the export control rules are likely to impose compliance burdens on our business and our customers, negatively and materially impacting our business.\nIncreasing use of economic sanctions and export controls has impacted and may in the future impact demand for our products or services, negatively impacting our business and financial results. Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges. Additional unilateral or multilateral controls are also likely to include deemed export control limitations that negatively impact the ability of our research and development teams to execute our roadmap or other objectives in a timely manner. Additional export restrictions may not only impact our ability to serve overseas markets, but also provoke responses from foreign governments, including China, that negatively impact our supply chain or our ability to provide our products and services to customers in all markets worldwide, which could also substantially reduce our revenue. Regulators in China have inquired about our sales and efforts to supply the China market and our fulfillment of the commitments we entered at the close of our Mellanox acquisition. On September 15, 2025, China’s antitrust regulators published their preliminary finding that our compliance with applicable U.S. export controls, which required us to offer degraded products to the Chinese market, discriminated unfairly against customers in the China market and therefore violated the terms of China’s approval of our Mellanox acquisition. If regulators conclude that we have failed to fulfill the terms of our Mellanox acquisition or we have violated any applicable law in China, we could be subject to financial penalties, restrictions on our ability to conduct our business, restrictions or other orders regarding our networking business, products, and services, or otherwise impact our operations in China, any of which could have a material and adverse impact on our business, ope",
+          "metadata": {
+            "fiscal_year": 2026,
+            "start": 134173,
+            "form": "10-K",
+            "section_title": "Risk Factors",
+            "report_date": "2026-01-25",
+            "section_start": 58590,
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "accession_number": "0001045810-26-000021",
+            "cik": "0001045810",
+            "end": 135671,
+            "section_end": 173432,
+            "section": "Item 1A",
+            "ticker": "NVDA"
+          }
+        }
+      ],
+      "expected_supported": true,
+      "cited_source_ids": [
+        3
+      ]
+    },
+    {
+      "id": "research_wrong_citation",
+      "claim": "Ek ihracat kontrolleri, NVIDIA'nın araştırma ve geliştirme ekiplerinin yol haritasını zamanında uygulamasını zorlaştırabilir.",
+      "sources": [
+        {
+          "source_id": 4,
+          "text": "ion of or increase to import duties or tariffs, restrictions and controls on imports or exports, or other retaliatory actions, which could have an adverse effect on our business plans or impact the timing of our shipments. Additionally, changes in the public perception of governments in the regions where we operate or plan to operate could negatively impact our business and results of operations.\nGovernment actions, including trade protection and national and economic security policies of U.S. and foreign government bodies, such as tariffs, import or export regulations, including deemed export restrictions and restrictions on the activities of U.S. persons, trade and economic sanctions, decrees, quotas or other trade barriers and restrictions could affect our ability to ship products, provide services to our customers and employees, do business without an export license with entities on the U.S. Department of Commerce’s U.S. Entity List or other USG restricted parties lists (which is expected to change from time to time), and generally fulfill our contractual obligations and have a material adverse effect on our business. If we were ever found to have violated export control laws or sanctions of the U.S. or similar applicable non-U.S. laws, even if the violation occurred without our knowledge, we may be subject to various penalties available under the laws, any of which could have a material and adverse impact on our business, operating results and financial condition.\nFor example, in response to the war in Ukraine, the United States and other jurisdictions imposed economic sanctions and export control measures which blocked the passage of our products, services and support into Russia, Belarus, and certain regions of Ukraine. In fiscal year 2023, we stopped direct sales to Russia and closed business operations in Russia. Concurrently, the war in Ukraine has im",
+          "metadata": {
+            "start": 129162,
+            "fiscal_year": 2026,
+            "form": "10-K",
+            "section_end": 173432,
+            "accession_number": "0001045810-26-000021",
+            "end": 130255,
+            "report_date": "2026-01-25",
+            "section": "Item 1A",
+            "section_start": 58590,
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "section_title": "Risk Factors",
+            "ticker": "NVDA",
+            "cik": "0001045810"
+          }
+        }
+      ],
+      "expected_supported": false,
+      "cited_source_ids": [
+        4
+      ]
+    }
+  ],
+  "results": [
+    {
+      "id": "china_scope_wrong",
+      "expected_supported": false,
+      "verdict": {
+        "supported": false,
+        "quotes": [],
+        "missing_details": [
+          "Independent source screening did not establish this entire claim in the cited passages. Preserve the source's scope and conditions; split combined claims or remove unused citations."
+        ]
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "Customers in regions like China, Europe, Latin America, and Southeast Asia may avoid U.S. semiconductors to reduce compliance burdens.",
+          "source_ids": [
+            2,
+            3
+          ],
+          "status": "completed",
+          "supported": false,
+          "candidates": [
+            {
+              "id": "2:0:4",
+              "source_id": 2,
+              "text_index": 0,
+              "start": 613,
+              "end": 891,
+              "text": "Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide.",
+              "context_start": 400,
+              "preceding_context": "Export controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control.",
+              "premise": "Export controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control. Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide.",
+              "classifier_input": "NVDA states in its filing: Export controls have and are likely in the future to have a disproportionate impact on NVIDIA and may disadvantage us against certain of our competitors that sell chips that are outside the scope of such control. Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide.",
+              "scores": {
+                "entailment": 0.06413709821477794,
+                "neutral": 0.9196457281034116,
+                "contradiction": 0.016217173681810318
+              }
+            },
+            {
+              "id": "3:0:6",
+              "source_id": 3,
+              "text_index": 0,
+              "start": 721,
+              "end": 962,
+              "text": "Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China.",
+              "context_start": 444,
+              "preceding_context": "Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results.",
+              "premise": "Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results. Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China.",
+              "classifier_input": "NVDA states in its filing: Export controls targeting GPUs and semiconductors associated with AI have subjected and may in the future subject downstream users of our products to restrictions on the use, resale, repair, or transfer of our products, negatively impacting our business and financial results. Controls could negatively impact our cost and/or ability to provide services such as NVIDIA AI cloud services and could impact the cost and/or ability for our CSPs and customers to provide services to their end customers, even outside China.",
+              "scores": {
+                "entailment": 0.006750138295408108,
+                "neutral": 0.9846976383820043,
+                "contradiction": 0.008552223322587541
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 1.277147832999617
+        }
+      ],
+      "elapsed_seconds": 1.299991833000604
+    },
+    {
+      "id": "china_scope_correct",
+      "expected_supported": true,
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 2,
+            "text": "Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk"
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "Customers outside China and other impacted regions may design out certain U.S. semiconductors to reduce compliance burdens.",
+          "source_ids": [
+            2,
+            3
+          ],
+          "status": "completed",
+          "supported": true,
+          "candidates": [
+            {
+              "id": "2:0:5",
+              "source_id": 2,
+              "text_index": 0,
+              "start": 892,
+              "end": 1146,
+              "text": "Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.",
+              "context_start": 613,
+              "preceding_context": "Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide.",
+              "premise": "Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide. Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.",
+              "classifier_input": "NVDA states in its filing: Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk, and to ensure that they are able to serve markets worldwide. Export controls have already encouraged and may in the future encourage overseas governments to request that our customers purchase from our competitors rather than NVIDIA or other U.S. firms, harming our business, market position, and financial results.",
+              "scores": {
+                "entailment": 0.9745491974530925,
+                "neutral": 0.024212990778534543,
+                "contradiction": 0.0012378117683728813
+              }
+            },
+            {
+              "id": "3:0:3",
+              "source_id": 3,
+              "text_index": 0,
+              "start": 403,
+              "end": 420,
+              "text": "Table of Contents",
+              "context_start": 400,
+              "preceding_context": "25",
+              "premise": "25\nTable of Contents",
+              "classifier_input": "NVDA states in its filing: 25\nTable of Contents",
+              "scores": {
+                "entailment": 0.00881235131303037,
+                "neutral": 0.9671610348723491,
+                "contradiction": 0.024026613814620644
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.6797282919997087
+        },
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Customers outside China and other impacted regions may design out certain U.S. semiconductors to reduce compliance burdens.",
+          "source_ids": [
+            2
+          ],
+          "content": "{\"quotes\":[{\"source_id\":2,\"text\":\"Export controls have already and may in the future encourage customers outside China and other impacted regions to “design-out” certain U.S. semiconductors from their products to reduce the compliance burden and risk\"}],\"missing_details\":[],\"supported\":true}",
+          "status": "completed",
+          "elapsed_seconds": 11.718384290999893
+        }
+      ],
+      "elapsed_seconds": 12.398177208000561
+    },
+    {
+      "id": "supplier_region_transfer_wrong",
+      "expected_supported": false,
+      "verdict": {
+        "supported": false,
+        "quotes": [],
+        "missing_details": [
+          "Independent source screening did not establish this entire claim in the cited passages. Preserve the source's scope and conditions; split combined claims or remove unused citations."
+        ]
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "Suppliers in Japan may delay deliveries because of power shortages.",
+          "source_ids": [
+            21
+          ],
+          "status": "completed",
+          "supported": false,
+          "candidates": [
+            {
+              "id": "21:0:1",
+              "source_id": 21,
+              "text_index": 0,
+              "start": 69,
+              "end": 135,
+              "text": "Suppliers in Japan may raise prices because of higher labor costs.",
+              "context_start": 0,
+              "preceding_context": "Suppliers in Taiwan may delay deliveries because of power shortages.",
+              "premise": "Suppliers in Taiwan may delay deliveries because of power shortages. Suppliers in Japan may raise prices because of higher labor costs.",
+              "classifier_input": "Suppliers in Taiwan may delay deliveries because of power shortages. Suppliers in Japan may raise prices because of higher labor costs.",
+              "scores": {
+                "entailment": 0.08057169589331578,
+                "neutral": 0.04423489797894167,
+                "contradiction": 0.8751934061277424
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.046105749999696855
+        }
+      ],
+      "elapsed_seconds": 0.04612716599876876
+    },
+    {
+      "id": "supplier_region_translation_correct",
+      "expected_supported": true,
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 21,
+            "text": "Suppliers in Taiwan may delay deliveries because of power shortages."
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "Tayvan'daki tedarikçiler elektrik sıkıntısı nedeniyle teslimatları geciktirebilir.",
+          "source_ids": [
+            21
+          ],
+          "status": "completed",
+          "supported": true,
+          "candidates": [
+            {
+              "id": "21:0:1",
+              "source_id": 21,
+              "text_index": 0,
+              "start": 69,
+              "end": 135,
+              "text": "Suppliers in Japan may raise prices because of higher labor costs.",
+              "context_start": 0,
+              "preceding_context": "Suppliers in Taiwan may delay deliveries because of power shortages.",
+              "premise": "Suppliers in Taiwan may delay deliveries because of power shortages. Suppliers in Japan may raise prices because of higher labor costs.",
+              "classifier_input": "Suppliers in Taiwan may delay deliveries because of power shortages. Suppliers in Japan may raise prices because of higher labor costs.",
+              "scores": {
+                "entailment": 0.9990887189829295,
+                "neutral": 0.0007606252501610729,
+                "contradiction": 0.00015065576690950316
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.030144124999424093
+        },
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Tayvan'daki tedarikçiler elektrik sıkıntısı nedeniyle teslimatları geciktirebilir.",
+          "source_ids": [
+            21
+          ],
+          "content": "{\n\n\"quotes\": [\n    {\"source_id\": 21, \"text\": \"Suppliers in Taiwan may delay deliveries because of power shortages.\"}\n],\n\"missing_details\": [],\n\"supported\": true\n}",
+          "status": "completed",
+          "elapsed_seconds": 10.538342166999428
+        }
+      ],
+      "elapsed_seconds": 10.568557709000743
+    },
+    {
+      "id": "condition_transfer_wrong",
+      "expected_supported": false,
+      "verdict": {
+        "quotes": [],
+        "missing_details": [
+          "The connection between port closure and accident rates increase is not established in the text."
+        ],
+        "supported": false
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "If the port closes, insurance premiums may rise.",
+          "source_ids": [
+            22
+          ],
+          "status": "completed",
+          "supported": true,
+          "candidates": [
+            {
+              "id": "22:0:1",
+              "source_id": 22,
+              "text_index": 0,
+              "start": 46,
+              "end": 102,
+              "text": "If accident rates increase, insurance premiums may rise.",
+              "context_start": 0,
+              "preceding_context": "If the port closes, shipments may be delayed.",
+              "premise": "If the port closes, shipments may be delayed. If accident rates increase, insurance premiums may rise.",
+              "classifier_input": "If the port closes, shipments may be delayed. If accident rates increase, insurance premiums may rise.",
+              "scores": {
+                "entailment": 0.9863562875390561,
+                "neutral": 0.009293217396581004,
+                "contradiction": 0.004350495064362846
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.03498187500008498
+        },
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "If the port closes, insurance premiums may rise.",
+          "source_ids": [
+            22
+          ],
+          "content": "{\n\n\"quotes\": [\n    {\"source_id\": 22, \"text\": \"If the port closes, shipments may be delayed.\"},\n    {\"source_id\": 22, \"text\": \"If accident rates increase, insurance premiums may rise.\"}\n],\n\"missing_details\": [\n    \"The connection between port closure and accident rates increase is not established in the text.\"\n],\n\"supported\": false\n}",
+          "status": "completed",
+          "elapsed_seconds": 9.277199209000173
+        }
+      ],
+      "elapsed_seconds": 9.31226420799976
+    },
+    {
+      "id": "condition_translation_correct",
+      "expected_supported": true,
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 22,
+            "text": "If accident rates increase, insurance premiums may rise."
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "Kaza oranları artarsa sigorta primleri yükselebilir.",
+          "source_ids": [
+            22
+          ],
+          "status": "completed",
+          "supported": true,
+          "candidates": [
+            {
+              "id": "22:0:1",
+              "source_id": 22,
+              "text_index": 0,
+              "start": 46,
+              "end": 102,
+              "text": "If accident rates increase, insurance premiums may rise.",
+              "context_start": 0,
+              "preceding_context": "If the port closes, shipments may be delayed.",
+              "premise": "If the port closes, shipments may be delayed. If accident rates increase, insurance premiums may rise.",
+              "classifier_input": "If the port closes, shipments may be delayed. If accident rates increase, insurance premiums may rise.",
+              "scores": {
+                "entailment": 0.9982661849848307,
+                "neutral": 0.0015710272242382545,
+                "contradiction": 0.00016278779093101508
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.04089679099888599
+        },
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Kaza oranları artarsa sigorta primleri yükselebilir.",
+          "source_ids": [
+            22
+          ],
+          "content": "{\n\n\"quotes\": [\n    {\"source_id\": 22, \"text\": \"If accident rates increase, insurance premiums may rise.\"}\n],\n\"missing_details\": [],\n\"supported\": true\n}",
+          "status": "completed",
+          "elapsed_seconds": 10.980619457999637
+        }
+      ],
+      "elapsed_seconds": 11.021595834001346
+    },
+    {
+      "id": "excluded_population_wrong",
+      "expected_supported": false,
+      "verdict": {
+        "supported": false,
+        "quotes": [],
+        "missing_details": [
+          "Independent source screening did not establish this entire claim in the cited passages. Preserve the source's scope and conditions; split combined claims or remove unused citations."
+        ]
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "Customers with long-term contracts may switch suppliers when spot prices rise.",
+          "source_ids": [
+            23
+          ],
+          "status": "completed",
+          "supported": false,
+          "candidates": [
+            {
+              "id": "23:0:0",
+              "source_id": 23,
+              "text_index": 0,
+              "start": 0,
+              "end": 81,
+              "text": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+              "context_start": 0,
+              "preceding_context": "",
+              "premise": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+              "classifier_input": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+              "scores": {
+                "entailment": 0.21383838204765504,
+                "neutral": 0.3074419372838478,
+                "contradiction": 0.47871968066849707
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.04297433400097361
+        }
+      ],
+      "elapsed_seconds": 0.04299412500040489
+    },
+    {
+      "id": "excluded_population_correct",
+      "expected_supported": true,
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 23,
+            "text": "Customers without long-term contracts may switch suppliers when spot prices rise."
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+          "source_ids": [
+            23
+          ],
+          "status": "completed",
+          "supported": true,
+          "candidates": [
+            {
+              "id": "23:0:0",
+              "source_id": 23,
+              "text_index": 0,
+              "start": 0,
+              "end": 81,
+              "text": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+              "context_start": 0,
+              "preceding_context": "",
+              "premise": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+              "classifier_input": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+              "scores": {
+                "entailment": 0.9956459091409757,
+                "neutral": 0.0038438038059637673,
+                "contradiction": 0.0005102870530604368
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.029934958000012557
+        },
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Customers without long-term contracts may switch suppliers when spot prices rise.",
+          "source_ids": [
+            23
+          ],
+          "content": "{\n\n\"quotes\": [\n    {\"source_id\": 23, \"text\": \"Customers without long-term contracts may switch suppliers when spot prices rise.\"}\n],\n\"missing_details\": [],\n\"supported\": true\n}",
+          "status": "completed",
+          "elapsed_seconds": 8.504085999999006
+        }
+      ],
+      "elapsed_seconds": 8.53408916599983
+    },
+    {
+      "id": "supplier_translation",
+      "expected_supported": true,
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 11,
+            "text": "We rely on third-party suppliers."
+          },
+          {
+            "source_id": 11,
+            "text": "Manufacturing interruptions at these suppliers may delay product deliveries."
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "Tedarikçilerdeki üretim kesintileri ürün teslimatlarını geciktirebilir.",
+          "source_ids": [
+            11
+          ],
+          "status": "completed",
+          "supported": true,
+          "candidates": [
+            {
+              "id": "11:0:1",
+              "source_id": 11,
+              "text_index": 0,
+              "start": 34,
+              "end": 110,
+              "text": "Manufacturing interruptions at these suppliers may delay product deliveries.",
+              "context_start": 0,
+              "preceding_context": "We rely on third-party suppliers.",
+              "premise": "We rely on third-party suppliers. Manufacturing interruptions at these suppliers may delay product deliveries.",
+              "classifier_input": "We rely on third-party suppliers. Manufacturing interruptions at these suppliers may delay product deliveries.",
+              "scores": {
+                "entailment": 0.9990996061644092,
+                "neutral": 0.0007532226827636498,
+                "contradiction": 0.00014717115282715645
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.0403031669993652
+        },
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Tedarikçilerdeki üretim kesintileri ürün teslimatlarını geciktirebilir.",
+          "source_ids": [
+            11
+          ],
+          "content": "{\n\n\"quotes\": [\n    {\"source_id\": 11, \"text\": \"We rely on third-party suppliers.\"},\n    {\"source_id\": 11, \"text\": \"Manufacturing interruptions at these suppliers may delay product deliveries.\"}\n],\n\"missing_details\": [],\n\"supported\": true\n}",
+          "status": "completed",
+          "elapsed_seconds": 8.85449916700054
+        }
+      ],
+      "elapsed_seconds": 8.894890333998774
+    },
+    {
+      "id": "negated_incident",
+      "expected_supported": false,
+      "verdict": {
+        "supported": false,
+        "quotes": [],
+        "missing_details": [
+          "Independent source screening did not establish this entire claim in the cited passages. Preserve the source's scope and conditions; split combined claims or remove unused citations."
+        ]
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "The incident caused a material disruption to operations.",
+          "source_ids": [
+            12
+          ],
+          "status": "completed",
+          "supported": false,
+          "candidates": [
+            {
+              "id": "12:0:1",
+              "source_id": 12,
+              "text_index": 0,
+              "start": 31,
+              "end": 110,
+              "text": "We have not experienced a material disruption to operations from this incident.",
+              "context_start": 0,
+              "preceding_context": "The incident was investigated.",
+              "premise": "The incident was investigated. We have not experienced a material disruption to operations from this incident.",
+              "classifier_input": "The incident was investigated. We have not experienced a material disruption to operations from this incident.",
+              "scores": {
+                "entailment": 0.006439633184576068,
+                "neutral": 0.04491542545033783,
+                "contradiction": 0.9486449413650861
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.037204707999990205
+        }
+      ],
+      "elapsed_seconds": 0.03721845800100709
+    },
+    {
+      "id": "conditional_translation",
+      "expected_supported": true,
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 13,
+            "text": "If export license applications are denied, we may be unable to ship some products."
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "İhracat lisansı başvuruları reddedilirse bazı ürünler sevk edilemeyebilir.",
+          "source_ids": [
+            13
+          ],
+          "status": "completed",
+          "supported": true,
+          "candidates": [
+            {
+              "id": "13:0:0",
+              "source_id": 13,
+              "text_index": 0,
+              "start": 0,
+              "end": 82,
+              "text": "If export license applications are denied, we may be unable to ship some products.",
+              "context_start": 0,
+              "preceding_context": "",
+              "premise": "If export license applications are denied, we may be unable to ship some products.",
+              "classifier_input": "If export license applications are denied, we may be unable to ship some products.",
+              "scores": {
+                "entailment": 0.998944145186379,
+                "neutral": 0.0009462901759849214,
+                "contradiction": 0.00010956463763599306
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.029791875000228174
+        },
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "İhracat lisansı başvuruları reddedilirse bazı ürünler sevk edilemeyebilir.",
+          "source_ids": [
+            13
+          ],
+          "content": "{\n\n\"quotes\": [\n    {\"source_id\": 13, \"text\": \"If export license applications are denied, we may be unable to ship some products.\"}\n],\n\"missing_details\": [],\n\"supported\": true\n}",
+          "status": "completed",
+          "elapsed_seconds": 10.002309833000254
+        }
+      ],
+      "elapsed_seconds": 10.032168292000279
+    },
+    {
+      "id": "certainty_and_scope",
+      "expected_supported": false,
+      "verdict": {
+        "supported": false,
+        "quotes": [],
+        "missing_details": [
+          "Independent source screening did not establish this entire claim in the cited passages. Preserve the source's scope and conditions; split combined claims or remove unused citations."
+        ]
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "All shipments will stop because the export licenses have been denied.",
+          "source_ids": [
+            13
+          ],
+          "status": "completed",
+          "supported": false,
+          "candidates": [
+            {
+              "id": "13:0:0",
+              "source_id": 13,
+              "text_index": 0,
+              "start": 0,
+              "end": 82,
+              "text": "If export license applications are denied, we may be unable to ship some products.",
+              "context_start": 0,
+              "preceding_context": "",
+              "premise": "If export license applications are denied, we may be unable to ship some products.",
+              "classifier_input": "If export license applications are denied, we may be unable to ship some products.",
+              "scores": {
+                "entailment": 0.026562720782245603,
+                "neutral": 0.49242177900776646,
+                "contradiction": 0.481015500209988
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.04003958400062402
+        }
+      ],
+      "elapsed_seconds": 0.04005387500001234
+    },
+    {
+      "id": "reversed_causality",
+      "expected_supported": false,
+      "verdict": {
+        "supported": false,
+        "quotes": [],
+        "missing_details": [
+          "Independent source screening did not establish this entire claim in the cited passages. Preserve the source's scope and conditions; split combined claims or remove unused citations."
+        ]
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "Excess inventory may cause lower customer demand.",
+          "source_ids": [
+            14
+          ],
+          "status": "completed",
+          "supported": false,
+          "candidates": [
+            {
+              "id": "14:0:1",
+              "source_id": 14,
+              "text_index": 0,
+              "start": 52,
+              "end": 95,
+              "text": "We monitor demand when planning production.",
+              "context_start": 0,
+              "preceding_context": "Lower customer demand may lead to excess inventory.",
+              "premise": "Lower customer demand may lead to excess inventory. We monitor demand when planning production.",
+              "classifier_input": "Lower customer demand may lead to excess inventory. We monitor demand when planning production.",
+              "scores": {
+                "entailment": 0.456082745137957,
+                "neutral": 0.02195808553792262,
+                "contradiction": 0.5219591693241205
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.024923083999965456
+        }
+      ],
+      "elapsed_seconds": 0.024932124999395455
+    },
+    {
+      "id": "unsupported_conjunct",
+      "expected_supported": false,
+      "verdict": {
+        "supported": false,
+        "quotes": [],
+        "missing_details": [
+          "Independent source screening did not establish this entire claim in the cited passages. Preserve the source's scope and conditions; split combined claims or remove unused citations."
+        ]
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "Supplier interruptions may delay deliveries and cause customer data breaches.",
+          "source_ids": [
+            15
+          ],
+          "status": "completed",
+          "supported": false,
+          "candidates": [
+            {
+              "id": "15:0:1",
+              "source_id": 15,
+              "text_index": 0,
+              "start": 45,
+              "end": 111,
+              "text": "We maintain inventory to reduce the impact of these interruptions.",
+              "context_start": 0,
+              "preceding_context": "Supplier interruptions may delay deliveries.",
+              "premise": "Supplier interruptions may delay deliveries. We maintain inventory to reduce the impact of these interruptions.",
+              "classifier_input": "Supplier interruptions may delay deliveries. We maintain inventory to reduce the impact of these interruptions.",
+              "scores": {
+                "entailment": 0.0005016653753619747,
+                "neutral": 0.9988232335394465,
+                "contradiction": 0.0006751010851916489
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.02547420799965039
+        }
+      ],
+      "elapsed_seconds": 0.02548262500022247
+    },
+    {
+      "id": "english_paraphrase",
+      "expected_supported": true,
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 16,
+            "text": "Qualifying replacement suppliers for these components may require significant time."
+          },
+          {
+            "source_id": 16,
+            "text": "Some components are obtained from sole-source suppliers"
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "Changing certain suppliers can take time.",
+          "source_ids": [
+            16
+          ],
+          "status": "completed",
+          "supported": true,
+          "candidates": [
+            {
+              "id": "16:0:1",
+              "source_id": 16,
+              "text_index": 0,
+              "start": 57,
+              "end": 140,
+              "text": "Qualifying replacement suppliers for these components may require significant time.",
+              "context_start": 0,
+              "preceding_context": "Some components are obtained from sole-source suppliers.",
+              "premise": "Some components are obtained from sole-source suppliers. Qualifying replacement suppliers for these components may require significant time.",
+              "classifier_input": "Some components are obtained from sole-source suppliers. Qualifying replacement suppliers for these components may require significant time.",
+              "scores": {
+                "entailment": 0.9776962881937471,
+                "neutral": 0.020949193922483487,
+                "contradiction": 0.0013545178837692697
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.022144833999846014
+        },
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Changing certain suppliers can take time.",
+          "source_ids": [
+            16
+          ],
+          "content": "{\"quotes\": [{\"source_id\": 16, \"text\": \"Qualifying replacement suppliers for these components may require significant time.\"}, {\"source_id\": 16, \"text\": \"Some components are obtained from sole-source suppliers\"}], \"missing_details\": [], \"supported\": true}",
+          "status": "completed",
+          "elapsed_seconds": 8.743389708000905
+        }
+      ],
+      "elapsed_seconds": 8.765592583000398
+    },
+    {
+      "id": "uncited_support",
+      "expected_supported": false,
+      "verdict": {
+        "supported": false,
+        "quotes": [],
+        "missing_details": [
+          "Independent source screening did not establish this entire claim in the cited passages. Preserve the source's scope and conditions; split combined claims or remove unused citations."
+        ]
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "Severe storms may disrupt transportation.",
+          "source_ids": [
+            17
+          ],
+          "status": "completed",
+          "supported": false,
+          "candidates": [
+            {
+              "id": "17:0:0",
+              "source_id": 17,
+              "text_index": 0,
+              "start": 0,
+              "end": 54,
+              "text": "Distribution costs may increase when fuel prices rise.",
+              "context_start": 0,
+              "preceding_context": "",
+              "premise": "Distribution costs may increase when fuel prices rise.",
+              "classifier_input": "Distribution costs may increase when fuel prices rise.",
+              "scores": {
+                "entailment": 0.008008328943399737,
+                "neutral": 0.962226330934122,
+                "contradiction": 0.02976534012247814
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.023202166999908513
+        }
+      ],
+      "elapsed_seconds": 0.023224124999615015
+    },
+    {
+      "id": "shipping_correct_citation",
+      "expected_supported": true,
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 4,
+            "text": "export regulations, including deemed export restrictions and restrictions on the activities of U.S. persons, trade and economic sanctions, decrees, quotas or other trade barriers and restrictions could affect our ability to ship products, provide services to our customers and employees"
+          },
+          {
+            "source_id": 4,
+            "text": "material adverse effect on our business"
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "ABD ve diğer devletlerin ihracat düzenlemeleri, NVIDIA'nın ürün sevkiyatını ve müşterilerine hizmet sunmasını olumsuz etkileyebilir.",
+          "source_ids": [
+            4
+          ],
+          "status": "completed",
+          "supported": true,
+          "candidates": [
+            {
+              "id": "4:0:2",
+              "source_id": 4,
+              "text_index": 0,
+              "start": 400,
+              "end": 1139,
+              "text": "Government actions, including trade protection and national and economic security policies of U.S. and foreign government bodies, such as tariffs, import or export regulations, including deemed export restrictions and restrictions on the activities of U.S. persons, trade and economic sanctions, decrees, quotas or other trade barriers and restrictions could affect our ability to ship products, provide services to our customers and employees, do business without an export license with entities on the U.S. Department of Commerce’s U.S. Entity List or other USG restricted parties lists (which is expected to change from time to time), and generally fulfill our contractual obligations and have a material adverse effect on our business.",
+              "context_start": 223,
+              "preceding_context": "Additionally, changes in the public perception of governments in the regions where we operate or plan to operate could negatively impact our business and results of operations.",
+              "premise": "Additionally, changes in the public perception of governments in the regions where we operate or plan to operate could negatively impact our business and results of operations.\nGovernment actions, including trade protection and national and economic security policies of U.S. and foreign government bodies, such as tariffs, import or export regulations, including deemed export restrictions and restrictions on the activities of U.S. persons, trade and economic sanctions, decrees, quotas or other trade barriers and restrictions could affect our ability to ship products, provide services to our customers and employees, do business without an export license with entities on the U.S. Department of Commerce’s U.S. Entity List or other USG restricted parties lists (which is expected to change from time to time), and generally fulfill our contractual obligations and have a material adverse effect on our business.",
+              "classifier_input": "NVDA states in its filing: Additionally, changes in the public perception of governments in the regions where we operate or plan to operate could negatively impact our business and results of operations.\nGovernment actions, including trade protection and national and economic security policies of U.S. and foreign government bodies, such as tariffs, import or export regulations, including deemed export restrictions and restrictions on the activities of U.S. persons, trade and economic sanctions, decrees, quotas or other trade barriers and restrictions could affect our ability to ship products, provide services to our customers and employees, do business without an export license with entities on the U.S. Department of Commerce’s U.S. Entity List or other USG restricted parties lists (which is expected to change from time to time), and generally fulfill our contractual obligations and have a material adverse effect on our business.",
+              "scores": {
+                "entailment": 0.9953284165965571,
+                "neutral": 0.004388487998910285,
+                "contradiction": 0.00028309540453270066
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.34161725000012666
+        },
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "ABD ve diğer devletlerin ihracat düzenlemeleri, NVIDIA'nın ürün sevkiyatını ve müşterilerine hizmet sunmasını olumsuz etkileyebilir.",
+          "source_ids": [
+            4
+          ],
+          "content": "{\"quotes\": [{\"source_id\": 4, \"text\": \"Government actions... export regulations... could affect our ability to ship products, provide services to our customers\"}, {\"source_id\": 4, \"text\": \"material adverse effect on our business\"}], \"missing_details\": [], \"supported\": true}",
+          "status": "invalid",
+          "error": {
+            "type": "ValueError",
+            "message": "Claim quote does not occur verbatim in its source"
+          },
+          "elapsed_seconds": 14.703422791999401
+        },
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 2,
+          "claim": "ABD ve diğer devletlerin ihracat düzenlemeleri, NVIDIA'nın ürün sevkiyatını ve müşterilerine hizmet sunmasını olumsuz etkileyebilir.",
+          "source_ids": [
+            4
+          ],
+          "content": "{\n\n\"quotes\": [\n    {\"source_id\": 4, \"text\": \"export regulations, including deemed export restrictions and restrictions on the activities of U.S. persons, trade and economic sanctions, decrees, quotas or other trade barriers and restrictions could affect our ability to ship products, provide services to our customers and employees\"},\n    {\"source_id\": 4, \"text\": \"material adverse effect on our business\"}\n] }",
+          "status": "completed",
+          "elapsed_seconds": 43.52854245799972
+        }
+      ],
+      "elapsed_seconds": 58.573651333999806
+    },
+    {
+      "id": "shipping_wrong_citation",
+      "expected_supported": false,
+      "verdict": {
+        "quotes": [],
+        "missing_details": [
+          "specific countries involved (US and others)",
+          "specific consequences (product shipments, customer service)"
+        ],
+        "supported": false
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "ABD ve diğer devletlerin ihracat düzenlemeleri, NVIDIA'nın ürün sevkiyatını ve müşterilerine hizmet sunmasını olumsuz etkileyebilir.",
+          "source_ids": [
+            1
+          ],
+          "status": "completed",
+          "supported": true,
+          "candidates": [
+            {
+              "id": "1:0:5",
+              "source_id": 1,
+              "text_index": 0,
+              "start": 644,
+              "end": 1043,
+              "text": "We are subject to laws and regulations domestically and worldwide, affecting our operations in areas including, but not limited to, IP ownership and infringement; taxes; import and export requirements and tariffs; anti-corruption, including the Foreign Corrupt Practices Act; business acquisitions; foreign exchange controls and cash repatriation restrictions; foreign ownership and investment; data",
+              "context_start": 464,
+              "preceding_context": "We are subject to complex laws, rules, regulations, and political and other actions, including restrictions on the export of our products, which may adversely impact our business.",
+              "premise": "We are subject to complex laws, rules, regulations, and political and other actions, including restrictions on the export of our products, which may adversely impact our business.\nWe are subject to laws and regulations domestically and worldwide, affecting our operations in areas including, but not limited to, IP ownership and infringement; taxes; import and export requirements and tariffs; anti-corruption, including the Foreign Corrupt Practices Act; business acquisitions; foreign exchange controls and cash repatriation restrictions; foreign ownership and investment; data",
+              "classifier_input": "NVDA states in its filing: We are subject to complex laws, rules, regulations, and political and other actions, including restrictions on the export of our products, which may adversely impact our business.\nWe are subject to laws and regulations domestically and worldwide, affecting our operations in areas including, but not limited to, IP ownership and infringement; taxes; import and export requirements and tariffs; anti-corruption, including the Foreign Corrupt Practices Act; business acquisitions; foreign exchange controls and cash repatriation restrictions; foreign ownership and investment; data",
+              "scores": {
+                "entailment": 0.9910381366585521,
+                "neutral": 0.008788760466147433,
+                "contradiction": 0.00017310287530051632
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.20934783300072013
+        },
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "ABD ve diğer devletlerin ihracat düzenlemeleri, NVIDIA'nın ürün sevkiyatını ve müşterilerine hizmet sunmasını olumsuz etkileyebilir.",
+          "source_ids": [
+            1
+          ],
+          "content": "{\"quotes\":[{\"source_id\":1,\"text\":\"restrictions on the export of our products, which may adversely impact our business\"},{\"source_id\":1,\"text\":\"We are subject to complex laws, rules, regulations, and political and other actions\"}],\"missing_details\":[\"specific countries involved (US and others)\",\"specific consequences (product shipments, customer service)\"],\"supported\":false}",
+          "status": "completed",
+          "elapsed_seconds": 20.32320024999899
+        }
+      ],
+      "elapsed_seconds": 20.53261970800122
+    },
+    {
+      "id": "research_correct_citation",
+      "expected_supported": true,
+      "verdict": {
+        "quotes": [
+          {
+            "source_id": 3,
+            "text": "Additional unilateral or multilateral controls are also likely to include deemed export control limitations that negatively impact the ability of our research and development teams to execute our roadmap or other objectives in a timely manner."
+          }
+        ],
+        "missing_details": [],
+        "supported": true
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "Ek ihracat kontrolleri, NVIDIA'nın araştırma ve geliştirme ekiplerinin yol haritasını zamanında uygulamasını zorlaştırabilir.",
+          "source_ids": [
+            3
+          ],
+          "status": "completed",
+          "supported": true,
+          "candidates": [
+            {
+              "id": "3:0:4",
+              "source_id": 3,
+              "text_index": 0,
+              "start": 729,
+              "end": 972,
+              "text": "Additional unilateral or multilateral controls are also likely to include deemed export control limitations that negatively impact the ability of our research and development teams to execute our roadmap or other objectives in a timely manner.",
+              "context_start": 593,
+              "preceding_context": "Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges.",
+              "premise": "Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges. Additional unilateral or multilateral controls are also likely to include deemed export control limitations that negatively impact the ability of our research and development teams to execute our roadmap or other objectives in a timely manner.",
+              "classifier_input": "NVDA states in its filing: Reduced demand due to export controls has and could in the future lead to excess inventory or cause us to incur related supply charges. Additional unilateral or multilateral controls are also likely to include deemed export control limitations that negatively impact the ability of our research and development teams to execute our roadmap or other objectives in a timely manner.",
+              "scores": {
+                "entailment": 0.9970851460348071,
+                "neutral": 0.002738383330417886,
+                "contradiction": 0.00017647063477493126
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.9044906659983099
+        },
+        {
+          "type": "model",
+          "phase": "claim_grounding",
+          "attempt": 1,
+          "claim": "Ek ihracat kontrolleri, NVIDIA'nın araştırma ve geliştirme ekiplerinin yol haritasını zamanında uygulamasını zorlaştırabilir.",
+          "source_ids": [
+            3
+          ],
+          "content": "{\"quotes\":[{\"source_id\":3,\"text\":\"Additional unilateral or multilateral controls are also likely to include deemed export control limitations that negatively impact the ability of our research and development teams to execute our roadmap or other objectives in a timely manner.\"}],\"missing_details\":[],\"supported\":true}",
+          "status": "completed",
+          "elapsed_seconds": 17.97212424999998
+        }
+      ],
+      "elapsed_seconds": 18.87673037500099
+    },
+    {
+      "id": "research_wrong_citation",
+      "expected_supported": false,
+      "verdict": {
+        "supported": false,
+        "quotes": [],
+        "missing_details": [
+          "Independent source screening did not establish this entire claim in the cited passages. Preserve the source's scope and conditions; split combined claims or remove unused citations."
+        ]
+      },
+      "error": null,
+      "matches_expected": true,
+      "trace": [
+        {
+          "type": "verification",
+          "phase": "claim_nli",
+          "claim": "Ek ihracat kontrolleri, NVIDIA'nın araştırma ve geliştirme ekiplerinin yol haritasını zamanında uygulamasını zorlaştırabilir.",
+          "source_ids": [
+            4
+          ],
+          "status": "completed",
+          "supported": false,
+          "candidates": [
+            {
+              "id": "4:0:3",
+              "source_id": 4,
+              "text_index": 0,
+              "start": 1140,
+              "end": 1493,
+              "text": "If we were ever found to have violated export control laws or sanctions of the U.S. or similar applicable non-U.S. laws, even if the violation occurred without our knowledge, we may be subject to various penalties available under the laws, any of which could have a material and adverse impact on our business, operating results and financial condition.",
+              "context_start": 400,
+              "preceding_context": "Government actions, including trade protection and national and economic security policies of U.S. and foreign government bodies, such as tariffs, import or export regulations, including deemed export restrictions and restrictions on the activities of U.S. persons, trade and economic sanctions, decrees, quotas or other trade barriers and restrictions could affect our ability to ship products, provide services to our customers and employees, do business without an export license with entities on the U.S. Department of Commerce’s U.S. Entity List or other USG restricted parties lists (which is expected to change from time to time), and generally fulfill our contractual obligations and have a material adverse effect on our business.",
+              "premise": "Government actions, including trade protection and national and economic security policies of U.S. and foreign government bodies, such as tariffs, import or export regulations, including deemed export restrictions and restrictions on the activities of U.S. persons, trade and economic sanctions, decrees, quotas or other trade barriers and restrictions could affect our ability to ship products, provide services to our customers and employees, do business without an export license with entities on the U.S. Department of Commerce’s U.S. Entity List or other USG restricted parties lists (which is expected to change from time to time), and generally fulfill our contractual obligations and have a material adverse effect on our business. If we were ever found to have violated export control laws or sanctions of the U.S. or similar applicable non-U.S. laws, even if the violation occurred without our knowledge, we may be subject to various penalties available under the laws, any of which could have a material and adverse impact on our business, operating results and financial condition.",
+              "classifier_input": "NVDA states in its filing: Government actions, including trade protection and national and economic security policies of U.S. and foreign government bodies, such as tariffs, import or export regulations, including deemed export restrictions and restrictions on the activities of U.S. persons, trade and economic sanctions, decrees, quotas or other trade barriers and restrictions could affect our ability to ship products, provide services to our customers and employees, do business without an export license with entities on the U.S. Department of Commerce’s U.S. Entity List or other USG restricted parties lists (which is expected to change from time to time), and generally fulfill our contractual obligations and have a material adverse effect on our business. If we were ever found to have violated export control laws or sanctions of the U.S. or similar applicable non-U.S. laws, even if the violation occurred without our knowledge, we may be subject to various penalties available under the laws, any of which could have a material and adverse impact on our business, operating results and financial condition.",
+              "scores": {
+                "entailment": 0.010467623886545221,
+                "neutral": 0.9890948918344128,
+                "contradiction": 0.00043748427904184115
+              }
+            }
+          ],
+          "threshold": 0.8,
+          "model": {
+            "repository": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+            "revision": "8adb042d524ecd5c26d3e3ba0e3fbcf7e2d0864c",
+            "files": {
+              "config.json": {
+                "bytes": 1066,
+                "sha256": "4e4430c95100d613df80fa01276f231931e1b535557cf62fbb3cc50323e50cca"
+              },
+              "tokenizer.json": {
+                "bytes": 16331396,
+                "sha256": "3aca3ce69a0a35aeb144a52c4f1d41c4246b8785f8f398315cc8fb6b24057810"
+              },
+              "onnx/model_quantized.onnx": {
+                "bytes": 338679133,
+                "sha256": "27c39e884c14b03cf46cfc5485971b6db70ff330220d93dfe729c63fde43af0e"
+              }
+            }
+          },
+          "elapsed_seconds": 0.6388077090014121
+        }
+      ],
+      "elapsed_seconds": 0.6388306669996382
+    }
+  ]
+}

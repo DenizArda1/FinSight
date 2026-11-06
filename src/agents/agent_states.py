@@ -4,6 +4,7 @@ class PlanTask(TypedDict):
     id: str
     agent: Literal["financial_data", "filing_rag"]
     instruction: str
+    fiscal_year: int | None
 
 class AgentState(TypedDict):
     question: str
