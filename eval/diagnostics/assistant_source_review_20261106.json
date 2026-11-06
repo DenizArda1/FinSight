@@ -1,0 +1,63 @@
+{
+  "method": "assistant_source_review",
+  "human_review": null,
+  "run": "multi_agent_mcp_20261106T162201_758992Z_9f49989e.json",
+  "scope": "Selected-case inspection of saved questions, released answers and tool/agent traces; not independent human calibration and not a claim to review every substantive claim in all 111 answers.",
+  "cases": [
+    {
+      "id": "amzn_missing_gross_margin_tr",
+      "outcome": "withheld_contract_conflict",
+      "note": "The tool requires gross_profit while the Critic asks for a revenue-minus-cost derivation. The latter inputs are present; no derived metric was returned by Python."
+    },
+    {
+      "id": "amzn_missing_gross_margin_en",
+      "outcome": "released_language_error",
+      "note": "The question is English and the released narrative is Turkish. Both automatic reviews missed this. The metric-contract issue also remains."
+    },
+    {
+      "id": "nvda_cik_en",
+      "outcome": "released_false_refusal",
+      "note": "Planner out_of_scope with no tools; the CIK resolver exists. Critic approved the refusal."
+    },
+    {
+      "id": "amzn_cik_tr",
+      "outcome": "released_false_refusal",
+      "note": "Planner out_of_scope with no tools; the CIK resolver exists. Critic approved the refusal."
+    },
+    {
+      "id": "clarify_company_en",
+      "outcome": "released_wrong_assumption",
+      "note": "The user did not name a company; specialist selected AAPL. The Apple value is accurate but does not resolve the missing company."
+    },
+    {
+      "id": "aapl_revenue_growth_en",
+      "outcome": "withheld_missing_calculation",
+      "note": "Trace contains revenue retrieval for one and two periods, but no compute_metrics call. Withholding is justified for the incomplete draft; the upstream workflow failed."
+    },
+    {
+      "id": "amzn_segments_en",
+      "outcome": "planner_error",
+      "note": "Planner trace records ValueError: Mixed plans must use both financial_data and filing_rag."
+    },
+    {
+      "id": "aapl_business_tr",
+      "outcome": "withheld_unsupported_expansion",
+      "note": "The final draft still names service groups beyond the displayed section excerpt; Critic rejects these after revisions."
+    },
+    {
+      "id": "msft_competition_en",
+      "outcome": "withheld_unsupported_expansion",
+      "note": "The final draft extends the cited investment discussion into execution/adoption/market-share claims. Critic rejects the scope expansion."
+    },
+    {
+      "id": "nvda_export_risk_en",
+      "outcome": "source_review_pass",
+      "note": "Inspected Sources 1, 2 and 5 including expanded context. Source 5 context explicitly supports the downstream-user claim; the answer preserves conditional risk wording."
+    },
+    {
+      "id": "msft_revenue_macro_tr",
+      "outcome": "source_review_pass_with_rubric_disagreement",
+      "note": "Financial values match the raw-key audit. Source 6 expanded context supports macro/trade risks and Source 13 supports favorable FX effects on revenue and operating income. The automatic completeness failure requires international-expense detail not explicitly requested by the broad question; preserve it as disputed, not a proven factual error."
+    }
+  ]
+}

@@ -18,7 +18,7 @@ def expected_numbers(value):
         if type(value.get("value")) in (int, float):
             return [{"value": value["value"], "unit": value.get("unit"),
                      "metric": value.get("metric"), "ticker": value.get("ticker"),
-                     "tolerance": value.get("tolerance")}]
+                     "tolerance": value.get("absolute_tolerance", value.get("tolerance"))}]
         return [number for item in value.values() for number in expected_numbers(item)]
     if isinstance(value, list):
         return [number for item in value for number in expected_numbers(item)]
@@ -55,7 +55,7 @@ def validate_review(review, numbers):
     if numbers:
         numeric = review["numeric_context_correct"] and all(
             observed is not None and math.isfinite(observed) and math.isclose(
-                observed, expected["value"], rel_tol=0.01,
+                observed, expected["value"], rel_tol=0 if expected["tolerance"] is not None else 0.01,
                 abs_tol=expected["tolerance"] or 0,
             ) for observed, expected in zip(review["observed_values"], numbers, strict=True)
         )

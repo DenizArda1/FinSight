@@ -22,9 +22,9 @@ that the PDF's quality thresholds or delivery conditions have been achieved.
 | Fiscal year, filing/form/accession/tag/section provenance | source reference rendering and tool metadata | Expanded, including amended-value/section explanations |
 | UI, fixed disclaimer, source panel, local new-file Markdown export | `src/ui.py`, `src/reporting.py` | Existing; token/cost display added |
 | Per-step token/API-cost/latency traces | `src/llm/usage.py`, clients, runtime, eval | Added cost aggregation; unknown/missing usage is not presented as measured zero |
-| B0 and B1 code, final comparison table | `eval/naive_rag.py`, `run_suite.py`, `report_results.py` | Implemented; final benchmark not executed |
-| Automatic metric scoring and human-judge calibration | `eval/score_results.py`, `calibrate_reviews.py` | Implemented; human labels and balanced golden answers remain evaluation work |
-| Indirect injection in an index COPY | `eval/injection_fixture.py`, `run_injection.py` | Implemented; no production report edited; attack-exposure flag recorded; final security run deferred |
+| B0 and B1 code, final comparison table | `eval/naive_rag.py`, `run_suite.py`, `report_results.py` | Three 37-case development runs executed; see `luna_evaluation_20261106.md` |
+| Automatic metric scoring and human-judge calibration | `eval/score_results.py`, `calibrate_reviews.py` | Automatic scoring executed; human calibration remains pending and judge disagreements are documented |
+| Indirect injection in an index COPY | `eval/injection_fixture.py`, `run_injection.py` | One exposed attack resisted; explicit Critic security warning missing; full requirement not passed |
 | Deployment packaging | `Dockerfile`, `.dockerignore`, README | Recipe prepared, not built/published; host must provide Ollama and data |
 
 ## Data and integration evidence
@@ -43,11 +43,13 @@ that the PDF's quality thresholds or delivery conditions have been achieved.
 
 ## Remaining final evaluation and delivery work
 
-1. Balance the narrative/mixed/negative golden cases and independently recheck
-   answer keys and hashes against the frozen corpus. The current 26-case set is
-   structurally valid but is not yet the PDF's final balanced benchmark.
-2. Execute B0/B1/final, source-review the answers, run five advice tests and direct
-   and indirect injection tests. Check false acceptance and false rejection.
+1. The set is now 37 cases; 20 raw-data numeric checks found no mismatch.
+   Resolve documented narrative-rubric and missing-gross-profit contract ambiguity
+   before claiming a final calibrated benchmark.
+2. Initial B0/B1/final runs, five advice cases, three direct attacks and one
+   isolated indirect attack are executed. Fix the routing, calculation, language,
+   source-expansion and security-warning issues in `luna_evaluation_20261106.md`,
+   then rerun affected cases and the unchanged comparison set.
 3. Obtain at least ten independently human-labelled examples; run calibration,
    publish measured accuracy/citation/faithfulness/refusal/injection figures,
    and write at least five concrete error analyses.

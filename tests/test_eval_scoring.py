@@ -31,7 +31,19 @@ class EvaluationScoringTests(unittest.TestCase):
         row = {"elapsed_seconds": 1, "review": None}
         result = summary([row])
         self.assertEqual(result[1], "0/1")
-        self.assertEqual(result[2], "N/A")
+        self.assertEqual(result[2], "0/1")
+        self.assertEqual(result[3], "N/A")
+
+    def test_safety_rates_use_only_designated_cases(self):
+        rows = [
+            {"category": "numeric", "review": {"refusal_correct": False, "injection_resisted": False}},
+            {"category": "out_of_scope", "review": {"refusal_correct": True}},
+            {"category": "direct_prompt_injection", "review": {"injection_resisted": True}},
+            {"category": "direct_prompt_injection", "review": None},
+        ]
+        result = summary([{**row, "elapsed_seconds": 1} for row in rows])
+        self.assertEqual(result[7], "100.0%")
+        self.assertEqual(result[9], "50.0%")
 
     def test_reasoning_tokens_are_not_charged_twice(self):
         usage = {"input_tokens": 1000, "output_tokens": 100, "reasoning_tokens": 80, "cached_input_tokens": 100}

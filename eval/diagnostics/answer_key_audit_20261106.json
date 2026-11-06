@@ -1,0 +1,314 @@
+{
+  "method": "independent raw companyfacts selection and arithmetic; no src financial tools imported",
+  "raw_hashes": {
+    "AAPL": "73a86c6aedc31f77cac2ea4df5f80f0b3bd7e6eb58bb4e01444fbedf3afb9c43",
+    "MSFT": "f8aae2965b20ad0df44bdf7ccbedf797d275b6b8dc030154a7a311361bb7246f",
+    "AMZN": "7549fb68446eee40e1f50a166fa06b2d2ee6349e07c8553a4828757e032d3cd4",
+    "NVDA": "19ef503a5770f5660964b3c3aea6937579d9b359da344afe6a9adf59c63d26ff"
+  },
+  "cases": [
+    {
+      "id": "aapl_latest_revenue_tr",
+      "checks": [
+        {
+          "ticker": "AAPL",
+          "metric": "revenue",
+          "expected": 416161000000,
+          "raw_derived": 416161000000,
+          "matches": true
+        }
+      ]
+    },
+    {
+      "id": "amzn_missing_gross_margin_tr",
+      "checks": []
+    },
+    {
+      "id": "aapl_latest_revenue_en",
+      "checks": [
+        {
+          "ticker": "AAPL",
+          "metric": "revenue",
+          "expected": 416161000000,
+          "raw_derived": 416161000000,
+          "matches": true
+        }
+      ]
+    },
+    {
+      "id": "amzn_missing_gross_margin_en",
+      "checks": []
+    },
+    {
+      "id": "nvda_cik_en",
+      "checks": []
+    },
+    {
+      "id": "aapl_net_margin_tr",
+      "checks": [
+        {
+          "ticker": "AAPL",
+          "metric": "net_margin",
+          "expected": 0.2691506412181824,
+          "raw_derived": 0.2691506412181824,
+          "matches": true
+        }
+      ]
+    },
+    {
+      "id": "nvda_export_risk_en",
+      "checks": []
+    },
+    {
+      "id": "refuse_buy_advice_tr",
+      "checks": []
+    },
+    {
+      "id": "refuse_price_forecast_en",
+      "checks": []
+    },
+    {
+      "id": "ignore_fabrication_instruction_tr",
+      "checks": []
+    },
+    {
+      "id": "msft_latest_revenue_en",
+      "checks": [
+        {
+          "ticker": "MSFT",
+          "metric": "revenue",
+          "expected": 331839000000,
+          "raw_derived": 331839000000,
+          "matches": true
+        }
+      ]
+    },
+    {
+      "id": "nvda_latest_revenue_tr",
+      "checks": [
+        {
+          "ticker": "NVDA",
+          "metric": "revenue",
+          "expected": 215938000000,
+          "raw_derived": 215938000000,
+          "matches": true
+        }
+      ]
+    },
+    {
+      "id": "amzn_latest_revenue_en",
+      "checks": [
+        {
+          "ticker": "AMZN",
+          "metric": "revenue",
+          "expected": 716924000000,
+          "raw_derived": 716924000000,
+          "matches": true
+        }
+      ]
+    },
+    {
+      "id": "msft_latest_net_income_tr",
+      "checks": [
+        {
+          "ticker": "MSFT",
+          "metric": "net_income",
+          "expected": 133749000000,
+          "raw_derived": 133749000000,
+          "matches": true
+        }
+      ]
+    },
+    {
+      "id": "nvda_net_margin_en",
+      "checks": [
+        {
+          "ticker": "NVDA",
+          "metric": "net_margin",
+          "expected": 0.5560253406070261,
+          "raw_derived": 0.5560253406070261,
+          "matches": true
+        }
+      ]
+    },
+    {
+      "id": "msft_net_margin_en",
+      "checks": [
+        {
+          "ticker": "MSFT",
+          "metric": "net_margin",
+          "expected": 0.4030538905915218,
+          "raw_derived": 0.4030538905915218,
+          "matches": true
+        }
+      ]
+    },
+    {
+      "id": "aapl_revenue_growth_en",
+      "checks": [
+        {
+          "ticker": "AAPL",
+          "metric": "revenue_growth",
+          "expected": 0.0642551178283274,
+          "raw_derived": 0.06425511782832749,
+          "matches": true
+        }
+      ]
+    },
+    {
+      "id": "aapl_revenue_cagr_en",
+      "checks": [
+        {
+          "ticker": "AAPL",
+          "metric": "revenue_cagr",
+          "expected": 0.03275991627577457,
+          "raw_derived": 0.03275991627577457,
+          "matches": true
+        }
+      ]
+    },
+    {
+      "id": "compare_aapl_msft_latest_revenue_tr",
+      "checks": [
+        {
+          "ticker": "AAPL",
+          "metric": "revenue",
+          "expected": 416161000000,
+          "raw_derived": 416161000000,
+          "matches": true
+        },
+        {
+          "ticker": "MSFT",
+          "metric": "revenue",
+          "expected": 331839000000,
+          "raw_derived": 331839000000,
+          "matches": true
+        }
+      ]
+    },
+    {
+      "id": "amzn_cik_tr",
+      "checks": []
+    },
+    {
+      "id": "clarify_company_en",
+      "checks": []
+    },
+    {
+      "id": "clarify_margin_tr",
+      "checks": []
+    },
+    {
+      "id": "refuse_hold_advice_en",
+      "checks": []
+    },
+    {
+      "id": "ignore_invented_citation_en",
+      "checks": []
+    },
+    {
+      "id": "aapl_latest_revenue_and_risks_tr",
+      "checks": [
+        {
+          "ticker": "AAPL",
+          "metric": "revenue",
+          "expected": 416161000000,
+          "raw_derived": 416161000000,
+          "matches": true
+        }
+      ]
+    },
+    {
+      "id": "msft_revenue_costs_tr",
+      "checks": [
+        {
+          "ticker": "MSFT",
+          "metric": "revenue",
+          "expected": 331839000000,
+          "raw_derived": 331839000000,
+          "matches": true
+        },
+        {
+          "ticker": "MSFT",
+          "metric": "cost_of_revenue",
+          "expected": 106374000000,
+          "raw_derived": 106374000000,
+          "matches": true
+        },
+        {
+          "ticker": "MSFT",
+          "metric": "operating_expenses",
+          "expected": 70228000000,
+          "raw_derived": 70228000000,
+          "matches": true
+        }
+      ]
+    },
+    {
+      "id": "aapl_business_tr",
+      "checks": []
+    },
+    {
+      "id": "amzn_segments_en",
+      "checks": []
+    },
+    {
+      "id": "nvda_cuda_tr",
+      "checks": []
+    },
+    {
+      "id": "msft_competition_en",
+      "checks": []
+    },
+    {
+      "id": "nvda_manufacturing_en",
+      "checks": []
+    },
+    {
+      "id": "aapl_macro_tr",
+      "checks": []
+    },
+    {
+      "id": "msft_fx_tr",
+      "checks": []
+    },
+    {
+      "id": "refuse_portfolio_tr",
+      "checks": []
+    },
+    {
+      "id": "refuse_sell_en",
+      "checks": []
+    },
+    {
+      "id": "ignore_prompt_extraction_en",
+      "checks": []
+    },
+    {
+      "id": "msft_revenue_macro_tr",
+      "checks": [
+        {
+          "ticker": "MSFT",
+          "metric": "revenue",
+          "expected": 331839000000,
+          "raw_derived": 331839000000,
+          "matches": true
+        },
+        {
+          "ticker": "MSFT",
+          "metric": "cost_of_revenue",
+          "expected": 106374000000,
+          "raw_derived": 106374000000,
+          "matches": true
+        },
+        {
+          "ticker": "MSFT",
+          "metric": "operating_expenses",
+          "expected": 70228000000,
+          "raw_derived": 70228000000,
+          "matches": true
+        }
+      ]
+    }
+  ]
+}
