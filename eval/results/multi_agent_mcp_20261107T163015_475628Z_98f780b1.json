@@ -1,0 +1,1331 @@
+[
+  {
+    "id": "aapl_business_tr",
+    "question": "Apple’ın FY2025 raporunun Item 1 bölümüne göre temel ürün gruplarını açıkla.",
+    "expected": {
+      "ticker": "AAPL",
+      "fiscal_year": 2025,
+      "section": "Item 1",
+      "accession_number": "0000320193-25-000079",
+      "required_claim": "Designs, manufactures and markets smartphones, personal computers, tablets, wearables and accessories, and sells related services.",
+      "requires_source": true,
+      "sources": [
+        {
+          "path": "financial_data/processed/0000320193/filings/0000320193-25-000079/sections.json",
+          "sha256": "88d63663f0847495f4eb52a674132fc65cc5eca2415f1c738de4461a1ed8b7dd"
+        }
+      ]
+    },
+    "answer_language": "tr",
+    "category": "narrative",
+    "usage": {
+      "model_calls_with_usage": 6,
+      "model_calls_without_usage": 0,
+      "tool_calls": 1,
+      "input_tokens": 18439,
+      "output_tokens": 1380,
+      "estimated_cost_usd": 0.00109302,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    },
+    "answer": "Apple’ın 2025 mali yılına ait, 2025-09-27 tarihinde sona eren raporunun Item 1 bölümünde temel ürün grupları iPhone, Mac, iPad ve “Giyilebilir Ürünler, Ev ve Aksesuarlar” olarak açıklanıyor. iPhone akıllı telefonları, Mac kişisel bilgisayarları, iPad tabletleri kapsıyor. [Source 1]\n\n“Giyilebilir Ürünler, Ev ve Aksesuarlar” grubu akıllı saatler, kablosuz kulaklıklar ve uzamsal bilgisayarların yanı sıra ev ürünleri ile Apple markalı ve üçüncü taraf aksesuarları içeriyor. [Source 1]",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": {
+      "source_sha256": "49330362f3fd7c0907ca8d218a2005498060684c60754fc7737829dff054a2d0",
+      "index_sha256": "5d2d5206bde26d7a197a89c642de9f41c5f04d51cb0643f7b0fb8a219365e496",
+      "code_sha256": "8aba2dd3d93d839e5f8716c6db8407b07ce036becd6087b433d71efb3e3bdae7"
+    },
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": "Apple’ın 2025 mali yılına ait, 2025-09-27 tarihinde sona eren raporunun Item 1 bölümünde temel ürün grupları iPhone, Mac, iPad ve “Giyilebilir Ürünler, Ev ve Aksesuarlar” olarak açıklanıyor. iPhone akıllı telefonları, Mac kişisel bilgisayarları, iPad tabletleri kapsıyor. [Source 1]\n\n“Giyilebilir Ürünler, Ev ve Aksesuarlar” grubu akıllı saatler, kablosuz kulaklıklar ve uzamsal bilgisayarların yanı sıra ev ürünleri ile Apple markalı ve üçüncü taraf aksesuarları içeriyor. [Source 1]",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "answer",
+      "text": "Apple’ın {{1:matches/0/metadata/fiscal_year}} mali yılına ait, {{1:matches/0/metadata/report_date}} tarihinde sona eren raporunun Item 1 bölümünde temel ürün grupları iPhone, Mac, iPad ve “Giyilebilir Ürünler, Ev ve Aksesuarlar” olarak açıklanıyor. iPhone akıllı telefonları, Mac kişisel bilgisayarları, iPad tabletleri kapsıyor. [Source 1]\n\n“Giyilebilir Ürünler, Ev ve Aksesuarlar” grubu akıllı saatler, kablosuz kulaklıklar ve uzamsal bilgisayarların yanı sıra ev ürünleri ile Apple markalı ve üçüncü taraf aksesuarları içeriyor. [Source 1]",
+      "facts": []
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "search_filings",
+        "arguments": {
+          "fiscal_year": 2025,
+          "query": "Apple FY2025 Item 1 ürün grupları",
+          "section": "Item 1",
+          "ticker": "AAPL",
+          "top_k": 5
+        },
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "name": "Apple Inc.",
+            "cik": "0000320193"
+          },
+          "query": "Apple FY2025 Item 1 ürün grupları",
+          "fiscal_year": 2025,
+          "section": "Item 1",
+          "matches": [
+            {
+              "chunk_id": "0000320193-25-000079:item_1:0",
+              "text": "Item 1. Business\nCompany Background\nThe Company designs, manufactures and markets smartphones, personal computers, tablets, wearables and accessories, and sells a variety of related services. The Company’s fiscal year is the 52- or 53-week period that ends on the last Saturday of September.\nProducts\niPhone\niPhone® is the Company’s line of smartphones based on its iOS operating system. The iPhone line includes iPhone 17 Pro, iPhone Air™, iPhone 17, iPhone 16 and iPhone 16e.\nMac\nMac® is the Company’s line of personal computers based on its macOS® operating system. The Mac line includes laptops MacBook Air® and MacBook Pro®, as well as desktops iMac®, Mac mini®, Mac Studio® and Mac Pro®.\niPad\niPad® is the Company’s line of multipurpose tablets based on its iPadOS® operating system. The iPad line includes iPad Pro®, iPad Air®, iPad and iPad mini®.\nWearables, Home and Accessories\nWearables includes smartwatches, wireless headphones and spatial computers. The Company’s line of smartwatches, based on its watchOS® operating system, includes Apple Watch® Series 11, Apple Watch SE® 3 and Apple Watch Ultra® 3. The Company’s line of wireless headphones includes AirPods®, AirPods Pro®, AirPods Max® and Beats® products. Apple Vision Pro™ is the Company’s spatial computer based on its visionOS® operating system.",
+              "metadata": {
+                "form": "10-K",
+                "filed": "2025-10-31",
+                "section_start": 8545,
+                "section_title": "Business",
+                "report_date": "2025-09-27",
+                "end": 9863,
+                "fiscal_year": 2025,
+                "cik": "0000320193",
+                "start": 8545,
+                "section_end": 24541,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "amendment_note": "Original annual filing section.",
+                "accession_number": "0000320193-25-000079",
+                "section": "Item 1",
+                "ticker": "AAPL"
+              },
+              "distance": 0.4638994336128235,
+              "score": 0.03278688524590164,
+              "ranks": {
+                "dense": 1,
+                "bm25": 1
+              },
+              "context": {
+                "text": "Item 1. Business\nCompany Background\nThe Company designs, manufactures and markets smartphones, personal computers, tablets, wearables and accessories, and sells a variety of related services. The Company’s fiscal year is the 52- or 53-week period that ends on the last Saturday of September.\nProducts\niPhone\niPhone® is the Company’s line of smartphones based on its iOS operating system. The iPhone line includes iPhone 17 Pro, iPhone Air™, iPhone 17, iPhone 16 and iPhone 16e.\nMac\nMac® is the Company’s line of personal computers based on its macOS® operating system. The Mac line includes laptops MacBook Air® and MacBook Pro®, as well as desktops iMac®, Mac mini®, Mac Studio® and Mac Pro®.\niPad\niPad® is the Company’s line of multipurpose tablets based on its iPadOS® operating system. The iPad line includes iPad Pro®, iPad Air®, iPad and iPad mini®.\nWearables, Home and Accessories\nWearables includes smartwatches, wireless headphones and spatial computers. The Company’s line of smartwatches, based on its watchOS® operating system, includes Apple Watch® Series 11, Apple Watch SE® 3 and Apple Watch Ultra® 3. The Company’s line of wireless headphones includes AirPods®, AirPods Pro®, AirPods Max® and Beats® products. Apple Vision Pro™ is the Company’s spatial computer based on its visionOS® operating system.\nHome includes Apple TV 4K®, the Company’s media streaming and gaming device based on its tvOS® operating system, and HomePod® and HomePod mini®, high-fidelity wireless smart speakers.\nAccessories includes Apple-branded and third-party accessories.\nApple Inc. | 2025 Form 10-K | 1\nServices\nAdvertising\nThe Company’s advertising services include third-party licensing arrangements and the Company’s ow",
+                "start": 8545,
+                "end": 10263
+              }
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "search_filings",
+        "arguments": {
+          "fiscal_year": 2025,
+          "query": "Apple FY2025 Item 1 ürün grupları",
+          "section": "Item 1",
+          "ticker": "AAPL",
+          "top_k": 5
+        },
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "name": "Apple Inc.",
+            "cik": "0000320193"
+          },
+          "query": "Apple FY2025 Item 1 ürün grupları",
+          "fiscal_year": 2025,
+          "section": "Item 1",
+          "matches": [
+            {
+              "chunk_id": "0000320193-25-000079:item_1:1",
+              "text": "Home includes Apple TV 4K®, the Company’s media streaming and gaming device based on its tvOS® operating system, and HomePod® and HomePod mini®, high-fidelity wireless smart speakers.\nAccessories includes Apple-branded and third-party accessories.\nApple Inc. | 2025 Form 10-K | 1\nServices\nAdvertising\nThe Company’s advertising services include third-party licensing arrangements and the Company’s own advertising platforms.\nAppleCare\nThe Company offers a portfolio of fee-based service and support products under the AppleCare® brand. The offerings provide priority access to Apple technical support, access to the global Apple authorized service network for repair and replacement services, and in many cases additional coverage for instances of accidental damage or theft and loss, depending on the country and type of product.\nCloud Services\nThe Company’s cloud services store and keep customers’ content up-to-date and available across multiple Apple devices and Windows personal computers.\nDigital Content\nThe Company operates various platforms, including the App Store®, that allow customers to discover and download applications and digital content, such as books, music, video, games and podcasts.",
+              "metadata": {
+                "accession_number": "0000320193-25-000079",
+                "report_date": "2025-09-27",
+                "cik": "0000320193",
+                "filed": "2025-10-31",
+                "section_start": 8545,
+                "end": 11069,
+                "form": "10-K",
+                "amendment_note": "Original annual filing section.",
+                "fiscal_year": 2025,
+                "section_end": 24541,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "section_title": "Business",
+                "section": "Item 1",
+                "ticker": "AAPL",
+                "start": 9864
+              },
+              "distance": 0.468239426612854,
+              "score": 0.03225806451612903,
+              "ranks": {
+                "dense": 2,
+                "bm25": 2
+              },
+              "context": {
+                "text": ", wireless headphones and spatial computers. The Company’s line of smartwatches, based on its watchOS® operating system, includes Apple Watch® Series 11, Apple Watch SE® 3 and Apple Watch Ultra® 3. The Company’s line of wireless headphones includes AirPods®, AirPods Pro®, AirPods Max® and Beats® products. Apple Vision Pro™ is the Company’s spatial computer based on its visionOS® operating system.\nHome includes Apple TV 4K®, the Company’s media streaming and gaming device based on its tvOS® operating system, and HomePod® and HomePod mini®, high-fidelity wireless smart speakers.\nAccessories includes Apple-branded and third-party accessories.\nApple Inc. | 2025 Form 10-K | 1\nServices\nAdvertising\nThe Company’s advertising services include third-party licensing arrangements and the Company’s own advertising platforms.\nAppleCare\nThe Company offers a portfolio of fee-based service and support products under the AppleCare® brand. The offerings provide priority access to Apple technical support, access to the global Apple authorized service network for repair and replacement services, and in many cases additional coverage for instances of accidental damage or theft and loss, depending on the country and type of product.\nCloud Services\nThe Company’s cloud services store and keep customers’ content up-to-date and available across multiple Apple devices and Windows personal computers.\nDigital Content\nThe Company operates various platforms, including the App Store®, that allow customers to discover and download applications and digital content, such as books, music, video, games and podcasts.\nThe Company also offers digital content through subscription-based services, including Apple Arcade®, a game service; Apple Fitness+®, a personalized fitness service; Apple Music®, which offers users a curated listening experience with on-demand radio stations; Apple News+®, a news and magazine service; and Apple TV®, which offers exclusive original content and live sports.\nPayment Services\nThe C",
+                "start": 9464,
+                "end": 11469
+              }
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 3,
+        "tool": "search_filings",
+        "arguments": {
+          "fiscal_year": 2025,
+          "query": "Apple FY2025 Item 1 ürün grupları",
+          "section": "Item 1",
+          "ticker": "AAPL",
+          "top_k": 5
+        },
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "name": "Apple Inc.",
+            "cik": "0000320193"
+          },
+          "query": "Apple FY2025 Item 1 ürün grupları",
+          "fiscal_year": 2025,
+          "section": "Item 1",
+          "matches": [
+            {
+              "chunk_id": "0000320193-25-000079:item_1:2",
+              "text": "The Company operates various platforms, including the App Store®, that allow customers to discover and download applications and digital content, such as books, music, video, games and podcasts.\nThe Company also offers digital content through subscription-based services, including Apple Arcade®, a game service; Apple Fitness+®, a personalized fitness service; Apple Music®, which offers users a curated listening experience with on-demand radio stations; Apple News+®, a news and magazine service; and Apple TV®, which offers exclusive original content and live sports.\nPayment Services\nThe Company offers payment services, including Apple Card®, a co-branded credit card, and Apple Pay®, a cashless payment service.\nSegments",
+              "metadata": {
+                "section": "Item 1",
+                "filed": "2025-10-31",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "section_title": "Business",
+                "form": "10-K",
+                "fiscal_year": 2025,
+                "section_end": 24541,
+                "amendment_note": "Original annual filing section.",
+                "ticker": "AAPL",
+                "accession_number": "0000320193-25-000079",
+                "end": 11602,
+                "report_date": "2025-09-27",
+                "section_start": 8545,
+                "start": 10875,
+                "cik": "0000320193"
+              },
+              "distance": 0.5268901586532593,
+              "score": 0.031746031746031744,
+              "ranks": {
+                "dense": 3,
+                "bm25": 3
+              },
+              "context": {
+                "text": "the global Apple authorized service network for repair and replacement services, and in many cases additional coverage for instances of accidental damage or theft and loss, depending on the country and type of product.\nCloud Services\nThe Company’s cloud services store and keep customers’ content up-to-date and available across multiple Apple devices and Windows personal computers.\nDigital Content\nThe Company operates various platforms, including the App Store®, that allow customers to discover and download applications and digital content, such as books, music, video, games and podcasts.\nThe Company also offers digital content through subscription-based services, including Apple Arcade®, a game service; Apple Fitness+®, a personalized fitness service; Apple Music®, which offers users a curated listening experience with on-demand radio stations; Apple News+®, a news and magazine service; and Apple TV®, which offers exclusive original content and live sports.\nPayment Services\nThe Company offers payment services, including Apple Card®, a co-branded credit card, and Apple Pay®, a cashless payment service.\nSegments\nThe Company manages its business primarily on a geographic basis. The Company’s reportable segments consist of the Americas, Europe, Greater China, Japan and Rest of Asia Pacific. Americas includes both North and South America. Europe includes European countries, as well as India, the Middle East and Africa. Greater China includes China mainland, Hong Kong and Taiwan. Rest of Asia Pacific include",
+                "start": 10475,
+                "end": 12002
+              }
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 4,
+        "tool": "search_filings",
+        "arguments": {
+          "fiscal_year": 2025,
+          "query": "Apple FY2025 Item 1 ürün grupları",
+          "section": "Item 1",
+          "ticker": "AAPL",
+          "top_k": 5
+        },
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "name": "Apple Inc.",
+            "cik": "0000320193"
+          },
+          "query": "Apple FY2025 Item 1 ürün grupları",
+          "fiscal_year": 2025,
+          "section": "Item 1",
+          "matches": [
+            {
+              "chunk_id": "0000320193-25-000079:item_1:13",
+              "text": "The Company is committed to the safety and security of its team members everywhere it operates. The Company supports employees with general safety, security and crisis management training, and by putting specific programs in place for those working in potentially high-hazard environments.\nAvailable Information\nThe Company’s Annual Reports on Form 10-K, Quarterly Reports on Form 10-Q, Current Reports on Form 8-K, and amendments to reports filed pursuant to Sections 13(a) and 15(d) of the Securities Exchange Act of 1934, as amended (“Exchange Act”), are filed with the U.S. Securities and Exchange Commission (“SEC”). Such reports and other information filed by the Company with the SEC are available free of charge at investor.apple.com/investor-relations/sec-filings/default.aspx when such reports are available on the SEC’s website. The Company periodically provides certain information for investors on its corporate website, www.apple.com, and its investor relations website, investor.apple.com. This includes press releases and other information about financial performance, information on corporate governance, and details related to the Company’s annual meeting of shareholders. The information contained on the websites referenced in this Form 10-K is not incorporated by reference into this filing. Further, the Company’s references to website URLs are intended to be inactive textual references only.\nApple Inc. | 2025 Form 10-K | 4",
+              "metadata": {
+                "cik": "0000320193",
+                "fiscal_year": 2025,
+                "report_date": "2025-09-27",
+                "form": "10-K",
+                "amendment_note": "Original annual filing section.",
+                "section": "Item 1",
+                "filed": "2025-10-31",
+                "ticker": "AAPL",
+                "start": 23093,
+                "section_title": "Business",
+                "section_start": 8545,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "section_end": 24541,
+                "end": 24540,
+                "accession_number": "0000320193-25-000079"
+              },
+              "distance": 0.5685499310493469,
+              "score": 0.03055037313432836,
+              "ranks": {
+                "dense": 7,
+                "bm25": 4
+              },
+              "context": {
+                "text": "at open and honest communication among team members, managers and leaders helps create an open, collaborative work environment where everyone can contribute, grow and succeed. Team members are encouraged to come to their managers with questions, feedback or concerns, and the Company conducts surveys that gauge employee sentiment in areas like career development, manager performance and inclusion.\nThe Company is committed to the safety and security of its team members everywhere it operates. The Company supports employees with general safety, security and crisis management training, and by putting specific programs in place for those working in potentially high-hazard environments.\nAvailable Information\nThe Company’s Annual Reports on Form 10-K, Quarterly Reports on Form 10-Q, Current Reports on Form 8-K, and amendments to reports filed pursuant to Sections 13(a) and 15(d) of the Securities Exchange Act of 1934, as amended (“Exchange Act”), are filed with the U.S. Securities and Exchange Commission (“SEC”). Such reports and other information filed by the Company with the SEC are available free of charge at investor.apple.com/investor-relations/sec-filings/default.aspx when such reports are available on the SEC’s website. The Company periodically provides certain information for investors on its corporate website, www.apple.com, and its investor relations website, investor.apple.com. This includes press releases and other information about financial performance, information on corporate governance, and details related to the Company’s annual meeting of shareholders. The information contained on the websites referenced in this Form 10-K is not incorporated by reference into this filing. Further, the Company’s references to website URLs are intended to be inactive textual references only.\nApple Inc. | 2025 Form 10-K | 4\n",
+                "start": 22693,
+                "end": 24541
+              }
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 5,
+        "tool": "search_filings",
+        "arguments": {
+          "fiscal_year": 2025,
+          "query": "Apple FY2025 Item 1 ürün grupları",
+          "section": "Item 1",
+          "ticker": "AAPL",
+          "top_k": 5
+        },
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "name": "Apple Inc.",
+            "cik": "0000320193"
+          },
+          "query": "Apple FY2025 Item 1 ürün grupları",
+          "fiscal_year": 2025,
+          "section": "Item 1",
+          "matches": [
+            {
+              "chunk_id": "0000320193-25-000079:item_1:5",
+              "text": "Apple Inc. | 2025 Form 10-K | 2\nThe Company’s ability to compete successfully depends heavily on ensuring the continuing and timely introduction of innovative new products, services and technologies to the marketplace. The Company designs and develops nearly the entire solution for its products, including the hardware, operating system, numerous software applications and related services. Principal competitive factors important to the Company include price, product and service features (including security features), relative price and performance, product and service quality and reliability, design and technology innovation, a strong third-party software and accessories ecosystem, marketing and distribution capability, service and support, corporate reputation, and the ability to effectively protect and enforce the Company’s intellectual property rights.",
+              "metadata": {
+                "section_end": 24541,
+                "end": 14754,
+                "ticker": "AAPL",
+                "filed": "2025-10-31",
+                "section_start": 8545,
+                "fiscal_year": 2025,
+                "form": "10-K",
+                "amendment_note": "Original annual filing section.",
+                "accession_number": "0000320193-25-000079",
+                "cik": "0000320193",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "section": "Item 1",
+                "start": 13888,
+                "report_date": "2025-09-27",
+                "section_title": "Business"
+              },
+              "distance": 0.5297863483428955,
+              "score": 0.03055037313432836,
+              "ranks": {
+                "dense": 4,
+                "bm25": 7
+              },
+              "context": {
+                "text": "s are further defined by frequent introduction of new products and services, short product life cycles, evolving industry standards, and rapid adoption of technological advancements by competitors. Many of the Company’s competitors seek to compete primarily through aggressive pricing and very low cost structures, and by imitating the Company’s products and infringing on its intellectual property.\nApple Inc. | 2025 Form 10-K | 2\nThe Company’s ability to compete successfully depends heavily on ensuring the continuing and timely introduction of innovative new products, services and technologies to the marketplace. The Company designs and develops nearly the entire solution for its products, including the hardware, operating system, numerous software applications and related services. Principal competitive factors important to the Company include price, product and service features (including security features), relative price and performance, product and service quality and reliability, design and technology innovation, a strong third-party software and accessories ecosystem, marketing and distribution capability, service and support, corporate reputation, and the ability to effectively protect and enforce the Company’s intellectual property rights.\nThe Company is focused on expanding its market opportunities related to smartphones, personal computers, tablets, wearables and accessories, and services. The Company’s products and services face substantial competition from companies that have significant technical, marketing, distribution and other resources, as well as established hardware, software, and service offerings with large customer b",
+                "start": 13488,
+                "end": 15154
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "filing",
+        "plan": [
+          {
+            "id": "task_1",
+            "agent": "filing_rag",
+            "instruction": "Apple’ın FY2025 raporunun Item 1 bölümüne göre temel ürün gruplarını açıkla.",
+            "fiscal_year": 2025
+          }
+        ],
+        "elapsed_seconds": 5.500545792000139,
+        "input_tokens": 679,
+        "output_tokens": 85,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 1021,
+        "output_tokens": 65,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_d7on54tr",
+            "function": {
+              "index": 0,
+              "name": "search_filings",
+              "arguments": {
+                "fiscal_year": 2025,
+                "query": "Apple FY2025 Item 1 ürün grupları",
+                "section": "Item 1",
+                "ticker": "AAPL",
+                "top_k": 5
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 4.374865917000079
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "step": 1,
+        "call_id": 1,
+        "name": "search_filings",
+        "arguments": {
+          "fiscal_year": 2025,
+          "query": "Apple FY2025 Item 1 ürün grupları",
+          "section": "Item 1",
+          "ticker": "AAPL",
+          "top_k": 5
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "AAPL",
+            "name": "Apple Inc.",
+            "cik": "0000320193"
+          },
+          "query": "Apple FY2025 Item 1 ürün grupları",
+          "fiscal_year": 2025,
+          "section": "Item 1",
+          "matches": [
+            {
+              "chunk_id": "0000320193-25-000079:item_1:0",
+              "text": "Item 1. Business\nCompany Background\nThe Company designs, manufactures and markets smartphones, personal computers, tablets, wearables and accessories, and sells a variety of related services. The Company’s fiscal year is the 52- or 53-week period that ends on the last Saturday of September.\nProducts\niPhone\niPhone® is the Company’s line of smartphones based on its iOS operating system. The iPhone line includes iPhone 17 Pro, iPhone Air™, iPhone 17, iPhone 16 and iPhone 16e.\nMac\nMac® is the Company’s line of personal computers based on its macOS® operating system. The Mac line includes laptops MacBook Air® and MacBook Pro®, as well as desktops iMac®, Mac mini®, Mac Studio® and Mac Pro®.\niPad\niPad® is the Company’s line of multipurpose tablets based on its iPadOS® operating system. The iPad line includes iPad Pro®, iPad Air®, iPad and iPad mini®.\nWearables, Home and Accessories\nWearables includes smartwatches, wireless headphones and spatial computers. The Company’s line of smartwatches, based on its watchOS® operating system, includes Apple Watch® Series 11, Apple Watch SE® 3 and Apple Watch Ultra® 3. The Company’s line of wireless headphones includes AirPods®, AirPods Pro®, AirPods Max® and Beats® products. Apple Vision Pro™ is the Company’s spatial computer based on its visionOS® operating system.",
+              "metadata": {
+                "form": "10-K",
+                "filed": "2025-10-31",
+                "section_start": 8545,
+                "section_title": "Business",
+                "report_date": "2025-09-27",
+                "end": 9863,
+                "fiscal_year": 2025,
+                "cik": "0000320193",
+                "start": 8545,
+                "section_end": 24541,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "amendment_note": "Original annual filing section.",
+                "accession_number": "0000320193-25-000079",
+                "section": "Item 1",
+                "ticker": "AAPL"
+              },
+              "distance": 0.4638994336128235,
+              "score": 0.03278688524590164,
+              "ranks": {
+                "dense": 1,
+                "bm25": 1
+              },
+              "context": {
+                "text": "Item 1. Business\nCompany Background\nThe Company designs, manufactures and markets smartphones, personal computers, tablets, wearables and accessories, and sells a variety of related services. The Company’s fiscal year is the 52- or 53-week period that ends on the last Saturday of September.\nProducts\niPhone\niPhone® is the Company’s line of smartphones based on its iOS operating system. The iPhone line includes iPhone 17 Pro, iPhone Air™, iPhone 17, iPhone 16 and iPhone 16e.\nMac\nMac® is the Company’s line of personal computers based on its macOS® operating system. The Mac line includes laptops MacBook Air® and MacBook Pro®, as well as desktops iMac®, Mac mini®, Mac Studio® and Mac Pro®.\niPad\niPad® is the Company’s line of multipurpose tablets based on its iPadOS® operating system. The iPad line includes iPad Pro®, iPad Air®, iPad and iPad mini®.\nWearables, Home and Accessories\nWearables includes smartwatches, wireless headphones and spatial computers. The Company’s line of smartwatches, based on its watchOS® operating system, includes Apple Watch® Series 11, Apple Watch SE® 3 and Apple Watch Ultra® 3. The Company’s line of wireless headphones includes AirPods®, AirPods Pro®, AirPods Max® and Beats® products. Apple Vision Pro™ is the Company’s spatial computer based on its visionOS® operating system.\nHome includes Apple TV 4K®, the Company’s media streaming and gaming device based on its tvOS® operating system, and HomePod® and HomePod mini®, high-fidelity wireless smart speakers.\nAccessories includes Apple-branded and third-party accessories.\nApple Inc. | 2025 Form 10-K | 1\nServices\nAdvertising\nThe Company’s advertising services include third-party licensing arrangements and the Company’s ow",
+                "start": 8545,
+                "end": 10263
+              }
+            },
+            {
+              "chunk_id": "0000320193-25-000079:item_1:1",
+              "text": "Home includes Apple TV 4K®, the Company’s media streaming and gaming device based on its tvOS® operating system, and HomePod® and HomePod mini®, high-fidelity wireless smart speakers.\nAccessories includes Apple-branded and third-party accessories.\nApple Inc. | 2025 Form 10-K | 1\nServices\nAdvertising\nThe Company’s advertising services include third-party licensing arrangements and the Company’s own advertising platforms.\nAppleCare\nThe Company offers a portfolio of fee-based service and support products under the AppleCare® brand. The offerings provide priority access to Apple technical support, access to the global Apple authorized service network for repair and replacement services, and in many cases additional coverage for instances of accidental damage or theft and loss, depending on the country and type of product.\nCloud Services\nThe Company’s cloud services store and keep customers’ content up-to-date and available across multiple Apple devices and Windows personal computers.\nDigital Content\nThe Company operates various platforms, including the App Store®, that allow customers to discover and download applications and digital content, such as books, music, video, games and podcasts.",
+              "metadata": {
+                "accession_number": "0000320193-25-000079",
+                "report_date": "2025-09-27",
+                "cik": "0000320193",
+                "filed": "2025-10-31",
+                "section_start": 8545,
+                "end": 11069,
+                "form": "10-K",
+                "amendment_note": "Original annual filing section.",
+                "fiscal_year": 2025,
+                "section_end": 24541,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "section_title": "Business",
+                "section": "Item 1",
+                "ticker": "AAPL",
+                "start": 9864
+              },
+              "distance": 0.468239426612854,
+              "score": 0.03225806451612903,
+              "ranks": {
+                "dense": 2,
+                "bm25": 2
+              },
+              "context": {
+                "text": ", wireless headphones and spatial computers. The Company’s line of smartwatches, based on its watchOS® operating system, includes Apple Watch® Series 11, Apple Watch SE® 3 and Apple Watch Ultra® 3. The Company’s line of wireless headphones includes AirPods®, AirPods Pro®, AirPods Max® and Beats® products. Apple Vision Pro™ is the Company’s spatial computer based on its visionOS® operating system.\nHome includes Apple TV 4K®, the Company’s media streaming and gaming device based on its tvOS® operating system, and HomePod® and HomePod mini®, high-fidelity wireless smart speakers.\nAccessories includes Apple-branded and third-party accessories.\nApple Inc. | 2025 Form 10-K | 1\nServices\nAdvertising\nThe Company’s advertising services include third-party licensing arrangements and the Company’s own advertising platforms.\nAppleCare\nThe Company offers a portfolio of fee-based service and support products under the AppleCare® brand. The offerings provide priority access to Apple technical support, access to the global Apple authorized service network for repair and replacement services, and in many cases additional coverage for instances of accidental damage or theft and loss, depending on the country and type of product.\nCloud Services\nThe Company’s cloud services store and keep customers’ content up-to-date and available across multiple Apple devices and Windows personal computers.\nDigital Content\nThe Company operates various platforms, including the App Store®, that allow customers to discover and download applications and digital content, such as books, music, video, games and podcasts.\nThe Company also offers digital content through subscription-based services, including Apple Arcade®, a game service; Apple Fitness+®, a personalized fitness service; Apple Music®, which offers users a curated listening experience with on-demand radio stations; Apple News+®, a news and magazine service; and Apple TV®, which offers exclusive original content and live sports.\nPayment Services\nThe C",
+                "start": 9464,
+                "end": 11469
+              }
+            },
+            {
+              "chunk_id": "0000320193-25-000079:item_1:2",
+              "text": "The Company operates various platforms, including the App Store®, that allow customers to discover and download applications and digital content, such as books, music, video, games and podcasts.\nThe Company also offers digital content through subscription-based services, including Apple Arcade®, a game service; Apple Fitness+®, a personalized fitness service; Apple Music®, which offers users a curated listening experience with on-demand radio stations; Apple News+®, a news and magazine service; and Apple TV®, which offers exclusive original content and live sports.\nPayment Services\nThe Company offers payment services, including Apple Card®, a co-branded credit card, and Apple Pay®, a cashless payment service.\nSegments",
+              "metadata": {
+                "section": "Item 1",
+                "filed": "2025-10-31",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "section_title": "Business",
+                "form": "10-K",
+                "fiscal_year": 2025,
+                "section_end": 24541,
+                "amendment_note": "Original annual filing section.",
+                "ticker": "AAPL",
+                "accession_number": "0000320193-25-000079",
+                "end": 11602,
+                "report_date": "2025-09-27",
+                "section_start": 8545,
+                "start": 10875,
+                "cik": "0000320193"
+              },
+              "distance": 0.5268901586532593,
+              "score": 0.031746031746031744,
+              "ranks": {
+                "dense": 3,
+                "bm25": 3
+              },
+              "context": {
+                "text": "the global Apple authorized service network for repair and replacement services, and in many cases additional coverage for instances of accidental damage or theft and loss, depending on the country and type of product.\nCloud Services\nThe Company’s cloud services store and keep customers’ content up-to-date and available across multiple Apple devices and Windows personal computers.\nDigital Content\nThe Company operates various platforms, including the App Store®, that allow customers to discover and download applications and digital content, such as books, music, video, games and podcasts.\nThe Company also offers digital content through subscription-based services, including Apple Arcade®, a game service; Apple Fitness+®, a personalized fitness service; Apple Music®, which offers users a curated listening experience with on-demand radio stations; Apple News+®, a news and magazine service; and Apple TV®, which offers exclusive original content and live sports.\nPayment Services\nThe Company offers payment services, including Apple Card®, a co-branded credit card, and Apple Pay®, a cashless payment service.\nSegments\nThe Company manages its business primarily on a geographic basis. The Company’s reportable segments consist of the Americas, Europe, Greater China, Japan and Rest of Asia Pacific. Americas includes both North and South America. Europe includes European countries, as well as India, the Middle East and Africa. Greater China includes China mainland, Hong Kong and Taiwan. Rest of Asia Pacific include",
+                "start": 10475,
+                "end": 12002
+              }
+            },
+            {
+              "chunk_id": "0000320193-25-000079:item_1:13",
+              "text": "The Company is committed to the safety and security of its team members everywhere it operates. The Company supports employees with general safety, security and crisis management training, and by putting specific programs in place for those working in potentially high-hazard environments.\nAvailable Information\nThe Company’s Annual Reports on Form 10-K, Quarterly Reports on Form 10-Q, Current Reports on Form 8-K, and amendments to reports filed pursuant to Sections 13(a) and 15(d) of the Securities Exchange Act of 1934, as amended (“Exchange Act”), are filed with the U.S. Securities and Exchange Commission (“SEC”). Such reports and other information filed by the Company with the SEC are available free of charge at investor.apple.com/investor-relations/sec-filings/default.aspx when such reports are available on the SEC’s website. The Company periodically provides certain information for investors on its corporate website, www.apple.com, and its investor relations website, investor.apple.com. This includes press releases and other information about financial performance, information on corporate governance, and details related to the Company’s annual meeting of shareholders. The information contained on the websites referenced in this Form 10-K is not incorporated by reference into this filing. Further, the Company’s references to website URLs are intended to be inactive textual references only.\nApple Inc. | 2025 Form 10-K | 4",
+              "metadata": {
+                "cik": "0000320193",
+                "fiscal_year": 2025,
+                "report_date": "2025-09-27",
+                "form": "10-K",
+                "amendment_note": "Original annual filing section.",
+                "section": "Item 1",
+                "filed": "2025-10-31",
+                "ticker": "AAPL",
+                "start": 23093,
+                "section_title": "Business",
+                "section_start": 8545,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "section_end": 24541,
+                "end": 24540,
+                "accession_number": "0000320193-25-000079"
+              },
+              "distance": 0.5685499310493469,
+              "score": 0.03055037313432836,
+              "ranks": {
+                "dense": 7,
+                "bm25": 4
+              },
+              "context": {
+                "text": "at open and honest communication among team members, managers and leaders helps create an open, collaborative work environment where everyone can contribute, grow and succeed. Team members are encouraged to come to their managers with questions, feedback or concerns, and the Company conducts surveys that gauge employee sentiment in areas like career development, manager performance and inclusion.\nThe Company is committed to the safety and security of its team members everywhere it operates. The Company supports employees with general safety, security and crisis management training, and by putting specific programs in place for those working in potentially high-hazard environments.\nAvailable Information\nThe Company’s Annual Reports on Form 10-K, Quarterly Reports on Form 10-Q, Current Reports on Form 8-K, and amendments to reports filed pursuant to Sections 13(a) and 15(d) of the Securities Exchange Act of 1934, as amended (“Exchange Act”), are filed with the U.S. Securities and Exchange Commission (“SEC”). Such reports and other information filed by the Company with the SEC are available free of charge at investor.apple.com/investor-relations/sec-filings/default.aspx when such reports are available on the SEC’s website. The Company periodically provides certain information for investors on its corporate website, www.apple.com, and its investor relations website, investor.apple.com. This includes press releases and other information about financial performance, information on corporate governance, and details related to the Company’s annual meeting of shareholders. The information contained on the websites referenced in this Form 10-K is not incorporated by reference into this filing. Further, the Company’s references to website URLs are intended to be inactive textual references only.\nApple Inc. | 2025 Form 10-K | 4\n",
+                "start": 22693,
+                "end": 24541
+              }
+            },
+            {
+              "chunk_id": "0000320193-25-000079:item_1:5",
+              "text": "Apple Inc. | 2025 Form 10-K | 2\nThe Company’s ability to compete successfully depends heavily on ensuring the continuing and timely introduction of innovative new products, services and technologies to the marketplace. The Company designs and develops nearly the entire solution for its products, including the hardware, operating system, numerous software applications and related services. Principal competitive factors important to the Company include price, product and service features (including security features), relative price and performance, product and service quality and reliability, design and technology innovation, a strong third-party software and accessories ecosystem, marketing and distribution capability, service and support, corporate reputation, and the ability to effectively protect and enforce the Company’s intellectual property rights.",
+              "metadata": {
+                "section_end": 24541,
+                "end": 14754,
+                "ticker": "AAPL",
+                "filed": "2025-10-31",
+                "section_start": 8545,
+                "fiscal_year": 2025,
+                "form": "10-K",
+                "amendment_note": "Original annual filing section.",
+                "accession_number": "0000320193-25-000079",
+                "cik": "0000320193",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+                "section": "Item 1",
+                "start": 13888,
+                "report_date": "2025-09-27",
+                "section_title": "Business"
+              },
+              "distance": 0.5297863483428955,
+              "score": 0.03055037313432836,
+              "ranks": {
+                "dense": 4,
+                "bm25": 7
+              },
+              "context": {
+                "text": "s are further defined by frequent introduction of new products and services, short product life cycles, evolving industry standards, and rapid adoption of technological advancements by competitors. Many of the Company’s competitors seek to compete primarily through aggressive pricing and very low cost structures, and by imitating the Company’s products and infringing on its intellectual property.\nApple Inc. | 2025 Form 10-K | 2\nThe Company’s ability to compete successfully depends heavily on ensuring the continuing and timely introduction of innovative new products, services and technologies to the marketplace. The Company designs and develops nearly the entire solution for its products, including the hardware, operating system, numerous software applications and related services. Principal competitive factors important to the Company include price, product and service features (including security features), relative price and performance, product and service quality and reliability, design and technology innovation, a strong third-party software and accessories ecosystem, marketing and distribution capability, service and support, corporate reputation, and the ability to effectively protect and enforce the Company’s intellectual property rights.\nThe Company is focused on expanding its market opportunities related to smartphones, personal computers, tablets, wearables and accessories, and services. The Company’s products and services face substantial competition from companies that have significant technical, marketing, distribution and other resources, as well as established hardware, software, and service offerings with large customer b",
+                "start": 13488,
+                "end": 15154
+              }
+            }
+          ]
+        },
+        "elapsed_seconds": 0.28620795899996665
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 4567,
+        "output_tokens": 569,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 26.33681129200022
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "status": "completed",
+        "elapsed_seconds": 30.998123124999893
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 5055,
+        "output_tokens": 214,
+        "total_tokens": 5269,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "response_id": "resp_060f8da79e519383016aef523e456087d2ad8d84e8fddbb4f2",
+        "estimated_cost_usd": 0.0006125,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"Apple’ın FY2025 raporunun Item 1 bölümünde temel ürün grupları iPhone, Mac ve iPad olarak sıralanıyor. iPhone, iOS tabanlı akıllı telefon serisini; Mac, macOS tabanlı dizüstü ve masaüstü bilgisayarları; iPad ise iPadOS tabanlı tabletleri kapsıyor. [Source 1]\\n\\nDiğer ürün grubu “Giyilebilir Ürünler, Ev ve Aksesuarlar”dır: buna Apple Watch ve kablosuz kulaklıklar gibi giyilebilir ürünler, Apple Vision Pro, Apple TV 4K ve HomePod ürünleri ile Apple markalı ve üçüncü taraf aksesuarlar dahildir. Şirket ayrıca reklam, AppleCare, bulut hizmetleri, dijital içerik ve ödeme hizmetlerinden oluşan Hizmetler sunuyor. [Sources 1, 2, 3]\",\"facts\":[]}",
+        "elapsed_seconds": 3.554947916999936
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"4K\", \"1,\", \"2,\", \"3]\"]. Replace these with the matching {{source_id:path}} token from the catalog, or remove the unsupported claim. Do not calculate or spell out values."
+        },
+        "elapsed_seconds": 3.55827570800011
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "issues": [
+          "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"4K\", \"1,\", \"2,\", \"3]\"]. Replace these with the matching {{source_id:path}} token from the catalog, or remove the unsupported claim. Do not calculate or spell out values."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 5442,
+        "output_tokens": 311,
+        "total_tokens": 5753,
+        "cached_input_tokens": 5052,
+        "reasoning_tokens": 123,
+        "response_id": "resp_03f3f294ae4562fd016aef5241aca887d2b7b0e8f4426feaa6",
+        "estimated_cost_usd": 0.00024502000000000004,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"Apple’ın {{1:matches/0/metadata/fiscal_year}} mali yılına ait, {{1:matches/0/metadata/report_date}} tarihinde sona eren raporunun Item 1 bölümünde temel ürün grupları iPhone, Mac, iPad ve “Giyilebilir Ürünler, Ev ve Aksesuarlar” olarak açıklanıyor. iPhone akıllı telefonları, Mac kişisel bilgisayarları, iPad tabletleri kapsıyor. [Source 1]\\n\\n“Giyilebilir Ürünler, Ev ve Aksesuarlar” grubu akıllı saatler, kablosuz kulaklıklar ve uzamsal bilgisayarların yanı sıra ev ürünleri ile Apple markalı ve üçüncü taraf aksesuarları içeriyor. [Source 1]\",\"facts\":[]}",
+        "elapsed_seconds": 4.327562209000007
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 4.32943883400003
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 1675,
+        "output_tokens": 136,
+        "total_tokens": 1811,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 104,
+        "response_id": "resp_0b82edeb0ec361ec016aef5246049087d2bf79d165cd4ab983",
+        "estimated_cost_usd": 0.0002355,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"issues\":[],\"evidence_supported\":true,\"language_matches\":true,\"answer_complete\":true}",
+        "elapsed_seconds": 2.853842624999743
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 2.856314334000217
+      }
+    ],
+    "elapsed_seconds": 47.85344225000017,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "think": false,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      },
+      "roles": {
+        "writer": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "max_output_tokens": 8192
+        },
+        "critic": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "max_output_tokens": 8192
+        }
+      }
+    },
+    "dataset_sha256": "979898b334164959e620633c885e8f2000298b6ee0684a7821301fab4db9c5c1",
+    "recorded_at": "2026-11-07T16:31:04.852708+00:00",
+    "transport": "mcp"
+  },
+  {
+    "id": "msft_competition_en",
+    "question": "Using Microsoft’s FY2026 Item 1A, explain why competition and continued innovation matter to its business.",
+    "expected": {
+      "ticker": "MSFT",
+      "fiscal_year": 2026,
+      "section": "Item 1A",
+      "accession_number": "0001193125-26-323660",
+      "required_claim": "Microsoft faces competition from diversified firms and specialized companies; rapid technology change and failure to innovate can harm competitiveness and operating results.",
+      "requires_source": true,
+      "sources": [
+        {
+          "path": "financial_data/processed/0000789019/filings/0001193125-26-323660/sections.json",
+          "sha256": "c6aab166b44c6d2073a8c0c0a3c4ada11faebc5f5c6935a70e408d6f3a8e2dfe"
+        }
+      ]
+    },
+    "answer_language": "en",
+    "category": "narrative",
+    "usage": {
+      "model_calls_with_usage": 7,
+      "model_calls_without_usage": 0,
+      "tool_calls": 1,
+      "input_tokens": 15861,
+      "output_tokens": 1348,
+      "estimated_cost_usd": 0.0011433900000000002,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    },
+    "answer": "In Microsoft’s FY2026 Item 1A (period end: 2026-06-30), the company says intense competition spans all its markets. Competitors range from large global firms with substantial research and development resources to specialized companies, while low barriers to entry and rapidly changing technologies and customer needs add competitive pressure. Microsoft warns that failing to continue innovating and offering products, devices, and services that appeal to businesses and consumers could weaken its competitiveness and adversely affect its business, financial condition, and results of operations. [Source 1]\n\nInnovation and competition also matter to Microsoft’s platform-based ecosystems: network effects among users, application developers, and the platform provider can accelerate growth, while competing platforms may make it harder to attract and retain customers. Microsoft says achieving and maintaining marketplace scale is necessary to meet consumer demand and attain attractive margins. [Source 1]",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": {
+      "source_sha256": "49330362f3fd7c0907ca8d218a2005498060684c60754fc7737829dff054a2d0",
+      "index_sha256": "5d2d5206bde26d7a197a89c642de9f41c5f04d51cb0643f7b0fb8a219365e496",
+      "code_sha256": "8aba2dd3d93d839e5f8716c6db8407b07ce036becd6087b433d71efb3e3bdae7"
+    },
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": "In Microsoft’s FY2026 Item 1A (period end: 2026-06-30), the company says intense competition spans all its markets. Competitors range from large global firms with substantial research and development resources to specialized companies, while low barriers to entry and rapidly changing technologies and customer needs add competitive pressure. Microsoft warns that failing to continue innovating and offering products, devices, and services that appeal to businesses and consumers could weaken its competitiveness and adversely affect its business, financial condition, and results of operations. [Source 1]\n\nInnovation and competition also matter to Microsoft’s platform-based ecosystems: network effects among users, application developers, and the platform provider can accelerate growth, while competing platforms may make it harder to attract and retain customers. Microsoft says achieving and maintaining marketplace scale is necessary to meet consumer demand and attain attractive margins. [Source 1]",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "answer",
+      "text": "In Microsoft’s FY2026 Item 1A (period end: {{1:matches/0/metadata/report_date}}), the company says intense competition spans all its markets. Competitors range from large global firms with substantial research and development resources to specialized companies, while low barriers to entry and rapidly changing technologies and customer needs add competitive pressure. Microsoft warns that failing to continue innovating and offering products, devices, and services that appeal to businesses and consumers could weaken its competitiveness and adversely affect its business, financial condition, and results of operations. [Source 1]\n\nInnovation and competition also matter to Microsoft’s platform-based ecosystems: network effects among users, application developers, and the platform provider can accelerate growth, while competing platforms may make it harder to attract and retain customers. Microsoft says achieving and maintaining marketplace scale is necessary to meet consumer demand and attain attractive margins. [Source 1]",
+      "facts": []
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "search_filings",
+        "arguments": {
+          "fiscal_year": 2026,
+          "ticker": "MSFT",
+          "query": "competition and continued innovation",
+          "section": "Item 1A",
+          "top_k": 3
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "query": "competition and continued innovation",
+          "fiscal_year": 2026,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0001193125-26-323660:item_1a:1",
+              "text": "We face intense competition across all markets for our products and services, which could adversely affect our results of operations.\nCompetition in the technology sector\nOur competitors range in size from diversified global companies with significant research and development resources to small, specialized firms who may be more effective in deploying technical, marketing, and financial resources. Barriers to entry in many of our businesses are low and many of the areas in which we compete evolve rapidly with changing and disruptive technologies, shifting user needs, and frequent introductions of new products and services. If we do not continue to innovate and provide products, devices, and services that appeal to businesses and consumers, we may not remain competitive, which could adversely affect our business, financial condition, and results of operations.\nCompetition among platform-based ecosystems\nAn important element of our business model has been to create platform-based ecosystems on which many participants can build diverse solutions. A well-established ecosystem creates beneficial network effects among users, application developers, and the platform provider that can accelerate growth. Establishing significant scale in the marketplace is necessary to meet consumer demand and to achieve and maintain attractive margins. Firms offering competing platforms may make it more difficult to attract and retain customers.\n•",
+              "metadata": {
+                "filed": "2026-07-29",
+                "fiscal_year": 2026,
+                "form": "10-K",
+                "section": "Item 1A",
+                "ticker": "MSFT",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "end": 50636,
+                "cik": "0000789019",
+                "amendment_note": "Original annual filing section.",
+                "start": 49190,
+                "report_date": "2026-06-30",
+                "section_start": 48557,
+                "accession_number": "0001193125-26-323660",
+                "section_end": 129753,
+                "section_title": "Risk Factors"
+              },
+              "distance": 0.36304038763046265,
+              "score": 0.03252247488101534,
+              "ranks": {
+                "dense": 1,
+                "bm25": 2
+              },
+              "context": {
+                "text": "ons, liquidity, and the trading price of our common stock. Statements in this section reflect our beliefs and opinions as to matters that could adversely affect us in the future. References to past events are provided by way of example only and are not intended to be a complete listing or a representation as to whether or not such matters have occurred in the past.\nSTRATEGIC AND COMPETITIVE RISKS\nWe face intense competition across all markets for our products and services, which could adversely affect our results of operations.\nCompetition in the technology sector\nOur competitors range in size from diversified global companies with significant research and development resources to small, specialized firms who may be more effective in deploying technical, marketing, and financial resources. Barriers to entry in many of our businesses are low and many of the areas in which we compete evolve rapidly with changing and disruptive technologies, shifting user needs, and frequent introductions of new products and services. If we do not continue to innovate and provide products, devices, and services that appeal to businesses and consumers, we may not remain competitive, which could adversely affect our business, financial condition, and results of operations.\nCompetition among platform-based ecosystems\nAn important element of our business model has been to create platform-based ecosystems on which many participants can build diverse solutions. A well-established ecosystem creates beneficial network effects among users, application developers, and the platform provider that can accelerate growth. Establishing significant scale in the marketplace is necessary to meet consumer demand and to achieve and maintain attractive margins. Firms offering competing platforms may make it more difficult to attract and retain customers.\n•\nA competing vertically-integrated model, in which a single firm controls the hardware and software elements of a product and related services, has succeeded with some consumer products such as PCs, tablets, smartphones, gaming consoles, wearables, and other endpoint devices. Competitors pursuing this model also earn revenue from services integrated with the hardware and software platform, includi",
+                "start": 48790,
+                "end": 51036
+              }
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "search_filings",
+        "arguments": {
+          "fiscal_year": 2026,
+          "ticker": "MSFT",
+          "query": "competition and continued innovation",
+          "section": "Item 1A",
+          "top_k": 3
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "query": "competition and continued innovation",
+          "fiscal_year": 2026,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0001193125-26-323660:item_1a:53",
+              "text": "•\nCompetition laws and new market regulation: Government agencies closely scrutinize us under U.S. and foreign competition laws. Governments are actively enforcing competition laws and regulations and enacting new regulations to intervene in digital markets, and this includes markets such as the EU, the United Kingdom, the U.S., and China. Some jurisdictions also allow competitors or consumers to assert claims of anti-competitive conduct. U.S. and foreign antitrust authorities have previously brought enforcement actions and continue to scrutinize our business. Competition law enforcement actions and court decisions along with new market regulations may result in fines or hinder our ability to provide the benefits of our software to consumers and businesses, reducing the attractiveness of our products and the revenue that comes from them. New competition law actions or obligations under market regulation schemes could be initiated, potentially using previous actions as precedent.\n•",
+              "metadata": {
+                "section": "Item 1A",
+                "filed": "2026-07-29",
+                "amendment_note": "Original annual filing section.",
+                "form": "10-K",
+                "cik": "0000789019",
+                "section_start": 48557,
+                "start": 103715,
+                "section_title": "Risk Factors",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "fiscal_year": 2026,
+                "section_end": 129753,
+                "ticker": "MSFT",
+                "end": 104710,
+                "report_date": "2026-06-30",
+                "accession_number": "0001193125-26-323660"
+              },
+              "distance": 0.40763354301452637,
+              "score": 0.032018442622950824,
+              "ranks": {
+                "dense": 4,
+                "bm25": 1
+              },
+              "context": {
+                "text": " and regulations, or interpretations or applications of existing laws and regulations in a manner inconsistent with our interpretations of such laws and regulations or our practices, may result in modification of our products and services, altered business models and operations, increased costs, reputational damage, and civil or criminal liability. Examples include laws and regulations regarding:\n•\nCompetition laws and new market regulation: Government agencies closely scrutinize us under U.S. and foreign competition laws. Governments are actively enforcing competition laws and regulations and enacting new regulations to intervene in digital markets, and this includes markets such as the EU, the United Kingdom, the U.S., and China. Some jurisdictions also allow competitors or consumers to assert claims of anti-competitive conduct. U.S. and foreign antitrust authorities have previously brought enforcement actions and continue to scrutinize our business. Competition law enforcement actions and court decisions along with new market regulations may result in fines or hinder our ability to provide the benefits of our software to consumers and businesses, reducing the attractiveness of our products and the revenue that comes from them. New competition law actions or obligations under market regulation schemes could be initiated, potentially using previous actions as precedent.\n•\nAI: Legislative and regulatory action is evolving with respect to AI, which could increase costs or restrict opportunity. For example, the EU’s AI Act may increase costs or impact the provision or operation of our AI models and services in the European market. In addition, governments may impose restrictions on the development, deployment, availability, or cross-border access to advanced AI model",
+                "start": 103315,
+                "end": 105110
+              }
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 3,
+        "tool": "search_filings",
+        "arguments": {
+          "fiscal_year": 2026,
+          "ticker": "MSFT",
+          "query": "competition and continued innovation",
+          "section": "Item 1A",
+          "top_k": 3
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "query": "competition and continued innovation",
+          "fiscal_year": 2026,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0001193125-26-323660:item_1a:13",
+              "text": "We make significant investments in products and services that may not achieve expected returns. We will continue to make significant investments in research, development, and marketing for existing products, services, and technologies, including AI-based products and services. We also invest in the development and acquisition of a variety of hardware for productivity, communication, and entertainment, including PCs, tablets, and gaming devices. Investments in new technology are speculative. Commercial success depends on many factors, including innovation, developer support, and effective distribution and marketing. If customers do not perceive our latest offerings as providing significant new functionality or other value, they may reduce their purchases of new software and hardware products or upgrades, unfavorably affecting revenue. We may not achieve significant revenue from new product, service, and distribution channel investments for several years, if at all. New products and services may not be profitable or may not achieve operating margins as high as we have experienced historically. We may not get engagement in certain features that drive post-sale monetization opportunities. Our data-handling practices across our products and services will continue to be under scrutiny. Perceptions of mismanagement, driven by regulatory activity or negative public reaction to our practices or product experiences, could negatively impact product and feature adoption. Developing new",
+              "metadata": {
+                "start": 63400,
+                "accession_number": "0001193125-26-323660",
+                "section_start": 48557,
+                "end": 64898,
+                "section_title": "Risk Factors",
+                "cik": "0000789019",
+                "form": "10-K",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "fiscal_year": 2026,
+                "amendment_note": "Original annual filing section.",
+                "section_end": 129753,
+                "filed": "2026-07-29",
+                "section": "Item 1A",
+                "report_date": "2026-06-30",
+                "ticker": "MSFT"
+              },
+              "distance": 0.4385300278663635,
+              "score": 0.03007688828584351,
+              "ranks": {
+                "dense": 7,
+                "bm25": 6
+              },
+              "context": {
+                "text": " users, or malicious actors for unintended, fraudulent, abusive, or unlawful purposes. Our efforts to detect, prevent, and mitigate such misuse may not be successful, which could result in reputational harm, regulatory scrutiny, service disruptions, or adverse impacts on our business, financial condition, and results of operations.\n16\nPART I\nItem 1A\nRISKS RELATING TO THE EVOLUTION OF OUR BUSINESS\nWe make significant investments in products and services that may not achieve expected returns. We will continue to make significant investments in research, development, and marketing for existing products, services, and technologies, including AI-based products and services. We also invest in the development and acquisition of a variety of hardware for productivity, communication, and entertainment, including PCs, tablets, and gaming devices. Investments in new technology are speculative. Commercial success depends on many factors, including innovation, developer support, and effective distribution and marketing. If customers do not perceive our latest offerings as providing significant new functionality or other value, they may reduce their purchases of new software and hardware products or upgrades, unfavorably affecting revenue. We may not achieve significant revenue from new product, service, and distribution channel investments for several years, if at all. New products and services may not be profitable or may not achieve operating margins as high as we have experienced historically. We may not get engagement in certain features that drive post-sale monetization opportunities. Our data-handling practices across our products and services will continue to be under scrutiny. Perceptions of mismanagement, driven by regulatory activity or negative public reaction to our practices or product experiences, could negatively impact product and feature adoption. Developing new technologies is complex. It can require long development and testing periods. We could experience significant delays in new releases or significant problems in creating new products or services. These factors could adversely affect our business, financial condition, and results of operations.\nAcquisitions, joint ventures, and strategic alliances could have an adverse effect on our business. We ex",
+                "start": 63000,
+                "end": 65298
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "filing",
+        "plan": [
+          {
+            "id": "task_1",
+            "agent": "filing_rag",
+            "instruction": "Use search_filings to find Microsoft's FY2026 Item 1A, then explain why competition and continued innovation matter to its business.",
+            "fiscal_year": 2026
+          }
+        ],
+        "elapsed_seconds": 2.365514458999769,
+        "input_tokens": 677,
+        "output_tokens": 89,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 1025,
+        "output_tokens": 58,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_ay5y2s73",
+            "function": {
+              "index": 0,
+              "name": "search_filings",
+              "arguments": {
+                "fiscal_year": 2026,
+                "ticker": "MSFT",
+                "query": "competition and continued innovation",
+                "section": "Item 1A",
+                "top_k": 3
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 4.188873957999931
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "step": 1,
+        "call_id": 1,
+        "name": "search_filings",
+        "arguments": {
+          "fiscal_year": 2026,
+          "ticker": "MSFT",
+          "query": "competition and continued innovation",
+          "section": "Item 1A",
+          "top_k": 3
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "query": "competition and continued innovation",
+          "fiscal_year": 2026,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0001193125-26-323660:item_1a:1",
+              "text": "We face intense competition across all markets for our products and services, which could adversely affect our results of operations.\nCompetition in the technology sector\nOur competitors range in size from diversified global companies with significant research and development resources to small, specialized firms who may be more effective in deploying technical, marketing, and financial resources. Barriers to entry in many of our businesses are low and many of the areas in which we compete evolve rapidly with changing and disruptive technologies, shifting user needs, and frequent introductions of new products and services. If we do not continue to innovate and provide products, devices, and services that appeal to businesses and consumers, we may not remain competitive, which could adversely affect our business, financial condition, and results of operations.\nCompetition among platform-based ecosystems\nAn important element of our business model has been to create platform-based ecosystems on which many participants can build diverse solutions. A well-established ecosystem creates beneficial network effects among users, application developers, and the platform provider that can accelerate growth. Establishing significant scale in the marketplace is necessary to meet consumer demand and to achieve and maintain attractive margins. Firms offering competing platforms may make it more difficult to attract and retain customers.\n•",
+              "metadata": {
+                "filed": "2026-07-29",
+                "fiscal_year": 2026,
+                "form": "10-K",
+                "section": "Item 1A",
+                "ticker": "MSFT",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "end": 50636,
+                "cik": "0000789019",
+                "amendment_note": "Original annual filing section.",
+                "start": 49190,
+                "report_date": "2026-06-30",
+                "section_start": 48557,
+                "accession_number": "0001193125-26-323660",
+                "section_end": 129753,
+                "section_title": "Risk Factors"
+              },
+              "distance": 0.36304038763046265,
+              "score": 0.03252247488101534,
+              "ranks": {
+                "dense": 1,
+                "bm25": 2
+              },
+              "context": {
+                "text": "ons, liquidity, and the trading price of our common stock. Statements in this section reflect our beliefs and opinions as to matters that could adversely affect us in the future. References to past events are provided by way of example only and are not intended to be a complete listing or a representation as to whether or not such matters have occurred in the past.\nSTRATEGIC AND COMPETITIVE RISKS\nWe face intense competition across all markets for our products and services, which could adversely affect our results of operations.\nCompetition in the technology sector\nOur competitors range in size from diversified global companies with significant research and development resources to small, specialized firms who may be more effective in deploying technical, marketing, and financial resources. Barriers to entry in many of our businesses are low and many of the areas in which we compete evolve rapidly with changing and disruptive technologies, shifting user needs, and frequent introductions of new products and services. If we do not continue to innovate and provide products, devices, and services that appeal to businesses and consumers, we may not remain competitive, which could adversely affect our business, financial condition, and results of operations.\nCompetition among platform-based ecosystems\nAn important element of our business model has been to create platform-based ecosystems on which many participants can build diverse solutions. A well-established ecosystem creates beneficial network effects among users, application developers, and the platform provider that can accelerate growth. Establishing significant scale in the marketplace is necessary to meet consumer demand and to achieve and maintain attractive margins. Firms offering competing platforms may make it more difficult to attract and retain customers.\n•\nA competing vertically-integrated model, in which a single firm controls the hardware and software elements of a product and related services, has succeeded with some consumer products such as PCs, tablets, smartphones, gaming consoles, wearables, and other endpoint devices. Competitors pursuing this model also earn revenue from services integrated with the hardware and software platform, includi",
+                "start": 48790,
+                "end": 51036
+              }
+            },
+            {
+              "chunk_id": "0001193125-26-323660:item_1a:53",
+              "text": "•\nCompetition laws and new market regulation: Government agencies closely scrutinize us under U.S. and foreign competition laws. Governments are actively enforcing competition laws and regulations and enacting new regulations to intervene in digital markets, and this includes markets such as the EU, the United Kingdom, the U.S., and China. Some jurisdictions also allow competitors or consumers to assert claims of anti-competitive conduct. U.S. and foreign antitrust authorities have previously brought enforcement actions and continue to scrutinize our business. Competition law enforcement actions and court decisions along with new market regulations may result in fines or hinder our ability to provide the benefits of our software to consumers and businesses, reducing the attractiveness of our products and the revenue that comes from them. New competition law actions or obligations under market regulation schemes could be initiated, potentially using previous actions as precedent.\n•",
+              "metadata": {
+                "section": "Item 1A",
+                "filed": "2026-07-29",
+                "amendment_note": "Original annual filing section.",
+                "form": "10-K",
+                "cik": "0000789019",
+                "section_start": 48557,
+                "start": 103715,
+                "section_title": "Risk Factors",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "fiscal_year": 2026,
+                "section_end": 129753,
+                "ticker": "MSFT",
+                "end": 104710,
+                "report_date": "2026-06-30",
+                "accession_number": "0001193125-26-323660"
+              },
+              "distance": 0.40763354301452637,
+              "score": 0.032018442622950824,
+              "ranks": {
+                "dense": 4,
+                "bm25": 1
+              },
+              "context": {
+                "text": " and regulations, or interpretations or applications of existing laws and regulations in a manner inconsistent with our interpretations of such laws and regulations or our practices, may result in modification of our products and services, altered business models and operations, increased costs, reputational damage, and civil or criminal liability. Examples include laws and regulations regarding:\n•\nCompetition laws and new market regulation: Government agencies closely scrutinize us under U.S. and foreign competition laws. Governments are actively enforcing competition laws and regulations and enacting new regulations to intervene in digital markets, and this includes markets such as the EU, the United Kingdom, the U.S., and China. Some jurisdictions also allow competitors or consumers to assert claims of anti-competitive conduct. U.S. and foreign antitrust authorities have previously brought enforcement actions and continue to scrutinize our business. Competition law enforcement actions and court decisions along with new market regulations may result in fines or hinder our ability to provide the benefits of our software to consumers and businesses, reducing the attractiveness of our products and the revenue that comes from them. New competition law actions or obligations under market regulation schemes could be initiated, potentially using previous actions as precedent.\n•\nAI: Legislative and regulatory action is evolving with respect to AI, which could increase costs or restrict opportunity. For example, the EU’s AI Act may increase costs or impact the provision or operation of our AI models and services in the European market. In addition, governments may impose restrictions on the development, deployment, availability, or cross-border access to advanced AI model",
+                "start": 103315,
+                "end": 105110
+              }
+            },
+            {
+              "chunk_id": "0001193125-26-323660:item_1a:13",
+              "text": "We make significant investments in products and services that may not achieve expected returns. We will continue to make significant investments in research, development, and marketing for existing products, services, and technologies, including AI-based products and services. We also invest in the development and acquisition of a variety of hardware for productivity, communication, and entertainment, including PCs, tablets, and gaming devices. Investments in new technology are speculative. Commercial success depends on many factors, including innovation, developer support, and effective distribution and marketing. If customers do not perceive our latest offerings as providing significant new functionality or other value, they may reduce their purchases of new software and hardware products or upgrades, unfavorably affecting revenue. We may not achieve significant revenue from new product, service, and distribution channel investments for several years, if at all. New products and services may not be profitable or may not achieve operating margins as high as we have experienced historically. We may not get engagement in certain features that drive post-sale monetization opportunities. Our data-handling practices across our products and services will continue to be under scrutiny. Perceptions of mismanagement, driven by regulatory activity or negative public reaction to our practices or product experiences, could negatively impact product and feature adoption. Developing new",
+              "metadata": {
+                "start": 63400,
+                "accession_number": "0001193125-26-323660",
+                "section_start": 48557,
+                "end": 64898,
+                "section_title": "Risk Factors",
+                "cik": "0000789019",
+                "form": "10-K",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "fiscal_year": 2026,
+                "amendment_note": "Original annual filing section.",
+                "section_end": 129753,
+                "filed": "2026-07-29",
+                "section": "Item 1A",
+                "report_date": "2026-06-30",
+                "ticker": "MSFT"
+              },
+              "distance": 0.4385300278663635,
+              "score": 0.03007688828584351,
+              "ranks": {
+                "dense": 7,
+                "bm25": 6
+              },
+              "context": {
+                "text": " users, or malicious actors for unintended, fraudulent, abusive, or unlawful purposes. Our efforts to detect, prevent, and mitigate such misuse may not be successful, which could result in reputational harm, regulatory scrutiny, service disruptions, or adverse impacts on our business, financial condition, and results of operations.\n16\nPART I\nItem 1A\nRISKS RELATING TO THE EVOLUTION OF OUR BUSINESS\nWe make significant investments in products and services that may not achieve expected returns. We will continue to make significant investments in research, development, and marketing for existing products, services, and technologies, including AI-based products and services. We also invest in the development and acquisition of a variety of hardware for productivity, communication, and entertainment, including PCs, tablets, and gaming devices. Investments in new technology are speculative. Commercial success depends on many factors, including innovation, developer support, and effective distribution and marketing. If customers do not perceive our latest offerings as providing significant new functionality or other value, they may reduce their purchases of new software and hardware products or upgrades, unfavorably affecting revenue. We may not achieve significant revenue from new product, service, and distribution channel investments for several years, if at all. New products and services may not be profitable or may not achieve operating margins as high as we have experienced historically. We may not get engagement in certain features that drive post-sale monetization opportunities. Our data-handling practices across our products and services will continue to be under scrutiny. Perceptions of mismanagement, driven by regulatory activity or negative public reaction to our practices or product experiences, could negatively impact product and feature adoption. Developing new technologies is complex. It can require long development and testing periods. We could experience significant delays in new releases or significant problems in creating new products or services. These factors could adversely affect our business, financial condition, and results of operations.\nAcquisitions, joint ventures, and strategic alliances could have an adverse effect on our business. We ex",
+                "start": 63000,
+                "end": 65298
+              }
+            }
+          ]
+        },
+        "elapsed_seconds": 0.3189660839998396
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 3300,
+        "output_tokens": 458,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 18.820769334000033
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "filing_rag",
+        "status": "completed",
+        "elapsed_seconds": 23.32876612500013
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 3492,
+        "output_tokens": 238,
+        "total_tokens": 3730,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "response_id": "resp_0cf01602d132bdc2016aef5263354887d2943907f7d1b4a897",
+        "estimated_cost_usd": 0.00046820000000000005,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"In Microsoft’s FY2026 Item 1A (period end: {{1:matches/0/metadata/report_date}}), the company says intense competition spans all its markets. Competitors range from large global firms with substantial research and development resources to specialized companies, while low barriers to entry and rapidly changing technologies and customer needs can make markets harder to defend. Microsoft warns that failing to keep innovating and offer products, devices, and services that appeal to businesses and consumers could weaken its competitiveness and adversely affect its business, financial condition, and results of operations. [Source 1]\\n\\nInnovation also matters because Microsoft’s platform ecosystems depend on attracting users, developers, and other participants; competing platforms can make it harder to win and retain customers, and marketplace scale is important to meeting demand and maintaining attractive margins. At the same time, Microsoft says investment in new products and technologies is speculative: customer uptake may disappoint, revenue may take years to emerge or never materialize, and new offerings may be unprofitable or deliver lower operating margins than historically experienced. [Source 1]\",\"facts\":[]}",
+        "elapsed_seconds": 2.622612625000329
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 2.6261770830001296
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 1767,
+        "output_tokens": 189,
+        "total_tokens": 1956,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 87,
+        "response_id": "resp_09108bcbbfff28ce016aef5265d0ac87d2bd45c9b0eb0f63d5",
+        "estimated_cost_usd": 0.00027120000000000003,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"issues\":[\"The claims that investment in new products and technologies is speculative, customer uptake may disappoint, revenue may take years or never materialize, and new offerings may be unprofitable or have lower operating margins are not supported by the cited excerpt. The excerpt discusses competition, continued innovation, platform ecosystems, customer retention, and the importance of scale to attractive margins.\"],\"evidence_supported\":false,\"language_matches\":true,\"answer_complete\":true}",
+        "elapsed_seconds": 3.067541500000061
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "failed",
+        "issues": [
+          "The claims that investment in new products and technologies is speculative, customer uptake may disappoint, revenue may take years or never materialize, and new offerings may be unprofitable or have lower operating margins are not supported by the cited excerpt. The excerpt discusses competition, continued innovation, platform ecosystems, customer retention, and the importance of scale to attractive margins."
+        ],
+        "elapsed_seconds": 3.0696780830003263
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "issues": [
+          "The claims that investment in new products and technologies is speculative, customer uptake may disappoint, revenue may take years or never materialize, and new offerings may be unprofitable or have lower operating margins are not supported by the cited excerpt. The excerpt discusses competition, continued innovation, platform ecosystems, customer retention, and the importance of scale to attractive margins."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 3907,
+        "output_tokens": 201,
+        "total_tokens": 4108,
+        "cached_input_tokens": 3489,
+        "reasoning_tokens": 0,
+        "response_id": "resp_03c5abbde83ec008016aef5268ed2c87d28e71ed28bb4feeb5",
+        "estimated_cost_usd": 0.00017719,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"In Microsoft’s FY2026 Item 1A (period end: {{1:matches/0/metadata/report_date}}), the company says intense competition spans all its markets. Competitors range from large global firms with substantial research and development resources to specialized companies, while low barriers to entry and rapidly changing technologies and customer needs add competitive pressure. Microsoft warns that failing to continue innovating and offering products, devices, and services that appeal to businesses and consumers could weaken its competitiveness and adversely affect its business, financial condition, and results of operations. [Source 1]\\n\\nInnovation and competition also matter to Microsoft’s platform-based ecosystems: network effects among users, application developers, and the platform provider can accelerate growth, while competing platforms may make it harder to attract and retain customers. Microsoft says achieving and maintaining marketplace scale is necessary to meet consumer demand and attain attractive margins. [Source 1]\",\"facts\":[]}",
+        "elapsed_seconds": 2.66917979200025
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 2.671275040999717
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 1693,
+        "output_tokens": 115,
+        "total_tokens": 1808,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 83,
+        "response_id": "resp_0a49b3e6febd73cb016aef526b8fa087d2adbfd12af35af02a",
+        "estimated_cost_usd": 0.0002268,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"issues\":[],\"evidence_supported\":true,\"language_matches\":true,\"answer_complete\":true}",
+        "elapsed_seconds": 1.833949708000091
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 1.8356386659997952
+      }
+    ],
+    "elapsed_seconds": 36.526744708000024,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "think": false,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      },
+      "roles": {
+        "writer": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "max_output_tokens": 8192
+        },
+        "critic": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "max_output_tokens": 8192
+        }
+      }
+    },
+    "dataset_sha256": "979898b334164959e620633c885e8f2000298b6ee0684a7821301fab4db9c5c1",
+    "recorded_at": "2026-11-07T16:31:41.379901+00:00",
+    "transport": "mcp"
+  }
+]

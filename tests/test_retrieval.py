@@ -191,7 +191,7 @@ class LatestReportTests(unittest.TestCase):
 
 class LatestReportSearchTests(unittest.TestCase):
     def setUp(self):
-        patcher = patch("src.rag.index_identity.verify_collection_identity", return_value={"embedding_digest": "test"})
+        patcher = patch("src.rag.retrieval.verify_collection_identity", return_value={"embedding_digest": "test"})
         patcher.start()
         self.addCleanup(patcher.stop)
         self.company = {"ticker": "AAPL", "cik": "0000320193", "name": "Apple Inc."}

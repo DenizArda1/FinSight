@@ -1,4 +1,4 @@
-"""Token-level API cost estimates; local hardware/electricity costs are excluded."""
+#Token-level API cost estimates; local hardware/electricity costs are excluded.
 LUNA_PRICING_DATE = "2026-11-06"
 
 

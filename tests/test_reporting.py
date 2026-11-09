@@ -1,9 +1,6 @@
-import tempfile
 import unittest
-from pathlib import Path
-from unittest.mock import patch
 
-from src.reporting import DISCLAIMER, build_report, format_citation_links, save_report, source_financial_rows, split_research_note
+from src.reporting import DISCLAIMER, build_report, source_financial_rows, split_research_note
 from src.verification.agent_answer import build_fact_catalog, compose_template, render_agent_template
 
 
@@ -25,11 +22,6 @@ class ReportingTests(unittest.TestCase):
         self.assertIn("[^1]: AAPL | 10-K", note)
         self.assertIn("416161000000 USD [^1]", note)
         self.assertTrue(note.endswith(DISCLAIMER + "\n"))
-
-    def test_citation_links_preserve_positions_and_multi_digit_ids(self):
-        text = "Revenue [Source 2].\n\nCosts [Source 12]. Risk [Source 2]."
-        self.assertEqual(format_citation_links(text),
-                         "Revenue [²](#source-2).\n\nCosts [¹²](#source-12). Risk [²](#source-2).")
 
     def test_only_exact_generated_supporting_records_are_collapsed(self):
         evidence = self.result["evidence"]
@@ -84,20 +76,3 @@ class ReportingTests(unittest.TestCase):
     def test_empty_trace_does_not_inherit_stale_financial_evidence(self):
         rows, evidence = source_financial_rows({**self.result, "trace": []})
         self.assertEqual((rows, evidence), ([], []))
-
-    def test_exports_create_distinct_files_only_in_reports(self):
-        with tempfile.TemporaryDirectory() as directory, patch("src.reporting.PROJECT_ROOT", Path(directory)):
-            first = save_report("../outside", self.result)
-            original = first.read_text()
-            second = save_report("Question", self.result)
-            self.assertNotEqual(first, second)
-            self.assertEqual(first.parent, Path(directory) / "reports")
-            self.assertEqual(first.read_text(), original)
-            self.assertEqual(set(Path(directory).iterdir()), {first.parent})
-
-    def test_reports_symlink_is_rejected(self):
-        with tempfile.TemporaryDirectory() as directory, tempfile.TemporaryDirectory() as outside:
-            (Path(directory) / "reports").symlink_to(outside, target_is_directory=True)
-            with patch("src.reporting.PROJECT_ROOT", Path(directory)), self.assertRaises(ValueError):
-                save_report("Question", self.result)
-            self.assertEqual(list(Path(outside).iterdir()), [])

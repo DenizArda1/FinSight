@@ -3,9 +3,12 @@
 import argparse
 import os
 from pathlib import Path
-PROJECT = Path(__file__).resolve().parents[1]
+
 from src.ingestion.edgar import EdgarClient
 from src.utils.utils import save_json
+
+
+PROJECT = Path(__file__).resolve().parents[1]
 
 
 def main():

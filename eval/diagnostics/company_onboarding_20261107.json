@@ -1,0 +1,135 @@
+{
+  "oracle_previously_downloaded": false,
+  "company": {
+    "ticker": "ORCL",
+    "name": "ORACLE CORP",
+    "cik": "0001341439"
+  },
+  "facts": {
+    "company": {
+      "ticker": "ORCL",
+      "cik": "0001341439",
+      "name": "ORACLE CORP"
+    },
+    "concept": "revenue",
+    "definition": {
+      "description": "Annual total revenue",
+      "taxonomy": "us-gaap",
+      "unit": "USD",
+      "tags": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "Revenues",
+        "SalesRevenueNet"
+      ]
+    },
+    "unit": "USD",
+    "requested_years": 1,
+    "available_period_count": 1,
+    "history_complete": true,
+    "requested_period_ends": [
+      "2026-05-31"
+    ],
+    "missing_period_ends": [],
+    "records": [
+      {
+        "cik": 1341439,
+        "metric": "revenue",
+        "start": "2025-06-01",
+        "end": "2026-05-31",
+        "value": 67357000000,
+        "unit": "USD",
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "form": "10-K",
+        "filed": "2026-06-22",
+        "accn": "0001193125-26-277521",
+        "is_amendment": false,
+        "fiscal_year": 2026,
+        "period_label": "FY2026 (period end: 2026-05-31)",
+        "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm"
+      }
+    ]
+  },
+  "adobe_search": {
+    "company": {
+      "ticker": "ADBE",
+      "name": "ADOBE INC.",
+      "cik": "0000796343"
+    },
+    "query": "main products and services",
+    "fiscal_year": 2025,
+    "section": "Item 1",
+    "matches": [
+      {
+        "chunk_id": "0000796343-26-000003:item_1:32",
+        "text": "We license our software-as-a-service solutions to customers over multi-year service terms and license the majority of our software products through a subscription model where our customers purchase access to a product for a specific period during which they always have a license to use the most recent version of that product. We also license perpetual versions of certain products with maintenance and support, which includes rights to upgrades, when and if available, support, updates and enhancements.\nServices and Support\nWe provide expert consulting, customer success management, technical support and learning services across a range of audiences. With a focus on ensuring sustained customer success and realized value, this comprehensive portfolio of services is designed to help our customers and partners maximize the return on their investments in our cloud solutions and licensed products.\nConsulting Services",
+        "metadata": {
+          "start": 45458,
+          "section_end": 71409,
+          "section_title": "Business",
+          "accession_number": "0000796343-26-000003",
+          "section": "Item 1",
+          "filed": "2026-01-15",
+          "form": "10-K",
+          "amendment_note": "Original annual filing section.",
+          "ticker": "ADBE",
+          "fiscal_year": 2025,
+          "end": 46379,
+          "cik": "0000796343",
+          "report_date": "2025-11-28",
+          "section_start": 8387,
+          "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+        },
+        "distance": 0.4525386095046997,
+        "score": 0.03278688524590164,
+        "ranks": {
+          "dense": 1,
+          "bm25": 1
+        },
+        "context": {
+          "text": "rers and hardware manufacturers.\nOur local field offices include locations in Australia, Belgium, Brazil, Canada, China, Denmark, France, Germany, Hong Kong, India, Ireland, Italy, Japan, Mexico, the Netherlands, New Zealand, Poland, Romania, Kingdom of Saudi Arabia, Singapore, South Africa, Republic of Korea, Spain, Sweden, Switzerland, Taiwan, Thailand, the United Kingdom and the United States.\nWe license our software-as-a-service solutions to customers over multi-year service terms and license the majority of our software products through a subscription model where our customers purchase access to a product for a specific period during which they always have a license to use the most recent version of that product. We also license perpetual versions of certain products with maintenance and support, which includes rights to upgrades, when and if available, support, updates and enhancements.\nServices and Support\nWe provide expert consulting, customer success management, technical support and learning services across a range of audiences. With a focus on ensuring sustained customer success and realized value, this comprehensive portfolio of services is designed to help our customers and partners maximize the return on their investments in our cloud solutions and licensed products.\nConsulting Services\nWe have a global professional services team dedicated to designing and implementing solutions for our largest customers. Our professional services team uses a comprehensive, customer-focused methodology that has been refined over years of capturing and analyzing best practices from numerous customer engagements across a diverse mix of solutions, industries and customer segments. Our customers con",
+          "start": 45058,
+          "end": 46779
+        }
+      },
+      {
+        "chunk_id": "0000796343-26-000003:item_1:36",
+        "text": "11\nTable of Contents\n•product upgrades and enhancements during the term of the maintenance and support or subscription period, which is typically one to three years.\nWe provide product support through our support organization that includes several regional and global support centers, supplemented with outsourced vendors for specific services. Our customers can seek help through multiple channels including phone, chat, web, social media and email, allowing quick and easy access to the information they need. These teams are responsible for providing timely, high-quality technical expertise on all our products.\nCertain consumers are eligible to receive Getting Started support, to assist with easy adoption of their products. Support for some products and in some countries may vary. For our enterprise customers with greater support needs, we offer personalized service options through premium support offerings, delivered by global support centers and technical account managers who can also provide proactive risk mitigation services and on-site support services for those with business-critical deployments.\nWe also offer delivery assurance, technical support and enablement services to partners and developer organizations. We provide developers with high-quality tools, software development kits, information and services.\nDigital Learning Solutions",
+        "metadata": {
+          "filed": "2026-01-15",
+          "form": "10-K",
+          "start": 49373,
+          "ticker": "ADBE",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm",
+          "section": "Item 1",
+          "report_date": "2025-11-28",
+          "section_start": 8387,
+          "cik": "0000796343",
+          "section_title": "Business",
+          "section_end": 71409,
+          "amendment_note": "Original annual filing section.",
+          "fiscal_year": 2025,
+          "accession_number": "0000796343-26-000003",
+          "end": 50733
+        },
+        "distance": 0.4746401309967041,
+        "score": 0.03225806451612903,
+        "ranks": {
+          "dense": 2,
+          "bm25": 2
+        },
+        "context": {
+          "text": "hnical Support\nAdobe provides enterprise maintenance and support services to our subscription customers as part of the subscription entitlement and to our perpetual license customers via annual fee-based maintenance and support programs. These offerings provide our customers with:\n•technical support on the products our customers have purchased from Adobe;\n•“how to” help in using our products; and\n11\nTable of Contents\n•product upgrades and enhancements during the term of the maintenance and support or subscription period, which is typically one to three years.\nWe provide product support through our support organization that includes several regional and global support centers, supplemented with outsourced vendors for specific services. Our customers can seek help through multiple channels including phone, chat, web, social media and email, allowing quick and easy access to the information they need. These teams are responsible for providing timely, high-quality technical expertise on all our products.\nCertain consumers are eligible to receive Getting Started support, to assist with easy adoption of their products. Support for some products and in some countries may vary. For our enterprise customers with greater support needs, we offer personalized service options through premium support offerings, delivered by global support centers and technical account managers who can also provide proactive risk mitigation services and on-site support services for those with business-critical deployments.\nWe also offer delivery assurance, technical support and enablement services to partners and developer organizations. We provide developers with high-quality tools, software development kits, information and services.\nDigital Learning Solutions\nAdobe Customer Solutions offers a comprehensive portfolio of learning and enablement services to assist our customer and partner teams in the use of our products. Our training portfolio includes a large number of free online self-service learning options on learning.adobe.com. Adobe Digital Learning Solutions also has an extensive portfolio of fee-based learning programs including a wide range of",
+          "start": 48973,
+          "end": 51133
+        }
+      }
+    ],
+    "latest": true,
+    "selected_report": {
+      "fiscal_year": 2025,
+      "report_date": "2025-11-28",
+      "accession_number": "0000796343-26-000003"
+    }
+  }
+}

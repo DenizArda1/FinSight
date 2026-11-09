@@ -4,7 +4,6 @@ Never edits downloaded SEC HTML, production documents or the production index.
 Run explicitly during the final security evaluation, then use the emitted paths.
 """
 import argparse
-from copy import deepcopy
 from pathlib import Path
 import shutil
 

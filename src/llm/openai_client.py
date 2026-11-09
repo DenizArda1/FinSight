@@ -5,7 +5,7 @@ from pathlib import Path
 import requests
 from dotenv import load_dotenv
 
-from src.llm.client import IncompleteResponseError
+from src.llm.errors import IncompleteResponseError
 from src.llm.usage import annotate_usage
 
 

@@ -2,6 +2,8 @@ import math
 
 import requests
 
+from src.rag.index_identity import embedding_identity
+
 
 def validate_vectors(vectors, expected_count, expected_dimension=None):
     #Validate embedding values and return their shared dimension
@@ -46,7 +48,6 @@ def validate_vectors(vectors, expected_count, expected_dimension=None):
 
 def embed_texts(texts, embedding_config):
     if embedding_config.get("digest"):
-        from src.rag.index_identity import embedding_identity
         embedding_identity(embedding_config)
     if not isinstance(texts, list) or not texts:
         raise ValueError("Text must be a non-empty list")

@@ -144,6 +144,8 @@ class FinancialAgentToolTests(unittest.TestCase):
         save_json([], self.processed / "gross_profit.json")
         result = execute_tool("compute_metrics", {"cik": self.cik, "metrics": ["gross_margin", "net_margin"]})
         self.assertEqual(result["results"]["gross_margin"], [])
+        self.assertEqual(result["calculation_definitions"]["gross_margin"]["inputs"],
+                         ["gross_profit", "revenue"])
         self.assertEqual(len(result["results"]["net_margin"]), 3)
         self.assertTrue(result["warnings"])
 

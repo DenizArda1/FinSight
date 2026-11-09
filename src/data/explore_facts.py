@@ -4,6 +4,7 @@ from pathlib import Path
 from src.utils.utils import load_json, load_yaml, save_json
 from src.data.contracts import validate_selection
 from src.rag.html_parser import extract_fiscal_year
+from src.tools.company import downloaded_companies
 
 
 def filter_annual_records(records, selection):
@@ -166,16 +167,9 @@ def process_company(cik, years=5):
 
 
 def main():
-    companies = {
-        "NVDA": "0001045810",
-        "AAPL": "0000320193",
-        "MSFT": "0000789019",
-        "AMZN": "0001018724",
-    }
-
-    for ticker, cik in companies.items():
-        print("\nProcessing: ", ticker)
-        process_company(cik,years=5)
+    for company in downloaded_companies():
+        print("\nProcessing: ", company['ticker'])
+        process_company(company['cik'], years=5)
 
 if __name__ == "__main__":
     main()

@@ -9,6 +9,22 @@ from src.verification.agent_answer import build_agent_evidence
 
 
 class WriterTests(unittest.IsolatedAsyncioTestCase):
+    async def test_clarification_route_cannot_be_replaced_by_missing_data_answer(self):
+        state = create_initial_state("What was the latest annual revenue?")
+        state["request_type"] = "clarification"
+        self.generate.return_value = json.dumps({
+            "kind": "insufficient_data", "text": "No evidence is available.", "facts": [],
+        })
+        with self.assertRaises(ValueError):
+            await run_writer(state, {"model": "test-model"})
+        self.assertIsNone(state["answer"])
+
+        self.generate.return_value = json.dumps({
+            "kind": "clarification", "text": "Which company do you mean?", "facts": [],
+        })
+        result = await run_writer(state, {"model": "test-model"})
+        self.assertEqual(result["draft"], "Which company do you mean?")
+
     def setUp(self):
         patcher = patch("src.verification.agent_answer.generate_response")
         self.generate = patcher.start()

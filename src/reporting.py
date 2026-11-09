@@ -1,14 +1,10 @@
-#Render and save research notes without overwriting existing reports
-from datetime import datetime, timezone
-from pathlib import Path
-from uuid import uuid4
+"""Format verified research notes and source records for display and download."""
 
 from src.verification.agent_answer import (
     build_agent_evidence, build_fact_catalog, compose_template, format_source_references, render_agent_template,
 )
 from src.verification.citations import SOURCE_REFERENCE
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DISCLAIMER = (
     "Bu not SEC filing'lerine dayalı otomatik bir taslaktır; yatırım tavsiyesi değildir; "
     "analist onayı olmadan kullanılmaz."
@@ -37,14 +33,6 @@ def split_research_note(result):
         return answer[:-len(suffix)], details
     # A facts-only lookup must remain visible, not disappear into an expander.
     return answer, ""
-
-
-def format_citation_links(text):
-    """Display compact references at their original claim positions."""
-    superscript = str.maketrans("0123456789", "⁰¹²³⁴⁵⁶⁷⁸⁹")
-    return SOURCE_REFERENCE.sub(
-        lambda match: f"[{match[1].translate(superscript)}](#source-{match[1]})", text,
-    )
 
 
 def source_financial_rows(result):
@@ -78,7 +66,7 @@ def build_report(question, result):
     if details:
         sections.append("<details>\n<summary>Veri ayrıntıları / Supporting data</summary>\n\n"
                         + SOURCE_REFERENCE.sub(r"[^\1]", details) + "\n\n</details>")
-    # Standard Markdown footnotes also work outside the Streamlit interface.
+    # Standard Markdown footnotes preserve citations in downloaded notes.
     cited = {int(number) for number in SOURCE_REFERENCE.findall(answer)}
     sources = []
     for source in result.get("evidence", []):
@@ -91,16 +79,3 @@ def build_report(question, result):
         sections.extend(["## Kaynaklar / Sources", "\n\n".join(sources)])
     sections.append(DISCLAIMER)
     return "\n\n".join(sections) + "\n"
-
-
-def save_report(question, result):
-    content = build_report(question, result)
-    directory = PROJECT_ROOT / "reports"
-    if directory.is_symlink():
-        raise ValueError("The reports directory must not be a symbolic link.")
-    directory.mkdir(exist_ok=True)
-    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
-    path = directory / f"finsight_{timestamp}_{uuid4().hex[:8]}.md"
-    with path.open("x", encoding="utf-8") as handle:
-        handle.write(content)
-    return path

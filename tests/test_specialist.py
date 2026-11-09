@@ -230,9 +230,12 @@ class SpecialistLoopTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(event["task_id"], self.task["id"])
             self.assertEqual(event["agent"], self.task["agent"])
         self.assertNotIn("private reasoning", json.dumps(result))
-        for chat_call in self.chat.call_args_list:
+        for index, chat_call in enumerate(self.chat.call_args_list):
             tools = chat_call.kwargs["tools"]
-            self.assertEqual({item["function"]["name"] for item in tools}, AGENT_TOOL_NAMES["financial_data"])
+            expected = AGENT_TOOL_NAMES["financial_data"]
+            if index == 0:
+                expected = expected - {"get_company_facts", "compute_metrics"}
+            self.assertEqual({item["function"]["name"] for item in tools}, expected)
         messages = self.chat.call_args.args[0]
         tool_messages = [message for message in messages if message["role"] == "tool"]
         self.assertEqual(json.loads(tool_messages[-1]["content"]), records)

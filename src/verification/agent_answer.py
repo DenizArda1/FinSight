@@ -4,7 +4,7 @@ import re
 from decimal import Decimal
 from time import perf_counter
 
-from src.llm.client import generate_response
+from src.llm.client import config_for_role, generate_response
 from src.llm.prompts import build_agent_answer_messages, build_agent_verification_messages
 from src.verification.citations import SOURCE_REFERENCE, validate_citations
 from src.verification.grounding import parse_verification_response
@@ -130,6 +130,9 @@ def composition_schema(catalog, request_type=None, evidence=None):
         },
         "required": ["kind", "text", "facts"],
     }
+    if request_type == "clarification":
+        schema["properties"]["kind"]["enum"] = ["clarification"]
+        schema["properties"]["facts"]["maxItems"] = 0
     return schema
 
 
@@ -449,7 +452,6 @@ def parse_agent_verdict(text):
 
 
 def request_answer_check(messages, llm_config, trace, phase, response_format="json"):
-    from src.llm.client import config_for_role
     llm_config = config_for_role(llm_config, phase)
     started = perf_counter()
     event = {"type": "model", "phase": phase, "provider": llm_config.get("provider", "ollama"), "model": llm_config.get("model")}

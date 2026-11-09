@@ -76,6 +76,8 @@ def get_company_facts(cik: str, concept: str, years: int = 5, unit: str = "USD")
                        if key in config["metrics"][concept]},
         "unit": unit,
         "requested_years": years,
+        "available_period_count": len(period_ends),
+        "history_complete": len(period_ends) == years,
         "requested_period_ends": period_ends,
         "missing_period_ends": [end for end in period_ends if end not in seen_ends],
         "records": sorted(selected, key=lambda record: record["end"], reverse=True),
@@ -111,6 +113,8 @@ def compute_metrics(cik: str, metrics: list[str], years: int = 5) -> dict:
 
                 records[input_name] = facts[input_name]["records"]
                 missing = facts[input_name]["missing_period_ends"]
+                if len(facts[input_name]["requested_period_ends"]) < years:
+                    warnings.append(f"Only {len(facts[input_name]['requested_period_ends'])} annual source periods available for {input_name}; requested {years}.")
                 
                 if missing:
                     warnings.append(f"Missing {input_name} for period ends: {', '.join(missing)}")
@@ -126,7 +130,9 @@ def compute_metrics(cik: str, metrics: list[str], years: int = 5) -> dict:
             continue
         # Growth/CAGR must cover the requested window; do not silently skip missing years.
         if definition["period_mode"] != "same_period" and any(
-            facts[input_name]["missing_period_ends"] for input_name in definition["inputs"]
+            facts[input_name]["missing_period_ends"]
+            or len(facts[input_name]["requested_period_ends"]) < years
+            for input_name in definition["inputs"]
         ):
             results[name] = []
             warnings.append(f"Incomplete requested period coverage for {name}.")
@@ -139,6 +145,7 @@ def compute_metrics(cik: str, metrics: list[str], years: int = 5) -> dict:
         "company": next(iter(facts.values()))["company"],
         "requested_years": years,
         "results": results,
+        "calculation_definitions": definitions,
         "warnings": warnings,
         "availability": {
             name: {"concept": name, "missing_period_ends": fact["missing_period_ends"],

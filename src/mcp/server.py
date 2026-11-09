@@ -14,8 +14,8 @@ from src.tools.dispatcher import execute_tool
 def execute_mcp_tool(name: str, arguments: dict) -> dict:
     # Validate the original JSON arguments before any function-signature coercion.
     try:
-        return execute_tool(name, arguments)
-    except (ValueError, TypeError, FileNotFoundError) as error:
+        return execute_tool(name, arguments, prepare=True)
+    except (ValueError, TypeError, OSError) as error:
         raise ToolError(str(error)) from error
 
 

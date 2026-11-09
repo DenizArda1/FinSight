@@ -53,7 +53,7 @@ class FilingPeriodIntegrationTests(unittest.IsolatedAsyncioTestCase):
                         "end": section["end"], "section_start": section["start"], "section_end": section["end"]}
             self.collection.add(ids=[accession + ":1"], documents=[text], metadatas=[metadata], embeddings=[vector])
         patchers = [
-            patch("src.rag.index_identity.verify_collection_identity", return_value={"embedding_digest": "test"}),
+            patch("src.rag.retrieval.verify_collection_identity", return_value={"embedding_digest": "test"}),
             patch("src.tools.report_search.PROJECT_ROOT", self.root),
             patch("src.tools.report_search.resolve_company", return_value=self.company),
             patch("src.tools.report_search.load_yaml", return_value={"embedding": {}, "vector_store": {}}),

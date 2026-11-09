@@ -124,8 +124,10 @@ class EdgarClient:
             rows.extend(filing_rows(columns))
         selected = select_filings(rows, years)
         
-        if len({row["reportDate"] for row in selected if row["form"] == "10-K"}) < years:
-            raise ValueError(f"Fewer than {years} annual periods available: {ticker}")
+        available_periods = len({row["reportDate"] for row in selected if row["form"] == "10-K"})
+        if not available_periods:
+            forms = sorted({row["form"] for row in rows if row["form"]})
+            raise ValueError(f"No supported 10-K annual reports for {ticker}. Available forms: {', '.join(forms)}")
         records = []
 
         for row in selected:
@@ -140,7 +142,7 @@ class EdgarClient:
             records.append({**row, "url": url, "path": str(destination.relative_to(self.root))})
             
         manifest = {"ticker": ticker, "cik": cik, "name": submissions["name"],
-                    "requested_periods": years, "filings": records,
+                    "requested_periods": years, "available_periods": available_periods, "filings": records,
                     "manifest_generated_at": datetime.now(timezone.utc).isoformat()}
         save_json(manifest, directory / "manifest.json")
         return manifest

@@ -1,15 +1,13 @@
 import requests
+
+from src.llm.errors import IncompleteResponseError
+from src.llm.openai_client import send_response_request
 from src.llm.usage import annotate_usage
-
-
-class IncompleteResponseError(ValueError):
-    """The model stopped before completing its response."""
 
 
 def send_chat_request(messages, llm_config, tools=None, response_format=None, telemetry=None):
     provider = llm_config.get("provider", "ollama")
     if provider == "openai":
-        from src.llm.openai_client import send_response_request
         if tools is not None:
             raise ValueError("OpenAI is configured only for Writer and Critic, without tools")
         return send_response_request(messages, llm_config, response_format, telemetry)

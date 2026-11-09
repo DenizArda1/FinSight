@@ -107,8 +107,12 @@ async def run_specialist(task, llm_config, mcp_client, tool_schemas,max_steps=6,
             model_event = {"type": "model", **identity, "step": step,
                            "max_output_tokens": options["num_predict"]}
             try:
+                step_tools = available_tools
+                if task["agent"] == "financial_data" and not resolved_ciks:
+                    step_tools = [tool for tool in available_tools
+                                  if tool["function"]["name"] not in {"get_company_facts", "compute_metrics"}]
                 message = await asyncio.to_thread(
-                    send_chat_request, messages, model_config, tools=available_tools, telemetry=model_event,
+                    send_chat_request, messages, model_config, tools=step_tools, telemetry=model_event,
                 )
 
                 if not isinstance(message, dict):

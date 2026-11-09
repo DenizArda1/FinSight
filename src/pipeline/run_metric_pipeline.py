@@ -9,6 +9,7 @@ from src.metrics.calculations import (
     index_rows_by_period,
 )
 from src.data.contracts import validate_calculations
+from src.tools.company import downloaded_companies
 from src.utils.utils import load_json, load_yaml, save_json
 
 
@@ -185,16 +186,9 @@ def main():
     project_root = Path(__file__).resolve().parents[2]
     config = load_yaml(project_root / "configs" / "metrics.yaml")
 
-    companies = {
-        "NVDA": "0001045810",
-        "AAPL": "0000320193",
-        "MSFT": "0000789019",
-        "AMZN": "0001018724",
-    }
-
-    for ticker, cik in companies.items():
-        print("\nProcessing:", ticker)
-        process_company_calculations(cik, config["calculations"], config["metrics"])
+    for company in downloaded_companies():
+        print("\nProcessing:", company['ticker'])
+        process_company_calculations(company['cik'], config["calculations"], config["metrics"])
 
 if __name__ == "__main__":
     main()

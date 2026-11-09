@@ -3,6 +3,8 @@ import hashlib
 import json
 from pathlib import Path
 
+import chromadb
+
 
 def hash_files(root, files):
     digest = hashlib.sha256()
@@ -26,7 +28,6 @@ def capture_snapshot(project_root, settings):
     index_hash = None
     vector_config = settings.get("vector_store")
     if vector_config:
-        import chromadb
         index_path = root / vector_config["path"]
         if not (index_path / "chroma.sqlite3").is_file():
             raise FileNotFoundError("Configured vector index does not exist")

@@ -3,6 +3,7 @@ import re
 
 from src.rag.embeddings import embed_text
 from src.rag.hybrid import bm25_rank, reciprocal_rank_fusion
+from src.rag.index_identity import verify_collection_identity
 from src.rag.versions import active_records, version_filter
 
 
@@ -47,7 +48,6 @@ def search_reports(query, collection, embedding_config, top_k=5, ticker=None, fi
 
     lexical = []
     if hybrid:
-        from src.rag.index_identity import verify_collection_identity
         identity = verify_collection_identity(collection, embedding_config)
         embedding_config = {**embedding_config, "digest": identity["embedding_digest"]}
         stored = collection.get(where=where, include=["documents", "metadatas"])

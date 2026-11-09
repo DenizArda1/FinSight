@@ -1,5 +1,6 @@
 from jsonschema import Draft202012Validator, ValidationError
 
+from src.pipeline.prepare_company import prepare_for_tool
 from src.tools.agentic_tools import TOOL_FUNCTIONS, TOOL_SCHEMAS
 
 
@@ -9,7 +10,7 @@ TOOL_VALIDATORS = {
 }
 
 
-def execute_tool(name: str, arguments: dict):
+def execute_tool(name: str, arguments: dict, *, prepare=False):
     if not isinstance(name, str) or not name.strip():
         raise ValueError("Tool name must be a non-empty string")
     
@@ -24,4 +25,6 @@ def execute_tool(name: str, arguments: dict):
         raise ValueError(f"Invalid arguments for {name}: {error.message}") from error
 
     function = TOOL_FUNCTIONS[name]
+    if prepare:
+        prepare_for_tool(name, arguments)
     return function(**arguments)

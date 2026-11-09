@@ -1,0 +1,672 @@
+[
+  {
+    "id": "adbe_latest_revenue_tr",
+    "question": "Adobe'nin yerel verideki son yıllık gelirini, mali yılını ve dönem sonunu belirt.",
+    "expected": {
+      "ticker": "ADBE",
+      "metric": "revenue",
+      "value": 23769000000,
+      "unit": "USD",
+      "fiscal_year": 2025,
+      "period_end": "2025-11-28"
+    },
+    "answer_language": "tr",
+    "category": "numeric",
+    "usage": {
+      "model_calls_with_usage": 10,
+      "model_calls_without_usage": 0,
+      "tool_calls": 4,
+      "input_tokens": 12911,
+      "output_tokens": 599,
+      "estimated_cost_usd": 0.00048490999999999996,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    },
+    "answer": "Adobe'nin yerel veride bulunan son yıllık geliri 23769000000 USD olup FY2025 dönemine aittir; dönem sonu 2025-11-28 tarihidir. [Source 2]",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": null,
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": "Adobe'nin yerel veride bulunan son yıllık geliri 23769000000 USD olup FY2025 dönemine aittir; dönem sonu 2025-11-28 tarihidir. [Source 2]",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "answer",
+      "text": "Adobe'nin yerel veride bulunan son yıllık geliri {{2:records/0/value}} {{2:records/0/unit}} olup FY{{2:records/0/fiscal_year}} dönemine aittir; dönem sonu {{2:records/0/end}} tarihidir.",
+      "facts": []
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "ADBE"
+        },
+        "result": {
+          "ticker": "ADBE",
+          "name": "ADOBE INC.",
+          "cik": "0000796343"
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0000796343",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "ADBE",
+            "cik": "0000796343",
+            "name": "ADOBE INC."
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2025-11-28"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 796343,
+              "metric": "revenue",
+              "start": "2024-11-30",
+              "end": "2025-11-28",
+              "value": 23769000000,
+              "unit": "USD",
+              "tag": "Revenues",
+              "form": "10-K",
+              "filed": "2026-01-15",
+              "accn": "0000796343-26-000003",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-11-28)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 3,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "ADBE"
+        },
+        "result": {
+          "ticker": "ADBE",
+          "name": "ADOBE INC.",
+          "cik": "0000796343"
+        }
+      },
+      {
+        "source_id": 4,
+        "tool": "get_company_facts",
+        "arguments": {
+          "years": 1,
+          "cik": "0000796343",
+          "concept": "revenue",
+          "unit": "USD"
+        },
+        "result": {
+          "company": {
+            "ticker": "ADBE",
+            "cik": "0000796343",
+            "name": "ADOBE INC."
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2025-11-28"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 796343,
+              "metric": "revenue",
+              "start": "2024-11-30",
+              "end": "2025-11-28",
+              "value": 23769000000,
+              "unit": "USD",
+              "tag": "Revenues",
+              "form": "10-K",
+              "filed": "2026-01-15",
+              "accn": "0000796343-26-000003",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-11-28)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+            }
+          ]
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "financial",
+        "plan": [
+          {
+            "id": "task_1",
+            "agent": "financial_data",
+            "instruction": "Use get_company_facts for Adobe's revenue in the latest annual period, years=1.",
+            "fiscal_year": null
+          },
+          {
+            "id": "task_2",
+            "agent": "financial_data",
+            "instruction": "Use get_company_facts for Adobe's fiscal year and fiscal period end in the latest annual period.",
+            "fiscal_year": null
+          }
+        ],
+        "elapsed_seconds": 2.2988690000001952,
+        "input_tokens": 678,
+        "output_tokens": 87,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 672,
+        "output_tokens": 25,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_gixaeh33",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "ADBE"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.4296174999999494
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "ADBE"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "ADBE",
+          "name": "ADOBE INC.",
+          "cik": "0000796343"
+        },
+        "elapsed_seconds": 0.009805749999941327
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 1104,
+        "output_tokens": 51,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_8zojj3o8",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000796343",
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 3.1765942499996527
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000796343",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "ADBE",
+            "cik": "0000796343",
+            "name": "ADOBE INC."
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2025-11-28"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 796343,
+              "metric": "revenue",
+              "start": "2024-11-30",
+              "end": "2025-11-28",
+              "value": 23769000000,
+              "unit": "USD",
+              "tag": "Revenues",
+              "form": "10-K",
+              "filed": "2026-01-15",
+              "accn": "0000796343-26-000003",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-11-28)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.033811374999913824
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 1559,
+        "output_tokens": 46,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 2.508119374999751
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 8.158104125000136
+      },
+      {
+        "type": "agent",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 673,
+        "output_tokens": 25,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_g2bxmw20",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "ADBE"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.4075536669997746
+      },
+      {
+        "type": "tool",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "ADBE"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "ADBE",
+          "name": "ADOBE INC.",
+          "cik": "0000796343"
+        },
+        "elapsed_seconds": 0.006949083000108658
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 1105,
+        "output_tokens": 51,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_m0qkwdl5",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "years": 1,
+                "cik": "0000796343",
+                "concept": "revenue",
+                "unit": "USD"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 3.1899386249997406
+      },
+      {
+        "type": "tool",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "years": 1,
+          "cik": "0000796343",
+          "concept": "revenue",
+          "unit": "USD"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "ADBE",
+            "cik": "0000796343",
+            "name": "ADOBE INC."
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2025-11-28"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 796343,
+              "metric": "revenue",
+              "start": "2024-11-30",
+              "end": "2025-11-28",
+              "value": 23769000000,
+              "unit": "USD",
+              "tag": "Revenues",
+              "form": "10-K",
+              "filed": "2026-01-15",
+              "accn": "0000796343-26-000003",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-11-28)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.022331250000206637
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 1560,
+        "output_tokens": 69,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 3.061191708000024
+      },
+      {
+        "type": "agent",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 7.688063292000152
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 2154,
+        "output_tokens": 84,
+        "total_tokens": 2238,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "response_id": "resp_01fea520f87d859d016aef52bfa64887d2a97dc20054f86132",
+        "estimated_cost_usd": 0.00025739999999999997,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"Adobe'nin yerel veride bulunan son yıllık geliri {{2:records/0:value}} {{2:records/0:unit}} olup FY{{2:records/0:fiscal_year}} dönemine aittir; mali yıl dönemi {{2:records/0:end}} tarihinde sona ermiştir.\",\"facts\":[]}",
+        "elapsed_seconds": 1.4229386249999152
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Malformed source field reference"
+        },
+        "elapsed_seconds": 1.4248557079999955
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "issues": [
+          "Malformed source field reference"
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 2346,
+        "output_tokens": 131,
+        "total_tokens": 2477,
+        "cached_input_tokens": 2151,
+        "reasoning_tokens": 49,
+        "response_id": "resp_0854b58d16f75c21016aef52c0faec87d2812003c654c0ed12",
+        "estimated_cost_usd": 0.00010651000000000001,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"Adobe'nin yerel veride bulunan son yıllık geliri {{2:records/0/value}} {{2:records/0/unit}} olup FY{{2:records/0/fiscal_year}} dönemine aittir; dönem sonu {{2:records/0/end}} tarihidir.\",\"facts\":[]}",
+        "elapsed_seconds": 1.809831583000232
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 1.8119631250001476
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 1060,
+        "output_tokens": 30,
+        "total_tokens": 1090,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "response_id": "resp_066243e1b47fe1cf016aef52c2c9b887d287ae8d0e6927d45c",
+        "estimated_cost_usd": 0.000121,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"issues\":[],\"evidence_supported\":true,\"language_matches\":true,\"answer_complete\":true}",
+        "elapsed_seconds": 0.9201809169999251
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 0.9215231670000321
+      }
+    ],
+    "elapsed_seconds": 22.941038458000094,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "think": false,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      },
+      "roles": {
+        "writer": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "max_output_tokens": 8192
+        },
+        "critic": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "max_output_tokens": 8192
+        }
+      }
+    },
+    "dataset_sha256": "2dc9cb468605ebbdf9ad368e8636e58239a11d7ea93bf19de15e0c076b1dc92a",
+    "recorded_at": "2026-11-07T16:33:07.701206+00:00",
+    "transport": "mcp"
+  }
+]

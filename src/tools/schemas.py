@@ -42,15 +42,15 @@ RESOLVE_TICKER_TOOL = {
     "function": {
         "name": "resolve_ticker_to_cik",
         "description": (
-            "Resolve a US stock ticker to its company name and "
-            "10-digit SEC CIK using the local ticker directory."
+            "Resolve a stock ticker, exact company name or CIK to its company name and "
+            "10-digit SEC CIK. Uses the SEC directory and submissions; not limited to demo companies."
         ),
         "parameters": {
             "type": "object",
             "properties": {
                 "ticker": {
                     "type": "string",
-                    "description": "Stock ticker symbol, for example NVDA.",
+                    "description": "Stock ticker, exact company name, or SEC CIK. Do not invent identifiers.",
                 },
             },
             "required": ["ticker"],
