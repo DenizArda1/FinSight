@@ -1,4 +1,4 @@
-"""Format verified research notes and source records for display and download."""
+#Format verified research notes and source records for display and download
 
 from src.verification.agent_answer import (
     build_agent_evidence, build_fact_catalog, compose_template, format_source_references, render_agent_template,
@@ -46,7 +46,7 @@ def source_financial_rows(result):
             continue
         source = sources[entry["source_id"]]
         rows.append({
-            "Şirket": source["result"].get("company", {}).get("ticker", str(fields.get("cik", ""))),
+            "Şirket": source["result"].get("company", {}).get("ticker", source["result"].get("publisher", str(fields.get("cik", "")))),
             "Metrik": fields.get("metric", source["result"].get("concept", "")),
             "Değer": fields["value"], "Birim": fields.get("unit", ""),
             "Mali yıl": fields.get("fiscal_year"), "Dönem sonu": fields.get("end", ""),

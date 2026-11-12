@@ -6,6 +6,8 @@ import hashlib
 import json
 
 
+REPORT_SEARCH_TOOLS = {"search_filings", "search_company_updates", "search_fed_releases"}
+
 MAX_REPORT_SOURCE_CHARS = 6000
 MAX_REPORT_TOTAL_CHARS = 12000
 
@@ -14,7 +16,7 @@ def report_text_size(source):
     result = source["result"]
     if source["tool"] == "get_filing_section":
         return len(result.get("text", ""))
-    if source["tool"] == "search_filings":
+    if source["tool"] in REPORT_SEARCH_TOOLS:
         return sum(
             len(match.get("context", {}).get("text", match.get("text", "")))
             for match in result.get("matches", [])
@@ -46,7 +48,7 @@ def limit_report_evidence(evidence, max_source_chars=MAX_REPORT_SOURCE_CHARS,
     # Admit the top result from each query before the next result from one query.
     candidates = [item[-1] for item in sorted(priorities, key=lambda item: item[:3])]
     for source in candidates:
-        if source["tool"] not in {"search_filings", "get_filing_section"}:
+        if source["tool"] not in REPORT_SEARCH_TOOLS | {"get_filing_section"}:
             continue
         size = report_text_size(source)
         reason = None
@@ -79,7 +81,7 @@ def evidence_for_prompt(evidence):
         if source.get("content_omitted"):
             continue
         result = source["result"]
-        if source["tool"] == "search_filings":
+        if source["tool"] in REPORT_SEARCH_TOOLS:
             for match in result.get("matches", []):
                 context = match.pop("context", {})
                 excerpt = context.get("text", match.get("text", ""))

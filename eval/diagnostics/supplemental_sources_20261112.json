@@ -1,0 +1,40 @@
+{
+  "bls": {
+    "status": "ok",
+    "records": 3,
+    "matches": 0,
+    "coverage": "Latest available monthly observations from the keyless v1 API, not real-time data.",
+    "warnings": [],
+    "references": "[Source 1]  | BLS | https://api.bls.gov/publicAPI/v1/timeseries/data/LNS14000000\n[Source 1]  | BLS | Unemployment rate | 2026-08 | LNS14000000 | https://api.bls.gov/publicAPI/v1/timeseries/data/LNS14000000\n[Source 1]  | BLS | Unemployment rate | 2026-09 | LNS14000000 | https://api.bls.gov/publicAPI/v1/timeseries/data/LNS14000000\n[Source 1]  | BLS | Unemployment rate | 2026-10 | LNS14000000 | https://api.bls.gov/publicAPI/v1/timeseries/data/LNS14000000"
+  },
+  "8-K": {
+    "status": "ok",
+    "records": 0,
+    "matches": 3,
+    "coverage": {
+      "form": "8-K",
+      "filings_considered": 4,
+      "documents_loaded": 5,
+      "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+    },
+    "warnings": [
+      "0001193125-26-436149: exhibit index unavailable (ReadTimeout)."
+    ],
+    "references": "[Source 1] MSFT | MSFT | 8-K | 0001193125-26-436122 | 2026-10-28 | EX-99 exhibit | 2026-10-28 | https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm\n[Source 2] MSFT | MSFT | 8-K | 0001193125-26-436122 | 2026-10-28 | EX-99 exhibit | 2026-10-28 | https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm\n[Source 3] MSFT | MSFT | 8-K | 0001193125-26-436122 | 2026-10-28 | EX-99 exhibit | 2026-10-28 | https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm"
+  },
+  "10-Q": {
+    "matches": 2,
+    "warnings": [],
+    "coverage": {
+      "form": "10-Q",
+      "filings_considered": 1,
+      "documents_loaded": 1,
+      "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+    }
+  },
+  "fed": {
+    "matches": 2,
+    "warnings": [],
+    "coverage": "Up to eight releases from the current monetary-policy RSS feed; not a historical archive."
+  }
+}

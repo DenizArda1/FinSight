@@ -8,7 +8,7 @@ from src.llm.client import config_for_role, generate_response
 from src.llm.prompts import build_agent_answer_messages, build_agent_verification_messages
 from src.verification.citations import SOURCE_REFERENCE, validate_citations
 from src.verification.grounding import parse_verification_response
-from src.verification.evidence import limit_report_evidence
+from src.verification.evidence import REPORT_SEARCH_TOOLS, limit_report_evidence
 
 
 FIELD_REFERENCE = re.compile(r"\{\{([1-9][0-9]*):([A-Za-z0-9_/-]+)(\|percent)?\}\}")
@@ -256,6 +256,9 @@ def collect_filing_references(value, ticker=""):
     references = set()
     if isinstance(value, dict):
         ticker = value.get("ticker", ticker)
+        if value.get('publisher') and value.get('source_url'):
+            references.add(tuple(str(value.get(key, '')) for key in
+                                 ('publisher', 'name', 'report_date', 'end', 'section', 'tag', 'source_url')))
         accession = value.get("accn") or value.get("accession_number")
         if accession and value.get("form"):
             amendment = value.get("amendment_note", "")
@@ -287,7 +290,8 @@ def format_source_references(answer, evidence):
         references = collect_filing_references(result)
         if references:
             for reference in sorted(references):
-                lines.append(f"{label} | " + " | ".join(part for part in reference if part))
+                separator = " | " if company.get("ticker") else " "
+                lines.append(label.rstrip() + separator + " | ".join(part for part in reference if part))
         else:
             lines.append(f"{label} | {source['tool']}")
     return "\n".join(lines)
@@ -300,7 +304,7 @@ def build_agent_evidence(trace):
         if event.get("type") == "tool" and event.get("status") == "completed":
             result = event["result"]
             results = [result]
-            if event["name"] == "search_filings" and isinstance(result, dict) and result.get("matches"):
+            if event["name"] in REPORT_SEARCH_TOOLS and isinstance(result, dict) and result.get("matches"):
                 results = [{**result, "matches": [match]} for match in result["matches"]]
             for source_result in results:
                 evidence.append({
@@ -349,7 +353,7 @@ def cited_report_texts(evidence):
         if source.get("content_omitted"):
             continue
         result = source["result"]
-        if source["tool"] == "search_filings":
+        if source["tool"] in REPORT_SEARCH_TOOLS:
             reports[source["source_id"]] = [match.get("context", {}).get("text", match["text"])
                                            for match in result.get("matches", [])]
         elif source["tool"] == "get_filing_section":

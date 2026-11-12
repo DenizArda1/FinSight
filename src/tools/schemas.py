@@ -173,3 +173,37 @@ COMPUTE_METRICS_TOOL = {
         },
     },
 }
+
+SEARCH_COMPANY_UPDATES_TOOL = {
+    'type': 'function', 'function': {
+        'name': 'search_company_updates',
+        'description': 'Search recent 10-Q or 8-K filings and HTML EX-99 exhibits. Use an English keyword query. Returns exact excerpts, filing dates, URLs and coverage warnings. Quarterly/YTD figures are not annual metrics. This is a bounded recent search, not all historical filings.',
+        'parameters': {'type': 'object', 'additionalProperties': False, 'properties': {
+            'ticker': {'type': 'string', 'minLength': 1},
+            'query': {'type': 'string', 'minLength': 1, 'maxLength': 1000},
+            'form': {'type': 'string', 'enum': ['10-Q', '8-K'], 'default': '10-Q'},
+            'limit': {'type': 'integer', 'minimum': 1, 'maximum': 8, 'default': 4},
+            'top_k': {'type': 'integer', 'minimum': 1, 'maximum': 8, 'default': 4},
+        }, 'required': ['ticker', 'query']},
+    },
+}
+SEARCH_FED_RELEASES_TOOL = {
+    'type': 'function', 'function': {
+        'name': 'search_fed_releases',
+        'description': 'Search recent official Federal Reserve monetary-policy releases. Use English keywords such as inflation, interest rates or economic activity. Does not prove company-specific effects or cover historical fiscal years.',
+        'parameters': {'type': 'object', 'additionalProperties': False, 'properties': {
+            'query': {'type': 'string', 'minLength': 1, 'maxLength': 1000},
+            'top_k': {'type': 'integer', 'minimum': 1, 'maximum': 8, 'default': 4},
+        }, 'required': ['query']},
+    },
+}
+GET_BLS_SERIES_TOOL = {
+    'type': 'function', 'function': {
+        'name': 'get_bls_series',
+        'description': 'Get official BLS monthly CPI index, unemployment percentage or nonfarm payroll employment level with units, seasonal adjustment and observation dates. CPI index is NOT an inflation rate. Latest available observations, not real time or annual company financials.',
+        'parameters': {'type': 'object', 'additionalProperties': False, 'properties': {
+            'indicator': {'type': 'string', 'enum': ['cpi', 'unemployment', 'payrolls']},
+            'months': {'type': 'integer', 'minimum': 1, 'maximum': 24, 'default': 12},
+        }, 'required': ['indicator']},
+    },
+}

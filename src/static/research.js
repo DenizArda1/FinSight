@@ -93,18 +93,18 @@ function showSource(id, reveal = true) {
   document.querySelectorAll('.citation').forEach(button => button.classList.toggle('active', Number(button.dataset.source) === id));
 }
 function sourceLinks(text) {
-  const links = [...new Set(String(text).match(/https:\/\/www\.sec\.gov\/[^\s|<>"']+/g) || [])];
-  return links.map(url => `<a class="source-open" href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">SEC üzerinde raporu aç ↗</a>`).join('');
+  const links = [...new Set(String(text).match(/https:\/\/(?:www\.sec\.gov|www\.federalreserve\.gov|api\.bls\.gov)\/[^\s|<>"']+/g) || [])];
+  return links.map(url => `<a class="source-open" href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">Kaynağı aç ↗</a>`).join('');
 }
 function sourceCard(source) {
   const references = String(source.reference || '').split('\n').filter(Boolean);
   return references.map(reference => {
     const parts = reference.replace(/\[Source \d+\]\s*/, '').split(' | ').map(part => part.trim());
     const company = parts[0] || 'SEC EDGAR';
-    const form = parts.find(part => /^(10-K|10-Q|20-F|40-F)(\/A)?$/.test(part)) || 'SEC raporu';
-    const year = parts.find(part => /^FY\d{4}$/.test(part)) || '';
-    const section = parts.find(part => /^(Item|Part)\s/i.test(part));
-    return `<div class="source-card"><span class="small-label">KAYNAK ${source.id}</span><h3>${escapeHTML(company)}</h3><p>${escapeHTML([form, year].filter(Boolean).join(' · '))}</p><div class="source-location"><span>Rapor içindeki konum</span><strong>${escapeHTML(section || 'Bölüm bilgisi mevcut değil')}</strong><small>HTML raporda sabit sayfa numarası bulunmuyor.</small></div>${sourceLinks(reference)}</div>`;
+    const form = parts.find(part => /^(10-K|10-Q|8-K|20-F|40-F)(\/A)?$/.test(part)) || (company === 'BLS' ? 'Ekonomik veri' : company === 'Federal Reserve' ? 'Para politikası açıklaması' : 'SEC raporu');
+    const year = parts.find(part => /^FY\d{4}$/.test(part)) || parts.find(part => /^\d{4}-\d{2}(-\d{2})?$/.test(part)) || '';
+    const section = parts.find(part => /^(Item|Part|Primary document|EX-99|Monetary policy)\b/i.test(part));
+    return `<div class="source-card"><span class="small-label">KAYNAK ${source.id}</span><h3>${escapeHTML(company)}</h3><p>${escapeHTML([form, year].filter(Boolean).join(' · '))}</p><div class="source-location"><span>Rapor içindeki konum</span><strong>${escapeHTML(section || 'Bölüm bilgisi mevcut değil')}</strong><small>Bu kaynak için sabit sayfa numarası mevcut değil.</small></div>${sourceLinks(reference)}</div>`;
   }).join('');
 }
 function openResearch(question = '') {

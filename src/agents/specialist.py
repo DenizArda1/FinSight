@@ -7,7 +7,7 @@ from src.llm.client import IncompleteResponseError, send_chat_request
 from src.llm.prompts import build_specialist_messages
 from src.mcp.client import MCPToolError, call_mcp_tool
 from src.tools.agentic_tools import AGENT_TOOL_NAMES, get_agent_tool_schemas
-from src.verification.evidence import MAX_REPORT_SOURCE_CHARS, limit_report_evidence, evidence_for_prompt
+from src.verification.evidence import REPORT_SEARCH_TOOLS, MAX_REPORT_SOURCE_CHARS, limit_report_evidence, evidence_for_prompt
 
 
 async def execute_specialist_tool(agent_name, tool_name, arguments, mcp_client, resolved_ciks,
@@ -24,6 +24,8 @@ async def execute_specialist_tool(agent_name, tool_name, arguments, mcp_client, 
     if requested_fiscal_year is not None:
         if type(requested_fiscal_year) is not int or requested_fiscal_year <= 0:
             raise ValueError("Requested fiscal year must be a positive integer or null")
+        if tool_name in {"search_company_updates", "search_fed_releases", "get_bls_series"}:
+            raise ValueError("Recent supplemental sources cannot satisfy an explicit historical fiscal-year task.")
         if tool_name == "search_filings":
             if (arguments.get("latest", False) is not False
                     or type(arguments.get("fiscal_year")) is not int
@@ -246,7 +248,7 @@ async def run_specialist(task, llm_config, mcp_client, tool_schemas,max_steps=6,
                             "ticker": arguments["ticker"], "fiscal_year": arguments["year"],
                             "section": arguments["section"], "query": task["instruction"], "top_k": 3,
                         }}}, "section_context_fallback"))
-                if event["status"] == "completed" and name in {"search_filings", "get_filing_section"}:
+                if event["status"] == "completed" and name in REPORT_SEARCH_TOOLS | {"get_filing_section"}:
                     model_result = evidence_for_prompt([{"source_id": 1, "tool": name, "result": model_result}])[0]["result"]
                 messages.append({
                     "role": "tool", "tool_name": name,

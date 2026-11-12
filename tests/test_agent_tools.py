@@ -46,7 +46,7 @@ class FinancialAgentToolTests(unittest.TestCase):
             ], self.processed / f"{metric}.json")
 
     def test_all_schemas_match_registered_signatures_and_config(self):
-        self.assertEqual(len(TOOL_SCHEMAS), 6)
+        self.assertEqual(len(TOOL_SCHEMAS), 9)
         self.assertEqual({schema["function"]["name"] for schema in TOOL_SCHEMAS}, set(TOOL_FUNCTIONS))
         json.dumps(TOOL_SCHEMAS)
         definitions = {schema["function"]["name"]: schema["function"] for schema in TOOL_SCHEMAS}
@@ -186,6 +186,7 @@ class AgentToolSelectionTests(unittest.TestCase):
             ],
             "filing_rag": [
                 "resolve_ticker_to_cik", "search_filings", "get_filing_section",
+                "search_company_updates", "search_fed_releases", "get_bls_series",
             ],
         }
         for agent_name, names in expected.items():
@@ -223,7 +224,7 @@ class AgentToolSelectionTests(unittest.TestCase):
         ]
         with self.assertRaisesRegex(ValueError, "Missing tools.*compute_metrics"):
             get_agent_tool_schemas("financial_data", discovered)
-        self.assertEqual(len(get_agent_tool_schemas("filing_rag", discovered)), 3)
+        self.assertEqual(len(get_agent_tool_schemas("filing_rag", discovered)), 6)
         with self.assertRaisesRegex(ValueError, "Missing tools"):
             get_agent_tool_schemas("financial_data", [])
 

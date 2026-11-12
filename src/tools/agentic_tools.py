@@ -2,18 +2,23 @@
 
 from copy import deepcopy
 
+from src.tools.research_sources import search_company_updates, search_fed_releases, get_bls_series
 from src.tools.company import resolve_company
 from src.tools.financial_metrics import get_company_facts, compute_metrics, compare_companies
 from src.tools.report_search import get_filing_section, search_company_reports
 from src.tools.schemas import (
+    SEARCH_COMPANY_UPDATES_TOOL, SEARCH_FED_RELEASES_TOOL, GET_BLS_SERIES_TOOL,
     RESOLVE_TICKER_TOOL, SEARCH_FILINGS_TOOL, GET_COMPANY_FACTS_TOOL, COMPUTE_METRICS_TOOL,
     GET_FILING_SECTION_TOOL, COMPARE_COMPANIES_TOOL,
 )
 
 
-TOOL_SCHEMAS = [RESOLVE_TICKER_TOOL, GET_COMPANY_FACTS_TOOL, COMPUTE_METRICS_TOOL, SEARCH_FILINGS_TOOL, GET_FILING_SECTION_TOOL, COMPARE_COMPANIES_TOOL]
+TOOL_SCHEMAS = [RESOLVE_TICKER_TOOL, GET_COMPANY_FACTS_TOOL, COMPUTE_METRICS_TOOL, SEARCH_FILINGS_TOOL, GET_FILING_SECTION_TOOL, COMPARE_COMPANIES_TOOL, SEARCH_COMPANY_UPDATES_TOOL, SEARCH_FED_RELEASES_TOOL, GET_BLS_SERIES_TOOL]
 
 TOOL_FUNCTIONS = {
+    "search_company_updates": search_company_updates,
+    "search_fed_releases": search_fed_releases,
+    "get_bls_series": get_bls_series,
     "resolve_ticker_to_cik": resolve_company,
     "search_filings": search_company_reports,
     "get_company_facts": get_company_facts,
@@ -30,6 +35,7 @@ AGENT_TOOL_NAMES = {
         "compare_companies",
     },
     "filing_rag": {
+        "search_company_updates", "search_fed_releases", "get_bls_series",
         "resolve_ticker_to_cik",
         "search_filings",
         "get_filing_section",

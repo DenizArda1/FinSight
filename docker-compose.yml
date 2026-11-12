@@ -1,0 +1,47 @@
+name: finsight
+
+services:
+  app:
+    image: finsight:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+      args:
+        APP_UID: ${FINSIGHT_UID:-1000}
+        APP_GID: ${FINSIGHT_GID:-1000}
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 5m
+    ports:
+      # Keep the public URL aligned with the application's origin validation.
+      - "127.0.0.1:8766:8766"
+    environment:
+      SEC_USER_AGENT: ${SEC_USER_AGENT:?Set SEC_USER_AGENT in .env}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:?Set OPENAI_API_KEY in .env}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      TOKENIZERS_PARALLELISM: "false"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      # Reuse downloaded filings and the existing Chroma collection.
+      - type: bind
+        source: ./financial_data
+        target: /app/financial_data
+      - type: bind
+        source: ./logs
+        target: /app/logs
+      # Read source configuration; the entrypoint writes its container-only copy.
+      - type: bind
+        source: ./configs
+        target: /opt/finsight/configs
+        read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

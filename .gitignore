@@ -6,6 +6,7 @@ env
 financial_data/raw/
 financial_data/processed/
 financial_data/indexed/
+financial_data/supplemental/
 financial_data/.preparation.lock
 __pycache__/
 *.pyc
