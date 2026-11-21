@@ -4,6 +4,9 @@ from pathlib import Path
 
 from mcp import Client, StdioServerParameters
 
+from src.observability import observation
+from src.tools.agentic_tools import TOOL_FUNCTIONS
+
 
 class MCPToolError(RuntimeError):
     """A tool returned an error result over MCP."""
@@ -38,18 +41,20 @@ async def load_mcp_tool_schemas(client: Client) -> list[dict]:
     return schemas
 
 async def call_mcp_tool(client: Client, name: str,arguments: dict) -> dict:
-    result = await client.call_tool(name, arguments)
+    span_name = name if name in TOOL_FUNCTIONS else "mcp.unknown_tool"
+    with observation(span_name, "tool"):
+        result = await client.call_tool(name, arguments)
 
-    if result.is_error:
-        error_text = "\n".join(
-            item.text for item in result.content if item.type == "text"
-        )
-        raise MCPToolError(f"MCP tool '{name}' failed: {error_text or 'Unknown error'}")
+        if result.is_error:
+            error_text = "\n".join(
+                item.text for item in result.content if item.type == "text"
+            )
+            raise MCPToolError(f"MCP tool '{name}' failed: {error_text or 'Unknown error'}")
 
-    if not isinstance(result.structured_content, dict):
-        raise RuntimeError(f"MCP tool '{name}' did not return a structured object")
+        if not isinstance(result.structured_content, dict):
+            raise RuntimeError(f"MCP tool '{name}' did not return a structured object")
 
-    return result.structured_content
+        return result.structured_content
 
 
 async def main() -> None:

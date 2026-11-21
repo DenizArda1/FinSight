@@ -11,6 +11,7 @@ from src.mcp.client import load_mcp_tool_schemas
 from src.agents.orchestrator import run_orchestrator
 from src.utils.utils import save_json
 from src.llm.usage import summarize_usage
+from src.observability import trace_run, update_observation
 
 TRACE_DIRECTORY = Path(__file__).resolve().parents[2] / "logs" / "runs"
 
@@ -45,17 +46,18 @@ async def run_mcp_agent(question, llm_config, verbose=False, trace=None):
         command=sys.executable,
         args=["-m", "src.mcp.server"],
         cwd=str(project_root),
-        env=dict(os.environ),
+        env={key: value for key, value in os.environ.items() if not key.startswith("LANGFUSE_")},
     )
-    async with Client(parameters, raise_exceptions=True) as client:
-        tool_schemas = await load_mcp_tool_schemas(client)
-        if verbose:
-            names = [schema["function"]["name"] for schema in tool_schemas]
-            print(f"MCP tools: {', '.join(names)}", file=sys.stderr)
-        return await run_agent_async(
-            question, llm_config, verbose=verbose, return_details=True,
-            trace=trace, mcp_client=client, tool_schemas=tool_schemas,
-        )
+    with trace_run("finsight.single_agent"):
+        async with Client(parameters, raise_exceptions=True) as client:
+            tool_schemas = await load_mcp_tool_schemas(client)
+            if verbose:
+                names = [schema["function"]["name"] for schema in tool_schemas]
+                print(f"MCP tools: {', '.join(names)}", file=sys.stderr)
+            return await run_agent_async(
+                question, llm_config, verbose=verbose, return_details=True,
+                trace=trace, mcp_client=client, tool_schemas=tool_schemas,
+            )
 
 async def run_mcp_orchestrator(question, llm_config, verbose=False, trace=None):
     project_root = Path(__file__).resolve().parents[2]
@@ -63,23 +65,30 @@ async def run_mcp_orchestrator(question, llm_config, verbose=False, trace=None):
         command=sys.executable,
         args=["-m","src.mcp.server"],
         cwd=str(project_root),
-        env=dict(os.environ),
+        env={key: value for key, value in os.environ.items() if not key.startswith("LANGFUSE_")},
     )
     run_trace = [] if trace is None else trace
     result = None
     error = None
     try:
-        async with Client(parameters, raise_exceptions=True) as client:
-            tool_schemas = await load_mcp_tool_schemas(client)
-            if verbose:
-                names = [schema["function"]["name"] for schema in tool_schemas]
-                print(f"MCP tools: {', '.join(names)}", file=sys.stderr)
-            result = await run_orchestrator(
-                question, llm_config, mcp_client=client,
-                tool_schemas=tool_schemas, trace=run_trace,
-            )
-            result["usage"] = summarize_usage(run_trace)
-            return result
+        with trace_run("finsight.multi_agent") as span:
+            async with Client(parameters, raise_exceptions=True) as client:
+                tool_schemas = await load_mcp_tool_schemas(client)
+                if verbose:
+                    names = [schema["function"]["name"] for schema in tool_schemas]
+                    print(f"MCP tools: {', '.join(names)}", file=sys.stderr)
+                result = await run_orchestrator(
+                    question, llm_config, mcp_client=client,
+                    tool_schemas=tool_schemas, trace=run_trace,
+                )
+                result["usage"] = summarize_usage(run_trace)
+                verification = result.get("verification") or {}
+                update_observation(span, metadata={
+                    "verification_status": verification.get("status"),
+                    "revision_count": result.get("revision_count"),
+                    "answer_delivered": result.get("answer") is not None,
+                })
+                return result
     except Exception as caught:
         error = caught
         raise

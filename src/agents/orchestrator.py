@@ -8,6 +8,7 @@ from src.agents.planner import generate_plan
 from src.agents.specialist import SpecialistLimitError, run_specialist
 from src.agents.writer import run_writer
 from src.agents.coverage import check_coverage
+from src.observability import observation, update_observation
 
 
 async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace=None, max_revisions=2) -> AgentState:
@@ -23,7 +24,8 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
     planner_usage = {}
     state["trace"].append({"type": "agent", "agent": "planner", "status": "started"})
     try:
-        plan = await asyncio.to_thread(generate_plan, state["question"], llm_config, telemetry=planner_usage)
+        with observation("planner", "agent"):
+            plan = await asyncio.to_thread(generate_plan, state["question"], llm_config, telemetry=planner_usage)
     except Exception as error:
         state["trace"].append({
             "type": "agent", "agent": "planner", "status": "error",
@@ -48,14 +50,15 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
 
     financial_years = max((task.get('years', 1) for task in state['plan']
                            if task['agent'] == 'financial_data'), default=1)
-    for task in state["plan"]:
+    for task_number, task in enumerate(state["plan"], 1):
         task_trace = []
         try:
             try:
                 scoped_task = {**task, 'question': state['question']}
                 if task['agent'] == 'financial_data':
                     scoped_task['years'] = financial_years
-                result = await run_specialist(scoped_task, llm_config, mcp_client, tool_schemas, trace=task_trace)
+                with observation(task["agent"], "agent", metadata={"task_number": task_number}):
+                    result = await run_specialist(scoped_task, llm_config, mcp_client, tool_schemas, trace=task_trace)
             except SpecialistLimitError:
                 result = {
                     "task_id": task["id"], "agent": task["agent"],
@@ -75,20 +78,23 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
             state["trace"].extend(deepcopy(task_trace))
 
     if state['request_type'] not in {'clarification', 'out_of_scope'}:
-        coverage = await check_coverage(state, llm_config)
+        with observation("coverage", "chain"):
+            coverage = await check_coverage(state, llm_config)
         repair_tasks = coverage['tasks']
         for index, task in enumerate(repair_tasks, 1):
             repair_trace = []
             scoped_task = {**task, 'id': f'coverage_repair_{index}', 'question': state['question']}
             try:
-                await run_specialist(scoped_task, llm_config, mcp_client, tool_schemas,
-                                     trace=repair_trace, max_steps=6, max_tool_calls=6)
+                with observation(task["agent"], "agent", metadata={"task_id": scoped_task["id"]}):
+                    await run_specialist(scoped_task, llm_config, mcp_client, tool_schemas,
+                                         trace=repair_trace, max_steps=6, max_tool_calls=6)
             except SpecialistLimitError:
                 pass  # The bounded pass still retains any successful tool evidence.
             finally:
                 state['trace'].extend(deepcopy(repair_trace))
         if repair_tasks:
-            coverage = await check_coverage(state, llm_config)
+            with observation("coverage", "chain"):
+                coverage = await check_coverage(state, llm_config)
         state['coverage'] = {key: value for key, value in coverage.items() if key != 'tasks'}
         state['coverage']['repair_tasks_attempted'] = len(repair_tasks)
         state['trace'].append({'type': 'coverage', **state['coverage']})
@@ -102,7 +108,8 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
         state["revision_count"] = revision
         writer_response = None
         try:
-            await run_writer(state, llm_config, feedback=feedback)
+            with observation("writer", "agent", metadata={"revision": revision}):
+                await run_writer(state, llm_config, feedback=feedback)
         except ValueError as error:
             event = state["trace"][-1]
             if event.get("agent") != "writer" or event.get("stage") not in {"parse", "schema", "deterministic"}:
@@ -115,7 +122,13 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
             }
         else:
             last_candidate = {key: deepcopy(state[key]) for key in ("draft", "composition", "evidence")}
-            await run_critic(state, llm_config)
+            with observation("critic", "agent", metadata={"revision": revision}) as span:
+                await run_critic(state, llm_config)
+                status = (state["verification"] or {}).get("status")
+                update_observation(span, metadata={
+                    "revision": revision,
+                    "verification_status": status,
+                }, level="ERROR" if status == "error" else None)
             critic_reviews += 1
         verification = state["verification"]
         if verification["status"] in {"passed", "error"}:

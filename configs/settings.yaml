@@ -26,5 +26,5 @@ llm:
       provider: openai
       model: gpt-6-luna
       timeout_seconds: 180
-      reasoning_effort: low
+      reasoning_effort: medium
       max_output_tokens: 8192

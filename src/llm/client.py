@@ -3,9 +3,30 @@ import requests
 from src.llm.errors import IncompleteResponseError
 from src.llm.openai_client import send_response_request
 from src.llm.usage import annotate_usage
+from src.observability import observation, update_observation
 
 
 def send_chat_request(messages, llm_config, tools=None, response_format=None, telemetry=None):
+    with observation(
+        "llm.request", "generation",
+        model=llm_config.get("model"),
+        metadata={"provider": llm_config.get("provider", "ollama")},
+    ) as generation:
+        usage = {} if generation is not None and telemetry is None else telemetry
+        try:
+            return _send_chat_request(messages, llm_config, tools, response_format, usage)
+        finally:
+            if generation is not None:
+                tokens = {
+                    name: usage[key]
+                    for name, key in (("input", "input_tokens"), ("output", "output_tokens"), ("total", "total_tokens"))
+                    if key in usage
+                }
+                cost = {"total": usage["estimated_cost_usd"]} if "estimated_cost_usd" in usage else None
+                update_observation(generation, usage_details=tokens or None, cost_details=cost)
+
+
+def _send_chat_request(messages, llm_config, tools, response_format, telemetry):
     provider = llm_config.get("provider", "ollama")
     if provider == "openai":
         if tools is not None:

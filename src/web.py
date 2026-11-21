@@ -1,4 +1,4 @@
-"""Local research workspace backed by the existing MCP orchestrator."""
+#Local research workspace backed by the existing MCP orchestrator
 import argparse
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
@@ -103,6 +103,23 @@ class ResearchJobs:
     def persist(self):
         if self.storage_path:
             save_json(self.jobs, self.storage_path)
+
+    def delete_conversation(self, conversation_id):
+        if not isinstance(conversation_id, str) or len(conversation_id) != 32 or any(char not in '0123456789abcdef' for char in conversation_id):
+            raise ValueError('Geçersiz konuşma kimliği.')
+        with self.lock:
+            messages = [job for job in self.jobs.values() if job['conversation_id'] == conversation_id]
+            if not messages:
+                raise KeyError(conversation_id)
+            if any(job['status'] == 'running' for job in messages):
+                raise RuntimeError('Bu konuşmada yanıt hazırlanıyor. Tamamlandıktan sonra silebilirsiniz.')
+            previous = self.jobs
+            self.jobs = {key: job for key, job in previous.items() if job['conversation_id'] != conversation_id}
+            try:
+                self.persist()
+            except OSError:
+                self.jobs = previous
+                raise
 
     def conversation_question(self, job):
         with self.lock:
@@ -212,6 +229,24 @@ class ResearchHandler(SimpleHTTPRequestHandler):
         except RuntimeError as error:
             return self.send_json(409, {'error': str(error)})
         self.send_json(202, job)
+
+    def do_DELETE(self):
+        if not self.local_request() or self.headers.get('X-FinSight-Request') != 'research':
+            return self.send_json(403, {'error': 'Geçersiz istek kaynağı.'})
+        path = urlsplit(self.path).path
+        if not path.startswith('/api/conversations/'):
+            return self.send_json(404, {'error': 'Bulunamadı.'})
+        try:
+            self.server.jobs.delete_conversation(path.removeprefix('/api/conversations/'))
+        except ValueError as error:
+            return self.send_json(400, {'error': str(error)})
+        except KeyError:
+            return self.send_json(404, {'error': 'Konuşma bulunamadı.'})
+        except RuntimeError as error:
+            return self.send_json(409, {'error': str(error)})
+        except OSError:
+            return self.send_json(500, {'error': 'Konuşma silinemedi. Disk erişimini kontrol edin.'})
+        self.send_json(200, {'deleted': True})
 
 
 def main():

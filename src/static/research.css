@@ -69,3 +69,10 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .history-item b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .source-tabs{flex-wrap:wrap}
 @media(max-width:700px){.chat-main{padding:65px 20px 24px}.chat-main.has-messages{padding-top:22px}.user-message{max-width:92%;font-size:13px}.assistant-message p{font-size:13px}.message-actions{gap:8px}.breadcrumb strong{max-width:140px}.chat-main.has-messages .chat-composer{bottom:8px}}
+
+/* Conversation history actions */
+.history-row{display:flex;align-items:flex-start;gap:4px}
+.history-row .history-item{flex:1;min-width:0}
+.history-delete{flex:0 0 30px;display:grid;place-items:center;height:30px;margin-top:10px;border-radius:5px;color:var(--muted)}
+.history-delete:hover:not(:disabled){background:#faeae7;color:#9b3628}
+.history-delete:focus-visible{outline:2px solid var(--green);outline-offset:2px}

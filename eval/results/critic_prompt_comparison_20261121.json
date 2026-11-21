@@ -1,0 +1,298 @@
+[
+  {
+    "case": "intel_supported",
+    "variant": "baseline",
+    "expected_supported": true,
+    "verdict": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true
+    },
+    "matched_expected": true,
+    "usage": {
+      "model_calls_with_usage": 1,
+      "model_calls_without_usage": 0,
+      "tool_calls": 0,
+      "input_tokens": 7054,
+      "output_tokens": 256,
+      "estimated_cost_usd": 0.0008334000000000001,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    }
+  },
+  {
+    "case": "intel_supported",
+    "variant": "revised",
+    "expected_supported": true,
+    "verdict": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true
+    },
+    "matched_expected": true,
+    "usage": {
+      "model_calls_with_usage": 1,
+      "model_calls_without_usage": 0,
+      "tool_calls": 0,
+      "input_tokens": 6981,
+      "output_tokens": 283,
+      "estimated_cost_usd": 0.0008396,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    }
+  },
+  {
+    "case": "oracle_supported",
+    "variant": "baseline",
+    "expected_supported": true,
+    "verdict": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true
+    },
+    "matched_expected": true,
+    "usage": {
+      "model_calls_with_usage": 1,
+      "model_calls_without_usage": 0,
+      "tool_calls": 0,
+      "input_tokens": 3152,
+      "output_tokens": 91,
+      "estimated_cost_usd": 0.00036070000000000004,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    }
+  },
+  {
+    "case": "oracle_supported",
+    "variant": "revised",
+    "expected_supported": true,
+    "verdict": {
+      "supported": false,
+      "issues": [
+        "Yanıt FY2025 ve FY2026 büyüme oranlarını veriyor, ancak FY2024 için oranı sunmuyor veya neden hesaplanamadığını açıklamıyor. Verilen kanıt yalnızca FY2024–FY2026 gelirlerini içerdiğinden FY2024 büyüme oranı için FY2023 geliri mevcut değil."
+      ],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": false
+    },
+    "matched_expected": false,
+    "usage": {
+      "model_calls_with_usage": 1,
+      "model_calls_without_usage": 0,
+      "tool_calls": 0,
+      "input_tokens": 3079,
+      "output_tokens": 251,
+      "estimated_cost_usd": 0.0004334,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    }
+  },
+  {
+    "case": "oracle_wrong_date_scope",
+    "variant": "baseline",
+    "expected_supported": false,
+    "verdict": {
+      "supported": false,
+      "issues": [
+        "“Oracle'ın mali yılları 2024-05-31 tarihinde sona eriyor” ifadesi FY2025 ve FY2026 için yanlıştır; kaynakta bu mali yılların sırasıyla 2025-05-31 ve 2026-05-31 tarihlerinde sona erdiği belirtiliyor."
+      ],
+      "evidence_supported": false,
+      "language_matches": true,
+      "answer_complete": true
+    },
+    "matched_expected": true,
+    "usage": {
+      "model_calls_with_usage": 1,
+      "model_calls_without_usage": 0,
+      "tool_calls": 0,
+      "input_tokens": 3028,
+      "output_tokens": 250,
+      "estimated_cost_usd": 0.0004278,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    }
+  },
+  {
+    "case": "oracle_wrong_date_scope",
+    "variant": "revised",
+    "expected_supported": false,
+    "verdict": {
+      "supported": false,
+      "issues": [
+        "“Oracle'ın mali yılları 2024-05-31 tarihinde sona eriyor” ifadesi, mali yılların hepsinin bu tarihte sona erdiğini söylüyor. Kaynakta FY2024'ün 2024-05-31'de, FY2025'in 2025-05-31'de ve FY2026'nın 2026-05-31'de sona erdiği gösteriliyor."
+      ],
+      "evidence_supported": false,
+      "language_matches": true,
+      "answer_complete": true
+    },
+    "matched_expected": true,
+    "usage": {
+      "model_calls_with_usage": 1,
+      "model_calls_without_usage": 0,
+      "tool_calls": 0,
+      "input_tokens": 2955,
+      "output_tokens": 280,
+      "estimated_cost_usd": 0.0004355,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    }
+  },
+  {
+    "case": "conditional_risk_changed_to_fact",
+    "variant": "baseline",
+    "expected_supported": false,
+    "verdict": {
+      "supported": false,
+      "issues": [
+        "Cevap, Intel'in Intel 14A çalışmalarını durdurduğunu söylüyor; kaynak bunu gerçekleşmiş bir olay olarak değil, durdurma ihtimalini koşullu biçimde ele alıyor.",
+        "Cevap, Intel'in harici dökümhane işini bıraktığını söylüyor; kaynak, şirketin şimdiye kadar önemli müşteriler çekemediğini ve Intel 14A ile sonraki düğümlerin geliştirilmesini bırakması hâlinde işin gelişmesinin belirsiz olacağını belirtiyor."
+      ],
+      "evidence_supported": false,
+      "language_matches": true,
+      "answer_complete": false
+    },
+    "matched_expected": true,
+    "usage": {
+      "model_calls_with_usage": 1,
+      "model_calls_without_usage": 0,
+      "tool_calls": 0,
+      "input_tokens": 1507,
+      "output_tokens": 221,
+      "estimated_cost_usd": 0.00026120000000000006,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    }
+  },
+  {
+    "case": "conditional_risk_changed_to_fact",
+    "variant": "revised",
+    "expected_supported": false,
+    "verdict": {
+      "supported": false,
+      "issues": [
+        "Intel, 2025 Form 10-K'ta Intel 14A çalışmalarını durdurduğunu söylemiyor; bu tür bir durdurmayı koşullu bir olasılık olarak ele alıyor. Ayrıca harici dökümhane işini bıraktığını değil, bu iş için bugüne kadar önemli müşteriler çekemediğini bildiriyor."
+      ],
+      "evidence_supported": false,
+      "language_matches": true,
+      "answer_complete": false
+    },
+    "matched_expected": true,
+    "usage": {
+      "model_calls_with_usage": 1,
+      "model_calls_without_usage": 0,
+      "tool_calls": 0,
+      "input_tokens": 1434,
+      "output_tokens": 229,
+      "estimated_cost_usd": 0.0002579,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    }
+  },
+  {
+    "case": "unsupported_causality",
+    "variant": "baseline",
+    "expected_supported": false,
+    "verdict": {
+      "supported": false,
+      "issues": [
+        "Intel’in gelirindeki düşüşün tamamen Intel 14A çalışmalarının durdurulmasından kaynaklandığı iddiası desteklenmiyor. Kaynak, Intel 14A ve sonraki düğümlerin geliştirilmesinin durdurulması halinde oluşabilecek potansiyel risklerden söz ediyor; gelir düşüşünü veya bunun nedenini belirtmiyor.",
+        "Yanıt, kaynakta gelir düşüşünün nedeni açıklanmadığı halde soruyu yanıtlamıyor veya bu kanıt sınırlamasını belirtmiyor."
+      ],
+      "evidence_supported": false,
+      "language_matches": true,
+      "answer_complete": false
+    },
+    "matched_expected": true,
+    "usage": {
+      "model_calls_with_usage": 1,
+      "model_calls_without_usage": 0,
+      "tool_calls": 0,
+      "input_tokens": 1495,
+      "output_tokens": 205,
+      "estimated_cost_usd": 0.000252,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    }
+  },
+  {
+    "case": "unsupported_causality",
+    "variant": "revised",
+    "expected_supported": false,
+    "verdict": {
+      "supported": false,
+      "issues": [
+        "Intel’in gelirindeki düşüşün tamamen Intel 14A çalışmalarının durdurulmasından kaynaklandığı iddiası desteklenmiyor. Kaynak 18, 14A çalışmalarının durdurulması ihtimaline bağlı olası risklerden söz ediyor; gelir düşüşünü veya bu neden-sonuç ilişkisini belirtmiyor. Yanıt ayrıca bu bilgi sınırını açıklamıyor."
+      ],
+      "evidence_supported": false,
+      "language_matches": true,
+      "answer_complete": false
+    },
+    "matched_expected": true,
+    "usage": {
+      "model_calls_with_usage": 1,
+      "model_calls_without_usage": 0,
+      "tool_calls": 0,
+      "input_tokens": 1422,
+      "output_tokens": 230,
+      "estimated_cost_usd": 0.00025720000000000007,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    }
+  },
+  {
+    "case": "wrong_language",
+    "variant": "baseline",
+    "expected_supported": false,
+    "verdict": {
+      "supported": false,
+      "issues": [
+        "The answer is in Turkish, but the question is in English."
+      ],
+      "evidence_supported": true,
+      "language_matches": false,
+      "answer_complete": true
+    },
+    "matched_expected": true,
+    "usage": {
+      "model_calls_with_usage": 1,
+      "model_calls_without_usage": 0,
+      "tool_calls": 0,
+      "input_tokens": 3130,
+      "output_tokens": 107,
+      "estimated_cost_usd": 0.0003665,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    }
+  },
+  {
+    "case": "wrong_language",
+    "variant": "revised",
+    "expected_supported": false,
+    "verdict": {
+      "supported": false,
+      "issues": [
+        "The question is in English, but the answer is in Turkish."
+      ],
+      "evidence_supported": true,
+      "language_matches": false,
+      "answer_complete": true
+    },
+    "matched_expected": true,
+    "usage": {
+      "model_calls_with_usage": 1,
+      "model_calls_without_usage": 0,
+      "tool_calls": 0,
+      "input_tokens": 3057,
+      "output_tokens": 185,
+      "estimated_cost_usd": 0.0003982,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    }
+  }
+]

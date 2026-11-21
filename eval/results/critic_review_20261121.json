@@ -1,0 +1,40 @@
+{
+  "change": {
+    "role": "critic",
+    "model": "gpt-6-luna",
+    "reasoning_effort_before": "low",
+    "reasoning_effort_after": "medium",
+    "prompt_content": "unchanged; unsuccessful rewrite reverted",
+    "new_agents_or_validation_bypass": false
+  },
+  "comparison": {
+    "low_correct_answer_trials": {
+      "accepted": 3,
+      "total": 4
+    },
+    "medium_correct_answer_trials": {
+      "accepted": 6,
+      "total": 6
+    },
+    "medium_incorrect_answer_trials": {
+      "rejected": 4,
+      "total": 4
+    }
+  },
+  "production_critic_replay": {
+    "intel_correct": "accepted with deterministic fields passed",
+    "oracle_incorrect_date_generalization": "rejected"
+  },
+  "unit_tests_passed": 532,
+  "limitations": [
+    "Small targeted set; does not establish zero false positives or general superiority.",
+    "Used saved evidence and fresh Critic calls; not a new full planner/retrieval/Writer benchmark.",
+    "Medium can use more tokens and latency.",
+    "Critic-role configuration also applies to the evidence coverage check."
+  ],
+  "artifacts": [
+    "eval/results/critic_prompt_comparison_20261121.json",
+    "eval/results/critic_reasoning_comparison_20261121.json",
+    "eval/results/critic_production_replay_20261121.json"
+  ]
+}

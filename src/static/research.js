@@ -3,7 +3,7 @@ const $ = selector => document.querySelector(selector);
 const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const citation = id => `<button class="citation" data-source="${Number(id)}" aria-label="Kaynak ${Number(id)}">${Number(id)}</button>`;
 const numberFormat = new Intl.NumberFormat('tr-TR', {maximumFractionDigits:6});
-let jobs = [], conversationId = null, sourceJobId = null, polling = false, submitting = false, initialized = false, revision = 0;
+let jobs = [], conversationId = null, sourceJobId = null, polling = false, submitting = false, deleting = false, initialized = false, revision = 0;
 const drafts = new Map();
 let lastRender = '';
 function conversationJobs() {
@@ -34,7 +34,10 @@ function conversations() {
 function renderHistory() {
   const groups = conversations();
   const search = $('#search-input').value.toLocaleLowerCase('tr');
-  const markup = group => `<button class="history-item ${group.id === conversationId ? 'current' : ''}" data-conversation="${escapeHTML(group.id)}" ${group.id === conversationId ? 'aria-current="page"' : ''}><b>${escapeHTML(group.title)}</b><small>${group.messages.length} mesaj · ${new Date(group.messages.at(-1).created_at).toLocaleDateString('tr-TR')}</small>${group.messages.some(job => job.status === 'running') ? '<span>Yanıt hazırlanıyor…</span>' : ''}</button>`;
+  const markup = group => {
+    const busy = group.messages.some(job => job.status === 'running');
+    return `<div class="history-row"><button class="history-item ${group.id === conversationId ? 'current' : ''}" data-conversation="${escapeHTML(group.id)}" ${group.id === conversationId ? 'aria-current="page"' : ''}><b>${escapeHTML(group.title)}</b><small>${group.messages.length} mesaj · ${new Date(group.messages.at(-1).created_at).toLocaleDateString('tr-TR')}</small>${busy ? '<span>Yanıt hazırlanıyor…</span>' : ''}</button><button class="history-delete" data-delete-conversation="${escapeHTML(group.id)}" aria-label="${escapeHTML(group.title)} konuşmasını sil" title="${busy ? 'Yanıt tamamlandıktan sonra silebilirsiniz' : 'Konuşmayı sil'}" ${busy || submitting || deleting ? 'disabled' : ''}><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/></svg></button></div>`;
+  };
   $('#history').innerHTML = groups.map(markup).join('') || '<p class="empty-search">İlk konuşmanı başlat.</p>';
   $('#search-results').innerHTML = groups.filter(group => group.messages.some(job => job.question.toLocaleLowerCase('tr').includes(search))).map(markup).join('') || '<p class="empty-search">Konuşma bulunamadı.</p>';
   $('#research-count').textContent = groups.length;
@@ -59,7 +62,7 @@ function messageHTML(job) {
   return `<section class="chat-turn" data-message="${job.id}"><div class="user-message"><span class="sr-only">Sen:</span>${escapeHTML(job.question).replace(/\n/g, '<br>')}</div><article class="assistant-message"><div class="assistant-label">FinSight</div>${body}${actions}</article></section>`;
 }
 function updateSubmit() {
-  $('#new-form [type=submit]').disabled = submitting || jobs.some(job => job.status === 'running') || !$('#question-input').value.trim();
+  $('#new-form [type=submit]').disabled = submitting || deleting || jobs.some(job => job.status === 'running') || !$('#question-input').value.trim();
 }
 function renderChat(forceScroll = false) {
   const messages = conversationJobs();
@@ -89,6 +92,23 @@ function selectConversation(id) {
   lastRender = '';
   renderChat(true);
   $('#question-input').focus();
+}
+async function deleteConversation(id) {
+  if (submitting || deleting || jobs.some(job => job.conversation_id === id && job.status === 'running')) return;
+  if (!window.confirm('Bu konuşma ve içindeki tüm mesajlar geçmişten silinsin mi?')) return;
+  deleting = true;
+  revision += 1;
+  updateSubmit();
+  renderHistory();
+  try {
+    await api(`/api/conversations/${encodeURIComponent(id)}`, {method:'DELETE', headers:{'X-FinSight-Request':'research'}});
+    jobs = jobs.filter(job => job.conversation_id !== id);
+    if (sourceJobId && !jobs.some(job => job.id === sourceJobId)) { closeSources(); sourceJobId = null; }
+    if (conversationId === id) selectConversation(null);
+    drafts.delete(id);
+    renderChat();
+  } catch (error) { window.alert(error.message); }
+  finally { deleting = false; revision += 1; updateSubmit(); renderHistory(); }
 }
 function closeSources() {
   $('#research-layout').classList.add('sources-hidden');
@@ -126,12 +146,12 @@ function openDialog(name) {
   if (!dialog.open) dialog.showModal();
 }
 async function refresh() {
-  if (polling || submitting) return;
+  if (polling || submitting || deleting) return;
   polling = true;
   try {
     const startedRevision = revision;
     const incoming = await api('/api/research');
-    if (submitting || revision !== startedRevision) return;
+    if (submitting || deleting || revision !== startedRevision) return;
     jobs = incoming;
     $('#connection-status').textContent = 'Yerel çalışma alanı';
     if (!initialized) {
@@ -147,7 +167,7 @@ async function refresh() {
 $('#new-form').addEventListener('submit', async event => {
   event.preventDefault();
   const question = $('#question-input').value.trim();
-  if (!question || submitting || jobs.some(job => job.status === 'running')) return;
+  if (!question || submitting || deleting || jobs.some(job => job.status === 'running')) return;
   submitting = true;
   revision += 1;
   updateSubmit();
@@ -180,6 +200,7 @@ document.addEventListener('click', event => {
   const button = event.target.closest('button');
   if (!button) return;
   if (button.hasAttribute('data-close')) { button.closest('dialog').close(); return; }
+  if (button.dataset.deleteConversation) { deleteConversation(button.dataset.deleteConversation); return; }
   if (button.dataset.conversation) { button.closest('dialog')?.close(); selectConversation(button.dataset.conversation); return; }
   if (button.dataset.source) { showSource(button.closest('[data-message]')?.dataset.message || sourceJobId, Number(button.dataset.source)); return; }
   if (button.dataset.sources) { showSource(button.dataset.sources); return; }

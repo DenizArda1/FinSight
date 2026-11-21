@@ -43,6 +43,7 @@ jobs:
         run: |
           node --check src/static/research.js
           node tests/test_chat_keyboard.cjs
+          node tests/test_chat_history.cjs
       - name: Validate Compose without real credentials
         env:
           SEC_USER_AGENT: FinSight CI ci@invalid.test

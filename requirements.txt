@@ -6,3 +6,4 @@ python-dotenv>=1,<2
 chromadb
 jsonschema>=4,<5
 mcp==2.3.0
+langfuse==5.2.0

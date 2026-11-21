@@ -9,6 +9,63 @@ from src.web import PROJECT_ROOT, ResearchHandler, ResearchJobs, present_result,
 
 
 class WebTests(unittest.TestCase):
+    def test_delete_conversation_removes_all_messages_and_survives_restart(self):
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'history.json'
+            jobs = ResearchJobs(storage_path=path)
+            try:
+                with patch.object(jobs.executor, 'submit'):
+                    first = jobs.submit({'question': 'First'})
+                    jobs.jobs[first['id']]['status'] = 'completed'
+                    followup = jobs.submit({'question': 'Follow-up', 'conversation_id': first['conversation_id']})
+                    jobs.jobs[followup['id']]['status'] = 'completed'
+                    other = jobs.submit({'question': 'Other conversation'})
+                    jobs.jobs[other['id']]['status'] = 'completed'
+                jobs.delete_conversation(first['conversation_id'])
+                self.assertEqual([job['id'] for job in jobs.snapshot()], [other['id']])
+                restored = ResearchJobs(storage_path=path)
+                try:
+                    self.assertEqual([job['id'] for job in restored.snapshot()], [other['id']])
+                finally:
+                    restored.executor.shutdown()
+            finally:
+                jobs.executor.shutdown()
+
+    def test_delete_rejects_running_conversation_and_rolls_back_disk_failure(self):
+        jobs = ResearchJobs()
+        try:
+            with patch.object(jobs.executor, 'submit'):
+                job = jobs.submit({'question': 'Question'})
+            with self.assertRaises(RuntimeError):
+                jobs.delete_conversation(job['conversation_id'])
+            jobs.jobs[job['id']]['status'] = 'completed'
+            with patch.object(jobs, 'persist', side_effect=OSError('Disk failure')):
+                with self.assertRaises(OSError):
+                    jobs.delete_conversation(job['conversation_id'])
+            self.assertIsNotNone(jobs.snapshot(job['id']))
+            with self.assertRaises(KeyError):
+                jobs.delete_conversation('0' * 32)
+        finally:
+            jobs.executor.shutdown()
+
+    def test_delete_endpoint_requires_local_origin_and_request_header(self):
+        from unittest.mock import Mock
+        handler = object.__new__(ResearchHandler)
+        handler.server = SimpleNamespace(server_port=8766, jobs=Mock())
+        handler.path = '/api/conversations/' + 'a' * 32
+        handler.send_json = Mock()
+        handler.headers = {'Host': '127.0.0.1:8766', 'Origin': 'https://foreign.example', 'X-FinSight-Request': 'research'}
+        handler.do_DELETE()
+        self.assertEqual(handler.send_json.call_args.args[0], 403)
+        handler.headers = {'Host': '127.0.0.1:8766'}
+        handler.do_DELETE()
+        self.assertEqual(handler.send_json.call_args.args[0], 403)
+        handler.server.jobs.delete_conversation.assert_not_called()
+        handler.headers['X-FinSight-Request'] = 'research'
+        handler.do_DELETE()
+        handler.server.jobs.delete_conversation.assert_called_once_with('a' * 32)
+        self.assertEqual(handler.send_json.call_args.args[0], 200)
+
     def test_step_limit_is_not_misreported_as_connection_failure(self):
         error = ExceptionGroup('Transport wrapper', [RuntimeError('Specialist reached the maximum number of steps')])
         message = research_error_message(error)
