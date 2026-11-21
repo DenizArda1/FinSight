@@ -10,6 +10,22 @@ from src.verification.evidence import evidence_for_prompt, limit_report_evidence
 
 
 class ResearchSourceTests(unittest.TestCase):
+    def test_latest_quarter_is_not_an_older_period_amendment(self):
+        rows = [
+            {'accessionNumber': 'old', 'form': '10-Q/A', 'filingDate': '2026-11-01', 'reportDate': '2026-03-31'},
+            {'accessionNumber': 'new', 'form': '10-Q', 'filingDate': '2026-10-25', 'reportDate': '2026-09-30'},
+        ]
+        self.assertEqual(select_updates(rows, '10-Q', 1)[0]['accessionNumber'], 'new')
+
+    def test_specific_results_outrank_long_generic_keyword_list(self):
+        disclaimer = 'Financial performance revenue operating income. ' + 'Generic caution. ' * 100
+        results = 'Revenue increased. Operating income improved. Revenue and operating income reflect current results.'
+        documents = [{'text': text, 'metadata': {'source_url': name}}
+                     for name, text in [('disclaimer', disclaimer), ('results', results)]]
+        match = rank_documents(documents, 'revenue operating income', 1)[0]
+        self.assertEqual(match['metadata']['source_url'], 'results')
+        self.assertEqual(match['text'], results)
+
     def test_only_requested_forms_are_selected_by_filing_date(self):
         rows = [{'accessionNumber': str(i), 'form': form, 'filingDate': day} for i, form, day in
                 [(1, '10-K', '2026-01-01'), (2, '10-Q', '2026-05-01'),

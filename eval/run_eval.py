@@ -115,6 +115,7 @@ def run_evaluation(cases, llm_config, mode="single_agent", output_path=None, tra
             "mode": mode,
             "data_snapshot": deepcopy(data_snapshot),
             "verification": verification,
+            "coverage": details.get("coverage"),
             "draft": details.get("draft"),
             "candidate": details.get("candidate"),
             "template": details.get("template"),

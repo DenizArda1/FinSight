@@ -36,6 +36,7 @@ async def run_writer(state: AgentState, llm_config, feedback=None) -> AgentState
         messages = build_agent_answer_messages(
             state["question"], state["evidence"], catalog, feedback=feedback,
             request_type=state["request_type"],
+            retrieval_limitations=[event for event in state["trace"] if event.get("type") == "coverage"],
         )
         schema = composition_schema(catalog, request_type=state["request_type"], evidence=state["evidence"])
         if state["request_type"] == "out_of_scope":

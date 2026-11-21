@@ -77,3 +77,37 @@ def extract_sections(text, partial=False):
         if previous["end"] > current["start"]:
             raise ValueError("Report sections overlap or appear out of order")
     return sections
+
+
+def extract_cross_reference_chapters(text):
+    """Read explicitly titled chapters in cross-reference-layout annual reports.
+
+    These reports do not present Item 1 as a contiguous section. Do not invent a
+    Business range. Retain only the identifiable risk and MD&A chapters.
+    """
+    if not re.search(r'Form 10-K Cross-Reference Index', text, re.IGNORECASE):
+        raise ValueError('No supported cross-reference layout')
+
+    def chapter_starts(title):
+        starts = []
+        for match in re.finditer(r'^' + title + r'[ \t]*$', text, re.MULTILINE | re.IGNORECASE):
+            following = text[match.end():].lstrip('\n').split('\n', 1)[0].strip()
+            # TOC entries and repeated page footers are followed by a page number.
+            if following and not re.fullmatch(r'\d+', following):
+                starts.append(match.start())
+        return starts
+
+    mda = chapter_starts(r"Management['’]s Discussion and Analysis")
+    risk = chapter_starts(r'Risk Factors')
+    if len(mda) != 1 or len(risk) != 1 or mda[0] >= risk[0]:
+        raise ValueError('Ambiguous cross-reference chapters')
+    boundaries = sorted(start for start in chapter_starts(r'Other Key Information') + chapter_starts(r'Properties') if start > risk[0])
+    if not boundaries:
+        raise ValueError('Missing risk chapter boundary')
+    sections = []
+    for item, start, end in [('7', mda[0], risk[0]), ('1A', risk[0], boundaries[0])]:
+        if end - start < MIN_BODY_CHARS:
+            raise ValueError('Cross-reference chapter has no substantive body')
+        sections.append({'section': f'Item {item}', 'title': SECTION_TITLES[item] + ' (named chapter; cross-reference layout)',
+                         'start': start, 'end': end, 'text': text[start:end]})
+    return sections

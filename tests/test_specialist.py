@@ -11,6 +11,31 @@ from src.verification.agent_answer import build_agent_evidence
 
 
 class SpecialistToolTests(unittest.IsolatedAsyncioTestCase):
+    async def test_recent_scope_rejects_annual_report_tools(self):
+        for name in ('search_filings', 'get_filing_section'):
+            with self.assertRaisesRegex(ValueError, 'search_company_updates'):
+                await execute_specialist_tool('filing_rag', name, {'ticker': 'TEST'},
+                                              self.client, set(), filing_scope='recent')
+        self.call_tool.assert_not_awaited()
+
+    async def test_annual_scope_rejects_quarterly_substitution_and_selects_latest_annual(self):
+        with self.assertRaisesRegex(ValueError, 'annual-report'):
+            await execute_specialist_tool('filing_rag', 'search_company_updates',
+                                          {'ticker': 'NVDA', 'query': 'growth'}, self.client, set(), filing_scope='annual')
+        self.call_tool.assert_not_awaited()
+        self.call_tool.return_value = {'matches': []}
+        await execute_specialist_tool('filing_rag', 'search_filings',
+                                      {'ticker': 'NVDA', 'query': 'growth'}, self.client, set(), filing_scope='annual')
+        self.assertTrue(self.call_tool.call_args.args[2]['latest'])
+
+    async def test_comparison_coverage_includes_both_years_without_mutating_input(self):
+        args = {'cik': self.cik, 'metrics': ['operating_margin'], 'years': 1}
+        self.call_tool.return_value = {'results': {}}
+        await execute_specialist_tool('financial_data', 'compute_metrics', args,
+                                      self.client, {self.cik}, requested_years=2)
+        self.assertEqual(self.call_tool.call_args.args[2]['years'], 2)
+        self.assertEqual(args['years'], 1)
+
     async def test_requested_filing_year_rejects_latest_missing_wrong_or_coerced_years(self):
         cases = [
             ("search_filings", {}),
@@ -170,6 +195,14 @@ def model_tool_message(name, arguments):
 
 
 class SpecialistLoopTests(unittest.IsolatedAsyncioTestCase):
+    async def test_plan_coverage_is_used_by_mcp_and_recorded_in_trace(self):
+        self.chat.side_effect = [self.resolve, self.facts, self.done]
+        self.call_tool.side_effect = [self.company, {'records': []}]
+        result = await run_specialist({**self.task, 'years': 2}, {}, self.client, TOOL_SCHEMAS)
+        self.assertEqual(self.call_tool.call_args.args[2]['years'], 2)
+        events = [event for event in result['trace'] if event.get('name') == 'get_company_facts']
+        self.assertEqual(events[0]['arguments']['years'], 2)
+
     async def test_oversized_section_gets_scoped_search_without_losing_raw_source(self):
         task = {"id": "risk", "agent": "filing_rag", "instruction": "Explain export risks.", "fiscal_year": 2026}
         arguments = {"ticker": "NVDA", "year": 2026, "section": "Item 1A"}
@@ -289,6 +322,15 @@ class SpecialistLoopTests(unittest.IsolatedAsyncioTestCase):
         self.call_tool.assert_not_awaited()
         self.assertEqual(sum(event["type"] == "tool" for event in trace), 1)
         self.assertEqual(trace[-1]["status"], "error")
+
+    async def test_identical_tool_failures_stop_without_discarding_the_trace(self):
+        self.chat.return_value = self.resolve
+        self.call_tool.side_effect = MCPToolError('Report preparation failed')
+        result = await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS)
+        self.assertEqual(self.call_tool.await_count, 2)
+        self.assertEqual(result['trace'][-1]['stop_reason'], 'repeated_requests')
+        self.assertEqual(sum(event.get('type') == 'tool' and event.get('status') == 'error'
+                             for event in result['trace']), 2)
 
     async def test_multiple_calls_cannot_overrun_budget(self):
         message = deepcopy(self.resolve)

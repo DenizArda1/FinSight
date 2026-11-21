@@ -1,0 +1,1838 @@
+{
+  "mode": "saved_final_writer_composition_live_critic_after_identifier_fix",
+  "coverage": {
+    "complete": true,
+    "gaps": [],
+    "status": "complete"
+  },
+  "verification": {
+    "supported": false,
+    "issues": [
+      "Son çeyreklik raporun FY2026 üçüncü çeyrek gelirinin yıllık bazda arttığını söylemesi destekleniyor, ancak bunu «son» çeyreklik açıklama olarak nitelemek için kanıt sunulmuyor; 10-Q kanıtı güncel olabilir, fakat 8-K’de daha yeni bir 2026-10-29 açıklama var.",
+      "Intel’in Intel 14A ve sonraki düğümlerin geliştirilmesini sürdürme arayışını durdurması halinde harici dökümhane işini geliştirme olasılığının oldukça belirsiz olacağı iddiası kaynakta var; ancak cevap, durdurma ya da bırakma eylemini Intel’in kendi eylemi gibi ifade ediyor. Kaynak bunu koşullu bir risk olarak sunuyor."
+    ],
+    "evidence_supported": false,
+    "language_matches": true,
+    "answer_complete": true,
+    "status": "failed",
+    "stage": "grounding_and_language",
+    "deterministic_fields": "passed",
+    "method": "source_fields_and_llm_judge"
+  },
+  "answer": null,
+  "draft": "Intel’in yıllık gelir büyümesinde gerileme var, ancak daralma hızı yavaşladı: FY2023 geliri 54228000000 USD, FY2024 geliri 53101000000 USD oldu; FY2024 yıllık gelir büyümesi -2.08% düzeyindeydi. FY2025’te gelir 52853000000 USD olarak gerçekleşti ve yıllık büyüme -0.47% oldu. Dolayısıyla büyüme oranı FY2024’e göre iyileşirken gelir daralması devam etti. [Source 2] [Source 3]\n\nYıllık sonuçlardan ayrı olarak, son çeyreklik açıklamada FY2026 üçüncü çeyrek geliri yıllık bazda artmış olarak bildirildi. 10-Q’daki dokuz aylık tutarlar ara dönem verileridir; yıllık sonuç olarak değerlendirilmemelidir. [Source 29] [Source 26]\n\nŞirketin aynı açıklamadaki FY2026 dördüncü çeyrek gelir aralığı bir beklentidir, gerçekleşmiş sonuç değildir. Yönetim, PC sektöründeki yavaşlamanın en azından gelecek yılın ilk yarısına kadar sürmesini beklediğini belirtti. Ayrıca Intel, Intel 14A ve sonraki düğümlerin geliştirilmesini sürdürme arayışını durdurması veya bırakması halinde harici dökümhane işini geliştirme olasılığının oldukça belirsiz olacağını bildirdi. [Source 29] [Source 18]",
+  "trace": [
+    {
+      "type": "tool",
+      "task_id": "1",
+      "agent": "financial_data",
+      "step": 1,
+      "call_id": 1,
+      "name": "resolve_ticker_to_cik",
+      "arguments": {
+        "ticker": "INTC"
+      },
+      "status": "completed",
+      "result": {
+        "ticker": "INTC",
+        "name": "INTEL CORP",
+        "cik": "0000050863"
+      },
+      "elapsed_seconds": 0.005902207980398089
+    },
+    {
+      "type": "tool",
+      "task_id": "1",
+      "agent": "financial_data",
+      "step": 2,
+      "call_id": 2,
+      "name": "get_company_facts",
+      "arguments": {
+        "years": 3,
+        "cik": "0000050863",
+        "concept": "revenue",
+        "unit": "USD"
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "cik": "0000050863",
+          "name": "INTEL CORP"
+        },
+        "concept": "revenue",
+        "definition": {
+          "description": "Annual total revenue",
+          "taxonomy": "us-gaap",
+          "unit": "USD",
+          "tags": [
+            "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "Revenues",
+            "SalesRevenueNet"
+          ]
+        },
+        "unit": "USD",
+        "requested_years": 3,
+        "available_period_count": 3,
+        "history_complete": true,
+        "requested_period_ends": [
+          "2025-12-27",
+          "2024-12-28",
+          "2023-12-30"
+        ],
+        "missing_period_ends": [],
+        "records": [
+          {
+            "cik": 50863,
+            "metric": "revenue",
+            "start": "2024-12-29",
+            "end": "2025-12-27",
+            "value": 52853000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-01-23",
+            "accn": "0000050863-26-000011",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+            "period_label": "FY2025 (period end: 2025-12-27)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+          },
+          {
+            "cik": 50863,
+            "metric": "revenue",
+            "start": "2023-12-31",
+            "end": "2024-12-28",
+            "value": 53101000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-01-23",
+            "accn": "0000050863-26-000011",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+            "period_label": "FY2024 (period end: 2024-12-28)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+          },
+          {
+            "cik": 50863,
+            "metric": "revenue",
+            "start": "2023-01-01",
+            "end": "2023-12-30",
+            "value": 54228000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-01-23",
+            "accn": "0000050863-26-000011",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+            "period_label": "FY2023 (period end: 2023-12-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+          }
+        ]
+      },
+      "elapsed_seconds": 5.433406916999957
+    },
+    {
+      "type": "tool",
+      "task_id": "1",
+      "agent": "financial_data",
+      "step": 3,
+      "call_id": 3,
+      "name": "compute_metrics",
+      "arguments": {
+        "cik": "0000050863",
+        "metrics": [
+          "revenue_growth"
+        ],
+        "years": 3
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "cik": "0000050863",
+          "name": "INTEL CORP"
+        },
+        "requested_years": 3,
+        "results": {
+          "revenue_growth": [
+            {
+              "cik": 50863,
+              "fiscal_year": 2025,
+              "metric": "revenue_growth",
+              "start": "2024-12-29",
+              "end": "2025-12-27",
+              "value": -0.004670345191239322,
+              "unit": "ratio",
+              "formula": "current_revenue / previous_revenue - 1",
+              "inputs": {
+                "previous_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2023-12-31",
+                  "end": "2024-12-28",
+                  "value": 53101000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2024,
+                  "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                  "period_label": "FY2024 (period end: 2024-12-28)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                },
+                "current_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2024-12-29",
+                  "end": "2025-12-27",
+                  "value": 52853000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2025,
+                  "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                  "period_label": "FY2025 (period end: 2025-12-27)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                }
+              },
+              "period_label": "FY2025 (period end: 2025-12-27)"
+            },
+            {
+              "cik": 50863,
+              "fiscal_year": 2024,
+              "metric": "revenue_growth",
+              "start": "2023-12-31",
+              "end": "2024-12-28",
+              "value": -0.02078262152393595,
+              "unit": "ratio",
+              "formula": "current_revenue / previous_revenue - 1",
+              "inputs": {
+                "previous_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2023-01-01",
+                  "end": "2023-12-30",
+                  "value": 54228000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2023,
+                  "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                  "period_label": "FY2023 (period end: 2023-12-30)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                },
+                "current_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2023-12-31",
+                  "end": "2024-12-28",
+                  "value": 53101000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2024,
+                  "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                  "period_label": "FY2024 (period end: 2024-12-28)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                }
+              },
+              "period_label": "FY2024 (period end: 2024-12-28)"
+            }
+          ]
+        },
+        "calculation_definitions": {
+          "revenue_growth": {
+            "description": "Annual revenue growth",
+            "function": "calculate_growth",
+            "inputs": [
+              "revenue"
+            ],
+            "unit": "ratio",
+            "period_mode": "consecutive_periods"
+          }
+        },
+        "warnings": [],
+        "availability": {
+          "revenue": {
+            "concept": "revenue",
+            "missing_period_ends": [],
+            "available_period_ends": [
+              "2025-12-27",
+              "2024-12-28",
+              "2023-12-30"
+            ]
+          }
+        }
+      },
+      "elapsed_seconds": 0.013731042010476813
+    },
+    {
+      "type": "tool",
+      "task_id": "2",
+      "agent": "financial_data",
+      "step": 1,
+      "call_id": 1,
+      "name": "resolve_ticker_to_cik",
+      "arguments": {
+        "ticker": "INTC"
+      },
+      "status": "completed",
+      "result": {
+        "ticker": "INTC",
+        "name": "INTEL CORP",
+        "cik": "0000050863"
+      },
+      "elapsed_seconds": 0.005639166018227115
+    },
+    {
+      "type": "tool",
+      "task_id": "2",
+      "agent": "financial_data",
+      "step": 2,
+      "call_id": 2,
+      "name": "get_company_facts",
+      "arguments": {
+        "cik": "0000050863",
+        "concept": "revenue",
+        "unit": "USD",
+        "years": 3
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "cik": "0000050863",
+          "name": "INTEL CORP"
+        },
+        "concept": "revenue",
+        "definition": {
+          "description": "Annual total revenue",
+          "taxonomy": "us-gaap",
+          "unit": "USD",
+          "tags": [
+            "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "Revenues",
+            "SalesRevenueNet"
+          ]
+        },
+        "unit": "USD",
+        "requested_years": 3,
+        "available_period_count": 3,
+        "history_complete": true,
+        "requested_period_ends": [
+          "2025-12-27",
+          "2024-12-28",
+          "2023-12-30"
+        ],
+        "missing_period_ends": [],
+        "records": [
+          {
+            "cik": 50863,
+            "metric": "revenue",
+            "start": "2024-12-29",
+            "end": "2025-12-27",
+            "value": 52853000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-01-23",
+            "accn": "0000050863-26-000011",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+            "period_label": "FY2025 (period end: 2025-12-27)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+          },
+          {
+            "cik": 50863,
+            "metric": "revenue",
+            "start": "2023-12-31",
+            "end": "2024-12-28",
+            "value": 53101000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-01-23",
+            "accn": "0000050863-26-000011",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+            "period_label": "FY2024 (period end: 2024-12-28)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+          },
+          {
+            "cik": 50863,
+            "metric": "revenue",
+            "start": "2023-01-01",
+            "end": "2023-12-30",
+            "value": 54228000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-01-23",
+            "accn": "0000050863-26-000011",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+            "period_label": "FY2023 (period end: 2023-12-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+          }
+        ]
+      },
+      "elapsed_seconds": 0.015465958014829084
+    },
+    {
+      "type": "tool",
+      "task_id": "2",
+      "agent": "financial_data",
+      "step": 3,
+      "call_id": 3,
+      "name": "compute_metrics",
+      "arguments": {
+        "cik": "0000050863",
+        "metrics": [
+          "revenue_growth"
+        ],
+        "years": 3
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "cik": "0000050863",
+          "name": "INTEL CORP"
+        },
+        "requested_years": 3,
+        "results": {
+          "revenue_growth": [
+            {
+              "cik": 50863,
+              "fiscal_year": 2025,
+              "metric": "revenue_growth",
+              "start": "2024-12-29",
+              "end": "2025-12-27",
+              "value": -0.004670345191239322,
+              "unit": "ratio",
+              "formula": "current_revenue / previous_revenue - 1",
+              "inputs": {
+                "previous_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2023-12-31",
+                  "end": "2024-12-28",
+                  "value": 53101000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2024,
+                  "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                  "period_label": "FY2024 (period end: 2024-12-28)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                },
+                "current_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2024-12-29",
+                  "end": "2025-12-27",
+                  "value": 52853000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2025,
+                  "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                  "period_label": "FY2025 (period end: 2025-12-27)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                }
+              },
+              "period_label": "FY2025 (period end: 2025-12-27)"
+            },
+            {
+              "cik": 50863,
+              "fiscal_year": 2024,
+              "metric": "revenue_growth",
+              "start": "2023-12-31",
+              "end": "2024-12-28",
+              "value": -0.02078262152393595,
+              "unit": "ratio",
+              "formula": "current_revenue / previous_revenue - 1",
+              "inputs": {
+                "previous_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2023-01-01",
+                  "end": "2023-12-30",
+                  "value": 54228000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2023,
+                  "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                  "period_label": "FY2023 (period end: 2023-12-30)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                },
+                "current_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2023-12-31",
+                  "end": "2024-12-28",
+                  "value": 53101000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2024,
+                  "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                  "period_label": "FY2024 (period end: 2024-12-28)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                }
+              },
+              "period_label": "FY2024 (period end: 2024-12-28)"
+            }
+          ]
+        },
+        "calculation_definitions": {
+          "revenue_growth": {
+            "description": "Annual revenue growth",
+            "function": "calculate_growth",
+            "inputs": [
+              "revenue"
+            ],
+            "unit": "ratio",
+            "period_mode": "consecutive_periods"
+          }
+        },
+        "warnings": [],
+        "availability": {
+          "revenue": {
+            "concept": "revenue",
+            "missing_period_ends": [],
+            "available_period_ends": [
+              "2025-12-27",
+              "2024-12-28",
+              "2023-12-30"
+            ]
+          }
+        }
+      },
+      "elapsed_seconds": 0.0193416659894865
+    },
+    {
+      "type": "tool",
+      "task_id": "3",
+      "agent": "filing_rag",
+      "step": 1,
+      "call_id": 1,
+      "name": "resolve_ticker_to_cik",
+      "arguments": {
+        "ticker": "INTC"
+      },
+      "status": "completed",
+      "result": {
+        "ticker": "INTC",
+        "name": "INTEL CORP",
+        "cik": "0000050863"
+      },
+      "elapsed_seconds": 0.005438708991277963
+    },
+    {
+      "type": "tool",
+      "task_id": "3",
+      "agent": "filing_rag",
+      "step": 2,
+      "call_id": 2,
+      "name": "search_filings",
+      "arguments": {
+        "section": "Item 7",
+        "top_k": 3,
+        "ticker": "INTC",
+        "query": "Intel's annual revenue growth",
+        "latest": true
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        },
+        "query": "Intel's annual revenue growth",
+        "fiscal_year": 2025,
+        "section": "Item 7",
+        "matches": [
+          {
+            "chunk_id": "0000050863-26-000011:item_7:21",
+            "text": "Intel Foundry Financial Performance1\n\tYears Ended ($ In Millions)\t\tDec 27, 2025\t\tDec 28, 2024\t\tDec 30, 2023\n\tRevenue\t\t$\t17,826 \t\t\t$\t17,317 \t\t\t$\t18,504 \t\n\tCost of sales and operating expenses\t\t28,144 \t\t\t30,608 \t\t\t25,587 \t\n\tOperating loss\t\t$\t(10,318)\t\t\t$\t(13,291)\t\t\t$\t(7,083)\t\n\tOperating loss %\t\t(58)%\t\t(77)%\t\t(38)%\n1 Operating segment results include intersegment financial activity; refer to \"Note 3: Operating Segments\" within Notes to Consolidated Financial Statements for a reconciliation between our operating segment and consolidated financial results for the periods presented.\nOperating Segment Revenue Summary\n2025 vs. 2024\nRevenue was $17.8 billion in 2025, up $509 million from 2024. Intersegment revenue was $17.5 billion, up $361 million from 2024, primarily due to higher back-end services revenue and higher wafer volume from our Intel 3, Intel 4 and Intel 18A process nodes, partially offset by lower intersegment samples revenue. External revenue was $307 million, up $148 million from 2024.\n2024 vs. 2023",
+            "metadata": {
+              "section_title": "Management's Discussion and Analysis (named chapter; cross-reference layout)",
+              "end": 122685,
+              "section": "Item 7",
+              "amendment_note": "Original annual filing section.",
+              "report_date": "2025-12-27",
+              "section_start": 97704,
+              "fiscal_year": 2025,
+              "accession_number": "0000050863-26-000011",
+              "cik": "0000050863",
+              "section_end": 178338,
+              "ticker": "INTC",
+              "form": "10-K",
+              "start": 121664,
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+              "filed": "2026-01-23"
+            },
+            "distance": 0.31540948152542114,
+            "score": 0.030886196246139225,
+            "ranks": {
+              "dense": 1,
+              "bm25": 9
+            },
+            "context": {
+              "text": "technology and manufacturing in the U.S., where we are the only company conducting both leading-edge logic R&D and high-volume manufacturing. At present, nearly all of our Intel Foundry business supports internal manufacturing for Intel Products; however, we are offering our Intel Foundry services to external customers and aim to develop a more significant external foundry business in the future.\nIntel Foundry Financial Performance1\n\tYears Ended ($ In Millions)\t\tDec 27, 2025\t\tDec 28, 2024\t\tDec 30, 2023\n\tRevenue\t\t$\t17,826 \t\t\t$\t17,317 \t\t\t$\t18,504 \t\n\tCost of sales and operating expenses\t\t28,144 \t\t\t30,608 \t\t\t25,587 \t\n\tOperating loss\t\t$\t(10,318)\t\t\t$\t(13,291)\t\t\t$\t(7,083)\t\n\tOperating loss %\t\t(58)%\t\t(77)%\t\t(38)%\n1 Operating segment results include intersegment financial activity; refer to \"Note 3: Operating Segments\" within Notes to Consolidated Financial Statements for a reconciliation between our operating segment and consolidated financial results for the periods presented.\nOperating Segment Revenue Summary\n2025 vs. 2024\nRevenue was $17.8 billion in 2025, up $509 million from 2024. Intersegment revenue was $17.5 billion, up $361 million from 2024, primarily due to higher back-end services revenue and higher wafer volume from our Intel 3, Intel 4 and Intel 18A process nodes, partially offset by lower intersegment samples revenue. External revenue was $307 million, up $148 million from 2024.\n2024 vs. 2023\nRevenue was $17.3 billion in 2024, down $1.2 billion from 2023. Intersegment revenue was $17.2 billion, down $799 million from 2023, primarily due to lower intersegment ASPs, lower back-end services revenue, and higher intersegment credits, partially offset by higher intersegment revenue due to higher wafer volume primarily from Intel 3, Intel 4 and Intel 7 products. External revenue was $159 mil",
+              "start": 121264,
+              "end": 123085
+            }
+          },
+          {
+            "chunk_id": "0000050863-26-000011:item_7:20",
+            "text": "▪DCAI operating income increased $469 million from 2023, primarily due to favorable impacts from lower period charges from the sell-through of previously reserved inventory and lower non-accelerator inventory reserves taken in 2024. These favorable impacts to operating income were partially offset by higher period charges due to $922 million in Gaudi AI accelerator inventory-related charges recognized in 2024 and higher operating expenses of $151 million primarily driven by increased product development costs in 2024.\nIntel Foundry\nIntel Foundry, comprised of technology development, manufacturing and foundry services, develops new leading-edge semiconductor process technologies and advanced packaging technologies and provides manufacturing, assembly and test and advanced packaging capacity and design enablement solutions across multiple nodes and platforms. We continue to innovate and advance leading-edge semiconductor process technology and manufacturing in the U.S., where we are the only company conducting both leading-edge logic R&D and high-volume manufacturing. At present, nearly all of our Intel Foundry business supports internal manufacturing for Intel Products; however, we are offering our Intel Foundry services to external customers and aim to develop a more significant external foundry business in the future.\nIntel Foundry Financial Performance1\n\tYears Ended ($ In Millions)\t\tDec 27, 2025\t\tDec 28, 2024\t\tDec 30, 2023\n\tRevenue\t\t$\t17,826 \t\t\t$\t17,317 \t\t\t$\t18,504",
+            "metadata": {
+              "section_title": "Management's Discussion and Analysis (named chapter; cross-reference layout)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+              "accession_number": "0000050863-26-000011",
+              "ticker": "INTC",
+              "cik": "0000050863",
+              "report_date": "2025-12-27",
+              "start": 120323,
+              "section_start": 97704,
+              "end": 121814,
+              "form": "10-K",
+              "section": "Item 7",
+              "section_end": 178338,
+              "fiscal_year": 2025,
+              "amendment_note": "Original annual filing section.",
+              "filed": "2026-01-23"
+            },
+            "distance": 0.3219287395477295,
+            "score": 0.02976190476190476,
+            "ranks": {
+              "dense": 3,
+              "bm25": 12
+            },
+            "context": {
+              "text": "d $1.5 billion from 2023, primarily due to $1.0 billion of favorable impacts attributable to higher product profit due to higher revenue in 2024 and lower period charges related to lower samples. Operating income also improved from 2023 due to favorable impacts from lower operating expenses of $423 million primarily driven by intersegment credits and various cost-reduction measures taken in 2024.\n▪DCAI operating income increased $469 million from 2023, primarily due to favorable impacts from lower period charges from the sell-through of previously reserved inventory and lower non-accelerator inventory reserves taken in 2024. These favorable impacts to operating income were partially offset by higher period charges due to $922 million in Gaudi AI accelerator inventory-related charges recognized in 2024 and higher operating expenses of $151 million primarily driven by increased product development costs in 2024.\nIntel Foundry\nIntel Foundry, comprised of technology development, manufacturing and foundry services, develops new leading-edge semiconductor process technologies and advanced packaging technologies and provides manufacturing, assembly and test and advanced packaging capacity and design enablement solutions across multiple nodes and platforms. We continue to innovate and advance leading-edge semiconductor process technology and manufacturing in the U.S., where we are the only company conducting both leading-edge logic R&D and high-volume manufacturing. At present, nearly all of our Intel Foundry business supports internal manufacturing for Intel Products; however, we are offering our Intel Foundry services to external customers and aim to develop a more significant external foundry business in the future.\nIntel Foundry Financial Performance1\n\tYears Ended ($ In Millions)\t\tDec 27, 2025\t\tDec 28, 2024\t\tDec 30, 2023\n\tRevenue\t\t$\t17,826 \t\t\t$\t17,317 \t\t\t$\t18,504 \t\n\tCost of sales and operating expenses\t\t28,144 \t\t\t30,608 \t\t\t25,587 \t\n\tOperating loss\t\t$\t(10,318)\t\t\t$\t(13,291)\t\t\t$\t(7,083)\t\n\tOperating loss %\t\t(58)%\t\t(77)%\t\t(38)%\n1 Operating segment results include intersegment financial activity; refer to \"Note 3: Operating Segments\" within Notes to Consolidated Financial Statements for a reconciliation between our operating segment and consolidated financial r",
+              "start": 119923,
+              "end": 122214
+            }
+          },
+          {
+            "chunk_id": "0000050863-26-000011:item_7:17",
+            "text": "2024 vs. 2023\nTotal Intel Products revenue was $49.5 billion in 2024, up $1.2 billion from 2023.\n▪CCG revenue increased $1.0 billion from 2023. Client revenue (collectively notebook and desktop) was $28.7 billion in 2024, up $1.6 billion from 2023, primarily due to an increase in 2024 client volume of 7% as customer inventory levels improved compared to higher levels in 2023. Client ASPs in 2024 were roughly flat with 2023. Other CCG revenue was $4.6 billion, down $521 million from 2023, primarily driven by the exit of legacy businesses.\n▪DCAI revenue increased $145 million from 2023, primarily driven by an increase in server revenue. Server ASPs increased 11% from 2023, primarily due to a higher mix of high core count products. Server volume decreased 8% from 2023, due to lower demand in a competitive environment and a higher mix of high core count products. Other DCAI product revenue was $2.7 billion, down $196 million from 2023, primarily due to 5G customers tempering purchases to reduce existing inventories.\nSegment Operating Income Summary\n2025 vs. 2024\nTotal Intel Products operating income was $12.7 billion in 2025, down $269 million from 2024.",
+            "metadata": {
+              "accession_number": "0000050863-26-000011",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+              "amendment_note": "Original annual filing section.",
+              "fiscal_year": 2025,
+              "section_end": 178338,
+              "section_title": "Management's Discussion and Analysis (named chapter; cross-reference layout)",
+              "end": 118345,
+              "report_date": "2025-12-27",
+              "section_start": 97704,
+              "start": 117177,
+              "filed": "2026-01-23",
+              "form": "10-K",
+              "cik": "0000050863",
+              "ticker": "INTC",
+              "section": "Item 7"
+            },
+            "distance": 0.31845980882644653,
+            "score": 0.02964254577157803,
+            "ranks": {
+              "dense": 2,
+              "bm25": 14
+            },
+            "context": {
+              "text": "upply of products due to Intel Foundry wafer fabrication supply constraints, primarily with respect to our Intel 7 and Intel 3 process nodes, impacting our ability to fully meet demand. We expect these supply constraints to persist into 2026, with the most severe constraints impacting Q1 2026. Other DCAI product revenue also increased from 2024 driven by higher networking customer-related demand.\n2024 vs. 2023\nTotal Intel Products revenue was $49.5 billion in 2024, up $1.2 billion from 2023.\n▪CCG revenue increased $1.0 billion from 2023. Client revenue (collectively notebook and desktop) was $28.7 billion in 2024, up $1.6 billion from 2023, primarily due to an increase in 2024 client volume of 7% as customer inventory levels improved compared to higher levels in 2023. Client ASPs in 2024 were roughly flat with 2023. Other CCG revenue was $4.6 billion, down $521 million from 2023, primarily driven by the exit of legacy businesses.\n▪DCAI revenue increased $145 million from 2023, primarily driven by an increase in server revenue. Server ASPs increased 11% from 2023, primarily due to a higher mix of high core count products. Server volume decreased 8% from 2023, due to lower demand in a competitive environment and a higher mix of high core count products. Other DCAI product revenue was $2.7 billion, down $196 million from 2023, primarily due to 5G customers tempering purchases to reduce existing inventories.\nSegment Operating Income Summary\n2025 vs. 2024\nTotal Intel Products operating income was $12.7 billion in 2025, down $269 million from 2024.\n▪CCG operating income decreased $2.3 billion from 2024, primarily due to $2.9 billion of unfavorable impacts attributable to $1.8 billion of lower 2025 product profit due to lower revenue and higher client unit costs resulting from an increased mix of newer generation products sold in 2025, as well as $1.1 billion of higher 2025 period charges related to higher inventory reserves related to lower",
+              "start": 116777,
+              "end": 118745
+            }
+          }
+        ],
+        "latest": true,
+        "selected_report": {
+          "fiscal_year": 2025,
+          "report_date": "2025-12-27",
+          "accession_number": "0000050863-26-000011"
+        }
+      },
+      "elapsed_seconds": 0.9676405419886578
+    },
+    {
+      "type": "tool",
+      "task_id": "3",
+      "agent": "filing_rag",
+      "step": 3,
+      "call_id": 3,
+      "name": "search_filings",
+      "arguments": {
+        "query": "Intel's quarterly revenue growth",
+        "section": "Item 7",
+        "ticker": "INTC",
+        "top_k": 3,
+        "latest": true
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        },
+        "query": "Intel's quarterly revenue growth",
+        "fiscal_year": 2025,
+        "section": "Item 7",
+        "matches": [
+          {
+            "chunk_id": "0000050863-26-000011:item_7:21",
+            "text": "Intel Foundry Financial Performance1\n\tYears Ended ($ In Millions)\t\tDec 27, 2025\t\tDec 28, 2024\t\tDec 30, 2023\n\tRevenue\t\t$\t17,826 \t\t\t$\t17,317 \t\t\t$\t18,504 \t\n\tCost of sales and operating expenses\t\t28,144 \t\t\t30,608 \t\t\t25,587 \t\n\tOperating loss\t\t$\t(10,318)\t\t\t$\t(13,291)\t\t\t$\t(7,083)\t\n\tOperating loss %\t\t(58)%\t\t(77)%\t\t(38)%\n1 Operating segment results include intersegment financial activity; refer to \"Note 3: Operating Segments\" within Notes to Consolidated Financial Statements for a reconciliation between our operating segment and consolidated financial results for the periods presented.\nOperating Segment Revenue Summary\n2025 vs. 2024\nRevenue was $17.8 billion in 2025, up $509 million from 2024. Intersegment revenue was $17.5 billion, up $361 million from 2024, primarily due to higher back-end services revenue and higher wafer volume from our Intel 3, Intel 4 and Intel 18A process nodes, partially offset by lower intersegment samples revenue. External revenue was $307 million, up $148 million from 2024.\n2024 vs. 2023",
+            "metadata": {
+              "filed": "2026-01-23",
+              "form": "10-K",
+              "cik": "0000050863",
+              "report_date": "2025-12-27",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+              "section_start": 97704,
+              "start": 121664,
+              "section": "Item 7",
+              "section_end": 178338,
+              "end": 122685,
+              "fiscal_year": 2025,
+              "ticker": "INTC",
+              "section_title": "Management's Discussion and Analysis (named chapter; cross-reference layout)",
+              "amendment_note": "Original annual filing section.",
+              "accession_number": "0000050863-26-000011"
+            },
+            "distance": 0.3194013833999634,
+            "score": 0.03131881575727918,
+            "ranks": {
+              "dense": 1,
+              "bm25": 7
+            },
+            "context": {
+              "text": "technology and manufacturing in the U.S., where we are the only company conducting both leading-edge logic R&D and high-volume manufacturing. At present, nearly all of our Intel Foundry business supports internal manufacturing for Intel Products; however, we are offering our Intel Foundry services to external customers and aim to develop a more significant external foundry business in the future.\nIntel Foundry Financial Performance1\n\tYears Ended ($ In Millions)\t\tDec 27, 2025\t\tDec 28, 2024\t\tDec 30, 2023\n\tRevenue\t\t$\t17,826 \t\t\t$\t17,317 \t\t\t$\t18,504 \t\n\tCost of sales and operating expenses\t\t28,144 \t\t\t30,608 \t\t\t25,587 \t\n\tOperating loss\t\t$\t(10,318)\t\t\t$\t(13,291)\t\t\t$\t(7,083)\t\n\tOperating loss %\t\t(58)%\t\t(77)%\t\t(38)%\n1 Operating segment results include intersegment financial activity; refer to \"Note 3: Operating Segments\" within Notes to Consolidated Financial Statements for a reconciliation between our operating segment and consolidated financial results for the periods presented.\nOperating Segment Revenue Summary\n2025 vs. 2024\nRevenue was $17.8 billion in 2025, up $509 million from 2024. Intersegment revenue was $17.5 billion, up $361 million from 2024, primarily due to higher back-end services revenue and higher wafer volume from our Intel 3, Intel 4 and Intel 18A process nodes, partially offset by lower intersegment samples revenue. External revenue was $307 million, up $148 million from 2024.\n2024 vs. 2023\nRevenue was $17.3 billion in 2024, down $1.2 billion from 2023. Intersegment revenue was $17.2 billion, down $799 million from 2023, primarily due to lower intersegment ASPs, lower back-end services revenue, and higher intersegment credits, partially offset by higher intersegment revenue due to higher wafer volume primarily from Intel 3, Intel 4 and Intel 7 products. External revenue was $159 mil",
+              "start": 121264,
+              "end": 123085
+            }
+          },
+          {
+            "chunk_id": "0000050863-26-000011:item_7:67",
+            "text": "Our quarterly qualitative impairment assessment for the third quarter of 2024 indicated that a more detailed quantitative analysis was necessary for certain of our reporting units, primarily due to the decline in our market capitalization below the carrying value of our net assets, as well as the decline in our Mobileye reporting unit's market capitalization below the carrying value of Mobileye's net assets. As a result of our impairment tests, we recognized a non-cash goodwill impairment charge of $2.8 billion in the third quarter of 2024, substantially all of which related to our Mobileye reporting unit, as the estimated fair value of the reporting unit was lower than the assigned carrying value. For each of our non-impaired reporting units, the estimated fair value substantially exceeded the assigned carrying value as of the assessment date. Additionally, we performed a market capitalization reconciliation as of September 28, 2024, for both Intel and Mobileye, concluding that the implied control premiums were reasonable. In the fourth quarter of 2024, as a part of our annual goodwill impairment assessment, we determined that the estimated fair value of each reporting unit substantially exceeded the assigned carrying value, with the exception of one reporting unit with a significant amount of assigned goodwill: Mobileye. While no additional impairment was recognized during the fourth quarter of 2024 for the Mobileye reporting unit as the most recently calculated fair value",
+            "metadata": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+              "report_date": "2025-12-27",
+              "filed": "2026-01-23",
+              "form": "10-K",
+              "accession_number": "0000050863-26-000011",
+              "section_title": "Management's Discussion and Analysis (named chapter; cross-reference layout)",
+              "section_start": 97704,
+              "fiscal_year": 2025,
+              "cik": "0000050863",
+              "amendment_note": "Original annual filing section.",
+              "start": 175304,
+              "end": 176803,
+              "section": "Item 7",
+              "section_end": 178338,
+              "ticker": "INTC"
+            },
+            "distance": 0.4165074825286865,
+            "score": 0.030017921146953404,
+            "ranks": {
+              "dense": 12,
+              "bm25": 2
+            },
+            "context": {
+              "text": "ial performance, business forecasts, and market capitalization noting no material changes. Notwithstanding Mobileye, our annual qualitative assessment did not indicate that a more detailed quantitative analysis was necessary for our other reporting units as the most recently calculated fair value substantially exceeded the assigned carrying value for each reporting unit as of our assessment date.\nOur quarterly qualitative impairment assessment for the third quarter of 2024 indicated that a more detailed quantitative analysis was necessary for certain of our reporting units, primarily due to the decline in our market capitalization below the carrying value of our net assets, as well as the decline in our Mobileye reporting unit's market capitalization below the carrying value of Mobileye's net assets. As a result of our impairment tests, we recognized a non-cash goodwill impairment charge of $2.8 billion in the third quarter of 2024, substantially all of which related to our Mobileye reporting unit, as the estimated fair value of the reporting unit was lower than the assigned carrying value. For each of our non-impaired reporting units, the estimated fair value substantially exceeded the assigned carrying value as of the assessment date. Additionally, we performed a market capitalization reconciliation as of September 28, 2024, for both Intel and Mobileye, concluding that the implied control premiums were reasonable. In the fourth quarter of 2024, as a part of our annual goodwill impairment assessment, we determined that the estimated fair value of each reporting unit substantially exceeded the assigned carrying value, with the exception of one reporting unit with a significant amount of assigned goodwill: Mobileye. While no additional impairment was recognized during the fourth quarter of 2024 for the Mobileye reporting unit as the most recently calculated fair value exceeded the assigned carrying value, our impairment conclusion remained sensitive to changes in Mobileye's operating results, market conditions, long-term growth projections, and other assumptions underlying our forecast, including changes to the discount rate.\nLoss Contingencies\nWe are subject to loss contingencies, including various legal and regulatory proceedings, asserted and potential clai",
+              "start": 174904,
+              "end": 177203
+            }
+          },
+          {
+            "chunk_id": "0000050863-26-000011:item_7:17",
+            "text": "2024 vs. 2023\nTotal Intel Products revenue was $49.5 billion in 2024, up $1.2 billion from 2023.\n▪CCG revenue increased $1.0 billion from 2023. Client revenue (collectively notebook and desktop) was $28.7 billion in 2024, up $1.6 billion from 2023, primarily due to an increase in 2024 client volume of 7% as customer inventory levels improved compared to higher levels in 2023. Client ASPs in 2024 were roughly flat with 2023. Other CCG revenue was $4.6 billion, down $521 million from 2023, primarily driven by the exit of legacy businesses.\n▪DCAI revenue increased $145 million from 2023, primarily driven by an increase in server revenue. Server ASPs increased 11% from 2023, primarily due to a higher mix of high core count products. Server volume decreased 8% from 2023, due to lower demand in a competitive environment and a higher mix of high core count products. Other DCAI product revenue was $2.7 billion, down $196 million from 2023, primarily due to 5G customers tempering purchases to reduce existing inventories.\nSegment Operating Income Summary\n2025 vs. 2024\nTotal Intel Products operating income was $12.7 billion in 2025, down $269 million from 2024.",
+            "metadata": {
+              "section_title": "Management's Discussion and Analysis (named chapter; cross-reference layout)",
+              "end": 118345,
+              "section_start": 97704,
+              "start": 117177,
+              "accession_number": "0000050863-26-000011",
+              "filed": "2026-01-23",
+              "ticker": "INTC",
+              "form": "10-K",
+              "fiscal_year": 2025,
+              "cik": "0000050863",
+              "amendment_note": "Original annual filing section.",
+              "report_date": "2025-12-27",
+              "section_end": 178338,
+              "section": "Item 7",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+            },
+            "distance": 0.3345215320587158,
+            "score": 0.02976190476190476,
+            "ranks": {
+              "dense": 3,
+              "bm25": 12
+            },
+            "context": {
+              "text": "upply of products due to Intel Foundry wafer fabrication supply constraints, primarily with respect to our Intel 7 and Intel 3 process nodes, impacting our ability to fully meet demand. We expect these supply constraints to persist into 2026, with the most severe constraints impacting Q1 2026. Other DCAI product revenue also increased from 2024 driven by higher networking customer-related demand.\n2024 vs. 2023\nTotal Intel Products revenue was $49.5 billion in 2024, up $1.2 billion from 2023.\n▪CCG revenue increased $1.0 billion from 2023. Client revenue (collectively notebook and desktop) was $28.7 billion in 2024, up $1.6 billion from 2023, primarily due to an increase in 2024 client volume of 7% as customer inventory levels improved compared to higher levels in 2023. Client ASPs in 2024 were roughly flat with 2023. Other CCG revenue was $4.6 billion, down $521 million from 2023, primarily driven by the exit of legacy businesses.\n▪DCAI revenue increased $145 million from 2023, primarily driven by an increase in server revenue. Server ASPs increased 11% from 2023, primarily due to a higher mix of high core count products. Server volume decreased 8% from 2023, due to lower demand in a competitive environment and a higher mix of high core count products. Other DCAI product revenue was $2.7 billion, down $196 million from 2023, primarily due to 5G customers tempering purchases to reduce existing inventories.\nSegment Operating Income Summary\n2025 vs. 2024\nTotal Intel Products operating income was $12.7 billion in 2025, down $269 million from 2024.\n▪CCG operating income decreased $2.3 billion from 2024, primarily due to $2.9 billion of unfavorable impacts attributable to $1.8 billion of lower 2025 product profit due to lower revenue and higher client unit costs resulting from an increased mix of newer generation products sold in 2025, as well as $1.1 billion of higher 2025 period charges related to higher inventory reserves related to lower",
+              "start": 116777,
+              "end": 118745
+            }
+          }
+        ],
+        "latest": true,
+        "selected_report": {
+          "fiscal_year": 2025,
+          "report_date": "2025-12-27",
+          "accession_number": "0000050863-26-000011"
+        }
+      },
+      "elapsed_seconds": 0.10941254199133255
+    },
+    {
+      "type": "tool",
+      "task_id": "3",
+      "agent": "filing_rag",
+      "step": 4,
+      "call_id": 4,
+      "name": "search_filings",
+      "arguments": {
+        "query": "Intel's risk factors",
+        "section": "Item 1A",
+        "ticker": "INTC",
+        "top_k": 3,
+        "latest": true
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        },
+        "query": "Intel's risk factors",
+        "fiscal_year": 2025,
+        "section": "Item 1A",
+        "matches": [
+          {
+            "chunk_id": "0000050863-26-000011:item_1a:25",
+            "text": "▪Other Significant Financial, Operational and Reputational Risks. If we pause or discontinue the design, development and manufacture of Intel 14A and future leading-edge nodes, it may give rise to additional material risks that we are not able to foresee or that are more significant than we anticipate, including, but not limited to, adverse impacts to our relationships and the terms of our engagements with customers, suppliers and strategic partners, potential credit rating risk, and diminished investor confidence and increased stock price volatility. It is also uncertain what actions, if any, may be taken by the U.S. and other governments to the extent they view a potential discontinuation of our leading-edge process technology design, development and manufacturing as a strategic risk from a national economic or defense perspective.",
+            "metadata": {
+              "report_date": "2025-12-27",
+              "accession_number": "0000050863-26-000011",
+              "amendment_note": "Original annual filing section.",
+              "ticker": "INTC",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+              "section_title": "Risk Factors (named chapter; cross-reference layout)",
+              "end": 205083,
+              "fiscal_year": 2025,
+              "section": "Item 1A",
+              "form": "10-K",
+              "section_start": 178338,
+              "cik": "0000050863",
+              "filed": "2026-01-23",
+              "start": 204238,
+              "section_end": 274553
+            },
+            "distance": 0.3410416841506958,
+            "score": 0.032266458495966696,
+            "ranks": {
+              "dense": 3,
+              "bm25": 1
+            },
+            "context": {
+              "text": "3) were designed for Intel products, and if potential customers for our upcoming Intel 18A-P node believe we are no longer committed to continued development of next generation leading-edge nodes (Intel 14A and beyond), they may be inclined to remain with their current foundry partners and unwilling to make the significant investments of time and resources needed to develop products on our nodes.\n▪Other Significant Financial, Operational and Reputational Risks. If we pause or discontinue the design, development and manufacture of Intel 14A and future leading-edge nodes, it may give rise to additional material risks that we are not able to foresee or that are more significant than we anticipate, including, but not limited to, adverse impacts to our relationships and the terms of our engagements with customers, suppliers and strategic partners, potential credit rating risk, and diminished investor confidence and increased stock price volatility. It is also uncertain what actions, if any, may be taken by the U.S. and other governments to the extent they view a potential discontinuation of our leading-edge process technology design, development and manufacturing as a strategic risk from a national economic or defense perspective.\nAny of the foregoing could have a material adverse impact on our revenue, operations, financial position, cash flows, access to financing, cost structure, competitiveness, reputation, profitability and prospects and could exacerbate other risks discussed in this Form 10-K. Further, given the decades of significant continuous investments in R&D, talent accumulation, intellectual property, state-of",
+              "start": 203838,
+              "end": 205483
+            }
+          },
+          {
+            "chunk_id": "0000050863-26-000011:item_1a:21",
+            "text": "Risk Factors\n39\nIf we were to pause or discontinue the design, development and manufacturing of Intel 14A and other next generation leading-edge nodes, we would be subject to a number of significant strategic business, financial, operational and reputational risks and repercussions including, but not limited to:\n▪Dependence on Third-Party Foundries. Our products business would, over time, become dependent on third-party foundries, particularly TSMC, as we develop products for nodes beyond Intel 18A and Intel 18A-P. We have no long-term contract with TSMC, and if we are unable to secure and maintain sufficient capacity on favorable pricing terms, we may be unable to manufacture our products in sufficient volume and at a cost that supports the continued success of our products business. Further, most of our competitors have longer and more established relationships with TSMC and other third-party foundries than we do, which may put us at a competitive disadvantage. There are few foundries capable of producing the leading-edge and near-leading-edge nodes needed for our products – currently only TSMC and Samsung. To the extent our competitors are more successful than us in securing capacity with those foundries than we are, our product roadmap, market position and customer relationships would be materially adversely impacted.",
+            "metadata": {
+              "report_date": "2025-12-27",
+              "accession_number": "0000050863-26-000011",
+              "cik": "0000050863",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+              "section_end": 274553,
+              "fiscal_year": 2025,
+              "section": "Item 1A",
+              "ticker": "INTC",
+              "form": "10-K",
+              "section_title": "Risk Factors (named chapter; cross-reference layout)",
+              "start": 199226,
+              "section_start": 178338,
+              "filed": "2026-01-23",
+              "end": 200569,
+              "amendment_note": "Original annual filing section."
+            },
+            "distance": 0.3401445746421814,
+            "score": 0.03128054740957967,
+            "ranks": {
+              "dense": 2,
+              "bm25": 6
+            },
+            "context": {
+              "text": " present we are maintaining the option to design future Intel products requiring nodes with performance beyond Intel 18A and Intel 18A-P to be produced internally or by an external foundry. We have been unsuccessful to date in securing any significant external foundry customers for any of our nodes and our prospects for securing a significant external foundry customer for Intel 14A are uncertain.\nRisk Factors\n39\nIf we were to pause or discontinue the design, development and manufacturing of Intel 14A and other next generation leading-edge nodes, we would be subject to a number of significant strategic business, financial, operational and reputational risks and repercussions including, but not limited to:\n▪Dependence on Third-Party Foundries. Our products business would, over time, become dependent on third-party foundries, particularly TSMC, as we develop products for nodes beyond Intel 18A and Intel 18A-P. We have no long-term contract with TSMC, and if we are unable to secure and maintain sufficient capacity on favorable pricing terms, we may be unable to manufacture our products in sufficient volume and at a cost that supports the continued success of our products business. Further, most of our competitors have longer and more established relationships with TSMC and other third-party foundries than we do, which may put us at a competitive disadvantage. There are few foundries capable of producing the leading-edge and near-leading-edge nodes needed for our products – currently only TSMC and Samsung. To the extent our competitors are more successful than us in securing capacity with those foundries than we are, our product roadmap, market position and customer relationships would be materially adversely impacted.\n▪Losses with Respect to our Investments in R&D and Manufacturing Facilities and Equipment: We had over $100 billion of property, plant and equipment, net on our balance sheet as of December 27, 2025, the substantial majority of which we estimate relate to our foundry business. While the significant majority of this relates to our existing and in-development nodes, including Intel 18A and Intel 18",
+              "start": 198826,
+              "end": 200969
+            }
+          },
+          {
+            "chunk_id": "0000050863-26-000011:item_1a:26",
+            "text": "Any of the foregoing could have a material adverse impact on our revenue, operations, financial position, cash flows, access to financing, cost structure, competitiveness, reputation, profitability and prospects and could exacerbate other risks discussed in this Form 10-K. Further, given the decades of significant continuous investments in R&D, talent accumulation, intellectual property, state-of-the-art facilities and technical know-how needed to compete in leading-edge node design, development and manufacturing, any decision to pause or discontinue our pursuit of Intel 14A and successor leading-edge process technologies may be effectively irreversible.\nRisk Factors\n40\nOur alternative financing arrangements and pursuit of government grants involve risks and may not be successful.",
+            "metadata": {
+              "start": 205084,
+              "section_end": 274553,
+              "filed": "2026-01-23",
+              "amendment_note": "Original annual filing section.",
+              "section": "Item 1A",
+              "form": "10-K",
+              "fiscal_year": 2025,
+              "section_title": "Risk Factors (named chapter; cross-reference layout)",
+              "ticker": "INTC",
+              "section_start": 178338,
+              "report_date": "2025-12-27",
+              "accession_number": "0000050863-26-000011",
+              "cik": "0000050863",
+              "end": 205875,
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+            },
+            "distance": 0.32802337408065796,
+            "score": 0.031099324975891997,
+            "ranks": {
+              "dense": 1,
+              "bm25": 8
+            },
+            "context": {
+              "text": "artners, potential credit rating risk, and diminished investor confidence and increased stock price volatility. It is also uncertain what actions, if any, may be taken by the U.S. and other governments to the extent they view a potential discontinuation of our leading-edge process technology design, development and manufacturing as a strategic risk from a national economic or defense perspective.\nAny of the foregoing could have a material adverse impact on our revenue, operations, financial position, cash flows, access to financing, cost structure, competitiveness, reputation, profitability and prospects and could exacerbate other risks discussed in this Form 10-K. Further, given the decades of significant continuous investments in R&D, talent accumulation, intellectual property, state-of-the-art facilities and technical know-how needed to compete in leading-edge node design, development and manufacturing, any decision to pause or discontinue our pursuit of Intel 14A and successor leading-edge process technologies may be effectively irreversible.\nRisk Factors\n40\nOur alternative financing arrangements and pursuit of government grants involve risks and may not be successful.\nTo support our capital investments, we have pursued alternative financing arrangements, such as our 2022 joint investment with Brookfield in the manufacturing expansion of our Arizona campus, and our 2024 joint investment with Apollo related to Fab 34 in Ireland, and may enter into similar arrangements in the future. These transactions may fail to advance our business strategy, may include unfavo",
+              "start": 204684,
+              "end": 206275
+            }
+          }
+        ],
+        "latest": true,
+        "selected_report": {
+          "fiscal_year": 2025,
+          "report_date": "2025-12-27",
+          "accession_number": "0000050863-26-000011"
+        }
+      },
+      "elapsed_seconds": 0.20264949998818338
+    },
+    {
+      "type": "tool",
+      "task_id": "3",
+      "agent": "filing_rag",
+      "step": 5,
+      "call_id": 5,
+      "name": "search_filings",
+      "arguments": {
+        "query": "Intel's recent developments",
+        "section": "Item 1A",
+        "ticker": "INTC",
+        "top_k": 3,
+        "latest": true
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        },
+        "query": "Intel's recent developments",
+        "fiscal_year": 2025,
+        "section": "Item 1A",
+        "matches": [
+          {
+            "chunk_id": "0000050863-26-000011:item_1a:22",
+            "text": "▪Losses with Respect to our Investments in R&D and Manufacturing Facilities and Equipment: We had over $100 billion of property, plant and equipment, net on our balance sheet as of December 27, 2025, the substantial majority of which we estimate relate to our foundry business. While the significant majority of this relates to our existing and in-development nodes, including Intel 18A and Intel 18A-P, with each transition to a new node we continue to utilize some R&D and manufacturing assets from prior nodes. If we were to pause or discontinue the design, development and manufacturing of Intel 14A and other next generation leading-edge nodes, we would expect to incur significant material impairments with respect to foundry assets that may impact our results of operations. For example, we would likely discontinue the new leading-edge fabrication facilities we are building in Ohio. We also would expect to incur additional costs and expenses as we wind down other projects and facilities and reduce headcount.\n▪Loss of Eligibility for Government Incentives. We have also entered into government incentive arrangements with local, regional and national governments, both U.S. and non-U.S. If we were to pause or discontinue the design, development and manufacturing of Intel 14A, we may lose eligibility for various incentives contemplated by these arrangements, and we may be required to repay amounts already received under these arrangements.",
+            "metadata": {
+              "section_title": "Risk Factors (named chapter; cross-reference layout)",
+              "fiscal_year": 2025,
+              "amendment_note": "Original annual filing section.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+              "cik": "0000050863",
+              "filed": "2026-01-23",
+              "section": "Item 1A",
+              "section_end": 274553,
+              "form": "10-K",
+              "section_start": 178338,
+              "ticker": "INTC",
+              "accession_number": "0000050863-26-000011",
+              "end": 202024,
+              "start": 200570,
+              "report_date": "2025-12-27"
+            },
+            "distance": 0.4320110082626343,
+            "score": 0.03149801587301587,
+            "ranks": {
+              "dense": 3,
+              "bm25": 4
+            },
+            "context": {
+              "text": "us at a competitive disadvantage. There are few foundries capable of producing the leading-edge and near-leading-edge nodes needed for our products – currently only TSMC and Samsung. To the extent our competitors are more successful than us in securing capacity with those foundries than we are, our product roadmap, market position and customer relationships would be materially adversely impacted.\n▪Losses with Respect to our Investments in R&D and Manufacturing Facilities and Equipment: We had over $100 billion of property, plant and equipment, net on our balance sheet as of December 27, 2025, the substantial majority of which we estimate relate to our foundry business. While the significant majority of this relates to our existing and in-development nodes, including Intel 18A and Intel 18A-P, with each transition to a new node we continue to utilize some R&D and manufacturing assets from prior nodes. If we were to pause or discontinue the design, development and manufacturing of Intel 14A and other next generation leading-edge nodes, we would expect to incur significant material impairments with respect to foundry assets that may impact our results of operations. For example, we would likely discontinue the new leading-edge fabrication facilities we are building in Ohio. We also would expect to incur additional costs and expenses as we wind down other projects and facilities and reduce headcount.\n▪Loss of Eligibility for Government Incentives. We have also entered into government incentive arrangements with local, regional and national governments, both U.S. and non-U.S. If we were to pause or discontinue the design, development and manufacturing of Intel 14A, we may lose eligibility for various incentives contemplated by these arrangements, and we may be required to repay amounts already received under these arrangements.\n▪Potential Penalty Payments Under our SCIP Agreements. To support our capital investments in recent years, we pursued alternative financing arrangements including our 2022 joint investment with Brookfield in the manufacturing expansion of our Arizona campus and our 2024 joint investment with Apollo related to Fab 34 in Ireland. Our potential pause or discontinuation of the design, development and",
+              "start": 200170,
+              "end": 202424
+            }
+          },
+          {
+            "chunk_id": "0000050863-26-000011:item_1a:24",
+            "text": "▪Limited External Foundry Potential. We have been unsuccessful to date in attracting significant customers to our external foundry business. If we were to pause or discontinue our pursuit of Intel 14A and successor nodes, it is highly uncertain whether we would be able to develop this business. Among other things, our existing nodes (Intel 7, Intel 4 and Intel 3) were designed for Intel products, and if potential customers for our upcoming Intel 18A-P node believe we are no longer committed to continued development of next generation leading-edge nodes (Intel 14A and beyond), they may be inclined to remain with their current foundry partners and unwilling to make the significant investments of time and resources needed to develop products on our nodes.",
+            "metadata": {
+              "section_end": 274553,
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+              "start": 203475,
+              "fiscal_year": 2025,
+              "cik": "0000050863",
+              "section_title": "Risk Factors (named chapter; cross-reference layout)",
+              "accession_number": "0000050863-26-000011",
+              "filed": "2026-01-23",
+              "section": "Item 1A",
+              "report_date": "2025-12-27",
+              "section_start": 178338,
+              "amendment_note": "Original annual filing section.",
+              "ticker": "INTC",
+              "end": 204237,
+              "form": "10-K"
+            },
+            "distance": 0.38316410779953003,
+            "score": 0.03131881575727918,
+            "ranks": {
+              "dense": 1,
+              "bm25": 7
+            },
+            "context": {
+              "text": "the cutting edge of semiconductor innovation. If we were to pause or discontinue leading-edge node design, development and manufacturing, or any perception that we may do so in the future, may materially adversely impact our ability to hire and retain key talent across our foundry organization and the company more broadly, and we risk substantial loss of historical, technical and other expertise.\n▪Limited External Foundry Potential. We have been unsuccessful to date in attracting significant customers to our external foundry business. If we were to pause or discontinue our pursuit of Intel 14A and successor nodes, it is highly uncertain whether we would be able to develop this business. Among other things, our existing nodes (Intel 7, Intel 4 and Intel 3) were designed for Intel products, and if potential customers for our upcoming Intel 18A-P node believe we are no longer committed to continued development of next generation leading-edge nodes (Intel 14A and beyond), they may be inclined to remain with their current foundry partners and unwilling to make the significant investments of time and resources needed to develop products on our nodes.\n▪Other Significant Financial, Operational and Reputational Risks. If we pause or discontinue the design, development and manufacture of Intel 14A and future leading-edge nodes, it may give rise to additional material risks that we are not able to foresee or that are more significant than we anticipate, including, but not limited to, adverse impacts to our relationships and the terms of our engage",
+              "start": 203075,
+              "end": 204637
+            }
+          },
+          {
+            "chunk_id": "0000050863-26-000011:item_1a:20",
+            "text": "Intel 18A and Intel 18A-P to be produced internally or by an external foundry. We have been unsuccessful to date in securing any significant external foundry customers for any of our nodes and our prospects for securing a significant external foundry customer for Intel 14A are uncertain.",
+            "metadata": {
+              "end": 199225,
+              "filed": "2026-01-23",
+              "amendment_note": "Original annual filing section.",
+              "start": 198937,
+              "form": "10-K",
+              "ticker": "INTC",
+              "section": "Item 1A",
+              "cik": "0000050863",
+              "fiscal_year": 2025,
+              "section_end": 274553,
+              "section_title": "Risk Factors (named chapter; cross-reference layout)",
+              "section_start": 178338,
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+              "report_date": "2025-12-27",
+              "accession_number": "0000050863-26-000011"
+            },
+            "distance": 0.4230419993400574,
+            "score": 0.030621785881252923,
+            "ranks": {
+              "dense": 2,
+              "bm25": 9
+            },
+            "context": {
+              "text": "investment and have further slowed down the construction of the new leading-edge fabrication facilities we are building in Ohio. In addition, while we continue to evaluate Intel 14A for use in future Intel products and our plan includes an initial product designed to utilize Intel 14A, at present we are maintaining the option to design future Intel products requiring nodes with performance beyond Intel 18A and Intel 18A-P to be produced internally or by an external foundry. We have been unsuccessful to date in securing any significant external foundry customers for any of our nodes and our prospects for securing a significant external foundry customer for Intel 14A are uncertain.\nRisk Factors\n39\nIf we were to pause or discontinue the design, development and manufacturing of Intel 14A and other next generation leading-edge nodes, we would be subject to a number of significant strategic business, financial, operational and reputational risks and repercussions including, but not limited to:\n▪Dependence on Third-Party Foundries. Our products business would, over time, become ",
+              "start": 198537,
+              "end": 199625
+            }
+          }
+        ],
+        "latest": true,
+        "selected_report": {
+          "fiscal_year": 2025,
+          "report_date": "2025-12-27",
+          "accession_number": "0000050863-26-000011"
+        }
+      },
+      "elapsed_seconds": 0.10840220900718123
+    },
+    {
+      "type": "tool",
+      "task_id": "3",
+      "agent": "filing_rag",
+      "step": 6,
+      "call_id": 6,
+      "name": "search_filings",
+      "arguments": {
+        "query": "Intel's financial performance",
+        "section": "Item 7",
+        "ticker": "INTC",
+        "top_k": 3,
+        "latest": true
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        },
+        "query": "Intel's financial performance",
+        "fiscal_year": 2025,
+        "section": "Item 7",
+        "matches": [
+          {
+            "chunk_id": "0000050863-26-000011:item_7:13",
+            "text": "Intel Products\nIntel Products consists substantially of the design, development, marketing, sale, support and servicing of CPUs and related semiconductor products for third-party customers. Intel Products is comprised of two operating segments: CCG and DCAI. CCG delivers platforms and processors that power PCs and edge devices, enabling enhanced performance, connectivity and user experiences for consumer and commercial markets with capabilities that also support retail, industrial robotics and AI ecosystems at the edge. DCAI delivers workload-optimized solutions based upon our x86 architecture for data centers, including CPUs, AI accelerators, NICs, IPUs and custom ASICs, enabling performance and scalability for cloud, enterprise, telecommunication and HPC environments. The manufacturing of our Intel Products offerings is performed by Intel Foundry and, to a lesser extent, by certain third party manufacturers.\nIntel Products Financial Performance1\n\t\t\tDec 27, 2025\n\tYear Ended ($ In Millions)\t\t\nCCG\nDCAI\n\t\tTotal\n\tRevenue\t\t$\t32,228 \t\t\t$\t16,919 \t\t\t$\t49,147 \t\nCost of sales and operating expenses\n\t\t22,911 \t\t\t13,497 \t\t\t36,408 \t\nOperating income\n\t\t$\t9,317 \t\t\t$\t3,422 \t\t\t$\t12,739 \t\n\tOperating margin %\t\t29%\t\t20%\t\t26%\n\t\t\tDec 28, 2024\n\tYear Ended ($ In Millions)\t\t\nCCG\nDCAI\n\t\tTotal\n\tRevenue\t\t$\t33,346 \t\t\t$\t16,125 \t\t\t$\t49,471 \t\nCost of sales and operating expenses\n\t\t21,752 \t\t\t14,711 \t\t\t36,463 \t\nOperating income\n\t\t$\t11,594 \t\t\t$\t1,414 \t\t\t$\t13,008 \t\n\tOperating margin %\t\t35%\t\t9%\t\t26%",
+            "metadata": {
+              "fiscal_year": 2025,
+              "filed": "2026-01-23",
+              "start": 112894,
+              "section": "Item 7",
+              "section_start": 97704,
+              "ticker": "INTC",
+              "form": "10-K",
+              "cik": "0000050863",
+              "amendment_note": "Original annual filing section.",
+              "section_title": "Management's Discussion and Analysis (named chapter; cross-reference layout)",
+              "accession_number": "0000050863-26-000011",
+              "section_end": 178338,
+              "report_date": "2025-12-27",
+              "end": 114381,
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+            },
+            "distance": 0.3587169647216797,
+            "score": 0.03149801587301587,
+            "ranks": {
+              "dense": 4,
+              "bm25": 3
+            },
+            "context": {
+              "text": "owances recorded against our net deferred tax assets, in addition to certain other items, as our CODM receives, views and uses information for decision-making purposes based upon segment results that exclude such items. \"Note 3: Operating Segments\" within Notes to Consolidated Financial Statements of this Form 10-K reconciles our segment and consolidated results for each of the periods presented.\nIntel Products\nIntel Products consists substantially of the design, development, marketing, sale, support and servicing of CPUs and related semiconductor products for third-party customers. Intel Products is comprised of two operating segments: CCG and DCAI. CCG delivers platforms and processors that power PCs and edge devices, enabling enhanced performance, connectivity and user experiences for consumer and commercial markets with capabilities that also support retail, industrial robotics and AI ecosystems at the edge. DCAI delivers workload-optimized solutions based upon our x86 architecture for data centers, including CPUs, AI accelerators, NICs, IPUs and custom ASICs, enabling performance and scalability for cloud, enterprise, telecommunication and HPC environments. The manufacturing of our Intel Products offerings is performed by Intel Foundry and, to a lesser extent, by certain third party manufacturers.\nIntel Products Financial Performance1\n\t\t\tDec 27, 2025\n\tYear Ended ($ In Millions)\t\t\nCCG\nDCAI\n\t\tTotal\n\tRevenue\t\t$\t32,228 \t\t\t$\t16,919 \t\t\t$\t49,147 \t\nCost of sales and operating expenses\n\t\t22,911 \t\t\t13,497 \t\t\t36,408 \t\nOperating income\n\t\t$\t9,317 \t\t\t$\t3,422 \t\t\t$\t12,739 \t\n\tOperating margin %\t\t29%\t\t20%\t\t26%\n\t\t\tDec 28, 2024\n\tYear Ended ($ In Millions)\t\t\nCCG\nDCAI\n\t\tTotal\n\tRevenue\t\t$\t33,346 \t\t\t$\t16,125 \t\t\t$\t49,471 \t\nCost of sales and operating expenses\n\t\t21,752 \t\t\t14,711 \t\t\t36,463 \t\nOperating income\n\t\t$\t11,594 \t\t\t$\t1,414 \t\t\t$\t13,008 \t\n\tOperating margin %\t\t35%\t\t9%\t\t26%\n\t\t\tDec 30, 2023\n\tYear Ended ($ In Millions)\t\t\nCCG\nDCAI\n\t\tTotal\n\tRevenue\t\t$\t32,305 \t\t\t$\t15,980 \t\t\t$\t48,285 \t\nCost of sales and operating expenses\n\t\t22,177 \t\t\t15,035 \t\t\t37,212 \t\nOperating income\n\t\t$\t10,128 \t\t\t$\t945 \t\t\t$\t11,073 \t\n\tOperating margin %\t\t31%\t\t6%\t\t23%\n1 Operating segment results include intersegment financial activity; refer to \"Note 3: Operating Segments\" within Notes to Consolidated Fi",
+              "start": 112494,
+              "end": 114781
+            }
+          },
+          {
+            "chunk_id": "0000050863-26-000011:item_7:21",
+            "text": "Intel Foundry Financial Performance1\n\tYears Ended ($ In Millions)\t\tDec 27, 2025\t\tDec 28, 2024\t\tDec 30, 2023\n\tRevenue\t\t$\t17,826 \t\t\t$\t17,317 \t\t\t$\t18,504 \t\n\tCost of sales and operating expenses\t\t28,144 \t\t\t30,608 \t\t\t25,587 \t\n\tOperating loss\t\t$\t(10,318)\t\t\t$\t(13,291)\t\t\t$\t(7,083)\t\n\tOperating loss %\t\t(58)%\t\t(77)%\t\t(38)%\n1 Operating segment results include intersegment financial activity; refer to \"Note 3: Operating Segments\" within Notes to Consolidated Financial Statements for a reconciliation between our operating segment and consolidated financial results for the periods presented.\nOperating Segment Revenue Summary\n2025 vs. 2024\nRevenue was $17.8 billion in 2025, up $509 million from 2024. Intersegment revenue was $17.5 billion, up $361 million from 2024, primarily due to higher back-end services revenue and higher wafer volume from our Intel 3, Intel 4 and Intel 18A process nodes, partially offset by lower intersegment samples revenue. External revenue was $307 million, up $148 million from 2024.\n2024 vs. 2023",
+            "metadata": {
+              "section": "Item 7",
+              "cik": "0000050863",
+              "section_end": 178338,
+              "filed": "2026-01-23",
+              "fiscal_year": 2025,
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+              "section_title": "Management's Discussion and Analysis (named chapter; cross-reference layout)",
+              "section_start": 97704,
+              "accession_number": "0000050863-26-000011",
+              "form": "10-K",
+              "report_date": "2025-12-27",
+              "end": 122685,
+              "ticker": "INTC",
+              "amendment_note": "Original annual filing section.",
+              "start": 121664
+            },
+            "distance": 0.3183061480522156,
+            "score": 0.030017921146953404,
+            "ranks": {
+              "dense": 2,
+              "bm25": 12
+            },
+            "context": {
+              "text": "technology and manufacturing in the U.S., where we are the only company conducting both leading-edge logic R&D and high-volume manufacturing. At present, nearly all of our Intel Foundry business supports internal manufacturing for Intel Products; however, we are offering our Intel Foundry services to external customers and aim to develop a more significant external foundry business in the future.\nIntel Foundry Financial Performance1\n\tYears Ended ($ In Millions)\t\tDec 27, 2025\t\tDec 28, 2024\t\tDec 30, 2023\n\tRevenue\t\t$\t17,826 \t\t\t$\t17,317 \t\t\t$\t18,504 \t\n\tCost of sales and operating expenses\t\t28,144 \t\t\t30,608 \t\t\t25,587 \t\n\tOperating loss\t\t$\t(10,318)\t\t\t$\t(13,291)\t\t\t$\t(7,083)\t\n\tOperating loss %\t\t(58)%\t\t(77)%\t\t(38)%\n1 Operating segment results include intersegment financial activity; refer to \"Note 3: Operating Segments\" within Notes to Consolidated Financial Statements for a reconciliation between our operating segment and consolidated financial results for the periods presented.\nOperating Segment Revenue Summary\n2025 vs. 2024\nRevenue was $17.8 billion in 2025, up $509 million from 2024. Intersegment revenue was $17.5 billion, up $361 million from 2024, primarily due to higher back-end services revenue and higher wafer volume from our Intel 3, Intel 4 and Intel 18A process nodes, partially offset by lower intersegment samples revenue. External revenue was $307 million, up $148 million from 2024.\n2024 vs. 2023\nRevenue was $17.3 billion in 2024, down $1.2 billion from 2023. Intersegment revenue was $17.2 billion, down $799 million from 2023, primarily due to lower intersegment ASPs, lower back-end services revenue, and higher intersegment credits, partially offset by higher intersegment revenue due to higher wafer volume primarily from Intel 3, Intel 4 and Intel 7 products. External revenue was $159 mil",
+              "start": 121264,
+              "end": 123085
+            }
+          },
+          {
+            "chunk_id": "0000050863-26-000011:item_7:62",
+            "text": "Our qualitative assessment considers industry and market considerations, overall financial performance and other relevant events and factors affecting our reporting units or Intel as a whole. More specifically, qualitative factors may include a sustained decrease in our consolidated market capitalization or one of our reporting units’ market capitalization relative to each’s respective net book value; significant company specific actions, including changes to the structure of our reporting units; and current, historical or projected deterioration of our financial performance. We may also perform a quantitative analysis to support the qualitative factors by applying sensitivities to assumptions and inputs used in measuring a reporting unit's fair value.",
+            "metadata": {
+              "section_title": "Management's Discussion and Analysis (named chapter; cross-reference layout)",
+              "accession_number": "0000050863-26-000011",
+              "start": 169805,
+              "section_start": 97704,
+              "section": "Item 7",
+              "fiscal_year": 2025,
+              "report_date": "2025-12-27",
+              "filed": "2026-01-23",
+              "cik": "0000050863",
+              "end": 170567,
+              "amendment_note": "Original annual filing section.",
+              "ticker": "INTC",
+              "form": "10-K",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+              "section_end": 178338
+            },
+            "distance": 0.45194339752197266,
+            "score": 0.029726775956284153,
+            "ranks": {
+              "dense": 15,
+              "bm25": 1
+            },
+            "context": {
+              "text": "rying value used in an impairment assessment represents the allocation of various assets and liabilities, excluding certain corporate assets and liabilities, such as cash, investments and debt. While a substantial majority of our allocable assets, primarily property, plant and equipment, are attributable to our Intel Foundry reporting unit, that reporting unit has no remaining allocated goodwill.\nOur qualitative assessment considers industry and market considerations, overall financial performance and other relevant events and factors affecting our reporting units or Intel as a whole. More specifically, qualitative factors may include a sustained decrease in our consolidated market capitalization or one of our reporting units’ market capitalization relative to each’s respective net book value; significant company specific actions, including changes to the structure of our reporting units; and current, historical or projected deterioration of our financial performance. We may also perform a quantitative analysis to support the qualitative factors by applying sensitivities to assumptions and inputs used in measuring a reporting unit's fair value.\nOur quantitative impairment assessment considers both the income approach and the market approach to estimate a reporting unit's fair value. The income approach estimates fair value using discounted future cash flows for a reporting unit primarily using the following major assumptions and inputs: revenue, based on assumed market segment growth rates and our assumed market segment share; estimated",
+              "start": 169405,
+              "end": 170967
+            }
+          }
+        ],
+        "latest": true,
+        "selected_report": {
+          "fiscal_year": 2025,
+          "report_date": "2025-12-27",
+          "accession_number": "0000050863-26-000011"
+        }
+      },
+      "elapsed_seconds": 0.1076174589979928
+    },
+    {
+      "type": "tool",
+      "task_id": "4",
+      "agent": "financial_data",
+      "step": 1,
+      "call_id": 1,
+      "name": "resolve_ticker_to_cik",
+      "arguments": {
+        "ticker": "INTC"
+      },
+      "status": "completed",
+      "result": {
+        "ticker": "INTC",
+        "name": "INTEL CORP",
+        "cik": "0000050863"
+      },
+      "elapsed_seconds": 0.0053769169899169356
+    },
+    {
+      "type": "tool",
+      "task_id": "4",
+      "agent": "financial_data",
+      "step": 2,
+      "call_id": 2,
+      "name": "get_company_facts",
+      "arguments": {
+        "cik": "0000050863",
+        "concept": "revenue",
+        "unit": "USD",
+        "years": 3
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "cik": "0000050863",
+          "name": "INTEL CORP"
+        },
+        "concept": "revenue",
+        "definition": {
+          "description": "Annual total revenue",
+          "taxonomy": "us-gaap",
+          "unit": "USD",
+          "tags": [
+            "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "Revenues",
+            "SalesRevenueNet"
+          ]
+        },
+        "unit": "USD",
+        "requested_years": 3,
+        "available_period_count": 3,
+        "history_complete": true,
+        "requested_period_ends": [
+          "2025-12-27",
+          "2024-12-28",
+          "2023-12-30"
+        ],
+        "missing_period_ends": [],
+        "records": [
+          {
+            "cik": 50863,
+            "metric": "revenue",
+            "start": "2024-12-29",
+            "end": "2025-12-27",
+            "value": 52853000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-01-23",
+            "accn": "0000050863-26-000011",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+            "period_label": "FY2025 (period end: 2025-12-27)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+          },
+          {
+            "cik": 50863,
+            "metric": "revenue",
+            "start": "2023-12-31",
+            "end": "2024-12-28",
+            "value": 53101000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-01-23",
+            "accn": "0000050863-26-000011",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+            "period_label": "FY2024 (period end: 2024-12-28)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+          },
+          {
+            "cik": 50863,
+            "metric": "revenue",
+            "start": "2023-01-01",
+            "end": "2023-12-30",
+            "value": 54228000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-01-23",
+            "accn": "0000050863-26-000011",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+            "period_label": "FY2023 (period end: 2023-12-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+          }
+        ]
+      },
+      "elapsed_seconds": 0.010389917006250471
+    },
+    {
+      "type": "tool",
+      "task_id": "4",
+      "agent": "financial_data",
+      "step": 3,
+      "call_id": 3,
+      "name": "compute_metrics",
+      "arguments": {
+        "cik": "0000050863",
+        "metrics": [
+          "revenue_growth"
+        ],
+        "years": 3
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "cik": "0000050863",
+          "name": "INTEL CORP"
+        },
+        "requested_years": 3,
+        "results": {
+          "revenue_growth": [
+            {
+              "cik": 50863,
+              "fiscal_year": 2025,
+              "metric": "revenue_growth",
+              "start": "2024-12-29",
+              "end": "2025-12-27",
+              "value": -0.004670345191239322,
+              "unit": "ratio",
+              "formula": "current_revenue / previous_revenue - 1",
+              "inputs": {
+                "previous_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2023-12-31",
+                  "end": "2024-12-28",
+                  "value": 53101000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2024,
+                  "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                  "period_label": "FY2024 (period end: 2024-12-28)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                },
+                "current_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2024-12-29",
+                  "end": "2025-12-27",
+                  "value": 52853000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2025,
+                  "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                  "period_label": "FY2025 (period end: 2025-12-27)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                }
+              },
+              "period_label": "FY2025 (period end: 2025-12-27)"
+            },
+            {
+              "cik": 50863,
+              "fiscal_year": 2024,
+              "metric": "revenue_growth",
+              "start": "2023-12-31",
+              "end": "2024-12-28",
+              "value": -0.02078262152393595,
+              "unit": "ratio",
+              "formula": "current_revenue / previous_revenue - 1",
+              "inputs": {
+                "previous_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2023-01-01",
+                  "end": "2023-12-30",
+                  "value": 54228000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2023,
+                  "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                  "period_label": "FY2023 (period end: 2023-12-30)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                },
+                "current_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2023-12-31",
+                  "end": "2024-12-28",
+                  "value": 53101000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2024,
+                  "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                  "period_label": "FY2024 (period end: 2024-12-28)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                }
+              },
+              "period_label": "FY2024 (period end: 2024-12-28)"
+            }
+          ]
+        },
+        "calculation_definitions": {
+          "revenue_growth": {
+            "description": "Annual revenue growth",
+            "function": "calculate_growth",
+            "inputs": [
+              "revenue"
+            ],
+            "unit": "ratio",
+            "period_mode": "consecutive_periods"
+          }
+        },
+        "warnings": [],
+        "availability": {
+          "revenue": {
+            "concept": "revenue",
+            "missing_period_ends": [],
+            "available_period_ends": [
+              "2025-12-27",
+              "2024-12-28",
+              "2023-12-30"
+            ]
+          }
+        }
+      },
+      "elapsed_seconds": 0.01212008300353773
+    },
+    {
+      "type": "tool",
+      "task_id": "focused_recent_repair",
+      "agent": "filing_rag",
+      "step": 1,
+      "call_id": 1,
+      "name": "search_company_updates",
+      "arguments": {
+        "form": "10-Q",
+        "limit": 1,
+        "query": "net revenue three months",
+        "ticker": "INTC",
+        "top_k": 3
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        },
+        "matches": [
+          {
+            "text": "All Other Financial Performance1\n\t\t\tThree Months Ended\t\tNine Months Ended\n\t($ In Millions)\t\tSep 26, 2026\t\tSep 27, 2025\t\tSep 26, 2026\t\tSep 27, 2025\n\tRevenue\t\t$\t692 \t\t\t$\t993 \t\t\t$\t2,021 \t\t\t$\t2,989 \t\n\tCost of sales and operating expenses\t\t513 \t\t\t893 \t\t\t1,510 \t\t\t2,717 \t\n\tOperating income\t\t$\t179 \t\t\t$\t100 \t\t\t$\t511 \t\t\t$\t272 \t\n\tOperating margin %\t\t26%\t\t10%\t\t25%\t\t9%\n1 Operating segment results include intersegment financial activity; refer to \"Note 2: Operating Segments\" within Notes to Consolidated Condensed Financial Statements for a reconciliation between our operating segment and consolidated financial results for the periods presented.\nOperating Segment Revenue Summary\nQ3 2026 vs. Q3 2025\nAll Other revenue was $692 million, down $301 million from Q3 2025, primarily as a result of the Q3 2025 deconsolidation of Altera. Mobileye revenue was $493 million in Q3 2026, roughly flat with Q3 2025.\nYTD 2026 vs. YTD 2025\nAll Other revenue was $2.0 billion, down $968 million from YTD 2025, primarily as a result of the Q3 2025 deconsolidation of Altera. This decrease was partially offset by higher Mobileye revenue in YTD 2026, which totaled $1.6 billion, up $109 million from YTD 2025, driven by higher demand for Mobileye EyeQ* products.\nSegment Operating Income Summary\nQ3 2026 vs. Q3 2025 and YTD 2026 vs. YTD 2025\nAll Other operating income was $179 million in Q3 2026, up $79 million from Q3 2025, and $511 million in YTD 2026, up $239 million from YTD 2025, driven by higher operating income from our other businesses in Q3 2026 and YTD 2026, partially offset by the absence of Altera operating margin in Q3 2026 and YTD 2026.\n\tMD&A\t\n36\nTable of Contents\n\tConsolidated Condensed Results of Operations\t\n\t\t\tThree Months Ended\t\tNine Months Ended\n\t\t\tSep 26, 2026\t\tSep 27, 2025\t\tSep 26, 2026\t\tSep 27, 2025\n\t(In Millions, Except Per Share Amounts)\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\tNet revenue\t\t$\t16,513 \t\t\t100.0 \t%\t\t$\t13,653 \t\t\t100.0 \t%\t\t$\t46,218 \t\t\t100.0 \t%\t\t$\t39,179 \t\t\t100.0 \t%\n\tCost of sales\t\t9,417 \t\t\t57.0 \t%\t\t8,435 \t\t\t61.8 \t%\t\t27,266 \t\t\t59.0 \t%\t\t25,747 \t\t\t65.7 \t%\n\tGross profit\t\t7,096 \t\t\t43.0 \t%\t\t5,218 \t\t\t38.2 \t%\t\t18,952 \t\t\t41.0 \t%\t\t13,432 \t\t\t34.3 \t%\n\tResearch and development\t\t3,490 \t\t\t21.1 \t%\t\t3,231 \t\t\t23.7 \t%\t\t10,233 \t\t\t22.1 \t%\t\t10,555 \t\t\t26.9 \t%\n\tMarketing, general, and administrative\t\t1,030 \t\t\t6.2 \t%\t\t1,129 \t\t\t8.3 \t%\t\t3,243 \t\t\t7.0 \t%\t\t3,450 \t\t\t8.8 \t%",
+            "score": 6.2208554452648706,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "10-Q",
+              "accession_number": "0000050863-26-000191",
+              "report_date": "2026-09-26",
+              "filed": "2026-10-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+              "section": "Primary document",
+              "retrieved_at": "2026-11-20T19:21:43.101950+00:00",
+              "sha256": "e016e384c1b1e1d2407198c75108b82990f9acfd7359cb77953d0b1b1f068d2c",
+              "start": 138892,
+              "end": 141341
+            }
+          },
+          {
+            "text": "Financial Statements\t Notes to Financial Statements\t\n10\nTable of Contents\nNet revenue, cost of sales and operating expenses and operating income (loss) for each period were as follows:\n\t\t\tThree Months Ended\n\t(In Millions)\t\tSep 26, 2026\n\t\t\tIntel Products\t\t\t\t\t\t\t\t\t\t\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\tIntel Foundry\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t8,097 \t\t\t$\t7,318 \t\t\t$\t15,415 \t\t\t$\t6,697 \t\t\t$\t692 \t\t\t$\t— \t\t\t$\t(6,291)\t\t\t$\t16,513 \t\nCost of sales and operating expenses\n\t\t5,812 \t\t\t4,279 \t\t\t10,091 \t\t\t8,550 \t\t\t513 \t\t\t1,058 \t\t\t(6,221)\t\t\t13,991 \t\nOperating income (loss)\n\t\t$\t2,285 \t\t\t$\t3,039 \t\t\t$\t5,324 \t\t\t$\t(1,853)\t\t\t$\t179 \t\t\t$\t(1,058)\t\t\t$\t(70)\t\t\t$\t2,522 \t\n\t\t\tThree Months Ended\n\t(In Millions)\t\tSep 27, 2025\nIntel Products\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\t\nIntel Foundry\n\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t8,535 \t\t\t$\t4,117 \t\t\t$\t12,652 \t\t\t$\t4,235 \t\t\t$\t993 \t\t\t$\t— \t\t\t$\t(4,227)\t\t\t$\t13,653 \t\nCost of sales and operating expenses\n\t\t5,841 \t\t\t3,153 \t\t\t8,994 \t\t\t6,556 \t\t\t893 \t\t\t782 \t\t\t(4,255)\t\t\t12,970 \t\n\tOperating income (loss)\t\t$\t2,694 \t\t\t$\t964 \t\t\t$\t3,658 \t\t\t$\t(2,321)\t\t\t$\t100 \t\t\t$\t(782)\t\t\t$\t28 \t\t\t$\t683 \t\n\t\t\tNine Months Ended\n\t(In Millions)\t\tSep 26, 2026\n\t\t\tIntel Products\t\t\t\t\t\t\t\t\t\t\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\tIntel Foundry\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t24,701 \t\t\t$\t18,632 \t\t\t$\t43,333 \t\t\t$\t17,883 \t\t\t$\t2,021 \t\t\t$\t— \t\t\t$\t(17,019)\t\t\t$\t46,218 \t\nCost of sales and operating expenses\n\t\t17,557 \t\t\t11,577 \t\t\t29,134 \t\t\t24,262 \t\t\t1,510 \t\t\t7,554 \t\t\t(17,424)\t\t\t45,036 \t\nOperating income (loss)\n\t\t$\t7,144 \t\t\t$\t7,055 \t\t\t$\t14,199 \t\t\t$\t(6,379)\t\t\t$\t511 \t\t\t$\t(7,554)\t\t\t$\t405 \t\t\t$\t1,182 \t\n\t\t\tNine Months Ended\n\t(In Millions)\t\tSep 27, 2025\nIntel Products\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\t\nIntel Foundry\n\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t24,035 \t\t\t$\t12,182 \t\t\t$\t36,217 \t\t\t$\t13,319 \t\t\t$\t2,989 \t\t\t$\t— \t\t\t$\t(13,346)\t\t\t$\t39,179 \t\nCost of sales and operating expenses\n\t\t16,927 \t\t\t10,010 \t\t\t26,937 \t\t\t21,128 \t\t\t2,717 \t\t\t4,797 \t\t\t(13,606)\t\t\t41,973 \t\n\tOperating income (loss)\t\t$\t7,108 \t\t\t$\t2,172 \t\t\t$\t9,280 \t\t\t$\t(7,809)\t\t\t$\t272 \t\t\t$\t(4,797)\t\t\t$\t260 \t\t\t$\t(2,794)\t\nCorporate Unallocated Expenses",
+            "score": 5.678593659220147,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "10-Q",
+              "accession_number": "0000050863-26-000191",
+              "report_date": "2026-09-26",
+              "filed": "2026-10-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+              "section": "Primary document",
+              "retrieved_at": "2026-11-20T19:21:43.101950+00:00",
+              "sha256": "e016e384c1b1e1d2407198c75108b82990f9acfd7359cb77953d0b1b1f068d2c",
+              "start": 34097,
+              "end": 36412
+            }
+          },
+          {
+            "text": "Gross profit\t\t7,096 \t\t\t43.0 \t%\t\t5,218 \t\t\t38.2 \t%\t\t18,952 \t\t\t41.0 \t%\t\t13,432 \t\t\t34.3 \t%\n\tResearch and development\t\t3,490 \t\t\t21.1 \t%\t\t3,231 \t\t\t23.7 \t%\t\t10,233 \t\t\t22.1 \t%\t\t10,555 \t\t\t26.9 \t%\n\tMarketing, general, and administrative\t\t1,030 \t\t\t6.2 \t%\t\t1,129 \t\t\t8.3 \t%\t\t3,243 \t\t\t7.0 \t%\t\t3,450 \t\t\t8.8 \t%\n\tRestructuring and other charges\t\t54 \t\t\t0.3 \t%\t\t175 \t\t\t1.3 \t%\t\t4,294 \t\t\t9.3 \t%\t\t2,221 \t\t\t5.7 \t%\n\tOperating income (loss)\t\t2,522 \t\t\t15.3 \t%\t\t683 \t\t\t5.0 \t%\t\t1,182 \t\t\t2.6 \t%\t\t(2,794)\t\t\t(7.1)\t%\n\tGains (losses) on equity investments, net\t\t330 \t\t\t2.0 \t%\t\t221 \t\t\t1.6 \t%\t\t219 \t\t\t0.5 \t%\t\t611 \t\t\t1.6 \t%\n\tInterest and other, net\t\t1,130 \t\t\t6.8 \t%\t\t3,670 \t\t\t26.9 \t%\t\t(12,184)\t\t\t(26.4)\t%\t\t3,402 \t\t\t8.7 \t%\n\tIncome (loss) before taxes\t\t3,982 \t\t\t24.1 \t%\t\t4,574 \t\t\t33.5 \t%\t\t(10,783)\t\t\t(23.3)\t%\t\t1,219 \t\t\t3.1 \t%\n\tProvision for (benefit from) taxes\t\t462 \t\t\t2.8 \t%\t\t304 \t\t\t2.2 \t%\t\t826 \t\t\t1.8 \t%\t\t860 \t\t\t2.2 \t%\n\tNet income (loss)\t\t3,520 \t\t\t21.3 \t%\t\t4,270 \t\t\t31.3 \t%\t\t(11,609)\t\t\t(25.1)\t%\t\t359 \t\t\t0.9 \t%\n\tLess: net income (loss) attributable to non-controlling interests\t\t200 \t\t\t1.2 \t%\t\t207 \t\t\t1.5 \t%\t\t(168)\t\t\t(0.4)\t%\t\t35 \t\t\t0.1 \t%\n\tNet income (loss) attributable to Intel\t\t$\t3,320 \t\t\t20.1 \t%\t\t$\t4,063 \t\t\t29.8 \t%\t\t$\t(11,441)\t\t\t(24.8)\t%\t\t$\t324 \t\t\t0.8 \t%\nEarnings (loss) per share attributable to Intel—diluted2\n\t\t$\t0.60 \t\t\t\t\t$\t0.90 \t\t\t\t\t$\t(2.22)\t\t\t\t\t$\t0.07 \t\t\t\n1 Totals may not sum due to rounding.\n2 For the three months ended September 26, 2026 and three and nine months ended September 27, 2025, earnings per share attributable to Intel-diluted has been calculated by adjusting net income attributable to Intel for the gain of $120 million and loss of $2 million, respectively, related to the mark-to-market of that portion of the derivative liability that is attributable to 5 million and 342 thousand, respectively, contingent Escrowed Shares that were included in the weighted average shares of common stock outstanding-diluted during the period.\n\tMD&A\t\n37\nTable of Contents\nConsolidated Revenue\nConsolidated Revenue Walk $B1\n1 Excludes intersegment revenue; totals may not sum due to rounding.\nQ3 2026 vs. Q3 2025",
+            "score": 5.612485522378239,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "10-Q",
+              "accession_number": "0000050863-26-000191",
+              "report_date": "2026-09-26",
+              "filed": "2026-10-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+              "section": "Primary document",
+              "retrieved_at": "2026-11-20T19:21:43.101950+00:00",
+              "sha256": "e016e384c1b1e1d2407198c75108b82990f9acfd7359cb77953d0b1b1f068d2c",
+              "start": 141047,
+              "end": 143137
+            }
+          }
+        ],
+        "warnings": [],
+        "coverage": {
+          "form": "10-Q",
+          "filings_considered": 1,
+          "documents_loaded": 1,
+          "latest_considered_report_date": "2026-09-26",
+          "latest_considered_filing_date": "2026-10-30",
+          "selected_filings": [
+            {
+              "accession_number": "0000050863-26-000191",
+              "report_date": "2026-09-26",
+              "filed": "2026-10-30"
+            }
+          ],
+          "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+        },
+        "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+      },
+      "elapsed_seconds": 0.3885277500085067
+    },
+    {
+      "type": "tool",
+      "task_id": "focused_recent_repair",
+      "agent": "filing_rag",
+      "step": 1,
+      "call_id": 2,
+      "name": "search_company_updates",
+      "arguments": {
+        "form": "8-K",
+        "limit": 3,
+        "query": "revenue earnings results",
+        "ticker": "INTC",
+        "top_k": 3
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        },
+        "matches": [
+          {
+            "text": "EX-99.1\n2\nq326earningsrelease.htm\nEX-99.1\nExhibit 99.1\nIntel Corporation\n2200 Mission College Blvd.\nSanta Clara, CA 95054-1549\nNews Release\nIntel Reports Third-Quarter 2026 Financial Results\nNews Summary\n▪Third-quarter revenue was $16.5 billion, up 21% year-over-year (YoY).\n▪Third-quarter earnings per share (EPS) attributable to Intel was $0.60; non-GAAP EPS attributable to Intel was $0.52.\n▪Forecasting fourth-quarter 2026 revenue of $15.0 billion to $16.0 billion; forecasting fourth-quarter EPS attributable to Intel of $0.10 and non-GAAP EPS attributable to Intel of $0.25.\nSANTA CLARA, Calif., October 29, 2026 – Intel Corporation today reported third-quarter 2026 financial results.\n“Our Q3 results demonstrate improving execution, meaningful progress expanding supply and continued advancement of our process technology,” said Lip-Bu Tan, Intel CEO. “Despite near-term headwinds across the PC industry, demand for our CPUs remains robust, reinforcing our confidence in the long-term growth opportunities for our business. Our immediate priority is to unlock additional supply to meet extraordinary demand for our Xeon family, while strengthening our product portfolio and roadmap. We are moving with urgency and focus to capitalize on these opportunities to deliver sustainable growth and long-term shareholder value.”\n“We delivered another solid quarter. Revenue, gross margin and earnings per share exceeded guidance, including our strongest data center revenue growth in 15 years,” said David Zinsner, Intel CFO. “Looking ahead, we see the PC slowdown continuing at least through the first half of next year, but we remain optimistic about the opportunities across our broader portfolio, and we will continue making disciplined investments in capacity and working capital to increase supply and support future growth.”\nQ3 2026 Financial Results\n\t\tGAAP\t\tNon-GAAP\n\t\tQ3 2026\tQ3 2025\tvs. Q3 2025\t\tQ3 2026\tQ3 2025\tvs. Q3 2025\n\tRevenue ($B)\t$16.5\t$13.7\tup 21%\t\t\t\t\n\tGross margin\t43.0%\t38.2%\tup 4.8 ppts\t\t44.1%\t40.0%\tup 4.1 ppts\n\tR&D and MG&A ($B)\t$4.5\t$4.4\tup 4%\t\t$4.1\t$3.9\tup 3%\n\tOperating margin\t15.3%\t5.0%\tup 10.3 ppts\t\t19.6%\t11.2%\tup 8.4 ppts\n\tTax rate\t11.6%\t6.6%\tup 5 ppts\t\t11.0%\t12.0%\tdown 1 ppt\n\tNet income attributable to Intel ($B)\t$3.3\t$4.1\tdown 18%\t\t$2.8\t$1.0\tup 169%\n\tEarnings per share attributable to Intel—diluted\t$0.60\t$0.90\tdown 33%\t\t$0.52\t$0.23\tup 126%\nFull reconciliations between GAAP and non-GAAP measures are provided below.",
+            "score": 4.570870370749115,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "8-K",
+              "accession_number": "0000050863-26-000188",
+              "report_date": "2026-10-29",
+              "filed": "2026-10-29",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+              "section": "EX-99 exhibit",
+              "retrieved_at": "2026-11-20T19:21:46.566854+00:00",
+              "sha256": "54154fd85190e0abd9533087a78f71b7c44e2153b8de012682db47c74c82c38f",
+              "start": 0,
+              "end": 2452
+            }
+          },
+          {
+            "text": "EX-99.1\n2\nq226earningsrelease.htm\nEX-99.1\nExhibit 99.1\nIntel Corporation\n2200 Mission College Blvd.\nSanta Clara, CA 95054-1549\nNews Release\nIntel Reports Second-Quarter 2026 Financial Results\nNews Summary\n▪Second-quarter revenue was $16.1 billion, up 25% year-over-year (YoY).\n▪Second-quarter earnings (loss) per share (EPS) attributable to Intel was $(2.16); non-GAAP EPS attributable to Intel was $0.42.\n▪Forecasting third-quarter 2026 revenue of $15.8 billion to $16.8 billion; expecting third-quarter EPS attributable to Intel of $0.31 and non-GAAP EPS attributable to Intel of $0.38.\nSANTA CLARA, Calif., July 23, 2026 – Intel Corporation today reported second-quarter 2026 financial results.\n“AI is driving unprecedented demand for compute, and as we continue to execute, Intel is well-positioned to capture sustainable growth across our CPU franchise, ASICs, advanced packaging and vast wafer foundry network,” said Lip-Bu Tan, Intel CEO. “Our Q2 results represent our strongest revenue growth in more than fifteen years, enabled by greater speed, accountability, and customer focus.”\n“We delivered a strong second quarter, exceeding our financial guidance on robust demand and improved execution, including volume upside driven by higher factory yields and improved cycle times,” said Dave Zinsner, Intel CFO. “AI-driven compute continues to strengthen, and to support expected growth this year and next across products and foundry, we are meaningfully increasing our investments in equipment, clean room space, and substrates.”\nQ2 2026 Financial Results\n\t\tGAAP\t\tNon-GAAP\n\t \tQ2 2026\tQ2 2025\tvs. Q2 2025\t\tQ2 2026\tQ2 2025\tvs. Q2 2025\n\tRevenue ($B)\t$16.1\t$12.9\tup 25%\t\t\t\t\n\tGross margin\t40.4%\t27.5%\tup 12.9 ppts\t\t41.8%\t29.7%\tup 12.1 ppts\n\tR&D and MG&A ($B)\t$4.5\t$4.8\tdown 6%\t\t$4.0\t$4.3\tdown 8%\n\tOperating margin (loss)\t11.1%\t(24.7)%\tup 35.8 ppts\t\t17.2%\t(3.9)%\tup 21.1 ppts\n\tTax rate\t(0.3)%\t(9.2)%\tup 8.9 ppts\t\t11.0%\t12.0%\tdown 1 ppt\n\tNet income (loss) attributable to Intel ($B)\t$(11.0)\t$(2.9)\tn/m*\t\t$2.2\t$(0.4)\tn/m*\n\tEarnings (loss) per share attributable to Intel—diluted\t$(2.16)\t$(0.67)\tn/m*\t\t$0.42\t$(0.10)\tn/m*\nFull reconciliations between GAAP and non-GAAP measures are provided below.\n*Not meaningful\nIn the second quarter, the company generated $7.0 billion in cash from operations.\nIntel/Page 2\nBusiness Unit Summary",
+            "score": 4.2859215633346155,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "8-K",
+              "accession_number": "0000050863-26-000155",
+              "report_date": "2026-07-23",
+              "filed": "2026-07-23",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000155/q226earningsrelease.htm",
+              "section": "EX-99 exhibit",
+              "retrieved_at": "2026-11-20T19:21:48.767101+00:00",
+              "sha256": "ed66841d17990aa65e2c25508d6061b288e703ced0e6ff42e449356c7b8671eb",
+              "start": 0,
+              "end": 2328
+            }
+          },
+          {
+            "text": "▪Intel expanded Bowers campus capacity, increasing Intel Mask Operations capability to support current and future leading-edge process technology development and manufacturing.\nCulture & Leadership\n▪Intel strengthened its leadership team with the appointments of Alex Katouzian to lead the Client Computing and Physical AI Group, Pushkar Ranade as chief technology officer, Seok-Hee Lee to lead advanced packaging, and Aparna Bawa to lead Intel’s global legal, ethics, compliance, people, and culture organization. These appointments further align Intel’s product, technology, manufacturing, and culture organizations with the company’s innovation and execution priorities.\n▪Intel and Google Cloud expanded their multi-year strategic collaboration to scale AI capabilities across Intel’s workforce and strengthen existing workflows as part of Intel’s AI-powered transformation.\nBusiness Outlook\nIntel's guidance for the third quarter of 2026 includes both GAAP and non-GAAP estimates as follows:\n\tQ3 2026\t\tGAAP\t\tNon-GAAP\n\tRevenue\t\t\n$15.8-16.8 billion\n\tGross margin\t\t41.0%\t\t42.0%\n\tTax Rate\t\t1%\t\t11%\n\tEarnings (Loss) Per Share Attributable to Intel—Diluted\t\t$0.31\t\t$0.38\nReconciliations between GAAP and non-GAAP financial measures are included below. Actual results may differ materially from Intel’s business outlook as a result of, among other things, the factors described under “Forward-Looking Statements” below. The gross margin and EPS outlooks are based on the midpoint of the revenue range.\nEarnings Webcast\nIntel will hold a public webcast at 2 p.m. PT today to discuss the results for its second quarter. The live public webcast can be accessed on Intel's Investor Relations website at www.intc.com. The corresponding earnings presentation and webcast replay will also be available on the site.\nForward-Looking Statements",
+            "score": 4.190221718220339,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "8-K",
+              "accession_number": "0000050863-26-000155",
+              "report_date": "2026-07-23",
+              "filed": "2026-07-23",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000155/q226earningsrelease.htm",
+              "section": "EX-99 exhibit",
+              "retrieved_at": "2026-11-20T19:21:48.767101+00:00",
+              "sha256": "ed66841d17990aa65e2c25508d6061b288e703ced0e6ff42e449356c7b8671eb",
+              "start": 6054,
+              "end": 7885
+            }
+          }
+        ],
+        "warnings": [],
+        "coverage": {
+          "form": "8-K",
+          "filings_considered": 3,
+          "documents_loaded": 7,
+          "latest_considered_report_date": "2026-10-29",
+          "latest_considered_filing_date": "2026-10-29",
+          "selected_filings": [
+            {
+              "accession_number": "0000050863-26-000188",
+              "report_date": "2026-10-29",
+              "filed": "2026-10-29"
+            },
+            {
+              "accession_number": "0001193125-26-346806",
+              "report_date": "2026-08-10",
+              "filed": "2026-08-12"
+            },
+            {
+              "accession_number": "0000050863-26-000155",
+              "report_date": "2026-07-23",
+              "filed": "2026-07-23"
+            }
+          ],
+          "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+        },
+        "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+      },
+      "elapsed_seconds": 0.2431695419945754
+    },
+    {
+      "type": "tool",
+      "task_id": "focused_recent_repair",
+      "agent": "filing_rag",
+      "step": 1,
+      "call_id": 3,
+      "name": "search_company_updates",
+      "arguments": {
+        "form": "8-K",
+        "limit": 3,
+        "query": "revenue outlook guidance",
+        "ticker": "INTC",
+        "top_k": 3
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        },
+        "matches": [
+          {
+            "text": "▪Intel expanded Bowers campus capacity, increasing Intel Mask Operations capability to support current and future leading-edge process technology development and manufacturing.\nCulture & Leadership\n▪Intel strengthened its leadership team with the appointments of Alex Katouzian to lead the Client Computing and Physical AI Group, Pushkar Ranade as chief technology officer, Seok-Hee Lee to lead advanced packaging, and Aparna Bawa to lead Intel’s global legal, ethics, compliance, people, and culture organization. These appointments further align Intel’s product, technology, manufacturing, and culture organizations with the company’s innovation and execution priorities.\n▪Intel and Google Cloud expanded their multi-year strategic collaboration to scale AI capabilities across Intel’s workforce and strengthen existing workflows as part of Intel’s AI-powered transformation.\nBusiness Outlook\nIntel's guidance for the third quarter of 2026 includes both GAAP and non-GAAP estimates as follows:\n\tQ3 2026\t\tGAAP\t\tNon-GAAP\n\tRevenue\t\t\n$15.8-16.8 billion\n\tGross margin\t\t41.0%\t\t42.0%\n\tTax Rate\t\t1%\t\t11%\n\tEarnings (Loss) Per Share Attributable to Intel—Diluted\t\t$0.31\t\t$0.38\nReconciliations between GAAP and non-GAAP financial measures are included below. Actual results may differ materially from Intel’s business outlook as a result of, among other things, the factors described under “Forward-Looking Statements” below. The gross margin and EPS outlooks are based on the midpoint of the revenue range.\nEarnings Webcast\nIntel will hold a public webcast at 2 p.m. PT today to discuss the results for its second quarter. The live public webcast can be accessed on Intel's Investor Relations website at www.intc.com. The corresponding earnings presentation and webcast replay will also be available on the site.\nForward-Looking Statements",
+            "score": 5.562172219622877,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "8-K",
+              "accession_number": "0000050863-26-000155",
+              "report_date": "2026-07-23",
+              "filed": "2026-07-23",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000155/q226earningsrelease.htm",
+              "section": "EX-99 exhibit",
+              "retrieved_at": "2026-11-20T19:21:48.767101+00:00",
+              "sha256": "ed66841d17990aa65e2c25508d6061b288e703ced0e6ff42e449356c7b8671eb",
+              "start": 6054,
+              "end": 7885
+            }
+          },
+          {
+            "text": "•Showcased three architectures for Agentic AI and Enterprise-scale workloads at Hot Chips 2026: next-generation Intel Xeon code-named Diamond Rapids for high-performance orchestration, Intel GPU D-series for efficient inference, and Intel® Core™ Series 3 for intelligent client and edge computing. \n•Announced the first Googlebook devices powered by Intel Core Ultra Series 3 processors with premium devices from Acer, ASUS and Lenovo, bringing together Google's next-generation computing and Intel's flagship client platform. \n•Collaborated with AMD to bring x86 CPU optimizations for PyTorch together in oneDNN, simplifying AI development and deployment across Intel and AMD CPUs.\n•Announced a collaboration with SAP to bridge business IT systems and the operational technology that controls physical equipment and processes through Physical AI.\nFoundry Momentum \n•Released Intel 14A 0.9 process design kit (PDK) in October.\n•Announced a collaboration with Lens Technology, combining Intel's advanced packaging expertise with Lens Technology's precision glass processing capabilities to enable advanced semiconductor packaging for the AI era. \n•Completed the RAMP-C program, enabling validated prototypes, ecosystem readiness and early customer engagement to accelerate momentum for Secure Enclave.\n•Announced a collaboration with ASML to accelerate industry readiness for High-NA EUV manufacturing. \nIntel/Page 3\n•Collaborated with Lam Research and Applied Materials on new facilities to expand capacity and enable joint R&D in process technology and manufacturing equipment.\nCulture & Leadership \n•Appointed Dean Jarnac as executive vice president and chief sales officer, leading Intel's global sales organization and strengthening customer relationships and go-to-market execution across the company's product portfolio. \nBusiness Outlook\nIntel's guidance for the fourth quarter of 2026 includes both GAAP and non-GAAP estimates as follows:\n\tQ4 2026\t\tGAAP\t\tNon-GAAP\n\tRevenue ($B)\t\t\n$15.0 - $16.0\n\tGross margin\t\t37.1%\t\t38.0%\n\tTax Rate\t\t31%\t\t11%\n\tEarnings (Loss) Per Share Attributable to Intel—Diluted\t\t$0.10\t\t$0.25\nReconciliations between GAAP and non-GAAP financial measures are included below. Actual results may differ materially from Intel’s business outlook as a result of, among other things, the factors described under “Forward-Looking Statements” below. The gross margin and EPS outlooks are based on the midpoint of the revenue range.\nEarnings Webcast",
+            "score": 5.055847791171723,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "8-K",
+              "accession_number": "0000050863-26-000188",
+              "report_date": "2026-10-29",
+              "filed": "2026-10-29",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+              "section": "EX-99 exhibit",
+              "retrieved_at": "2026-11-20T19:21:46.566854+00:00",
+              "sha256": "54154fd85190e0abd9533087a78f71b7c44e2153b8de012682db47c74c82c38f",
+              "start": 4555,
+              "end": 7022
+            }
+          },
+          {
+            "text": "Forward-Looking Statements\nThis release contains forward-looking statements that involve a number of risks and uncertainties. Words such as \"accelerate\", \"achieve\", \"aim\", \"ambitions\", \"anticipate\", \"believe\", \"committed\", \"continue\", \"could\", \"designed\", \"estimate\", \"expect\", \"forecast\", \"future\", \"goals\", \"grow\", \"guidance\", \"intend\", \"likely\", \"may\", \"might\", \"milestones\", \"next-generation\", \"objective\", \"on track\", \"opportunity\", \"outlook\", \"pending\", \"plan\", \"position\", \"possible\", \"potential\", \"predict\", \"progress\", \"ramp\", \"roadmap\", \"seek\", \"should\", \"strive\", \"targets\", \"to be\", \"upcoming\", \"will\", \"would\" and variations of such words and similar expressions are intended to identify such forward-looking statements, which may include statements regarding:\n▪our business plans and strategy and anticipated benefits therefrom;\n▪projections of our future financial performance, including future revenue, gross profits, capital expenditures and cash flows;\n▪projected costs and yield trends;\n▪future cash requirements, the availability, uses, sufficiency and cost of capital resources, and sources of funding, including for future capital and R&D investments and for returns to stockholders, and credit ratings expectations;\n▪future products, services and technologies, and the expected goals, timeline, ramps, progress, availability, production, regulation and benefits of such products, services and technologies, including future process nodes and packaging technologies, product roadmaps, schedules, future product architectures, expectations regarding process performance, per-watt parity and metrics, and expectations regarding product and process competitiveness;\nIntel/Page 4\n▪internal and external manufacturing plans, including future internal manufacturing volumes, manufacturing expansion plans and the financing therefor, and external foundry usage;\n▪future production capacity and product supply;\n▪supply expectations, including regarding constraints, limitations, pricing, and industry shortages;\n▪plans and goals related to Intel's foundry business, including with respect to anticipated customers, future manufacturing capacity and service, technology and IP offerings;\n▪expected timing and impact of acquisitions, divestitures and other significant transactions;\n▪expected completion and impacts of restructuring activities and cost-saving or efficiency initiatives;\n▪social and environmental performance goals, measures, strategies and results;",
+            "score": 4.38338946641124,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "8-K",
+              "accession_number": "0000050863-26-000155",
+              "report_date": "2026-07-23",
+              "filed": "2026-07-23",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000155/q226earningsrelease.htm",
+              "section": "EX-99 exhibit",
+              "retrieved_at": "2026-11-20T19:21:48.767101+00:00",
+              "sha256": "ed66841d17990aa65e2c25508d6061b288e703ced0e6ff42e449356c7b8671eb",
+              "start": 7859,
+              "end": 10336
+            }
+          }
+        ],
+        "warnings": [],
+        "coverage": {
+          "form": "8-K",
+          "filings_considered": 3,
+          "documents_loaded": 7,
+          "latest_considered_report_date": "2026-10-29",
+          "latest_considered_filing_date": "2026-10-29",
+          "selected_filings": [
+            {
+              "accession_number": "0000050863-26-000188",
+              "report_date": "2026-10-29",
+              "filed": "2026-10-29"
+            },
+            {
+              "accession_number": "0001193125-26-346806",
+              "report_date": "2026-08-10",
+              "filed": "2026-08-12"
+            },
+            {
+              "accession_number": "0000050863-26-000155",
+              "report_date": "2026-07-23",
+              "filed": "2026-07-23"
+            }
+          ],
+          "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+        },
+        "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+      },
+      "elapsed_seconds": 0.28060908301267773
+    },
+    {
+      "type": "agent",
+      "agent": "critic",
+      "status": "started"
+    },
+    {
+      "type": "model",
+      "phase": "critic",
+      "provider": "openai",
+      "model": "gpt-6-luna",
+      "input_tokens": 7065,
+      "output_tokens": 201,
+      "total_tokens": 7266,
+      "cached_input_tokens": 0,
+      "reasoning_tokens": 0,
+      "response_id": "resp_01a2f7e7590ea5bf016b00a623faa087d29e00b552bd63a71f",
+      "estimated_cost_usd": 0.000807,
+      "pricing_date": "2026-11-06",
+      "status": "completed",
+      "content": "{\"issues\":[\"Son çeyreklik raporun FY2026 üçüncü çeyrek gelirinin yıllık bazda arttığını söylemesi destekleniyor, ancak bunu «son» çeyreklik açıklama olarak nitelemek için kanıt sunulmuyor; 10-Q kanıtı güncel olabilir, fakat 8-K’de daha yeni bir 2026-10-29 açıklama var.\",\"Intel’in Intel 14A ve sonraki düğümlerin geliştirilmesini sürdürme arayışını durdurması halinde harici dökümhane işini geliştirme olasılığının oldukça belirsiz olacağı iddiası kaynakta var; ancak cevap, durdurma ya da bırakma eylemini Intel’in kendi eylemi gibi ifade ediyor. Kaynak bunu koşullu bir risk olarak sunuyor.\"],\"evidence_supported\":false,\"language_matches\":true,\"answer_complete\":true}",
+      "elapsed_seconds": 2.5635226250160486
+    },
+    {
+      "type": "agent",
+      "agent": "critic",
+      "status": "completed",
+      "verification_status": "failed",
+      "issues": [
+        "Son çeyreklik raporun FY2026 üçüncü çeyrek gelirinin yıllık bazda arttığını söylemesi destekleniyor, ancak bunu «son» çeyreklik açıklama olarak nitelemek için kanıt sunulmuyor; 10-Q kanıtı güncel olabilir, fakat 8-K’de daha yeni bir 2026-10-29 açıklama var.",
+        "Intel’in Intel 14A ve sonraki düğümlerin geliştirilmesini sürdürme arayışını durdurması halinde harici dökümhane işini geliştirme olasılığının oldukça belirsiz olacağı iddiası kaynakta var; ancak cevap, durdurma ya da bırakma eylemini Intel’in kendi eylemi gibi ifade ediyor. Kaynak bunu koşullu bir risk olarak sunuyor."
+      ],
+      "elapsed_seconds": 2.566846917005023
+    }
+  ]
+}

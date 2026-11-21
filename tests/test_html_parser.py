@@ -1,9 +1,21 @@
 import unittest
 
-from src.rag.html_parser import extract_fiscal_year, extract_text, normalize_text
+from src.rag.html_parser import extract_fiscal_year, extract_fiscal_year_details, extract_text, normalize_text
 
 
 class HtmlParserTests(unittest.TestCase):
+    def test_explicit_definition_must_match_this_report_period(self):
+        html = ('<ix:nonnumeric name="dei:DocumentFiscalYearFocus">2025</ix:nonnumeric>'
+                '<ix:nonnumeric name="dei:DocumentPeriodEndDate">January 31, 2026</ix:nonnumeric>'
+                '<p>References to fiscal 2026, for example, refer to the fiscal year ending January 31, 2026.</p>')
+        result = extract_fiscal_year_details(html)
+        self.assertEqual(result['fiscal_year'], 2026)
+        self.assertIn('2025', result['fiscal_year_warning'])
+        # An unrelated historical definition or a future mention is not a mapping.
+        historical = html.replace('ending January 31, 2026', 'ending January 31, 2024')
+        self.assertEqual(extract_fiscal_year(historical), 2025)
+        self.assertEqual(extract_fiscal_year(html.split('<p>')[0] + '<p>We expect growth in fiscal 2026.</p>'), 2025)
+
     def test_fiscal_year_is_read_before_hidden_xbrl_is_removed(self):
         html = '<ix:header><ix:nonnumeric name="dei:DocumentFiscalYearFocus">2025</ix:nonnumeric></ix:header><p>Report filed in 2026.</p>'
         self.assertEqual(extract_fiscal_year(html), 2025)

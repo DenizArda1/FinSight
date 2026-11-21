@@ -1,0 +1,63 @@
+{
+  "count": 7,
+  "automatic_pass": 6,
+  "full": 3,
+  "partial": 3,
+  "withheld": 1,
+  "total_seconds": 848.6727671250119,
+  "average_seconds": 121.23896673214456,
+  "estimated_api_cost_usd": 0.01911861,
+  "application_code_unchanged": true,
+  "review_method": "Manual coverage review of answers against original question and logged evidence/tool flow; not an independent financial audit.",
+  "cases": [
+    {
+      "id": "progressive_01_apple_latest",
+      "coverage_status": "Tam",
+      "notes": "Gelir, mali yıl ve dönem sonu yanıtlandı.",
+      "elapsed_seconds": 18.593570375000127,
+      "estimated_cost_usd": 0.00032150000000000006
+    },
+    {
+      "id": "progressive_02_microsoft_costs",
+      "coverage_status": "Kısmi",
+      "notes": "Gelir, satış maliyeti ve faaliyet giderleri verildi; önceki yıla göre gelir büyümesi hesaplanmadı.",
+      "elapsed_seconds": 54.36341866699513,
+      "estimated_cost_usd": 0.0013993800000000002
+    },
+    {
+      "id": "progressive_03_oracle_growth",
+      "coverage_status": "Başarısız",
+      "notes": "Yıl/tarih biçimi hatası ve ilk büyüme dönemi için eksiklik açıklaması etrafındaki revizyonlar sonucu cevap reddedildi.",
+      "elapsed_seconds": 59.26088937500026,
+      "estimated_cost_usd": 0.0016089200000000002
+    },
+    {
+      "id": "progressive_04_amazon_margin",
+      "coverage_status": "Tam",
+      "notes": "İki yıl için gelir, faaliyet kârı ve faaliyet marjları verildi; iyileşme değerlendirildi.",
+      "elapsed_seconds": 54.21024979199865,
+      "estimated_cost_usd": 0.00146558
+    },
+    {
+      "id": "progressive_05_intel_updates",
+      "coverage_status": "Kısmi",
+      "notes": "Yıllık eğilim ve şirket açıklamaları anlatıldı; son çeyreklik gelir/performans karşılaştırması eksik kaldı.",
+      "elapsed_seconds": 161.08366558302077,
+      "estimated_cost_usd": 0.0030787
+    },
+    {
+      "id": "progressive_06_nvidia_risks",
+      "coverage_status": "Tam",
+      "notes": "Üç yıllık gelir serisi, iki büyüme oranı, iki faaliyet marjı, yıllık rapor açıklamaları ve istenen risk başlıkları karşılandı; ilk yılın büyüme oranı için eksiklik açıklandı.",
+      "elapsed_seconds": 228.2110560000001,
+      "estimated_cost_usd": 0.00552691
+    },
+    {
+      "id": "progressive_07_cross_company",
+      "coverage_status": "Kısmi",
+      "notes": "Ortak FY2026 ve farklı mali yıl sonlarıyla finansal karşılaştırma yapıldı; iki şirket için AI talebi/yatırımların nakit akışı etkisi yeterince kaynaklandırılamadı.",
+      "elapsed_seconds": 272.94991733299685,
+      "estimated_cost_usd": 0.0057176200000000005
+    }
+  ]
+}

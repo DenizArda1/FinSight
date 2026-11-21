@@ -15,3 +15,5 @@ output
 
 docs
 /docs
+
+logs/conversations.json

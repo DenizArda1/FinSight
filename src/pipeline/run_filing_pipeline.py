@@ -4,8 +4,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from src.rag.filings import load_filing, load_latest_filing, select_filings
-from src.rag.html_parser import extract_fiscal_year, extract_text
-from src.rag.sections import extract_sections
+from src.rag.html_parser import extract_fiscal_year, extract_fiscal_year_details, extract_text
+from src.rag.sections import extract_sections, extract_cross_reference_chapters
 from src.rag.chunking import build_document_chunks
 from src.utils.utils import save_json, load_json
 
@@ -21,22 +21,36 @@ def prepare_filing(report, max_chars=1500, overlap=200):
     if not clean_text.strip():
         raise ValueError(f"No visible report text found for {ticker}")
     try:
-        fiscal_year = extract_fiscal_year(report["html"])
+        year_details = extract_fiscal_year_details(report["html"])
+        fiscal_year = year_details['fiscal_year']
     except ValueError:
         if report["filing"]["form"] != "10-K/A" or "original_fiscal_year" not in report:
             raise
         fiscal_year = report["original_fiscal_year"]
+        year_details = {'fiscal_year': fiscal_year, 'fiscal_year_source': 'original_filing'}
+    try:
+        sections = extract_sections(clean_text, partial=report['filing']['form'] == '10-K/A')
+        section_layout = 'numbered_items'
+    except ValueError as original_error:
+        if report['filing']['form'] != '10-K':
+            raise
+        try:
+            sections = extract_cross_reference_chapters(clean_text)
+        except ValueError:
+            raise original_error
+        section_layout = 'named_chapters_cross_reference'
     document = {
         "company": report["company"],
-        "filing": {**report["filing"], "fiscal_year": fiscal_year},
+        "filing": {**report["filing"], **year_details},
         "preparation": {
             "schema_version": 2,
+            "section_layout": section_layout,
             "html_sha256": hashlib.sha256(report["html"].encode("utf-8")).hexdigest(),
             "max_chars": max_chars,
             "overlap": overlap,
         },
         "text": clean_text,
-        "sections": extract_sections(clean_text, partial=report["filing"]["form"] == "10-K/A"),
+        "sections": sections,
     }
     chunks = build_document_chunks(document, max_chars=max_chars, overlap=overlap)
     if not chunks and report["filing"]["form"] != "10-K/A":

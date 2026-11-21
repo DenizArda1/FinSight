@@ -1,0 +1,23 @@
+{
+  "unit_tests_passed": 532,
+  "changes": [
+    "Recent tasks reject annual-report tools; latest quarter selected by report period.",
+    "Separate earnings/results and outlook queries; smaller recent-source chunks and source-family budget balancing.",
+    "Explicit fiscal-year definition matched to report end overrides conflicting XBRL with provenance; legacy financial caches refresh.",
+    "Writer/Critic date-scope guidance; cited quarter and digit-leading product identifiers validated without exempting amounts.",
+    "Recent tool results expose selected filings and dates."
+  ],
+  "validation": {
+    "oracle": "Full run passed with correct distinct period-end dates. Old incorrect date generalization rejected in separate live Critic replay.",
+    "salesforce": "Refreshed financial records and recomputed margins use FY2026 and FY2025; source conflict warning retained.",
+    "intel": "Full run improved to latest-quarter and guidance evidence but remained partial. Focused live specialist collected complete evidence. Subsequent saved-composition live Critic replay still rejected final prose."
+  },
+  "remaining_issue": "Critic produced a recency objection mixing quarterly report and event filing dates and a conditional-risk objection. Intel final answer not verified; do not claim end-to-end success.",
+  "artifacts": [
+    "eval/results/source_scope_fixes_20261120_224520.json",
+    "eval/results/source_scope_fixes_20261120_224520_crm.json",
+    "eval/diagnostics/oracle_scope_critic_20261120.json",
+    "eval/results/intel_source_scope_final_20261120.json",
+    "eval/results/intel_verified_replay_20261120.json"
+  ]
+}

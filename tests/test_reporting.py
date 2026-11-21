@@ -23,6 +23,15 @@ class ReportingTests(unittest.TestCase):
         self.assertIn("416161000000 USD [^1]", note)
         self.assertTrue(note.endswith(DISCLAIMER + "\n"))
 
+    def test_verified_partial_answer_keeps_coverage_notice_in_export(self):
+        result = {**self.result, 'coverage': {'status': 'partial'}}
+        note = build_report('Revenue and growth?', result)
+        self.assertIn('Kısmi yanıt / Partial coverage', note)
+        self.assertIn('416161000000 USD', note)
+        self.assertIn('[^1]: AAPL', note)
+        result['coverage']['status'] = 'unknown'
+        self.assertIn('Coverage not assessed', build_report('Question', result))
+
     def test_only_exact_generated_supporting_records_are_collapsed(self):
         evidence = self.result["evidence"]
         composition = {"kind": "answer", "text": "Reported in {{1:records/0/form}}. [Source 1]",

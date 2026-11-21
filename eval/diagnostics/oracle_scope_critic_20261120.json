@@ -1,0 +1,16 @@
+{
+  "mode": "saved_incorrect_answer_live_critic",
+  "verification": {
+    "supported": false,
+    "issues": [
+      "The statement that Oracle’s fiscal years end on 2024-05-31 is incorrect as a general claim. The evidence gives separate fiscal year-ends: FY2024 ended 2024-05-31, FY2025 ended 2025-05-31, and FY2026 ended 2026-05-31."
+    ],
+    "evidence_supported": false,
+    "language_matches": true,
+    "answer_complete": true,
+    "status": "failed",
+    "stage": "grounding_and_language",
+    "deterministic_fields": "passed",
+    "method": "source_fields_and_llm_judge"
+  }
+}

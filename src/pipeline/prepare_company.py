@@ -26,7 +26,10 @@ def prepare_company(identifier, *, filings=False):
         if not (raw / 'manifest.json').is_file():
             print(f"Preparing SEC data for {company['ticker']}...", file=sys.stderr, flush=True)
             sec_client().download_company(company['ticker'], {'cik_str': int(company['cik'])}, 5)
-        if not all((processed / company['cik'] / f'{name}.json').is_file() for name in config['metrics']):
+        metric_paths = [processed / company['cik'] / f'{name}.json' for name in config['metrics']]
+        if not all(path.is_file() for path in metric_paths) or any(
+            'fiscal_year_source' not in row for path in metric_paths for row in load_json(path)
+        ):
             process_company(company['cik'])
         if filings:
             prepare_company_index(company, processed)
@@ -48,7 +51,11 @@ def prepare_company_index(company, processed):
     saved = collection.get(where={'cik': company['cik']}, include=['documents', 'metadatas'])
     present = {key: (text, metadata) for key, text, metadata in
                zip(saved['ids'], saved['documents'], saved['metadatas'], strict=True)}
-    if reports and expected and all(
+    revenue_path = processed / company['cik'] / 'revenue.json'
+    fiscal_years = {row['end']: row['fiscal_year'] for row in load_json(revenue_path)} if revenue_path.is_file() else {}
+    years_match = all(chunk['metadata'].get('fiscal_year') == fiscal_years.get(
+        chunk['metadata'].get('report_date'), chunk['metadata'].get('fiscal_year')) for chunk in expected.values())
+    if years_match and reports and expected and all(
         key in present and present[key] == (chunk['text'], chunk['metadata'])
         for key, chunk in expected.items()
     ) and set(expected) == set(present):

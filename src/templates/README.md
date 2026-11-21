@@ -18,10 +18,18 @@ local environment. No credentials are sent to browser JavaScript.
 - `../web.py`: localhost API, background execution, and result presentation.
 
 Include the company name, ticker, or CIK in the single message field. Company preparation and supported filing coverage follow the existing backend.
-One research job runs at a time. Reloading the page reconnects to in-memory jobs;
-restarting the server clears that history. The latest 50 jobs are kept in memory.
-Download verified notes as Markdown for a durable copy. Existing runtime diagnostic
-traces continue to be saved locally. Bookmark IDs are stored in browser localStorage.
+One research job runs at a time. Enter sends a message; Shift+Enter inserts a newline.
+Replies stay in the same conversation. The sidebar groups messages by conversation.
+History is stored atomically in `logs/conversations.json` and survives server/container
+restarts through the existing logs bind mount. There is no automatic 50-job deletion.
+Interrupted requests are marked failed on restart, never replayed automatically.
+
+Follow-up questions include only their own conversation's opening turn and recent
+turns (up to four prior turns, with bounded text). Old answers provide context, not
+source evidence; the research workflow retrieves and verifies the new reply.
+Source IDs are scoped to individual replies. Verified replies can be downloaded as
+Markdown. The selected conversation ID is kept in browser localStorage; history itself
+is kept on the local server. This remains a single-user local application.
 
 Only verified prose is shown as a research note or exported. When verification fails,
 the UI shows the issues and any retrieved financial rows separately. Source numbers

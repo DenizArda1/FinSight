@@ -11,6 +11,34 @@ from src.verification.agent_answer import (
 
 
 class AgentVerificationTests(unittest.TestCase):
+    def test_natural_year_binds_to_cited_financial_year_without_allowing_amounts(self):
+        evidence = [{'source_id': 1, 'tool': 'get_company_facts', 'result': {
+            'records': [{'value': 100, 'unit': 'USD', 'fiscal_year': 2025}]}}]
+        catalog = build_fact_catalog(evidence)
+        payload = {'kind': 'answer', 'text': "2025’te gelir artmıştır. [Source 1]", 'facts': []}
+        self.assertEqual(render_agent_template(compose_template(payload, catalog), evidence), payload['text'])
+        for text in ('Gelir 2025 USD. [Source 1]', '2024’te gelir. [Source 1]'):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                render_agent_template(compose_template({**payload, 'text': text}, catalog), evidence)
+
+    def test_comparative_fiscal_year_in_cited_body_is_not_limited_to_report_metadata(self):
+        evidence = [{'source_id': 1, 'tool': 'search_filings', 'result': {'matches': [{
+            'text': 'Net income in 2025 compared to a net loss in 2024.',
+            'metadata': {'fiscal_year': 2025},
+        }]}}]
+        for suffix in ('’te', "'te", ' döneminde'):
+            text = 'FY2024' + suffix + ' net zarar kaydedildi. [Source 1]'
+            self.assertEqual(render_agent_template({'kind': 'answer', 'template': text}, evidence), text)
+        text = '2024’te net zarar kaydedildi. [Source 1]'
+        self.assertEqual(render_agent_template({'kind': 'answer', 'template': text}, evidence), text)
+        for text in ('FY2023’te net zarar. [Source 1]', 'Zarar 2024 USD. [Source 1]',
+                     'FY2024’te net zarar.\nKaynak: [Source 1]'):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                render_agent_template({'kind': 'answer', 'template': text}, evidence)
+        evidence[0]['content_omitted'] = True
+        with self.assertRaises(ValueError):
+            render_agent_template({'kind': 'answer', 'template': 'FY2024’te zarar. [Source 1]'}, evidence)
+
     def test_report_identifier_requires_literal_support_in_same_line_citation(self):
         evidence = [
             {"source_id": 1, "tool": "get_filing_section", "result": {"text": "The H20 product faces restrictions. FY2026 USD2025 123 USD Q1"}},
@@ -21,7 +49,7 @@ class AgentVerificationTests(unittest.TestCase):
         invalid = [
             "H20 faces restrictions. [Source 2]", "H200 faces restrictions. [Source 1]",
             "H20 faces restrictions.\nOther risks. [Source 1]", "Revenue is 123 USD. [Source 1]",
-            "FY2026 results. [Source 1]", "USD2025 results. [Source 1]", "Q1 results. [Source 1]",
+            "FY2027 results. [Source 1]", "USD2025 results. [Source 1]", "Q1 results. [Source 1]",
         ]
         for prose in invalid:
             with self.subTest(prose=prose), self.assertRaises(ValueError):
@@ -130,16 +158,15 @@ class AgentVerificationTests(unittest.TestCase):
             with self.subTest(prose=prose), self.assertRaisesRegex(ValueError, "requires an explanation"):
                 compose_template({**self.composition, "text": prose}, catalog, "comparison")
 
-    def test_mixed_report_explanation_cannot_cite_only_financial_records(self):
+    def test_mixed_route_does_not_force_unused_report_citations(self):
         evidence = self.evidence + [{"source_id": 2, "tool": "get_filing_section", "result": {
             "text": "Currency fluctuations increased reported revenue.",
             "metadata": {"section": "Item 7"},
         }}]
         catalog = build_fact_catalog(evidence)
-        payload = {"kind": "answer", "text": "Currency fluctuations affected revenue. [Source 1]",
+        payload = {"kind": "answer", "text": "Annual revenue is reported below. [Source 1]",
                    "facts": ["1:records/0", "2:metadata"]}
-        with self.assertRaisesRegex(ValueError, "Financial-record citations cannot support"):
-            compose_template(payload, catalog, "mixed")
+        self.assertIn(payload['text'], render_agent_template(compose_template(payload, catalog, 'mixed'), evidence))
         payload["text"] = "Currency fluctuations affected revenue. [Source 2]"
         rendered = render_agent_template(compose_template(payload, catalog, "mixed"), evidence)
         self.assertIn(payload["text"], rendered)
@@ -158,7 +185,7 @@ class AgentVerificationTests(unittest.TestCase):
         validator.validate(payload)
         self.assertIn("H20", render_agent_template(compose_template(payload, catalog, "mixed"), evidence))
         for text in ("Revenue is 416161000000 USD. [Source 1]", "In 2026 demand fell. [Source 2]",
-                     "FY2026 results. [Source 2]", "H200 demand may decline. [Source 2]",
+                     "FY2027 results. [Source 2]", "H200 demand may decline. [Source 2]",
                      "Revenue is ３３１ billion. [Source 1]", "Revenue is ٣٣١ billion. [Source 1]"):
             with self.subTest(text=text), self.assertRaises(ValueError):
                 candidate = {**payload, "text": text}

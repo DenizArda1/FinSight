@@ -10,8 +10,27 @@ from src.tools.agentic_tools import AGENT_TOOL_NAMES, get_agent_tool_schemas
 from src.verification.evidence import REPORT_SEARCH_TOOLS, MAX_REPORT_SOURCE_CHARS, limit_report_evidence, evidence_for_prompt
 
 
+class SpecialistLimitError(RuntimeError):
+    """A bounded retrieval task stopped; its trace remains usable evidence."""
+
+
+def scoped_tool_arguments(tool_name, arguments, filing_scope, requested_years, requested_fiscal_year):
+    """Apply the plan's period coverage without changing invalid input types."""
+    if not isinstance(arguments, dict):
+        return arguments
+    arguments = deepcopy(arguments)
+    if tool_name in {"get_company_facts", "compute_metrics"}:
+        years = arguments.get("years", 1)
+        if type(years) is int and 1 <= years < requested_years:
+            arguments["years"] = max(years, requested_years)
+    if filing_scope == "annual" and tool_name == "search_filings" and requested_fiscal_year is None:
+        if arguments.get("fiscal_year") is None:
+            arguments["latest"] = True
+    return arguments
+
+
 async def execute_specialist_tool(agent_name, tool_name, arguments, mcp_client, resolved_ciks,
-                                  requested_fiscal_year=None):
+                                  requested_fiscal_year=None, filing_scope="any", requested_years=1):
     
     if not isinstance(agent_name, str) or agent_name not in AGENT_TOOL_NAMES:
         raise ValueError(f"Unknown agent: {agent_name}")
@@ -21,6 +40,15 @@ async def execute_specialist_tool(agent_name, tool_name, arguments, mcp_client, 
         raise ValueError("Tool arguments must be a dictionary")
     if not isinstance(resolved_ciks, set):
         raise ValueError("Resolved CIKs must be a set")
+    if filing_scope not in {"annual", "recent", "any"}:
+        raise ValueError("Unknown filing scope")
+    if type(requested_years) is not int or not 1 <= requested_years <= 5:
+        raise ValueError("Requested years must be an integer from 1 to 5")
+    if filing_scope == "annual" and tool_name in {"search_company_updates", "search_fed_releases", "get_bls_series"}:
+        raise ValueError("This task requires annual-report evidence, not recent quarterly or event sources")
+    if filing_scope == 'recent' and tool_name in {'search_filings', 'get_filing_section'}:
+        raise ValueError('Use search_company_updates for quarterly or event evidence; annual reports cannot satisfy this recent-source task')
+    arguments = scoped_tool_arguments(tool_name, arguments, filing_scope, requested_years, requested_fiscal_year)
     if requested_fiscal_year is not None:
         if type(requested_fiscal_year) is not int or requested_fiscal_year <= 0:
             raise ValueError("Requested fiscal year must be a positive integer or null")
@@ -85,12 +113,25 @@ async def run_specialist(task, llm_config, mcp_client, tool_schemas,max_steps=6,
         raise ValueError("Trace must be an empty list for a new task")
 
     available_tools = get_agent_tool_schemas(task["agent"], tool_schemas)
+    filing_scope = task.get("filing_scope", "any")
+    requested_years = task.get("years", 1)
+    if filing_scope not in {"annual", "recent", "any"}:
+        raise ValueError("Unknown filing scope")
+    if type(requested_years) is not int or not 1 <= requested_years <= 5:
+        raise ValueError("Requested years must be an integer from 1 to 5")
+    if filing_scope == "annual":
+        available_tools = [tool for tool in available_tools if tool["function"]["name"] not in
+                           {"search_company_updates", "search_fed_releases", "get_bls_series"}]
+    elif filing_scope == 'recent':
+        available_tools = [tool for tool in available_tools if tool['function']['name'] not in
+                           {'search_filings', 'get_filing_section'}]
     messages = build_specialist_messages(deepcopy(task))
     identity = {"task_id": task["id"], "agent": task["agent"]}
     resolved_ciks = set()
     tool_call_count = 0
     searched_sections = set()
     successful_calls = set()
+    failed_calls = {}
     has_research_result = False
     started = perf_counter()
     trace.append({"type": "agent", **identity, "status": "started"})
@@ -183,7 +224,12 @@ async def run_specialist(task, llm_config, mcp_client, tool_schemas,max_steps=6,
             for tool_call, origin in pending_calls:
                 function = tool_call["function"]
                 name, arguments = function["name"], function.get("arguments")
+                arguments = scoped_tool_arguments(name, arguments, filing_scope, requested_years, fiscal_year)
                 call_key = json.dumps([name, arguments], sort_keys=True, allow_nan=False)
+                if failed_calls.get(call_key, 0) >= 2:
+                    messages.append({'role': 'tool', 'tool_name': name,
+                                     'content': 'This exact request failed twice. Do not repeat it. Report missing coverage or use a different source.'})
+                    continue
                 if call_key in successful_calls:
                     messages.append({
                         "role": "tool", "tool_name": name,
@@ -191,7 +237,7 @@ async def run_specialist(task, llm_config, mcp_client, tool_schemas,max_steps=6,
                     })
                     continue
                 if tool_call_count >= max_tool_calls:
-                    raise RuntimeError("Specialist reached the maximum number of tool calls")
+                    raise SpecialistLimitError("Specialist reached the maximum number of tool calls")
                 tool_call_count += 1
                 new_calls += 1
                 if origin != "model":
@@ -207,7 +253,7 @@ async def run_specialist(task, llm_config, mcp_client, tool_schemas,max_steps=6,
                 try:
                     result = await execute_specialist_tool(
                         task["agent"], name, arguments, mcp_client, resolved_ciks,
-                        requested_fiscal_year=fiscal_year,
+                        requested_fiscal_year=fiscal_year, filing_scope=filing_scope, requested_years=requested_years,
                     )
                     if not isinstance(result, dict):
                         raise RuntimeError("Tool result must be a structured object")
@@ -222,6 +268,7 @@ async def run_specialist(task, llm_config, mcp_client, tool_schemas,max_steps=6,
                 except Exception as error:
                     result = {"error": {"type": type(error).__name__, "message": str(error)}}
                     event["status"] = "error"
+                    failed_calls[call_key] = failed_calls.get(call_key, 0) + 1
                     if not isinstance(error, (ValueError, MCPToolError)):
                         event.update({
                             "result": deepcopy(result),
@@ -255,7 +302,7 @@ async def run_specialist(task, llm_config, mcp_client, tool_schemas,max_steps=6,
                     "content": json.dumps(model_result, ensure_ascii=False, allow_nan=False),
                 })
 
-            if new_calls == 0 and has_research_result:
+            if new_calls == 0 and (has_research_result or failed_calls):
                 trace.append({
                     "type": "agent", **identity, "status": "completed",
                     "stop_reason": "repeated_requests",
@@ -263,11 +310,11 @@ async def run_specialist(task, llm_config, mcp_client, tool_schemas,max_steps=6,
                 })
                 return {
                     **identity,
-                    "summary": "Repeated requests stopped. Assess the collected tool evidence for coverage and missing data.",
+                    "summary": "Repeated requests stopped. Some tool calls may have failed. Assess the trace for missing coverage; do not infer missing facts.",
                     "trace": deepcopy(trace), "tool_call_count": tool_call_count,
                 }
 
-        raise RuntimeError("Specialist reached the maximum number of steps")
+        raise SpecialistLimitError("Specialist reached the maximum number of steps")
     except Exception as error:
         trace.append({
             "type": "agent", **identity, "status": "error",

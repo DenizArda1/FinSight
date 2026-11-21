@@ -1,0 +1,64 @@
+[
+  {
+    "id": "progressive_02_microsoft_costs",
+    "coverage": {
+      "complete": false,
+      "gaps": [
+        "Microsoft’in bir önceki mali yıla ait geliri ve satış maliyeti yok; bu nedenle iki yılın karşılaştırması yapılamıyor.",
+        "Microsoft’in bir önceki mali yıla ait faaliyet giderleri yok; yıllık karşılaştırma yapılamıyor.",
+        "Gelir büyümesi için gereken bir önceki yıl geliri ve yıllık revenue_growth hesabı eksik."
+      ],
+      "tasks": [
+        {
+          "id": "msft_latest_fy_comparison",
+          "agent": "financial_data",
+          "instruction": "Microsoft (MSFT) için en son mali yılı ve hemen önceki mali yılı kapsayacak şekilde yıllık revenue, cost_of_revenue (satış maliyeti) ve operating_expenses verilerini USD olarak getir. Ayrıca revenue_growth değerini önceki yıla göre hesapla; her iki yılın gelirini ve büyüme oranının hesaplama temelini belirt. Mevcut çağrılar yalnızca son mali yılı kapsıyor; iki yıllık karşılaştırma için kapsamı iki",
+          "filing_scope": "annual",
+          "years": 2,
+          "fiscal_year": null
+        }
+      ],
+      "status": "partial"
+    }
+  },
+  {
+    "id": "progressive_03_oracle_growth",
+    "coverage": {
+      "complete": true,
+      "gaps": [],
+      "tasks": [],
+      "status": "complete"
+    }
+  },
+  {
+    "id": "progressive_05_intel_updates",
+    "coverage": {
+      "complete": false,
+      "gaps": [
+        "Yıllık gelir büyümesi hesaplamaları FY2023–FY2025 döneminin tamamını kapsamıyor: FY2023 gelir büyümesi eksik; mevcut FY2024 ve FY2025 oranları iki yıllık eğilimi gösteriyor, ancak FY2023 oranı olmadan üç mali yılın büyüme eğilimi tam değil.",
+        "Son çeyreklik raporun gerçekleşen geliri ve çeyreklik gelir büyümesi kanıtı yok; bulunan çeyreklik sorgu sonuçları yıllık segment verileri içeriyor.",
+        "Son şirket açıklamalarının içeriği ve yönetimin gelir beklentileri/guidance’ı yok; yıllık gerçekleşen sonuçlar, ara dönem verileri ve beklentiler bu kanıtlarla ayrı değerlendirilemiyor.",
+        "Yıllık gelir değişimlerinin nedenlerini açıklayan, Intel’in konsolide gelir eğilimine ilişkin ilgili MD&A içeriği yok; mevcut alıntılar segment düzeyinde."
+      ],
+      "tasks": [
+        {
+          "id": "t1",
+          "agent": "financial_data",
+          "instruction": "INTC için FY2023 gelir büyümesini hesapla ve FY2023–FY2025 mali yıllarının gelir büyümesi serisini doğrula. Ayrıca en son çeyreklik rapor için gerçekleşen gelir ve çeyreklik gelir büyümesi verisini getir; yıllık gerçekleşen sonuçları çeyreklik veriden ayrı tut. Latest dönemleri belirlemek için CIK veya yıl tahmin etme.",
+          "filing_scope": "recent",
+          "years": 3,
+          "fiscal_year": null
+        },
+        {
+          "id": "t2",
+          "agent": "filing_rag",
+          "instruction": "INTC’nin en son çeyreklik raporunda konsolide gelir performansı ile yönetimin gelir beklentisi/guidance’ını; ayrıca son şirket açıklamalarında gelir beklentileri veya ilgili güncel gelişmeleri bul. Yıllık gerçekleşen sonuçları, ara dönem gerçekleşmelerini ve beklentileri açıkça ayrı sınıflandır; konsolide yıllık gelir değişimlerinin nedenlerini açıklayan ilgili MD&A metnini de getir.",
+          "filing_scope": "recent",
+          "years": 2,
+          "fiscal_year": null
+        }
+      ],
+      "status": "partial"
+    }
+  }
+]

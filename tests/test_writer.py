@@ -5,10 +5,20 @@ from unittest.mock import patch
 
 from src.agents.agent_states import create_initial_state
 from src.agents.writer import run_writer
+from src.verification.field_references import normalize_catalog_references
 from src.verification.agent_answer import build_agent_evidence
 
 
 class WriterTests(unittest.IsolatedAsyncioTestCase):
+    def test_separator_repair_requires_an_exact_existing_catalog_token(self):
+        catalog = {'x': {'template': '{{2:records/0/value}}'}}
+        self.assertEqual(normalize_catalog_references('{{2:records/0:value}}', catalog), '{{2:records/0/value}}')
+        percent_catalog = {'x': {'template': '{{3:results/growth/0/value|percent}}'}}
+        self.assertEqual(normalize_catalog_references('{{3:results/growth/0/value}}', percent_catalog),
+                         '{{3:results/growth/0/value|percent}}')
+        for token in ('{{9:records/0:value}}', '{{2:records/1:value}}', '{{2:records/0:unit}}'):
+            self.assertEqual(normalize_catalog_references(token, catalog), token)
+
     async def test_clarification_route_cannot_be_replaced_by_missing_data_answer(self):
         state = create_initial_state("What was the latest annual revenue?")
         state["request_type"] = "clarification"
@@ -79,7 +89,7 @@ class WriterTests(unittest.IsolatedAsyncioTestCase):
             "Gelir 416161000000 USD olarak raporlandı. FY2025 dönem bitişi 2025-09-27. [Source 1]")
         self.assertIsNone(self.state["answer"])
         payload = json.loads(self.generate.call_args.args[0][1]["content"])
-        self.assertIn("{{1:records/0/value}}", payload["fact_catalog"]["1:records/0"]["inline_fields"].values())
+        self.assertIn("{{F1_value}}", payload["fact_catalog"]["1:records/0"]["inline_fields"].values())
 
     async def test_localized_citation_is_rendered_but_still_requires_critic(self):
         composition = {**self.composition, "text": "Gelir bilgileri [Kaynak 1]."}

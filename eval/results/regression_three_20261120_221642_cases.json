@@ -1,0 +1,31 @@
+[
+  {
+    "id": "progressive_03_oracle_growth",
+    "question": "Oracle'ın son üç mali yıldaki gelirlerini ve yıllık gelir büyüme oranlarını incele. Büyüme hızlanıyor mu, yavaşlıyor mu?",
+    "answer_language": "tr",
+    "category": "Üç yıllık eğilim",
+    "expected": {
+      "companies": "ORCL",
+      "review_criteria": "Üç gelir dönemi ve iki büyüme oranı; gelir seviyesi ile büyüme hızını ayır."
+    }
+  },
+  {
+    "id": "salesforce_margin_holdout",
+    "question": "Salesforce'un son iki mali yıldaki gelirini ve faaliyet kâr marjını karşılaştır. Gelir artarken kârlılığı da iyileşmiş mi?",
+    "answer_language": "tr",
+    "expected": {
+      "companies": "CRM",
+      "review_criteria": "Two revenue periods and two computed operating margins; distinguish growth from margin."
+    }
+  },
+  {
+    "id": "progressive_05_intel_updates",
+    "question": "Intel'in yıllık gelir büyümesinde gerileme var mı? Son üç mali yılın eğilimini, son çeyreklik raporunu ve son şirket açıklamalarını birlikte değerlendir. Yıllık sonuçları ara dönem verileri ve beklentilerden ayır.",
+    "answer_language": "tr",
+    "category": "Yıllık trend ve güncel kaynaklar",
+    "expected": {
+      "companies": "INTC",
+      "review_criteria": "İki yıllık büyüme oranı, 10-Q ve 8-K; dönemler ve gerçekleşmiş olay/beklenti ayrımı."
+    }
+  }
+]

@@ -1,0 +1,2937 @@
+[
+  {
+    "id": "progressive_02_microsoft_costs",
+    "question": "Microsoft'un son mali yıldaki gelirini, satış maliyetini ve faaliyet giderlerini karşılaştır. Bir önceki yıla göre geliri büyümüş mü?",
+    "expected": {
+      "companies": "MSFT",
+      "review_criteria": "Gider kategorileri ayrı; iki gelir dönemi; büyüme hesaplama aracından."
+    },
+    "answer_language": "tr",
+    "category": "Finansal kalemler ve yıllık karşılaştırma",
+    "usage": {
+      "model_calls_with_usage": 19,
+      "model_calls_without_usage": 0,
+      "tool_calls": 11,
+      "input_tokens": 41579,
+      "output_tokens": 2268,
+      "estimated_cost_usd": 0.00208509,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    },
+    "answer": "Microsoft’un FY2026 mali yılında (dönem sonu: 2026-06-30) geliri 331839000000 USD, satış maliyeti 106374000000 USD ve faaliyet giderleri 70228000000 USD oldu. Satış maliyeti ile faaliyet giderleri ayrı kalemlerdir: faaliyet giderleri satış maliyetini içermez. [Source 2] [Source 3] [Source 4]\n\nGelir, FY2025 dönem sonundaki 281724000000 USD düzeyinden FY2026 dönem sonundaki 331839000000 USD düzeyine yükseldi; dolayısıyla önceki mali yıla göre büyüdü. [Source 10]",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": null,
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "coverage": {
+      "complete": false,
+      "gaps": [
+        "Microsoft FY2026 gelir, satış maliyeti ve faaliyet giderleri için değerler mevcut; ancak FY2025'e göre gelir büyüme oranı hesaplanıp raporlanmamış."
+      ],
+      "status": "partial",
+      "repair_tasks_attempted": 1
+    },
+    "draft": "Microsoft’un FY2026 mali yılında (dönem sonu: 2026-06-30) geliri 331839000000 USD, satış maliyeti 106374000000 USD ve faaliyet giderleri 70228000000 USD oldu. Satış maliyeti ile faaliyet giderleri ayrı kalemlerdir: faaliyet giderleri satış maliyetini içermez. [Source 2] [Source 3] [Source 4]\n\nGelir, FY2025 dönem sonundaki 281724000000 USD düzeyinden FY2026 dönem sonundaki 331839000000 USD düzeyine yükseldi; dolayısıyla önceki mali yıla göre büyüdü. [Source 10]",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "answer",
+      "text": "Microsoft’un FY{{F2_fiscal_year}} mali yılında (dönem sonu: {{F2_end}}) geliri {{F2_value}} {{F2_unit}}, satış maliyeti {{F3_value}} {{F3_unit}} ve faaliyet giderleri {{F4_value}} {{F4_unit}} oldu. Satış maliyeti ile faaliyet giderleri ayrı kalemlerdir: faaliyet giderleri satış maliyetini içermez. [Source 2] [Source 3] [Source 4]\n\nGelir, FY{{F11_fiscal_year}} dönem sonundaki {{F11_value}} {{F11_unit}} düzeyinden FY{{F10_fiscal_year}} dönem sonundaki {{F10_value}} {{F10_unit}} düzeyine yükseldi; dolayısıyla önceki mali yıla göre büyüdü. [Source 10]",
+      "facts": []
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "Microsoft"
+        },
+        "result": {
+          "ticker": "MSFT",
+          "name": "MICROSOFT CORP",
+          "cik": "0000789019"
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "get_company_facts",
+        "arguments": {
+          "years": 1,
+          "cik": "0000789019",
+          "concept": "revenue",
+          "unit": "USD"
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 331839000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 3,
+        "tool": "get_company_facts",
+        "arguments": {
+          "concept": "cost_of_revenue",
+          "unit": "USD",
+          "years": 1,
+          "cik": "0000789019"
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "cost_of_revenue",
+          "definition": {
+            "description": "Annual cost of goods and services sold; not total expenses",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "CostOfGoodsAndServicesSold",
+              "CostOfRevenue"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "cost_of_revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 106374000000,
+              "unit": "USD",
+              "tag": "CostOfGoodsAndServicesSold",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 4,
+        "tool": "get_company_facts",
+        "arguments": {
+          "concept": "operating_expenses",
+          "unit": "USD",
+          "years": 1,
+          "cik": "0000789019"
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "operating_expenses",
+          "definition": {
+            "description": "Annual operating expenses excluding cost of revenue, interest and income taxes",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "OperatingExpenses"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "operating_expenses",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 70228000000,
+              "unit": "USD",
+              "tag": "OperatingExpenses",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 5,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "Microsoft"
+        },
+        "result": {
+          "ticker": "MSFT",
+          "name": "MICROSOFT CORP",
+          "cik": "0000789019"
+        }
+      },
+      {
+        "source_id": 6,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0000789019",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 331839000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 7,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0000789019",
+          "concept": "cost_of_revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "cost_of_revenue",
+          "definition": {
+            "description": "Annual cost of goods and services sold; not total expenses",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "CostOfGoodsAndServicesSold",
+              "CostOfRevenue"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "cost_of_revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 106374000000,
+              "unit": "USD",
+              "tag": "CostOfGoodsAndServicesSold",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 8,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0000789019",
+          "concept": "operating_expenses",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "operating_expenses",
+          "definition": {
+            "description": "Annual operating expenses excluding cost of revenue, interest and income taxes",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "OperatingExpenses"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "operating_expenses",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 70228000000,
+              "unit": "USD",
+              "tag": "OperatingExpenses",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 9,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "Microsoft"
+        },
+        "result": {
+          "ticker": "MSFT",
+          "name": "MICROSOFT CORP",
+          "cik": "0000789019"
+        }
+      },
+      {
+        "source_id": 10,
+        "tool": "get_company_facts",
+        "arguments": {
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 2,
+          "cik": "0000789019"
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 2,
+          "available_period_count": 2,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30",
+            "2025-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 331839000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            },
+            {
+              "cik": 789019,
+              "metric": "revenue",
+              "start": "2024-07-01",
+              "end": "2025-06-30",
+              "value": 281724000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 11,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0000789019",
+          "concept": "cost_of_revenue",
+          "unit": "USD",
+          "years": 2
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "cost_of_revenue",
+          "definition": {
+            "description": "Annual cost of goods and services sold; not total expenses",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "CostOfGoodsAndServicesSold",
+              "CostOfRevenue"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 2,
+          "available_period_count": 2,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30",
+            "2025-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "cost_of_revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 106374000000,
+              "unit": "USD",
+              "tag": "CostOfGoodsAndServicesSold",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            },
+            {
+              "cik": 789019,
+              "metric": "cost_of_revenue",
+              "start": "2024-07-01",
+              "end": "2025-06-30",
+              "value": 87831000000,
+              "unit": "USD",
+              "tag": "CostOfGoodsAndServicesSold",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "financial",
+        "plan": [
+          {
+            "id": "task_1",
+            "agent": "financial_data",
+            "instruction": "Microsoft'un son mali yıla ait gelirini, satış maliyetini ve faaliyet giderlerini al",
+            "filing_scope": "annual",
+            "years": 1,
+            "fiscal_year": null
+          },
+          {
+            "id": "task_2",
+            "agent": "financial_data",
+            "instruction": "Microsoft'un bir önceki mali yıla ait gelirini, satış maliyetini ve faaliyet giderlerini al",
+            "filing_scope": "annual",
+            "years": 1,
+            "fiscal_year": null
+          }
+        ],
+        "elapsed_seconds": 9.376369708013954,
+        "input_tokens": 501,
+        "output_tokens": 176,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 798,
+        "output_tokens": 24,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_w35sgpxo",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "Microsoft"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.7612997079850174
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "Microsoft"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "MSFT",
+          "name": "MICROSOFT CORP",
+          "cik": "0000789019"
+        },
+        "elapsed_seconds": 0.018428292009048164
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 1232,
+        "output_tokens": 51,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_2z60crvw",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "years": 1,
+                "cik": "0000789019",
+                "concept": "revenue",
+                "unit": "USD"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 3.366641291999258
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "years": 1,
+          "cik": "0000789019",
+          "concept": "revenue",
+          "unit": "USD"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 331839000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.015219624998280779
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 1698,
+        "output_tokens": 46,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_8rgy0ypg",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "concept": "cost_of_revenue",
+                "unit": "USD",
+                "years": 1,
+                "cik": "0000789019"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.5046452500100713
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 3,
+        "call_id": 3,
+        "name": "get_company_facts",
+        "arguments": {
+          "concept": "cost_of_revenue",
+          "unit": "USD",
+          "years": 1,
+          "cik": "0000789019"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "cost_of_revenue",
+          "definition": {
+            "description": "Annual cost of goods and services sold; not total expenses",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "CostOfGoodsAndServicesSold",
+              "CostOfRevenue"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "cost_of_revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 106374000000,
+              "unit": "USD",
+              "tag": "CostOfGoodsAndServicesSold",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.013952916982816532
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 4,
+        "max_output_tokens": 1024,
+        "input_tokens": 2166,
+        "output_tokens": 46,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_rbd2i7id",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "concept": "operating_expenses",
+                "unit": "USD",
+                "years": 1,
+                "cik": "0000789019"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.5388920830155257
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 4,
+        "call_id": 4,
+        "name": "get_company_facts",
+        "arguments": {
+          "concept": "operating_expenses",
+          "unit": "USD",
+          "years": 1,
+          "cik": "0000789019"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "operating_expenses",
+          "definition": {
+            "description": "Annual operating expenses excluding cost of revenue, interest and income taxes",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "OperatingExpenses"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "operating_expenses",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 70228000000,
+              "unit": "USD",
+              "tag": "OperatingExpenses",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.009896915988065302
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 5,
+        "max_output_tokens": 1024,
+        "input_tokens": 2623,
+        "output_tokens": 227,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 7.1144325000059325
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 18.34355637500994
+      },
+      {
+        "type": "agent",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 800,
+        "output_tokens": 24,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_ujd4htbi",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "Microsoft"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.5842444169975352
+      },
+      {
+        "type": "tool",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "Microsoft"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "MSFT",
+          "name": "MICROSOFT CORP",
+          "cik": "0000789019"
+        },
+        "elapsed_seconds": 0.023635499994270504
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 1234,
+        "output_tokens": 51,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_9gjwrfdh",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000789019",
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 3.3951684159983415
+      },
+      {
+        "type": "tool",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000789019",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 331839000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.013980000017909333
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 1700,
+        "output_tokens": 46,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_fex15fxn",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000789019",
+                "concept": "cost_of_revenue",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.562408500001766
+      },
+      {
+        "type": "tool",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 3,
+        "call_id": 3,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000789019",
+          "concept": "cost_of_revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "cost_of_revenue",
+          "definition": {
+            "description": "Annual cost of goods and services sold; not total expenses",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "CostOfGoodsAndServicesSold",
+              "CostOfRevenue"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "cost_of_revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 106374000000,
+              "unit": "USD",
+              "tag": "CostOfGoodsAndServicesSold",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.013967459002742544
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 4,
+        "max_output_tokens": 1024,
+        "input_tokens": 2168,
+        "output_tokens": 46,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_yompnyao",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000789019",
+                "concept": "operating_expenses",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.553227208001772
+      },
+      {
+        "type": "tool",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 4,
+        "call_id": 4,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000789019",
+          "concept": "operating_expenses",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "operating_expenses",
+          "definition": {
+            "description": "Annual operating expenses excluding cost of revenue, interest and income taxes",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "OperatingExpenses"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "operating_expenses",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 70228000000,
+              "unit": "USD",
+              "tag": "OperatingExpenses",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.013833999983035028
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 5,
+        "max_output_tokens": 1024,
+        "input_tokens": 2625,
+        "output_tokens": 202,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 6.561941249994561
+      },
+      {
+        "type": "agent",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 16.722577208012808
+      },
+      {
+        "type": "model",
+        "phase": "coverage",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 2161,
+        "output_tokens": 356,
+        "total_tokens": 2517,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 202,
+        "response_id": "resp_05b7e0547d3add71016b0098a9794c87d2b0b6baa2e9b6eef5",
+        "estimated_cost_usd": 0.00039410000000000004,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"complete\":false,\"gaps\":[\"Microsoft için son mali yılın gelir, satış maliyeti ve faaliyet giderleri mevcut; ancak bunları önceki mali yılla karşılaştırmak için önceki yılın değerleri eksik.\",\"Gelirin bir önceki yıla göre büyüyüp büyümediğini belirlemek için yıllık gelir büyümesi hesaplanmamış.\"],\"tasks\":[{\"id\":\"retrieve_annual_comparison\",\"agent\":\"financial_data\",\"instruction\":\"Microsoft için son iki yıllık revenue, cost_of_revenue ve operating_expenses verilerini al; compute_metrics ile revenue_growth hesapla.\",\"filing_scope\":\"annual\",\"years\":2,\"fiscal_year\":null}]}",
+        "elapsed_seconds": 4.172105000005104
+      },
+      {
+        "type": "agent",
+        "task_id": "coverage_repair_1",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "coverage_repair_1",
+        "agent": "financial_data",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 802,
+        "output_tokens": 24,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_j4j790r6",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "Microsoft"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.665538832981838
+      },
+      {
+        "type": "tool",
+        "task_id": "coverage_repair_1",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "Microsoft"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "MSFT",
+          "name": "MICROSOFT CORP",
+          "cik": "0000789019"
+        },
+        "elapsed_seconds": 0.015169041987974197
+      },
+      {
+        "type": "model",
+        "task_id": "coverage_repair_1",
+        "agent": "financial_data",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 1236,
+        "output_tokens": 51,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_evxrjt4x",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 2,
+                "cik": "0000789019"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 3.4256027919764165
+      },
+      {
+        "type": "tool",
+        "task_id": "coverage_repair_1",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 2,
+          "cik": "0000789019"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 2,
+          "available_period_count": 2,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30",
+            "2025-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 331839000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            },
+            {
+              "cik": 789019,
+              "metric": "revenue",
+              "start": "2024-07-01",
+              "end": "2025-06-30",
+              "value": 281724000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.014152207993902266
+      },
+      {
+        "type": "model",
+        "task_id": "coverage_repair_1",
+        "agent": "financial_data",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 1975,
+        "output_tokens": 46,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_4kai0lx8",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000789019",
+                "concept": "cost_of_revenue",
+                "unit": "USD",
+                "years": 2
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 3.346433041995624
+      },
+      {
+        "type": "tool",
+        "task_id": "coverage_repair_1",
+        "agent": "financial_data",
+        "step": 3,
+        "call_id": 3,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000789019",
+          "concept": "cost_of_revenue",
+          "unit": "USD",
+          "years": 2
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "cost_of_revenue",
+          "definition": {
+            "description": "Annual cost of goods and services sold; not total expenses",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "CostOfGoodsAndServicesSold",
+              "CostOfRevenue"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 2,
+          "available_period_count": 2,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30",
+            "2025-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "cost_of_revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 106374000000,
+              "unit": "USD",
+              "tag": "CostOfGoodsAndServicesSold",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            },
+            {
+              "cik": 789019,
+              "metric": "cost_of_revenue",
+              "start": "2024-07-01",
+              "end": "2025-06-30",
+              "value": 87831000000,
+              "unit": "USD",
+              "tag": "CostOfGoodsAndServicesSold",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.03501199997845106
+      },
+      {
+        "type": "agent",
+        "task_id": "coverage_repair_1",
+        "agent": "financial_data",
+        "status": "error",
+        "error": {
+          "type": "SpecialistLimitError",
+          "message": "Specialist reached the maximum number of steps"
+        },
+        "elapsed_seconds": 8.502013457997236
+      },
+      {
+        "type": "model",
+        "phase": "coverage",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 3122,
+        "output_tokens": 339,
+        "total_tokens": 3461,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 212,
+        "response_id": "resp_00d2a04b64765b00016b0098b610a087d2b5b1e7f1db23874f",
+        "estimated_cost_usd": 0.00048170000000000005,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"complete\":false,\"gaps\":[\"Microsoft FY2026 gelir, satış maliyeti ve faaliyet giderleri için değerler mevcut; ancak FY2025'e göre gelir büyüme oranı hesaplanıp raporlanmamış.\"],\"tasks\":[{\"id\":\"t1\",\"agent\":\"financial_data\",\"instruction\":\"Microsoft için FY2026 gelir büyümesini FY2025'e kıyasla hesapla; revenue_growth sonucunu ve kullanılan iki yıllık gelir değerlerini getir.\",\"filing_scope\":\"annual\",\"years\":2,\"fiscal_year\":2026}]}",
+        "elapsed_seconds": 3.8903049580112565
+      },
+      {
+        "type": "coverage",
+        "complete": false,
+        "gaps": [
+          "Microsoft FY2026 gelir, satış maliyeti ve faaliyet giderleri için değerler mevcut; ancak FY2025'e göre gelir büyüme oranı hesaplanıp raporlanmamış."
+        ],
+        "status": "partial",
+        "repair_tasks_attempted": 1
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 5792,
+        "output_tokens": 226,
+        "total_tokens": 6018,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "response_id": "resp_0fc4996eb4fdcc9f016b0098ba1c4887d2bd7c643b9b15d11e",
+        "estimated_cost_usd": 0.0006922,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"Microsoft’un 30 Haziran 2026’da sona eren FY2026 mali yılında geliri {{F2_value}} {{F2_unit}}, satış maliyeti {{F3_value}} {{F3_unit}} ve faaliyet giderleri {{F4_value}} {{F4_unit}} oldu. Satış maliyeti, gelir üretme maliyetini; faaliyet giderleri ise bu kalem dışındaki faaliyet harcamalarını ifade eder. Dolayısıyla bunlar farklı gider kategorileridir. [Source 2] [Source 3] [Source 4]\\n\\nGelir, 30 Haziran 2025’te sona eren FY2025’teki {{F11_value}} {{F11_unit}} düzeyinden FY2026’da {{F10_value}} {{F10_unit}} düzeyine çıktı; bu nedenle önceki yıla kıyasla büyüdü. Elde edilen kanıtlar büyümenin oranını raporlamıyor. [Source 10]\",\"facts\":[]}",
+        "elapsed_seconds": 3.639630040997872
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"30\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values."
+        },
+        "elapsed_seconds": 3.6472539999813307
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "reserved_content_repair": false,
+        "issues": [
+          "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"30\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 6186,
+        "output_tokens": 257,
+        "total_tokens": 6443,
+        "cached_input_tokens": 5789,
+        "reasoning_tokens": 50,
+        "response_id": "resp_0d7739aad98404c8016b0098bdba0487d2abcd710f544e3b10",
+        "estimated_cost_usd": 0.00022609,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"Microsoft’un FY{{F2_fiscal_year}} mali yılında (dönem sonu: {{F2_end}}) geliri {{F2_value}} {{F2_unit}}, satış maliyeti {{F3_value}} {{F3_unit}} ve faaliyet giderleri {{F4_value}} {{F4_unit}} oldu. Satış maliyeti ile faaliyet giderleri ayrı kalemlerdir: faaliyet giderleri satış maliyetini içermez. [Source 2] [Source 3] [Source 4]\\n\\nGelir, FY{{F11_fiscal_year}} dönem sonundaki {{F11_value}} {{F11_unit}} düzeyinden FY{{F10_fiscal_year}} dönem sonundaki {{F10_value}} {{F10_unit}} düzeyine yükseldi; dolayısıyla önceki mali yıla göre büyüdü. [Source 10]\",\"facts\":[]}",
+        "elapsed_seconds": 3.5294728339940775
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 3.532290249975631
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 2760,
+        "output_tokens": 30,
+        "total_tokens": 2790,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "response_id": "resp_030b71b9f3e02843016b0098c1248c87d280f61a224f301875",
+        "estimated_cost_usd": 0.000291,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"issues\":[],\"evidence_supported\":true,\"language_matches\":true,\"answer_complete\":true}",
+        "elapsed_seconds": 1.157540207990678
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 1.158716166013619
+      }
+    ],
+    "elapsed_seconds": 69.96998020799947,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "think": false,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      },
+      "roles": {
+        "writer": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "max_output_tokens": 8192
+        },
+        "critic": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "max_output_tokens": 8192
+        }
+      }
+    },
+    "dataset_sha256": "26f511ff0678d9cdca4f9e9b41b0ff84f7e17b5a37b821b6565b25ef69312102",
+    "recorded_at": "2026-11-20T19:00:18.186767+00:00",
+    "transport": "mcp"
+  },
+  {
+    "id": "coverage_adobe_holdout",
+    "question": "Adobe'nin son iki mali yıldaki gelirini karşılaştır ve yıllık gelir büyümesini hesapla. Büyüme oranıyla gelir tutarını ayrı belirt.",
+    "expected": {
+      "companies": "ADBE"
+    },
+    "answer_language": "tr",
+    "category": null,
+    "usage": {
+      "model_calls_with_usage": 13,
+      "model_calls_without_usage": 0,
+      "tool_calls": 6,
+      "input_tokens": 27830,
+      "output_tokens": 1182,
+      "estimated_cost_usd": 0.0012019,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    },
+    "answer": "Adobe'nin 2025 mali yılında (2025-11-28 tarihinde sona erdi) geliri 23769000000 USD oldu; 2024 mali yılında (2024-11-29 tarihinde sona erdi) 21505000000 USD olarak gerçekleşti. Son mali yıldaki gelir önceki mali yıla göre daha yüksekti. [Source 2]\n\n2025 mali yılı için yıllık gelir büyüme oranı 10.53% olarak hesaplandı. Bu oran, gelir tutarından ayrı bir büyüme ölçüsüdür. [Source 3]",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": null,
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "coverage": {
+      "complete": true,
+      "gaps": [],
+      "status": "complete",
+      "repair_tasks_attempted": 0
+    },
+    "draft": "Adobe'nin 2025 mali yılında (2025-11-28 tarihinde sona erdi) geliri 23769000000 USD oldu; 2024 mali yılında (2024-11-29 tarihinde sona erdi) 21505000000 USD olarak gerçekleşti. Son mali yıldaki gelir önceki mali yıla göre daha yüksekti. [Source 2]\n\n2025 mali yılı için yıllık gelir büyüme oranı 10.53% olarak hesaplandı. Bu oran, gelir tutarından ayrı bir büyüme ölçüsüdür. [Source 3]",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "answer",
+      "text": "Adobe'nin {{F2_fiscal_year}} mali yılında ({{F2_end}} tarihinde sona erdi) geliri {{F2_value}} {{F2_unit}} oldu; {{F3_fiscal_year}} mali yılında ({{F3_end}} tarihinde sona erdi) {{F3_value}} {{F3_unit}} olarak gerçekleşti. Son mali yıldaki gelir önceki mali yıla göre daha yüksekti. [Source 2]\n\n{{F4_fiscal_year}} mali yılı için yıllık gelir büyüme oranı {{F4_value}} olarak hesaplandı. Bu oran, gelir tutarından ayrı bir büyüme ölçüsüdür. [Source 3]",
+      "facts": []
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "ADBE"
+        },
+        "result": {
+          "ticker": "ADBE",
+          "name": "ADOBE INC.",
+          "cik": "0000796343"
+        }
+      },
+      {
+        "source_id": 2,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0000796343",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 2
+        },
+        "result": {
+          "company": {
+            "ticker": "ADBE",
+            "cik": "0000796343",
+            "name": "ADOBE INC."
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 2,
+          "available_period_count": 2,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2025-11-28",
+            "2024-11-29"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 796343,
+              "metric": "revenue",
+              "start": "2024-11-30",
+              "end": "2025-11-28",
+              "value": 23769000000,
+              "unit": "USD",
+              "tag": "Revenues",
+              "form": "10-K",
+              "filed": "2026-01-15",
+              "accn": "0000796343-26-000003",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-11-28)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+            },
+            {
+              "cik": 796343,
+              "metric": "revenue",
+              "start": "2023-12-02",
+              "end": "2024-11-29",
+              "value": 21505000000,
+              "unit": "USD",
+              "tag": "Revenues",
+              "form": "10-K",
+              "filed": "2026-01-15",
+              "accn": "0000796343-26-000003",
+              "is_amendment": false,
+              "fiscal_year": 2024,
+              "period_label": "FY2024 (period end: 2024-11-29)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 3,
+        "tool": "compute_metrics",
+        "arguments": {
+          "cik": "0000796343",
+          "metrics": [
+            "revenue_growth"
+          ],
+          "years": 2
+        },
+        "result": {
+          "company": {
+            "ticker": "ADBE",
+            "cik": "0000796343",
+            "name": "ADOBE INC."
+          },
+          "requested_years": 2,
+          "results": {
+            "revenue_growth": [
+              {
+                "cik": 796343,
+                "fiscal_year": 2025,
+                "metric": "revenue_growth",
+                "start": "2024-11-30",
+                "end": "2025-11-28",
+                "value": 0.10527784236224136,
+                "unit": "ratio",
+                "formula": "current_revenue / previous_revenue - 1",
+                "inputs": {
+                  "previous_revenue": {
+                    "cik": 796343,
+                    "metric": "revenue",
+                    "start": "2023-12-02",
+                    "end": "2024-11-29",
+                    "value": 21505000000,
+                    "unit": "USD",
+                    "tag": "Revenues",
+                    "form": "10-K",
+                    "filed": "2026-01-15",
+                    "accn": "0000796343-26-000003",
+                    "is_amendment": false,
+                    "fiscal_year": 2024,
+                    "period_label": "FY2024 (period end: 2024-11-29)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+                  },
+                  "current_revenue": {
+                    "cik": 796343,
+                    "metric": "revenue",
+                    "start": "2024-11-30",
+                    "end": "2025-11-28",
+                    "value": 23769000000,
+                    "unit": "USD",
+                    "tag": "Revenues",
+                    "form": "10-K",
+                    "filed": "2026-01-15",
+                    "accn": "0000796343-26-000003",
+                    "is_amendment": false,
+                    "fiscal_year": 2025,
+                    "period_label": "FY2025 (period end: 2025-11-28)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+                  }
+                },
+                "period_label": "FY2025 (period end: 2025-11-28)"
+              }
+            ]
+          },
+          "calculation_definitions": {
+            "revenue_growth": {
+              "description": "Annual revenue growth",
+              "function": "calculate_growth",
+              "inputs": [
+                "revenue"
+              ],
+              "unit": "ratio",
+              "period_mode": "consecutive_periods"
+            }
+          },
+          "warnings": [],
+          "availability": {
+            "revenue": {
+              "concept": "revenue",
+              "missing_period_ends": [],
+              "available_period_ends": [
+                "2025-11-28",
+                "2024-11-29"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "source_id": 4,
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "ADBE"
+        },
+        "result": {
+          "ticker": "ADBE",
+          "name": "ADOBE INC.",
+          "cik": "0000796343"
+        }
+      },
+      {
+        "source_id": 5,
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0000796343",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 2
+        },
+        "result": {
+          "company": {
+            "ticker": "ADBE",
+            "cik": "0000796343",
+            "name": "ADOBE INC."
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 2,
+          "available_period_count": 2,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2025-11-28",
+            "2024-11-29"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 796343,
+              "metric": "revenue",
+              "start": "2024-11-30",
+              "end": "2025-11-28",
+              "value": 23769000000,
+              "unit": "USD",
+              "tag": "Revenues",
+              "form": "10-K",
+              "filed": "2026-01-15",
+              "accn": "0000796343-26-000003",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-11-28)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+            },
+            {
+              "cik": 796343,
+              "metric": "revenue",
+              "start": "2023-12-02",
+              "end": "2024-11-29",
+              "value": 21505000000,
+              "unit": "USD",
+              "tag": "Revenues",
+              "form": "10-K",
+              "filed": "2026-01-15",
+              "accn": "0000796343-26-000003",
+              "is_amendment": false,
+              "fiscal_year": 2024,
+              "period_label": "FY2024 (period end: 2024-11-29)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 6,
+        "tool": "compute_metrics",
+        "arguments": {
+          "cik": "0000796343",
+          "metrics": [
+            "revenue_growth"
+          ],
+          "years": 2
+        },
+        "result": {
+          "company": {
+            "ticker": "ADBE",
+            "cik": "0000796343",
+            "name": "ADOBE INC."
+          },
+          "requested_years": 2,
+          "results": {
+            "revenue_growth": [
+              {
+                "cik": 796343,
+                "fiscal_year": 2025,
+                "metric": "revenue_growth",
+                "start": "2024-11-30",
+                "end": "2025-11-28",
+                "value": 0.10527784236224136,
+                "unit": "ratio",
+                "formula": "current_revenue / previous_revenue - 1",
+                "inputs": {
+                  "previous_revenue": {
+                    "cik": 796343,
+                    "metric": "revenue",
+                    "start": "2023-12-02",
+                    "end": "2024-11-29",
+                    "value": 21505000000,
+                    "unit": "USD",
+                    "tag": "Revenues",
+                    "form": "10-K",
+                    "filed": "2026-01-15",
+                    "accn": "0000796343-26-000003",
+                    "is_amendment": false,
+                    "fiscal_year": 2024,
+                    "period_label": "FY2024 (period end: 2024-11-29)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+                  },
+                  "current_revenue": {
+                    "cik": 796343,
+                    "metric": "revenue",
+                    "start": "2024-11-30",
+                    "end": "2025-11-28",
+                    "value": 23769000000,
+                    "unit": "USD",
+                    "tag": "Revenues",
+                    "form": "10-K",
+                    "filed": "2026-01-15",
+                    "accn": "0000796343-26-000003",
+                    "is_amendment": false,
+                    "fiscal_year": 2025,
+                    "period_label": "FY2025 (period end: 2025-11-28)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+                  }
+                },
+                "period_label": "FY2025 (period end: 2025-11-28)"
+              }
+            ]
+          },
+          "calculation_definitions": {
+            "revenue_growth": {
+              "description": "Annual revenue growth",
+              "function": "calculate_growth",
+              "inputs": [
+                "revenue"
+              ],
+              "unit": "ratio",
+              "period_mode": "consecutive_periods"
+            }
+          },
+          "warnings": [],
+          "availability": {
+            "revenue": {
+              "concept": "revenue",
+              "missing_period_ends": [],
+              "available_period_ends": [
+                "2025-11-28",
+                "2024-11-29"
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "comparison",
+        "plan": [
+          {
+            "id": "task_1",
+            "agent": "financial_data",
+            "instruction": "Adobe için son iki mali yılın gelirini topla",
+            "filing_scope": "annual",
+            "years": 2,
+            "fiscal_year": null
+          },
+          {
+            "id": "task_2",
+            "agent": "financial_data",
+            "instruction": "Adobe için son iki mali yılın gelir büyümesini hesapla",
+            "filing_scope": "annual",
+            "years": 2,
+            "fiscal_year": null
+          }
+        ],
+        "elapsed_seconds": 3.8400235830049496,
+        "input_tokens": 500,
+        "output_tokens": 151,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 784,
+        "output_tokens": 25,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_tfw6lxty",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "ADBE"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.7742183330119587
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "ADBE"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "ADBE",
+          "name": "ADOBE INC.",
+          "cik": "0000796343"
+        },
+        "elapsed_seconds": 0.010175917006563395
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 1216,
+        "output_tokens": 51,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_wt24wkkb",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000796343",
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 2
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 3.367883917002473
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000796343",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 2
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "ADBE",
+            "cik": "0000796343",
+            "name": "ADOBE INC."
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 2,
+          "available_period_count": 2,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2025-11-28",
+            "2024-11-29"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 796343,
+              "metric": "revenue",
+              "start": "2024-11-30",
+              "end": "2025-11-28",
+              "value": 23769000000,
+              "unit": "USD",
+              "tag": "Revenues",
+              "form": "10-K",
+              "filed": "2026-01-15",
+              "accn": "0000796343-26-000003",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-11-28)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+            },
+            {
+              "cik": 796343,
+              "metric": "revenue",
+              "start": "2023-12-02",
+              "end": "2024-11-29",
+              "value": 21505000000,
+              "unit": "USD",
+              "tag": "Revenues",
+              "form": "10-K",
+              "filed": "2026-01-15",
+              "accn": "0000796343-26-000003",
+              "is_amendment": false,
+              "fiscal_year": 2024,
+              "period_label": "FY2024 (period end: 2024-11-29)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.011329000000841916
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 1935,
+        "output_tokens": 39,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_z7qzmtw3",
+            "function": {
+              "index": 0,
+              "name": "compute_metrics",
+              "arguments": {
+                "cik": "0000796343",
+                "metrics": [
+                  "revenue_growth"
+                ],
+                "years": 2
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 3.0802524159953464
+      },
+      {
+        "type": "tool",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 3,
+        "call_id": 3,
+        "name": "compute_metrics",
+        "arguments": {
+          "cik": "0000796343",
+          "metrics": [
+            "revenue_growth"
+          ],
+          "years": 2
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "ADBE",
+            "cik": "0000796343",
+            "name": "ADOBE INC."
+          },
+          "requested_years": 2,
+          "results": {
+            "revenue_growth": [
+              {
+                "cik": 796343,
+                "fiscal_year": 2025,
+                "metric": "revenue_growth",
+                "start": "2024-11-30",
+                "end": "2025-11-28",
+                "value": 0.10527784236224136,
+                "unit": "ratio",
+                "formula": "current_revenue / previous_revenue - 1",
+                "inputs": {
+                  "previous_revenue": {
+                    "cik": 796343,
+                    "metric": "revenue",
+                    "start": "2023-12-02",
+                    "end": "2024-11-29",
+                    "value": 21505000000,
+                    "unit": "USD",
+                    "tag": "Revenues",
+                    "form": "10-K",
+                    "filed": "2026-01-15",
+                    "accn": "0000796343-26-000003",
+                    "is_amendment": false,
+                    "fiscal_year": 2024,
+                    "period_label": "FY2024 (period end: 2024-11-29)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+                  },
+                  "current_revenue": {
+                    "cik": 796343,
+                    "metric": "revenue",
+                    "start": "2024-11-30",
+                    "end": "2025-11-28",
+                    "value": 23769000000,
+                    "unit": "USD",
+                    "tag": "Revenues",
+                    "form": "10-K",
+                    "filed": "2026-01-15",
+                    "accn": "0000796343-26-000003",
+                    "is_amendment": false,
+                    "fiscal_year": 2025,
+                    "period_label": "FY2025 (period end: 2025-11-28)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+                  }
+                },
+                "period_label": "FY2025 (period end: 2025-11-28)"
+              }
+            ]
+          },
+          "calculation_definitions": {
+            "revenue_growth": {
+              "description": "Annual revenue growth",
+              "function": "calculate_growth",
+              "inputs": [
+                "revenue"
+              ],
+              "unit": "ratio",
+              "period_mode": "consecutive_periods"
+            }
+          },
+          "warnings": [],
+          "availability": {
+            "revenue": {
+              "concept": "revenue",
+              "missing_period_ends": [],
+              "available_period_ends": [
+                "2025-11-28",
+                "2024-11-29"
+              ]
+            }
+          }
+        },
+        "elapsed_seconds": 0.012611749989446253
+      },
+      {
+        "type": "model",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "step": 4,
+        "max_output_tokens": 1024,
+        "input_tokens": 2791,
+        "output_tokens": 167,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 6.810216332989512
+      },
+      {
+        "type": "agent",
+        "task_id": "task_1",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 16.066814958001487
+      },
+      {
+        "type": "agent",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 787,
+        "output_tokens": 25,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_lpdcuzlo",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "ADBE"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.5377474580018315
+      },
+      {
+        "type": "tool",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "ADBE"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "ADBE",
+          "name": "ADOBE INC.",
+          "cik": "0000796343"
+        },
+        "elapsed_seconds": 0.009523042012006044
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 1219,
+        "output_tokens": 51,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_brd8uw0r",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000796343",
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 2
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 3.440194499999052
+      },
+      {
+        "type": "tool",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000796343",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 2
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "ADBE",
+            "cik": "0000796343",
+            "name": "ADOBE INC."
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 2,
+          "available_period_count": 2,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2025-11-28",
+            "2024-11-29"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 796343,
+              "metric": "revenue",
+              "start": "2024-11-30",
+              "end": "2025-11-28",
+              "value": 23769000000,
+              "unit": "USD",
+              "tag": "Revenues",
+              "form": "10-K",
+              "filed": "2026-01-15",
+              "accn": "0000796343-26-000003",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "period_label": "FY2025 (period end: 2025-11-28)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+            },
+            {
+              "cik": 796343,
+              "metric": "revenue",
+              "start": "2023-12-02",
+              "end": "2024-11-29",
+              "value": 21505000000,
+              "unit": "USD",
+              "tag": "Revenues",
+              "form": "10-K",
+              "filed": "2026-01-15",
+              "accn": "0000796343-26-000003",
+              "is_amendment": false,
+              "fiscal_year": 2024,
+              "period_label": "FY2024 (period end: 2024-11-29)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.010548457998083904
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 1938,
+        "output_tokens": 39,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_311xjfd2",
+            "function": {
+              "index": 0,
+              "name": "compute_metrics",
+              "arguments": {
+                "cik": "0000796343",
+                "metrics": [
+                  "revenue_growth"
+                ],
+                "years": 2
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 3.181698625005083
+      },
+      {
+        "type": "tool",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 3,
+        "call_id": 3,
+        "name": "compute_metrics",
+        "arguments": {
+          "cik": "0000796343",
+          "metrics": [
+            "revenue_growth"
+          ],
+          "years": 2
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "ADBE",
+            "cik": "0000796343",
+            "name": "ADOBE INC."
+          },
+          "requested_years": 2,
+          "results": {
+            "revenue_growth": [
+              {
+                "cik": 796343,
+                "fiscal_year": 2025,
+                "metric": "revenue_growth",
+                "start": "2024-11-30",
+                "end": "2025-11-28",
+                "value": 0.10527784236224136,
+                "unit": "ratio",
+                "formula": "current_revenue / previous_revenue - 1",
+                "inputs": {
+                  "previous_revenue": {
+                    "cik": 796343,
+                    "metric": "revenue",
+                    "start": "2023-12-02",
+                    "end": "2024-11-29",
+                    "value": 21505000000,
+                    "unit": "USD",
+                    "tag": "Revenues",
+                    "form": "10-K",
+                    "filed": "2026-01-15",
+                    "accn": "0000796343-26-000003",
+                    "is_amendment": false,
+                    "fiscal_year": 2024,
+                    "period_label": "FY2024 (period end: 2024-11-29)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+                  },
+                  "current_revenue": {
+                    "cik": 796343,
+                    "metric": "revenue",
+                    "start": "2024-11-30",
+                    "end": "2025-11-28",
+                    "value": 23769000000,
+                    "unit": "USD",
+                    "tag": "Revenues",
+                    "form": "10-K",
+                    "filed": "2026-01-15",
+                    "accn": "0000796343-26-000003",
+                    "is_amendment": false,
+                    "fiscal_year": 2025,
+                    "period_label": "FY2025 (period end: 2025-11-28)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm"
+                  }
+                },
+                "period_label": "FY2025 (period end: 2025-11-28)"
+              }
+            ]
+          },
+          "calculation_definitions": {
+            "revenue_growth": {
+              "description": "Annual revenue growth",
+              "function": "calculate_growth",
+              "inputs": [
+                "revenue"
+              ],
+              "unit": "ratio",
+              "period_mode": "consecutive_periods"
+            }
+          },
+          "warnings": [],
+          "availability": {
+            "revenue": {
+              "concept": "revenue",
+              "missing_period_ends": [],
+              "available_period_ends": [
+                "2025-11-28",
+                "2024-11-29"
+              ]
+            }
+          }
+        },
+        "elapsed_seconds": 0.011755167011870071
+      },
+      {
+        "type": "model",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "step": 4,
+        "max_output_tokens": 1024,
+        "input_tokens": 2794,
+        "output_tokens": 161,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 6.805648874986218
+      },
+      {
+        "type": "agent",
+        "task_id": "task_2",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 14.997231167013524
+      },
+      {
+        "type": "model",
+        "phase": "coverage",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 1965,
+        "output_tokens": 82,
+        "total_tokens": 2047,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 58,
+        "response_id": "resp_05c7f4468483b039016b0098e6223087d2ad2d6bf72d942419",
+        "estimated_cost_usd": 0.0002375,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"complete\":true,\"gaps\":[],\"tasks\":[]}",
+        "elapsed_seconds": 1.6898087919980753
+      },
+      {
+        "type": "coverage",
+        "complete": true,
+        "gaps": [],
+        "status": "complete",
+        "repair_tasks_attempted": 0
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 4683,
+        "output_tokens": 159,
+        "total_tokens": 4842,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "response_id": "resp_02a205669bcf03f0016b0098e7ddb887d29e2a76f47d1f6bfb",
+        "estimated_cost_usd": 0.0005478,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"Adobe'nin 2025 mali yılında (28 Kasım 2025'te sona erdi) geliri {{F2_value}} {{F2_unit}} oldu; 2024 mali yılında (29 Kasım 2024'te sona erdi) {{F3_value}} {{F3_unit}} olarak gerçekleşti. Dolayısıyla son mali yıldaki gelir, önceki mali yıla göre daha yüksekti. [Source 2]\\n\\n2025 mali yılı için yıllık gelir büyüme oranı {{F4_value}} olarak hesaplandı. Bu oran, gelir tutarından ayrı bir büyüme ölçüsüdür. [Source 3]\",\"facts\":[]}",
+        "elapsed_seconds": 2.5294482500175945
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"2025\", \"(28\", \"2024\", \"(29\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values."
+        },
+        "elapsed_seconds": 2.5327324999962
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "reserved_content_repair": false,
+        "issues": [
+          "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"2025\", \"(28\", \"2024\", \"(29\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 5023,
+        "output_tokens": 202,
+        "total_tokens": 5225,
+        "cached_input_tokens": 4680,
+        "reasoning_tokens": 36,
+        "response_id": "resp_012cc6338987c988016b0098ea6a1887d29a64a9b753e5178a",
+        "estimated_cost_usd": 0.00018210000000000004,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"Adobe'nin {{F2_fiscal_year}} mali yılında ({{F2_end}} tarihinde sona erdi) geliri {{F2_value}} {{F2_unit}} oldu; {{F3_fiscal_year}} mali yılında ({{F3_end}} tarihinde sona erdi) {{F3_value}} {{F3_unit}} olarak gerçekleşti. Son mali yıldaki gelir önceki mali yıla göre daha yüksekti. [Source 2]\\n\\n{{F4_fiscal_year}} mali yılı için yıllık gelir büyüme oranı {{F4_value}} olarak hesaplandı. Bu oran, gelir tutarından ayrı bir büyüme ölçüsüdür. [Source 3]\",\"facts\":[]}",
+        "elapsed_seconds": 2.415583791997051
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 2.418131040991284
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 2195,
+        "output_tokens": 30,
+        "total_tokens": 2225,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "response_id": "resp_069118970c9d638e016b0098ecbf2c87d289ee4ddbff792caf",
+        "estimated_cost_usd": 0.0002345,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"issues\":[],\"evidence_supported\":true,\"language_matches\":true,\"answer_complete\":true}",
+        "elapsed_seconds": 1.1213501249731053
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 1.1240477499959525
+      }
+    ],
+    "elapsed_seconds": 43.543943583994405,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "think": false,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      },
+      "roles": {
+        "writer": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "max_output_tokens": 8192
+        },
+        "critic": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "max_output_tokens": 8192
+        }
+      }
+    },
+    "dataset_sha256": "26f511ff0678d9cdca4f9e9b41b0ff84f7e17b5a37b821b6565b25ef69312102",
+    "recorded_at": "2026-11-20T19:01:01.731198+00:00",
+    "transport": "mcp"
+  }
+]

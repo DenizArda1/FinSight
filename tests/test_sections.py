@@ -1,10 +1,27 @@
 import unittest
 
-from src.rag.sections import extract_sections
+from src.rag.sections import extract_sections, extract_cross_reference_chapters
 from tests.filing_fixtures import REPORT_TEXT
 
 
 class SectionTests(unittest.TestCase):
+    def test_cross_reference_chapters_exclude_toc_and_repeated_page_footers(self):
+        text = ("Form 10-K Cross-Reference Index\n"
+                "\tManagement's Discussion and Analysis\t\nOverview\n"
+                "Risk Factors\n37\nOther Key Information\n52\n"
+                "Management's Discussion and Analysis\nOverview\n" + "Results improved. " * 30 +
+                "\nRisk Factors\nOur material risks include competition. " + "Risk discussion. " * 30 +
+                "\nRisk Factors\n38\n" + "More risks. " * 30 +
+                "\nOther Key Information\nInformation About Executive Officers\nExcluded")
+        sections = extract_cross_reference_chapters(text)
+        self.assertEqual([entry['section'] for entry in sections], ['Item 7', 'Item 1A'])
+        self.assertNotIn('Excluded', sections[-1]['text'])
+        self.assertIn('More risks.', sections[-1]['text'])
+        for entry in sections:
+            self.assertEqual(entry['text'], text[entry['start']:entry['end']])
+        with self.assertRaises(ValueError):
+            extract_cross_reference_chapters(text.replace('Form 10-K Cross-Reference Index', 'Contents'))
+
     def test_toc_is_ignored_and_sections_match_source_spans(self):
         toc = (
             "Item 1.\nBusiness\n3\nItem 1A.\nRisk Factors\n5\n"

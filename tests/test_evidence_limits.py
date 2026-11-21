@@ -29,6 +29,16 @@ def source_event(source):
 
 
 class EvidenceLimitTests(unittest.TestCase):
+    def test_annual_queries_cannot_exclude_quarterly_and_event_sources(self):
+        sources = [search_source(i, 'x' * 5) for i in range(1, 6)]
+        for i, source in enumerate(sources):
+            source['arguments'] = {'ticker': 'TEST', 'query': str(i)}
+        for source, form in zip(sources[3:], ['10-Q', '8-K']):
+            source['tool'] = 'search_company_updates'
+            source['arguments']['form'] = form
+        result = limit_report_evidence(sources, 5, 15)
+        self.assertEqual([s['source_id'] for s in result if not s.get('content_omitted')], [1, 4, 5])
+
     def test_search_has_priority_without_renumbering_or_mutating_trace(self):
         sources = [section_source(1, "A" * 8), search_source(2, "B" * 6)]
         original = deepcopy(sources)

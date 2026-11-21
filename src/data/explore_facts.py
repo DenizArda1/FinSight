@@ -3,7 +3,7 @@ from pathlib import Path
 
 from src.utils.utils import load_json, load_yaml, save_json
 from src.data.contracts import validate_selection
-from src.rag.html_parser import extract_fiscal_year
+from src.rag.html_parser import extract_fiscal_year_details
 from src.tools.company import downloaded_companies
 
 
@@ -127,7 +127,7 @@ def process_company(cik, years=5):
     for filing in manifest["filings"]:
         if filing["form"] == "10-K" and filing["reportDate"] in period_ends:
             html = (raw_path / filing["path"]).read_text(encoding="utf-8")
-            fiscal_years[filing["reportDate"]] = extract_fiscal_year(html)
+            fiscal_years[filing["reportDate"]] = extract_fiscal_year_details(html)
     results = {}
 
     print("Company:", data["entityName"])
@@ -148,7 +148,7 @@ def process_company(cik, years=5):
             period_ends=period_ends,
         )
         for row in metric_rows:
-            row["fiscal_year"] = fiscal_years[row["end"]]
+            row.update(fiscal_years[row["end"]])
             row["period_label"] = f"FY{row['fiscal_year']} (period end: {row['end']})"
         output_path = (
             project_root / "financial_data" / "processed" / cik / f"{metric_name}.json"

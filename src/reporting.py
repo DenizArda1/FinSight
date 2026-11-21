@@ -63,6 +63,11 @@ def build_report(question, result):
         raise ValueError("Only an answer that passed verification can be exported.")
     prose, details = split_research_note(result)
     sections = ["# FinSight", f"**Soru / Question:** {question}", SOURCE_REFERENCE.sub(r"[^\1]", prose)]
+    coverage = result.get('coverage') or {}
+    if coverage.get('status') == 'partial':
+        sections.insert(2, '**Kısmi yanıt / Partial coverage:** İstenen bilgilerin bir kısmı tamamlanamadı.')
+    elif coverage.get('status') == 'unknown':
+        sections.insert(2, '**Kapsam kontrol edilemedi / Coverage not assessed.**')
     if details:
         sections.append("<details>\n<summary>Veri ayrıntıları / Supporting data</summary>\n\n"
                         + SOURCE_REFERENCE.sub(r"[^\1]", details) + "\n\n</details>")

@@ -53,6 +53,8 @@ def main():
             for issue in result["verification"]["issues"]:
                 print(f"- {issue}", file=sys.stderr)
         raise SystemExit(1)
+    if (result.get('coverage') or {}).get('status') in {'partial', 'unknown'}:
+        print('Research coverage: ' + result['coverage']['status'], file=sys.stderr)
     print(result["answer"])
     sources = format_source_references(result["answer"], result["evidence"])
     if sources:

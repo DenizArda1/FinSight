@@ -38,13 +38,21 @@ PLANNER_RESPONSE_SCHEMA = {
                         "minLength": 1,
                         "maxLength": 400,
                     },
+                    "filing_scope": {
+                        "type": "string", "enum": ["annual", "recent", "any"],
+                        "description": "annual for annual-report narratives; recent for quarterly reports/current events; any only when both are needed.",
+                    },
+                    "years": {
+                        "type": "integer", "minimum": 1, "maximum": 5,
+                        "description": "Minimum annual source years: 2 for year-over-year margin comparisons, 3 for comparing two growth rates.",
+                    },
                     "fiscal_year": {
                         "type": ["integer", "null"],
                         "minimum": 1,
                         "description": "The explicitly requested filing fiscal year; null for latest or unspecified periods.",
                     },
                 },
-                "required": ["id", "agent", "instruction", "fiscal_year"],
+                "required": ["id", "agent", "instruction", "fiscal_year", "filing_scope", "years"],
                 "additionalProperties": False,
             },
         },
@@ -81,6 +89,9 @@ def validate_plan(plan):
         if not task["instruction"].strip():
             raise ValueError("Task instructions must not be blank")
         fiscal_year = task.get("fiscal_year")
+        years = task.get("years", 1)
+        if type(years) is not int or not 1 <= years <= 5:
+            raise ValueError("Task years must be an integer from 1 to 5")
         if fiscal_year is not None and (type(fiscal_year) is not int or fiscal_year <= 0):
             raise ValueError("Task fiscal_year must be a positive integer or null")
         if task_id in seen_ids:

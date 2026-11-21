@@ -1,0 +1,90 @@
+[
+  {
+    "id": "user_03_aapl",
+    "plan": {
+      "request_type": "financial",
+      "tasks": [
+        {
+          "id": "task_1",
+          "agent": "financial_data",
+          "instruction": "Apple için son mali yıla ait gelir, satış maliyeti ve faaliyet giderlerini al",
+          "filing_scope": "annual",
+          "years": 1,
+          "fiscal_year": null
+        },
+        {
+          "id": "task_2",
+          "agent": "financial_data",
+          "instruction": "Apple için bir önceki mali yıla ait gelir, satış maliyeti ve faaliyet giderlerini al",
+          "filing_scope": "annual",
+          "years": 1,
+          "fiscal_year": null
+        },
+        {
+          "id": "task_3",
+          "agent": "financial_data",
+          "instruction": "Apple için son mali yıla ait gelir büyümesini hesapla",
+          "filing_scope": "annual",
+          "years": 2,
+          "fiscal_year": null
+        }
+      ]
+    }
+  },
+  {
+    "id": "user_04_nvda",
+    "plan": {
+      "request_type": "comparison",
+      "tasks": [
+        {
+          "id": "1",
+          "agent": "financial_data",
+          "instruction": "NVIDIA için son üç yılın gelir verilerini topla",
+          "filing_scope": "annual",
+          "years": 3,
+          "fiscal_year": null
+        },
+        {
+          "id": "2",
+          "agent": "filing_rag",
+          "instruction": "NVIDIA'nın son yıllık raporunda gelir büyümesini destekleyen gelişmeleri ve önemli riskleri belirle",
+          "filing_scope": "annual",
+          "years": 3,
+          "fiscal_year": null
+        }
+      ]
+    }
+  },
+  {
+    "id": "user_05_amzn",
+    "plan": {
+      "request_type": "financial",
+      "tasks": [
+        {
+          "id": "task_1",
+          "agent": "financial_data",
+          "instruction": "Amazon'un son mali yıla ait gelirini ve faaliyet kâr marjını al",
+          "filing_scope": "annual",
+          "years": 1,
+          "fiscal_year": null
+        },
+        {
+          "id": "task_2",
+          "agent": "financial_data",
+          "instruction": "Amazon'un önceki mali yıla ait gelirini ve faaliyet kâr marjını al",
+          "filing_scope": "annual",
+          "years": 1,
+          "fiscal_year": null
+        },
+        {
+          "id": "task_3",
+          "agent": "financial_data",
+          "instruction": "Amazon'un son ve önceki mali yıla ait gelir ve faaliyet kâr marjlarını karşılaştır",
+          "filing_scope": "annual",
+          "years": 2,
+          "fiscal_year": null
+        }
+      ]
+    }
+  }
+]

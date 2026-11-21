@@ -1,0 +1,88 @@
+[
+  {
+    "id": "user_03_aapl",
+    "plan": {
+      "request_type": "financial",
+      "tasks": [
+        {
+          "id": "task_1",
+          "agent": "financial_data",
+          "instruction": "Use get_company_facts for Apple's revenue, cost_of_revenue and operating_expenses in the latest annual period, fiscal_year=2023.",
+          "fiscal_year": 2023,
+          "filing_scope": "annual"
+        },
+        {
+          "id": "task_2",
+          "agent": "financial_data",
+          "instruction": "Use get_company_facts for Apple's revenue, cost_of_revenue and operating_expenses in the prior annual period, fiscal_year=2022.",
+          "fiscal_year": 2022,
+          "filing_scope": "annual"
+        },
+        {
+          "id": "task_3",
+          "agent": "financial_data",
+          "instruction": "Use compute_metrics for Apple's revenue_growth comparing fiscal years 2022 and 2023, years=2.",
+          "fiscal_year": null,
+          "filing_scope": "annual"
+        }
+      ]
+    }
+  },
+  {
+    "id": "user_04_nvda",
+    "plan": {
+      "request_type": "mixed",
+      "tasks": [
+        {
+          "id": "task_1",
+          "agent": "financial_data",
+          "instruction": "Use compute_metrics for NVIDIA revenue_growth in the latest three annual periods, years=3.",
+          "fiscal_year": null
+        },
+        {
+          "id": "task_2",
+          "agent": "filing_rag",
+          "instruction": "Use search_filings for NVIDIA's latest annual report to identify developments supporting revenue growth and significant risks.",
+          "fiscal_year": null,
+          "filing_scope": "annual"
+        }
+      ]
+    }
+  },
+  {
+    "id": "user_05_amzn",
+    "plan": {
+      "request_type": "financial",
+      "tasks": [
+        {
+          "id": "task_1",
+          "agent": "financial_data",
+          "instruction": "Use get_company_facts for Amazon revenue in the latest annual period, fiscal_year=2023.",
+          "fiscal_year": 2023,
+          "filing_scope": "annual"
+        },
+        {
+          "id": "task_2",
+          "agent": "financial_data",
+          "instruction": "Use get_company_facts for Amazon operating_income in the latest annual period, fiscal_year=2023.",
+          "fiscal_year": 2023,
+          "filing_scope": "annual"
+        },
+        {
+          "id": "task_3",
+          "agent": "financial_data",
+          "instruction": "Use get_company_facts for Amazon revenue in the prior annual period, fiscal_year=2022.",
+          "fiscal_year": 2022,
+          "filing_scope": "annual"
+        },
+        {
+          "id": "task_4",
+          "agent": "financial_data",
+          "instruction": "Use get_company_facts for Amazon operating_income in the prior annual period, fiscal_year=2022.",
+          "fiscal_year": 2022,
+          "filing_scope": "annual"
+        }
+      ]
+    }
+  }
+]

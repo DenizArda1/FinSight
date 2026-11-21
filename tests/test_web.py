@@ -1,12 +1,82 @@
+import json
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import AsyncMock, patch
+from tempfile import TemporaryDirectory
 
-from src.web import PROJECT_ROOT, ResearchHandler, ResearchJobs, present_result, research
+from src.web import PROJECT_ROOT, ResearchHandler, ResearchJobs, present_result, research, research_error_message
 
 
 class WebTests(unittest.TestCase):
+    def test_step_limit_is_not_misreported_as_connection_failure(self):
+        error = ExceptionGroup('Transport wrapper', [RuntimeError('Specialist reached the maximum number of steps')])
+        message = research_error_message(error)
+        self.assertIn('adım sınırına', message)
+        self.assertNotIn('bağlantısını kontrol', message)
+
+    def test_conversations_survive_restart_without_replaying_requests(self):
+        async def runner(question):
+            return {'answer': 'Saved answer', 'verification': {'supported': True}, 'evidence': []}
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'conversations.json'
+            jobs = ResearchJobs(runner, storage_path=path)
+            first = jobs.submit({'question': 'Apple revenue?'})
+            jobs.executor.shutdown(wait=True)
+            restored = ResearchJobs(runner, storage_path=path)
+            self.assertEqual(restored.snapshot(first['id'])['result']['prose'], 'Saved answer')
+            self.assertEqual(restored.snapshot(first['id'])['conversation_id'], first['conversation_id'])
+            restored.executor.shutdown()
+
+    def test_followup_context_is_scoped_and_previous_answers_are_not_evidence(self):
+        jobs = ResearchJobs()
+        try:
+            with patch.object(jobs.executor, 'submit'):
+                first = jobs.submit({'question': 'Apple revenue?'})
+                jobs.jobs[first['id']].update(status='completed', result={'supported': True, 'prose': 'Apple answer'})
+                unrelated = jobs.submit({'question': 'Microsoft risks?'})
+                jobs.jobs[unrelated['id']].update(status='failed', error='Failure')
+                followup = jobs.submit({'question': 'And its costs?', 'conversation_id': first['conversation_id']})
+                context = jobs.conversation_question(followup)
+            self.assertIn('Apple revenue?', context)
+            self.assertIn('CURRENT REQUEST:\nAnd its costs?', context)
+            self.assertIn('not source evidence', context)
+            self.assertNotIn('Microsoft', context)
+            self.assertEqual(jobs.conversation_question(unrelated), 'Microsoft risks?')
+        finally:
+            jobs.executor.shutdown()
+
+    def test_unknown_conversation_and_non_string_id_are_rejected(self):
+        jobs = ResearchJobs()
+        try:
+            for identifier in ['a' * 32, True, '../file']:
+                with self.subTest(identifier=identifier), self.assertRaises(ValueError):
+                    jobs.submit({'question': 'Question', 'conversation_id': identifier})
+        finally:
+            jobs.executor.shutdown()
+
+    def test_history_is_not_silently_removed_after_fifty_conversations(self):
+        jobs = ResearchJobs()
+        try:
+            with patch.object(jobs.executor, 'submit'):
+                for index in range(55):
+                    job = jobs.submit({'question': f'Question {index}'})
+                    jobs.jobs[job['id']]['status'] = 'completed'
+            self.assertEqual(len(jobs.snapshot()), 55)
+        finally:
+            jobs.executor.shutdown()
+
+    def test_interrupted_jobs_are_marked_failed_on_restart(self):
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'history.json'
+            jobs = ResearchJobs(storage_path=path)
+            with patch.object(jobs.executor, 'submit'):
+                job = jobs.submit({'question': 'Question'})
+            jobs.executor.shutdown()
+            restored = ResearchJobs(storage_path=path)
+            self.assertEqual(restored.snapshot(job['id'])['status'], 'failed')
+            restored.executor.shutdown()
+
     def test_web_research_uses_configured_mcp_orchestrator(self):
         import asyncio
         result = {'answer': 'Configured runner result'}
@@ -34,6 +104,7 @@ class WebTests(unittest.TestCase):
 
     def test_verified_prose_and_source_identity_are_preserved(self):
         result = {'answer': 'An explanation [Source 7]', 'verification': {'supported': True},
+                  'coverage': {'status': 'partial', 'gaps': ['Previous period missing.']},
                   'evidence': [{'source_id': 7, 'tool': 'get_filing_section', 'result': {
                       'text': 'Original evidence', 'source_url': 'https://www.sec.gov/test',
                       'company': {'ticker': 'TEST'}}}]}
@@ -43,6 +114,8 @@ class WebTests(unittest.TestCase):
         self.assertNotIn('text', payload['sources'][0])
         self.assertNotIn('Original evidence', str(payload['sources']))
         self.assertIn('An explanation', payload['markdown'])
+        self.assertEqual(payload['coverage'], result['coverage'])
+        self.assertIn('Partial coverage', payload['markdown'])
 
     def test_rejected_draft_is_not_rendered_or_exported(self):
         payload = present_result('Question', {'answer': 'Unsafe answer', 'draft': 'Unsafe draft',
@@ -62,6 +135,16 @@ class WebTests(unittest.TestCase):
             self.assertEqual(jobs.snapshot(), [])
         finally:
             jobs.executor.shutdown()
+
+    def test_executor_rejection_does_not_leave_a_running_job(self):
+        with TemporaryDirectory() as root:
+            path = Path(root) / 'conversations.json'
+            jobs = ResearchJobs(storage_path=path)
+            jobs.executor.shutdown()
+            with self.assertRaises(RuntimeError):
+                jobs.submit({'question': 'Question'})
+            self.assertEqual(jobs.snapshot(), [])
+            self.assertEqual(json.loads(path.read_text()), {})
 
     def test_submit_scopes_company_and_completes_existing_runner(self):
         seen = []

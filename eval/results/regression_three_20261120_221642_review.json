@@ -1,0 +1,40 @@
+{
+  "results_file": "eval/results/regression_three_20261120_221642.json",
+  "unit_tests": {
+    "passed": 526
+  },
+  "code_changed_during_run": false,
+  "automatic": {
+    "answers_returned": 3,
+    "verification_passed": 3,
+    "coverage_complete": 2,
+    "coverage_partial": 1
+  },
+  "total_seconds": 354.5908300820156,
+  "estimated_api_cost_usd": 0.01189911,
+  "manual_review": [
+    {
+      "id": "progressive_03_oracle_growth",
+      "status": "needs_correction",
+      "finding": "Revenue and growth match tool evidence, but opening sentence generalizes the single 2024-05-31 period end to all fiscal years. Critic approved this scope error.",
+      "priority": "high"
+    },
+    {
+      "id": "salesforce_margin_holdout",
+      "status": "answer_supported_metadata_conflict",
+      "finding": "Final answer uses correct period-end dates and supported revenues/margins. Underlying latest and previous financial records both carry FY2025. Latest cached report declares DocumentFiscalYearFocus=2025 while visible report text uses fiscal 2026 and period end January 31, 2026. Parser trusts the single inline XBRL field without detecting this conflict.",
+      "priority": "high"
+    },
+    {
+      "id": "progressive_05_intel_updates",
+      "status": "partial",
+      "finding": "Annual values and two growth rates are supported. Repair reaches 10-Q and 8-K tools, but top_k=1 10-Q excerpt covers cash flows rather than requested revenue; 8-K content remains unavailable. Final answer discloses limitations and coverage is partial. Initial specialists also repeat annual retrieval for quarterly/current tasks.",
+      "priority": "high"
+    }
+  ],
+  "next_actions": [
+    "Improve quarterly/current-source task routing and focused retrieval before increasing retries.",
+    "Detect conflicting fiscal-year evidence without company-specific mappings.",
+    "Reject period/date generalizations beyond the cited period in Writer/Critic review."
+  ]
+}

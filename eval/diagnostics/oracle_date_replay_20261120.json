@@ -1,0 +1,6 @@
+{
+  "case": "progressive_03_oracle_growth",
+  "mode": "saved_draft_deterministic_replay",
+  "passed": true,
+  "answer": "Oracle’ın FY2024 (2024-05-31’te sona eren mali yıl) geliri 52961000000 USD; FY2025 (2025-05-31) geliri 57399000000 USD; FY2026 (2026-05-31) geliri ise 67357000000 USD oldu. [Source 2]\n\nYıllık gelir büyümesi FY2025’te 8.38%, FY2026’da 17.35% olarak gerçekleşti. Bu iki yıllık karşılaştırma büyüme hızının hızlandığını gösteriyor. [Source 3]"
+}

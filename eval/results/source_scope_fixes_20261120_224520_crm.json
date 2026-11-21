@@ -1,0 +1,217 @@
+{
+  "company": {
+    "ticker": "CRM",
+    "name": "Salesforce, Inc.",
+    "cik": "0001108524"
+  },
+  "facts": {
+    "company": {
+      "ticker": "CRM",
+      "cik": "0001108524",
+      "name": "Salesforce, Inc."
+    },
+    "concept": "revenue",
+    "definition": {
+      "description": "Annual total revenue",
+      "taxonomy": "us-gaap",
+      "unit": "USD",
+      "tags": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "Revenues",
+        "SalesRevenueNet"
+      ]
+    },
+    "unit": "USD",
+    "requested_years": 2,
+    "available_period_count": 2,
+    "history_complete": true,
+    "requested_period_ends": [
+      "2026-01-31",
+      "2025-01-31"
+    ],
+    "missing_period_ends": [],
+    "records": [
+      {
+        "cik": 1108524,
+        "metric": "revenue",
+        "start": "2025-02-01",
+        "end": "2026-01-31",
+        "value": 41525000000,
+        "unit": "USD",
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "form": "10-K",
+        "filed": "2026-03-02",
+        "accn": "0001108524-26-000060",
+        "is_amendment": false,
+        "fiscal_year": 2026,
+        "fiscal_year_source": "explicit_report_definition",
+        "fiscal_year_warning": "DocumentFiscalYearFocus declares 2025; the explicit fiscal-year definition for this report period takes precedence.",
+        "period_label": "FY2026 (period end: 2026-01-31)",
+        "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+      },
+      {
+        "cik": 1108524,
+        "metric": "revenue",
+        "start": "2024-02-01",
+        "end": "2025-01-31",
+        "value": 37895000000,
+        "unit": "USD",
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "form": "10-K",
+        "filed": "2026-03-02",
+        "accn": "0001108524-26-000060",
+        "is_amendment": false,
+        "fiscal_year": 2025,
+        "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+        "period_label": "FY2025 (period end: 2025-01-31)",
+        "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+      }
+    ]
+  },
+  "metrics": {
+    "company": {
+      "ticker": "CRM",
+      "cik": "0001108524",
+      "name": "Salesforce, Inc."
+    },
+    "requested_years": 2,
+    "results": {
+      "operating_margin": [
+        {
+          "cik": 1108524,
+          "fiscal_year": 2026,
+          "start": "2025-02-01",
+          "end": "2026-01-31",
+          "value": 0.20062612883804937,
+          "unit": "ratio",
+          "metric": "operating_margin",
+          "formula": "operating_income / revenue",
+          "inputs": {
+            "operating_income": {
+              "cik": 1108524,
+              "metric": "operating_income",
+              "start": "2025-02-01",
+              "end": "2026-01-31",
+              "value": 8331000000,
+              "unit": "USD",
+              "tag": "OperatingIncomeLoss",
+              "form": "10-K",
+              "filed": "2026-03-02",
+              "accn": "0001108524-26-000060",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "explicit_report_definition",
+              "fiscal_year_warning": "DocumentFiscalYearFocus declares 2025; the explicit fiscal-year definition for this report period takes precedence.",
+              "period_label": "FY2026 (period end: 2026-01-31)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+            },
+            "revenue": {
+              "cik": 1108524,
+              "metric": "revenue",
+              "start": "2025-02-01",
+              "end": "2026-01-31",
+              "value": 41525000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-03-02",
+              "accn": "0001108524-26-000060",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "explicit_report_definition",
+              "fiscal_year_warning": "DocumentFiscalYearFocus declares 2025; the explicit fiscal-year definition for this report period takes precedence.",
+              "period_label": "FY2026 (period end: 2026-01-31)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+            }
+          },
+          "period_label": "FY2026 (period end: 2026-01-31)"
+        },
+        {
+          "cik": 1108524,
+          "fiscal_year": 2025,
+          "start": "2024-02-01",
+          "end": "2025-01-31",
+          "value": 0.19013062409288825,
+          "unit": "ratio",
+          "metric": "operating_margin",
+          "formula": "operating_income / revenue",
+          "inputs": {
+            "operating_income": {
+              "cik": 1108524,
+              "metric": "operating_income",
+              "start": "2024-02-01",
+              "end": "2025-01-31",
+              "value": 7205000000,
+              "unit": "USD",
+              "tag": "OperatingIncomeLoss",
+              "form": "10-K",
+              "filed": "2026-03-02",
+              "accn": "0001108524-26-000060",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2025 (period end: 2025-01-31)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+            },
+            "revenue": {
+              "cik": 1108524,
+              "metric": "revenue",
+              "start": "2024-02-01",
+              "end": "2025-01-31",
+              "value": 37895000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-03-02",
+              "accn": "0001108524-26-000060",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2025 (period end: 2025-01-31)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+            }
+          },
+          "period_label": "FY2025 (period end: 2025-01-31)"
+        }
+      ]
+    },
+    "calculation_definitions": {
+      "operating_margin": {
+        "description": "Annual operating profit margin",
+        "function": "calculate_margin",
+        "inputs": [
+          "operating_income",
+          "revenue"
+        ],
+        "unit": "ratio",
+        "period_mode": "same_period"
+      }
+    },
+    "warnings": [],
+    "availability": {
+      "operating_income": {
+        "concept": "operating_income",
+        "missing_period_ends": [],
+        "available_period_ends": [
+          "2026-01-31",
+          "2025-01-31"
+        ]
+      },
+      "revenue": {
+        "concept": "revenue",
+        "missing_period_ends": [],
+        "available_period_ends": [
+          "2026-01-31",
+          "2025-01-31"
+        ]
+      }
+    }
+  },
+  "passed": true
+}

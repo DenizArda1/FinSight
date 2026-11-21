@@ -5,8 +5,9 @@ from time import perf_counter
 from src.agents.agent_states import AgentState, create_initial_state
 from src.agents.critic import run_critic
 from src.agents.planner import generate_plan
-from src.agents.specialist import run_specialist
+from src.agents.specialist import SpecialistLimitError, run_specialist
 from src.agents.writer import run_writer
+from src.agents.coverage import check_coverage
 
 
 async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace=None, max_revisions=2) -> AgentState:
@@ -45,10 +46,27 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
         **planner_usage,
     })
 
+    financial_years = max((task.get('years', 1) for task in state['plan']
+                           if task['agent'] == 'financial_data'), default=1)
     for task in state["plan"]:
         task_trace = []
         try:
-            result = await run_specialist(task, llm_config, mcp_client, tool_schemas, trace=task_trace)
+            try:
+                scoped_task = {**task, 'question': state['question']}
+                if task['agent'] == 'financial_data':
+                    scoped_task['years'] = financial_years
+                result = await run_specialist(scoped_task, llm_config, mcp_client, tool_schemas, trace=task_trace)
+            except SpecialistLimitError:
+                result = {
+                    "task_id": task["id"], "agent": task["agent"],
+                    "summary": "Retrieval budget exhausted. Coverage is incomplete; use only collected tool evidence.",
+                    "trace": deepcopy(task_trace), "incomplete": True,
+                }
+                task_trace.append({
+                    "type": "coverage", "task_id": task["id"], "agent": task["agent"],
+                    "status": "incomplete", "reason": "retrieval_budget_exhausted",
+                    "instruction": task["instruction"],
+                })
             if task["agent"] == "financial_data":
                 state["financial_results"].append(result)
             elif task["agent"] == "filing_rag":
@@ -56,9 +74,31 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
         finally:
             state["trace"].extend(deepcopy(task_trace))
 
+    if state['request_type'] not in {'clarification', 'out_of_scope'}:
+        coverage = await check_coverage(state, llm_config)
+        repair_tasks = coverage['tasks']
+        for index, task in enumerate(repair_tasks, 1):
+            repair_trace = []
+            scoped_task = {**task, 'id': f'coverage_repair_{index}', 'question': state['question']}
+            try:
+                await run_specialist(scoped_task, llm_config, mcp_client, tool_schemas,
+                                     trace=repair_trace, max_steps=6, max_tool_calls=6)
+            except SpecialistLimitError:
+                pass  # The bounded pass still retains any successful tool evidence.
+            finally:
+                state['trace'].extend(deepcopy(repair_trace))
+        if repair_tasks:
+            coverage = await check_coverage(state, llm_config)
+        state['coverage'] = {key: value for key, value in coverage.items() if key != 'tasks'}
+        state['coverage']['repair_tasks_attempted'] = len(repair_tasks)
+        state['trace'].append({'type': 'coverage', **state['coverage']})
+
     feedback = None
     last_candidate = None
-    for revision in range(max_revisions + 1):
+    critic_reviews = 0
+    # Syntax repairs can consume the normal budget before the first content
+    # review. Reserve at most one further revision for that first review.
+    for revision in range(max_revisions + 2):
         state["revision_count"] = revision
         writer_response = None
         try:
@@ -76,11 +116,14 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
         else:
             last_candidate = {key: deepcopy(state[key]) for key in ("draft", "composition", "evidence")}
             await run_critic(state, llm_config)
+            critic_reviews += 1
         verification = state["verification"]
         if verification["status"] in {"passed", "error"}:
             return state
 
-        if revision == max_revisions:
+        first_content_repair = (max_revisions > 0 and revision == max_revisions
+                                and critic_reviews == 1 and writer_response is None)
+        if revision >= max_revisions and not first_content_repair:
             if state["draft"] is None and last_candidate is not None:
                 state.update(last_candidate)
                 # Keep the failed verification and answer=None: this is only an
@@ -105,6 +148,7 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
         state["trace"].append({
             "type": "revision", "status": "scheduled",
             "revision_count": revision + 1, "max_revisions": max_revisions,
+            "reserved_content_repair": first_content_repair,
             "issues": deepcopy(verification["issues"]),
         })
 

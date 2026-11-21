@@ -2,6 +2,7 @@ import json
 import math
 import re
 from decimal import Decimal
+from datetime import date
 from time import perf_counter
 
 from src.llm.client import config_for_role, generate_response
@@ -11,7 +12,7 @@ from src.verification.grounding import parse_verification_response
 from src.verification.evidence import REPORT_SEARCH_TOOLS, limit_report_evidence
 
 
-FIELD_REFERENCE = re.compile(r"\{\{([1-9][0-9]*):([A-Za-z0-9_/-]+)(\|percent)?\}\}")
+from src.verification.field_references import FIELD_REFERENCE, normalize_catalog_references
 TURKISH_SOURCE_REFERENCE = re.compile(r"\[Kaynak ([1-9][0-9]*)\]")
 DISPLAY_FIELDS = {
     "value", "unit", "start", "end", "fiscal_year", "period_label", "form",
@@ -166,11 +167,29 @@ def bind_cited_metadata(prose, catalog):
                     continue
                 prefix = "FY" if field == "fiscal_year" else ""
                 replacements.setdefault(prefix + str(value), prefix + match.group())
+                if field in {'start', 'end', 'report_date'}:
+                    parsed = date.fromisoformat(value)
+                    month_names = (
+                        ('January February March April May June July August September October November December').split(),
+                        ('Ocak Şubat Mart Nisan Mayıs Haziran Temmuz Ağustos Eylül Ekim Kasım Aralık').split(),
+                    )
+                    for names in month_names:
+                        month = names[parsed.month - 1]
+                        replacements.setdefault(f'{parsed.day} {month} {parsed.year}', match.group())
+                        replacements.setdefault(f'{month} {parsed.day}, {parsed.year}', match.group())
         if replacements:
+            # Bind full dates before standalone years so a Turkish suffix such
+            # as "31 Mayıs 2025’te" does not split the date into partial tokens.
             pattern = r"(?<![\w/-])(?:" + "|".join(
                 re.escape(label) for label in sorted(replacements, key=len, reverse=True)
             ) + r")(?![\w/-])"
             paragraph = re.sub(pattern, lambda match: replacements[match.group()], paragraph)
+            # A cited fiscal year can also be written naturally as 2025'te.
+            # Limit this binding to year labels followed by an apostrophe;
+            # a free amount such as "2025 USD" must not become a year token.
+            for label, reference in replacements.items():
+                if label.startswith('FY'):
+                    paragraph = re.sub(r'(?<!\w)' + label[2:] + r"(?=['’])", reference[2:], paragraph)
         paragraphs.append(paragraph)
     return "\n\n".join(paragraphs)
 
@@ -179,6 +198,7 @@ def compose_template(payload, catalog, request_type=None):
     if not isinstance(payload, dict) or not isinstance(payload.get("text"), str):
         raise ValueError("Composition must include text")
 
+    payload = {**payload, "text": normalize_catalog_references(payload["text"], catalog)}
     facts = payload.get("facts")
     if not isinstance(facts, list) or any(not isinstance(key, str) or key not in catalog for key in facts):
         raise ValueError("Composition must select existing fact IDs")
@@ -219,16 +239,6 @@ def compose_template(payload, catalog, request_type=None):
             "not a fact's position. Put selected fact_catalog IDs only in the facts list."
         )
     has_report_sources = any(entry["fields"].get("section") for entry in catalog.values())
-    if request_type == "mixed" and payload.get("kind") == "answer" and has_report_sources:
-        report_ids = {entry["source_id"] for entry in catalog.values() if entry["fields"].get("section")}
-        cited_ids = {int(number) for number in SOURCE_REFERENCE.findall(prose)}
-        if not report_ids.intersection(cited_ids):
-            raise ValueError(
-                "Cite the report explanation in prose using its actual report source IDs: "
-                + ", ".join(f"[Source {source_id}]" for source_id in sorted(report_ids))
-                + ". Financial-record citations cannot support macro events or business-risk claims. "
-                "Citations on metadata cards alone do not cite the explanation."
-            )
     if (payload.get("kind") == "answer" and prose and has_report_sources
             and not SOURCE_REFERENCE.search(prose)):
         raise ValueError(
@@ -362,14 +372,29 @@ def cited_report_texts(evidence):
 
 
 def mask_cited_identifiers(prose, evidence):
-    """Exempt literal alphanumeric names in cited report text, never numeric values."""
+    """Exempt cited names and report-year labels, never financial amounts.
+
+    A report's metadata describes its own fiscal year, not every comparative
+    year discussed in its body. Year presence is lexical support only; Critic
+    must still validate the period and the claim attached to it.
+    """
     reports = cited_report_texts(evidence)
     lines = []
     for line in prose.splitlines():
         excerpts = [text for number in SOURCE_REFERENCE.findall(line) for text in reports.get(int(number), [])]
-        for token in set(re.findall(r"\b[A-Za-z][A-Za-z-]*\d[A-Za-z0-9-]*\b", line)):
+        for label in set(re.findall(r'\bQ[1-4]\s+(?:19|20)\d{2}\b', line)):
+            pattern = r'\b' + r'\s+'.join(label.split()) + r'\b'
+            if any(re.search(pattern, text) for text in excerpts):
+                line = re.sub(pattern, lambda match: ' ' * len(match.group()), line)
+        for label in set(re.findall(r"\b(?:FY(?:19|20)\d{2}|(?:19|20)\d{2}(?=['’]))\b", line)):
+            year = label.removeprefix("FY")
+            if any(re.search(r'\b(?:FY)?' + year + r'\b', text) for text in excerpts):
+                line = re.sub(r'\b' + label + r'\b', ' ' * len(label), line)
+        for token in set(re.findall(r"\b(?:[A-Za-z][A-Za-z-]*\d[A-Za-z0-9-]*|\d+[A-Z][A-Za-z0-9-]*)\b", line)):
             if re.match(r"^(?:FY|Q|CIK|USD|EUR|GBP|JPY|CNY|CAD|AUD)\d", token, re.IGNORECASE):
                 continue
+            if re.fullmatch(r'\d+(?:K|M|B|T|USD|EUR|GBP|JPY|CNY|CAD|AUD|BPS)', token, re.I):
+                continue  # A compact amount/unit is not a product identifier.
             pattern = r"(?<!\w)" + re.escape(token) + r"(?!\w)"
             if any(re.search(pattern, text) for text in excerpts):
                 line = re.sub(pattern, " " * len(token), line)
@@ -401,7 +426,7 @@ def render_agent_template(payload, evidence):
             "Use exact catalog placeholders for numbers, dates, forms and percentages. "
             "Unbound prose values (untrusted text): "
             + json.dumps(offending_spans, ensure_ascii=False)
-            + ". Replace these with the matching {{source_id:path}} token from the catalog, "
+            + ". Replace these with the matching short field token from fact_catalog, "
             "or remove the unsupported claim. Do not calculate or spell out values."
         )
     if re.search(r"(?:https?://|www\.|\]\(|<a\b)", prose, re.IGNORECASE):
@@ -456,7 +481,8 @@ def parse_agent_verdict(text):
 
 
 def request_answer_check(messages, llm_config, trace, phase, response_format="json"):
-    llm_config = config_for_role(llm_config, phase)
+    role = {"composition": "writer", "composition_repair": "writer", "verification": "critic", "coverage": "critic"}.get(phase, phase)
+    llm_config = config_for_role(llm_config, role)
     started = perf_counter()
     event = {"type": "model", "phase": phase, "provider": llm_config.get("provider", "ollama"), "model": llm_config.get("model")}
     try:

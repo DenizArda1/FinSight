@@ -21,6 +21,8 @@ def make_plan(request_type, agents):
                 "agent": agent,
                 "instruction": "Retrieve Apple's latest annual evidence.",
                 "fiscal_year": None,
+                "filing_scope": "annual",
+                "years": 1,
             }
             for index, agent in enumerate(agents, start=1)
         ],
@@ -28,6 +30,18 @@ def make_plan(request_type, agents):
 
 
 class PlannerValidationTests(unittest.TestCase):
+    def test_source_scope_and_year_coverage_are_required_and_strict(self):
+        for field in ('filing_scope', 'years'):
+            plan = make_plan('financial', ['financial_data'])
+            del plan['tasks'][0][field]
+            with self.assertRaises(ValueError):
+                validate_plan(plan)
+        for years in (True, 2.0, '2', 0, 6):
+            plan = make_plan('financial', ['financial_data'])
+            plan['tasks'][0]['years'] = years
+            with self.subTest(years=years), self.assertRaises(ValueError):
+                validate_plan(plan)
+
     def test_filing_tasks_require_a_structured_period(self):
         plan = make_plan("filing", ["filing_rag"])
         del plan["tasks"][0]["fiscal_year"]

@@ -13,6 +13,7 @@ from src.ingestion.public_sources import PublicSourceClient
 from src.ingestion.sec_access import preparation_lock, sec_client
 from src.rag.chunking import split_text
 from src.rag.html_parser import extract_text
+from src.rag.hybrid import bm25_rank
 from src.tools.company import resolve_company
 
 BLS_SERIES = {
@@ -31,21 +32,20 @@ def validate_search(query, top_k):
 
 def rank_documents(documents, query, top_k):
     """Lexical excerpt retrieval over a bounded recent corpus, with exact offsets."""
-    terms = set(re.findall(r'[a-z0-9]{3,}', query.lower()))
-    matches = []
+    records = []
     for document in documents:
-        for chunk in split_text(document['text'], max_chars=3500, overlap=300):
-            words = set(re.findall(r'[a-z0-9]{3,}', chunk['text'].lower()))
-            score = len(terms & words)
-            if score:
-                matches.append({'text': chunk['text'], 'score': score,
-                                'metadata': {**document['metadata'], 'start': chunk['start'], 'end': chunk['end']}})
-    return sorted(matches, key=lambda item: item['score'], reverse=True)[:top_k]
+        for chunk in split_text(document['text'], max_chars=2500, overlap=300):
+            records.append({'chunk_id': f'{len(records):08d}', 'text': chunk['text'],
+                            'metadata': {**document['metadata'], 'start': chunk['start'], 'end': chunk['end']}})
+    return [{'text': record['text'], 'score': record['bm25_score'], 'metadata': record['metadata']}
+            for record in bm25_rank(query, records, top_k)]
 
 
 def select_updates(rows, form, limit):
     selected = {row['accessionNumber']: row for row in rows if row['form'] in {form, form + '/A'}}
-    return sorted(selected.values(), key=lambda row: (row['filingDate'], row['accessionNumber']), reverse=True)[:limit]
+    return sorted(selected.values(), key=lambda row: (
+        row.get('reportDate', '') if form == '10-Q' else row['filingDate'],
+        row['filingDate'], row['accessionNumber']), reverse=True)[:limit]
 
 
 def exhibit_links(index_html, base):
@@ -105,6 +105,10 @@ def search_company_updates(ticker, query, form='10-Q', limit=4, top_k=4):
                     warnings.append(f'{accession}: document unavailable ({type(error).__name__}).')
     return {'company': company, 'matches': rank_documents(documents, query, top_k), 'warnings': warnings,
             'coverage': {'form': form, 'filings_considered': len(rows), 'documents_loaded': len(documents),
+                         'latest_considered_report_date': max((row['reportDate'] for row in rows), default=None),
+                         'latest_considered_filing_date': max((row['filingDate'] for row in rows), default=None),
+                         'selected_filings': [{'accession_number': row['accessionNumber'],
+                                               'report_date': row['reportDate'], 'filed': row['filingDate']} for row in rows],
                          'scope': 'Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed.'},
             'period_warning': '10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter.'}
 

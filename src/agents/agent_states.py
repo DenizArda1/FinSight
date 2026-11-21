@@ -5,6 +5,8 @@ class PlanTask(TypedDict):
     agent: Literal["financial_data", "filing_rag"]
     instruction: str
     fiscal_year: int | None
+    filing_scope: Literal['annual', 'recent', 'any']
+    years: int
 
 class AgentState(TypedDict):
     question: str
@@ -19,6 +21,7 @@ class AgentState(TypedDict):
     request_type: str | None
     evidence: list[dict]
     composition: dict | None
+    coverage: dict | None
 
 def create_initial_state(question: str) -> AgentState:
     if not isinstance(question, str) or not question.strip():
@@ -36,5 +39,6 @@ def create_initial_state(question: str) -> AgentState:
         "trace": [],
         "request_type": None,
         "evidence": [],
-        "composition": None
+        "composition": None,
+        "coverage": None,
     }

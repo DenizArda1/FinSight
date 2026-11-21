@@ -1,0 +1,2297 @@
+{
+  "question": "Intel'in büyüme oranlarında bir gerileme var mı? Son gelişmeler ile güncel finansal durumu analiz et",
+  "plan": [
+    {
+      "id": "task_1",
+      "agent": "financial_data",
+      "instruction": "Intel'in son 3 yılın gelir büyüme oranlarını hesapla, years=3 kullan.",
+      "fiscal_year": null
+    },
+    {
+      "id": "task_2",
+      "agent": "filing_rag",
+      "instruction": "Intel'in son 10-Q ve 8-K dosyalarını araştırarak son gelişmeleri ve güncel finansal durumunu analiz et.",
+      "fiscal_year": null
+    }
+  ],
+  "financial_results": [
+    {
+      "task_id": "task_1",
+      "agent": "financial_data",
+      "summary": "Intel'in son 3 yılın gelir büyüme oranları aşağıdaki gibidir:\n\n- **FY2024 (2023-12-30 - 2024-12-28)**: -2.08% (54.228 milyar USD'den 53.101 milyar USD'ye düştü)\n- **FY2025 (2024-12-28 - 2025-12-27)**: -0.47% (53.101 milyar USD'den 52.853 milyar USD'ye düştü)\n\nBu büyüme oranları, Intel'in son üç yıl boyunca gelirlerindeki değişimleri yansıtmaktadır.",
+      "trace": [
+        {
+          "type": "agent",
+          "task_id": "task_1",
+          "agent": "financial_data",
+          "status": "started"
+        },
+        {
+          "type": "model",
+          "task_id": "task_1",
+          "agent": "financial_data",
+          "step": 1,
+          "max_output_tokens": 1024,
+          "input_tokens": 675,
+          "output_tokens": 24,
+          "model": "qwen3:8b",
+          "provider": "ollama",
+          "estimated_cost_usd": 0.0,
+          "status": "completed",
+          "tool_calls": [
+            {
+              "id": "call_jw0pjb0u",
+              "function": {
+                "index": 0,
+                "name": "resolve_ticker_to_cik",
+                "arguments": {
+                  "ticker": "Intel"
+                }
+              }
+            }
+          ],
+          "elapsed_seconds": 2.4319381669993163
+        },
+        {
+          "type": "tool",
+          "task_id": "task_1",
+          "agent": "financial_data",
+          "step": 1,
+          "call_id": 1,
+          "name": "resolve_ticker_to_cik",
+          "arguments": {
+            "ticker": "Intel"
+          },
+          "status": "completed",
+          "result": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "elapsed_seconds": 0.028963167002075352
+        },
+        {
+          "type": "model",
+          "task_id": "task_1",
+          "agent": "financial_data",
+          "step": 2,
+          "max_output_tokens": 1024,
+          "input_tokens": 1107,
+          "output_tokens": 51,
+          "model": "qwen3:8b",
+          "provider": "ollama",
+          "estimated_cost_usd": 0.0,
+          "status": "completed",
+          "tool_calls": [
+            {
+              "id": "call_srkiyk9a",
+              "function": {
+                "index": 0,
+                "name": "get_company_facts",
+                "arguments": {
+                  "cik": "0000050863",
+                  "concept": "revenue",
+                  "unit": "USD",
+                  "years": 3
+                }
+              }
+            }
+          ],
+          "elapsed_seconds": 3.1649545000000217
+        },
+        {
+          "type": "tool",
+          "task_id": "task_1",
+          "agent": "financial_data",
+          "step": 2,
+          "call_id": 2,
+          "name": "get_company_facts",
+          "arguments": {
+            "cik": "0000050863",
+            "concept": "revenue",
+            "unit": "USD",
+            "years": 3
+          },
+          "status": "completed",
+          "result": {
+            "company": {
+              "ticker": "INTC",
+              "cik": "0000050863",
+              "name": "INTEL CORP"
+            },
+            "concept": "revenue",
+            "definition": {
+              "description": "Annual total revenue",
+              "taxonomy": "us-gaap",
+              "unit": "USD",
+              "tags": [
+                "RevenueFromContractWithCustomerExcludingAssessedTax",
+                "Revenues",
+                "SalesRevenueNet"
+              ]
+            },
+            "unit": "USD",
+            "requested_years": 3,
+            "available_period_count": 3,
+            "history_complete": true,
+            "requested_period_ends": [
+              "2025-12-27",
+              "2024-12-28",
+              "2023-12-30"
+            ],
+            "missing_period_ends": [],
+            "records": [
+              {
+                "cik": 50863,
+                "metric": "revenue",
+                "start": "2024-12-29",
+                "end": "2025-12-27",
+                "value": 52853000000,
+                "unit": "USD",
+                "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                "form": "10-K",
+                "filed": "2026-01-23",
+                "accn": "0000050863-26-000011",
+                "is_amendment": false,
+                "fiscal_year": 2025,
+                "period_label": "FY2025 (period end: 2025-12-27)",
+                "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+              },
+              {
+                "cik": 50863,
+                "metric": "revenue",
+                "start": "2023-12-31",
+                "end": "2024-12-28",
+                "value": 53101000000,
+                "unit": "USD",
+                "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                "form": "10-K",
+                "filed": "2026-01-23",
+                "accn": "0000050863-26-000011",
+                "is_amendment": false,
+                "fiscal_year": 2024,
+                "period_label": "FY2024 (period end: 2024-12-28)",
+                "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+              },
+              {
+                "cik": 50863,
+                "metric": "revenue",
+                "start": "2023-01-01",
+                "end": "2023-12-30",
+                "value": 54228000000,
+                "unit": "USD",
+                "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                "form": "10-K",
+                "filed": "2026-01-23",
+                "accn": "0000050863-26-000011",
+                "is_amendment": false,
+                "fiscal_year": 2023,
+                "period_label": "FY2023 (period end: 2023-12-30)",
+                "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+              }
+            ]
+          },
+          "elapsed_seconds": 0.012426166998920962
+        },
+        {
+          "type": "model",
+          "task_id": "task_1",
+          "agent": "financial_data",
+          "step": 3,
+          "max_output_tokens": 1024,
+          "input_tokens": 2108,
+          "output_tokens": 39,
+          "model": "qwen3:8b",
+          "provider": "ollama",
+          "estimated_cost_usd": 0.0,
+          "status": "completed",
+          "tool_calls": [
+            {
+              "id": "call_rvzzgugb",
+              "function": {
+                "index": 0,
+                "name": "compute_metrics",
+                "arguments": {
+                  "cik": "0000050863",
+                  "metrics": [
+                    "revenue_growth"
+                  ],
+                  "years": 3
+                }
+              }
+            }
+          ],
+          "elapsed_seconds": 4.057699707998836
+        },
+        {
+          "type": "tool",
+          "task_id": "task_1",
+          "agent": "financial_data",
+          "step": 3,
+          "call_id": 3,
+          "name": "compute_metrics",
+          "arguments": {
+            "cik": "0000050863",
+            "metrics": [
+              "revenue_growth"
+            ],
+            "years": 3
+          },
+          "status": "completed",
+          "result": {
+            "company": {
+              "ticker": "INTC",
+              "cik": "0000050863",
+              "name": "INTEL CORP"
+            },
+            "requested_years": 3,
+            "results": {
+              "revenue_growth": [
+                {
+                  "cik": 50863,
+                  "fiscal_year": 2025,
+                  "metric": "revenue_growth",
+                  "start": "2024-12-29",
+                  "end": "2025-12-27",
+                  "value": -0.004670345191239322,
+                  "unit": "ratio",
+                  "formula": "current_revenue / previous_revenue - 1",
+                  "inputs": {
+                    "previous_revenue": {
+                      "cik": 50863,
+                      "metric": "revenue",
+                      "start": "2023-12-31",
+                      "end": "2024-12-28",
+                      "value": 53101000000,
+                      "unit": "USD",
+                      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                      "form": "10-K",
+                      "filed": "2026-01-23",
+                      "accn": "0000050863-26-000011",
+                      "is_amendment": false,
+                      "fiscal_year": 2024,
+                      "period_label": "FY2024 (period end: 2024-12-28)",
+                      "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                      "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                    },
+                    "current_revenue": {
+                      "cik": 50863,
+                      "metric": "revenue",
+                      "start": "2024-12-29",
+                      "end": "2025-12-27",
+                      "value": 52853000000,
+                      "unit": "USD",
+                      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                      "form": "10-K",
+                      "filed": "2026-01-23",
+                      "accn": "0000050863-26-000011",
+                      "is_amendment": false,
+                      "fiscal_year": 2025,
+                      "period_label": "FY2025 (period end: 2025-12-27)",
+                      "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                      "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                    }
+                  },
+                  "period_label": "FY2025 (period end: 2025-12-27)"
+                },
+                {
+                  "cik": 50863,
+                  "fiscal_year": 2024,
+                  "metric": "revenue_growth",
+                  "start": "2023-12-31",
+                  "end": "2024-12-28",
+                  "value": -0.02078262152393595,
+                  "unit": "ratio",
+                  "formula": "current_revenue / previous_revenue - 1",
+                  "inputs": {
+                    "previous_revenue": {
+                      "cik": 50863,
+                      "metric": "revenue",
+                      "start": "2023-01-01",
+                      "end": "2023-12-30",
+                      "value": 54228000000,
+                      "unit": "USD",
+                      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                      "form": "10-K",
+                      "filed": "2026-01-23",
+                      "accn": "0000050863-26-000011",
+                      "is_amendment": false,
+                      "fiscal_year": 2023,
+                      "period_label": "FY2023 (period end: 2023-12-30)",
+                      "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                      "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                    },
+                    "current_revenue": {
+                      "cik": 50863,
+                      "metric": "revenue",
+                      "start": "2023-12-31",
+                      "end": "2024-12-28",
+                      "value": 53101000000,
+                      "unit": "USD",
+                      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                      "form": "10-K",
+                      "filed": "2026-01-23",
+                      "accn": "0000050863-26-000011",
+                      "is_amendment": false,
+                      "fiscal_year": 2024,
+                      "period_label": "FY2024 (period end: 2024-12-28)",
+                      "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                      "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                    }
+                  },
+                  "period_label": "FY2024 (period end: 2024-12-28)"
+                }
+              ]
+            },
+            "calculation_definitions": {
+              "revenue_growth": {
+                "description": "Annual revenue growth",
+                "function": "calculate_growth",
+                "inputs": [
+                  "revenue"
+                ],
+                "unit": "ratio",
+                "period_mode": "consecutive_periods"
+              }
+            },
+            "warnings": [],
+            "availability": {
+              "revenue": {
+                "concept": "revenue",
+                "missing_period_ends": [],
+                "available_period_ends": [
+                  "2025-12-27",
+                  "2024-12-28",
+                  "2023-12-30"
+                ]
+              }
+            }
+          },
+          "elapsed_seconds": 0.025376833000336774
+        },
+        {
+          "type": "model",
+          "task_id": "task_1",
+          "agent": "financial_data",
+          "step": 4,
+          "max_output_tokens": 1024,
+          "input_tokens": 3650,
+          "output_tokens": 183,
+          "model": "qwen3:8b",
+          "provider": "ollama",
+          "estimated_cost_usd": 0.0,
+          "status": "completed",
+          "tool_calls": [],
+          "elapsed_seconds": 9.591943165996781
+        },
+        {
+          "type": "agent",
+          "task_id": "task_1",
+          "agent": "financial_data",
+          "status": "completed",
+          "elapsed_seconds": 19.31345537499874
+        }
+      ],
+      "tool_call_count": 3
+    }
+  ],
+  "filing_results": [
+    {
+      "task_id": "task_2",
+      "agent": "filing_rag",
+      "summary": "Intel's recent 10-Q and 8-K filings provide insights into its financial performance, strategic initiatives, and risk factors. Here's a summary of the key points:\n\n### Financial Performance (from 10-Q filings):\n- **Revenue and Profitability**: Intel reported a net revenue of $16.5 billion for the quarter ended September 26, 2026, with a net income of $3.3 billion. This reflects a strong financial position despite challenges in the semiconductor industry.\n- **Segment Performance**: The Intel Products segment contributed significantly to revenue, with $15.4 billion in revenue. The Intel Foundry segment reported a loss of $1.85 billion, indicating ongoing challenges in this area.\n- **Cost Management**: Cost of sales and operating expenses were managed effectively, contributing to a gross profit of $7.1 billion and an operating income of $2.5 billion.\n\n### Recent Developments (from 8-K filings):\n- **Strategic Initiatives**: Intel is focusing on advancing its next-generation process technologies, such as Intel 14A, and expanding manufacturing capabilities. These initiatives are expected to drive future growth and product design wins.\n- **Supply Chain and Geopolitical Risks**: Intel faces significant risks related to its global supply chain, including disruptions, delays, and shortages. Geopolitical tensions, particularly with the U.S. and China, and the impact of Russia's war on Ukraine, are also highlighted as potential threats.\n- **Debt and Capital Structure**: Intel has been actively managing its debt obligations, including the settlement of senior notes and the amendment of credit facilities. The company has also executed a $6.5 billion term loan facility to finance the repurchase of a minority interest in Ireland SCIP.\n- **Escrowed Shares and Warrants**: Intel has released a portion of its escrowed shares to the U.S. government and recognized gains and losses related to these shares. Additionally, warrants to the U.S. government for the purchase of shares are in place, which could dilute existing shareholders if exercised.\n\n### Risk Factors:\n- **Market and Economic Conditions**: Intel is exposed to macroeconomic conditions and geopolitical tensions, which could impact its business and financial performance.\n- **Technological and Manufacturing Challenges**: The development and implementation of new semiconductor products and manufacturing technologies are inherently risky and may not yield the expected returns.\n- **Regulatory and Legal Risks**: Intel faces potential risks related to IP litigation, cybersecurity threats, and evolving regulations across various jurisdictions.\n- **Talent and Operational Risks**: The need to attract, retain, and motivate key talent is critical for Intel's continued success, especially in a competitive industry.\n\n### Conclusion:\nIntel's recent filings indicate a strong financial position with effective cost management and strategic initiatives aimed at driving future growth. However, the company faces significant risks related to its global supply chain, geopolitical tensions, and technological challenges. These factors are expected to influence its financial performance and strategic direction in the coming quarters.",
+      "trace": [
+        {
+          "type": "agent",
+          "task_id": "task_2",
+          "agent": "filing_rag",
+          "status": "started"
+        },
+        {
+          "type": "model",
+          "task_id": "task_2",
+          "agent": "filing_rag",
+          "step": 1,
+          "max_output_tokens": 1024,
+          "input_tokens": 1464,
+          "output_tokens": 73,
+          "model": "qwen3:8b",
+          "provider": "ollama",
+          "estimated_cost_usd": 0.0,
+          "status": "completed",
+          "tool_calls": [
+            {
+              "id": "call_kezhooxg",
+              "function": {
+                "index": 0,
+                "name": "search_company_updates",
+                "arguments": {
+                  "form": "10-Q",
+                  "top_k": 5,
+                  "ticker": "INTC"
+                }
+              }
+            },
+            {
+              "id": "call_xy1nglqn",
+              "function": {
+                "index": 1,
+                "name": "search_company_updates",
+                "arguments": {
+                  "ticker": "INTC",
+                  "form": "8-K",
+                  "top_k": 5
+                }
+              }
+            }
+          ],
+          "elapsed_seconds": 5.926210207999247
+        },
+        {
+          "type": "tool",
+          "task_id": "task_2",
+          "agent": "filing_rag",
+          "step": 1,
+          "call_id": 1,
+          "name": "search_company_updates",
+          "arguments": {
+            "form": "10-Q",
+            "top_k": 5,
+            "ticker": "INTC"
+          },
+          "status": "error",
+          "result": {
+            "error": {
+              "type": "MCPToolError",
+              "message": "MCP tool 'search_company_updates' failed: Invalid arguments for search_company_updates: 'query' is a required property"
+            }
+          },
+          "elapsed_seconds": 0.005267209002340678
+        },
+        {
+          "type": "tool",
+          "task_id": "task_2",
+          "agent": "filing_rag",
+          "step": 1,
+          "call_id": 2,
+          "name": "search_company_updates",
+          "arguments": {
+            "ticker": "INTC",
+            "form": "8-K",
+            "top_k": 5
+          },
+          "status": "error",
+          "result": {
+            "error": {
+              "type": "MCPToolError",
+              "message": "MCP tool 'search_company_updates' failed: Invalid arguments for search_company_updates: 'query' is a required property"
+            }
+          },
+          "elapsed_seconds": 0.002677125001355307
+        },
+        {
+          "type": "model",
+          "task_id": "task_2",
+          "agent": "filing_rag",
+          "step": 2,
+          "max_output_tokens": 1024,
+          "input_tokens": 1625,
+          "output_tokens": 69,
+          "model": "qwen3:8b",
+          "provider": "ollama",
+          "estimated_cost_usd": 0.0,
+          "status": "completed",
+          "tool_calls": [
+            {
+              "id": "call_zzmynchk",
+              "function": {
+                "index": 0,
+                "name": "search_company_updates",
+                "arguments": {
+                  "form": "10-Q",
+                  "ticker": "INTC",
+                  "query": "financial performance",
+                  "top_k": 5
+                }
+              }
+            },
+            {
+              "id": "call_80fwl4d7",
+              "function": {
+                "index": 1,
+                "name": "search_company_updates",
+                "arguments": {
+                  "form": "8-K",
+                  "ticker": "INTC",
+                  "query": "recent developments",
+                  "top_k": 5
+                }
+              }
+            }
+          ],
+          "elapsed_seconds": 2.2505419999979495
+        },
+        {
+          "type": "tool",
+          "task_id": "task_2",
+          "agent": "filing_rag",
+          "step": 2,
+          "call_id": 3,
+          "name": "search_company_updates",
+          "arguments": {
+            "form": "10-Q",
+            "ticker": "INTC",
+            "query": "financial performance",
+            "top_k": 5
+          },
+          "status": "completed",
+          "result": {
+            "company": {
+              "ticker": "INTC",
+              "name": "INTEL CORP",
+              "cik": "0000050863"
+            },
+            "matches": [
+              {
+                "text": "Page\nForward-Looking Statements\n1\nAvailability of Company Information\n2\nConsolidated Condensed Financial Statements and Supplemental Details\n\tConsolidated Condensed Statements of Operations\t\n3\n\tConsolidated Condensed Statements of Comprehensive Income (Loss)\t\n4\n\tConsolidated Condensed Balance Sheets\t\n5\n\tConsolidated Condensed Statements of Cash Flows\t\n6\n\tConsolidated Condensed Statements of Stockholders' Equity\t\n8\n\tNotes to Consolidated Condensed Financial Statements\t\n9\n\tKey Terms\t\n29\nManagement's Discussion and Analysis (MD&A)\n\tOperating Segments Trends and Results\t\n33\n\tConsolidated Condensed Results of Operations\t\n37\n\tLiquidity and Capital Resources\t\n43\nRisk Factors and Other Key Information\n\tRisk Factors\t\n45\n\tQuantitative and Qualitative Disclosures About Market Risk\t\n45\n\tControls and Procedures\t\n45\n\tIssuer Purchases of Equity Securities\t\n45\n\tRule 10b5-1 Trading Arrangements\t\n46\n\tDisclosure Pursuant to Section 13(r) of the Securities Exchange Act of 1934\t\n46\n\tExhibits\t\n47\n\tForm 10-Q Cross-Reference Index\t\n48\nTable of Contents\nForward-Looking Statements\nThis Form 10-Q contains forward-looking statements that involve a number of risks and uncertainties. Words such as \"accelerate\", \"achieve\", \"aim\", \"ambitions\", \"anticipate\", \"believe\", \"committed\", \"continue\", \"could\", \"designed\", \"estimate\", \"expect\", \"forecast\", \"future\", \"goals\", \"grow\", \"guidance\", \"intend\", \"likely\", \"may\", \"might\", \"milestones\", \"next-generation\", \"objective\", \"on track\", \"opportunity\", \"outlook\", \"pending\", \"plan\", \"position\", \"possible\", \"potential\", \"predict\", \"progress\", \"ramp\", \"roadmap\", \"seek\", \"should\", \"strive\", \"targets\", \"to be\", \"upcoming\", \"will\", \"would\" and variations of such words and similar expressions are intended to identify such forward-looking statements, which may include statements regarding:\n▪our business plans and strategy and anticipated benefits therefrom;\n▪projections of our future financial performance, including future revenue, gross profits, capital expenditures and cash flows;\n▪projected costs and yield trends;\n▪future cash requirements, the availability, uses, sufficiency and cost of capital resources, and sources of funding, including for future capital and R&D investments and for returns to stockholders, and credit ratings expectations;\n▪future products, services and technologies, and the expected goals, timeline, ramps, progress, availability, production, regulation and benefits of such products, services and technologies, including future process nodes and packaging technologies, product roadmaps, schedules, future product architectures, expectations regarding process performance, per-watt parity and metrics, and expectations regarding product and process competitiveness;\n▪internal and external manufacturing plans, including future internal manufacturing volumes, manufacturing expansion plans and the financing therefor, and external foundry usage;\n▪future production capacity and product supply;\n▪supply expectations, including regarding constraints, limitations, pricing, and industry shortages;\n▪plans and goals related to Intel's foundry business, including with respect to anticipated customers, future manufacturing capacity and service, technology and IP offerings;\n▪expected timing and impact of acquisitions, divestitures and other significant transactions;\n▪expected completion and impacts of restructuring activities and cost-saving or efficiency initiatives;",
+                "score": 2,
+                "metadata": {
+                  "ticker": "INTC",
+                  "form": "10-Q",
+                  "accession_number": "0000050863-26-000191",
+                  "report_date": "2026-09-26",
+                  "filed": "2026-10-30",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                  "section": "Primary document",
+                  "retrieved_at": "2026-11-12T08:24:22.392055+00:00",
+                  "sha256": "a9ebfef45711a054ecea22a6ffb07b949e986ac50c908e5d5c013e4aea1bdf61",
+                  "start": 3286,
+                  "end": 6718
+                }
+              },
+              {
+                "text": "▪Segment expenses: consist of intersegment charges for product manufacturing and related services from Intel Foundry, external foundry and other manufacturing expenses, product development costs, allocated expenses as described below and direct operating expenses.\nIntel Foundry\n▪Segment revenue: consists substantially of intersegment product and services revenue for wafer fabrication, substrates and other related products and services sold to Intel Products and certain other Intel internal businesses. We recognize intersegment revenue based on the completion of performance obligations. Product revenue is recognized upon transfer of ownership, which is generally at the completion of wafer sorting. Back-end service revenue is recognized upon the completion of assembly and test milestones, which approximates the recognition of revenue over the service period. Intersegment sales are recorded at prices that are intended to approximate market pricing. Intel Foundry also includes certain third-party foundry and assembly and test revenues from external customers that totaled $411 million in the three months ended September 26, 2026 and $878 million in the first nine months of 2026 ($32 million in the three months ended September 27, 2025 and $85 million in the first nine months of 2025).\n▪Segment expenses: consist of direct expenses for technology development, product manufacturing and services provided by Intel Foundry to internal and external customers, allocated expenses as described below and direct operating expenses. Direct expenses for product manufacturing include excess capacity charges, if any.\n\tFinancial Statements\t Notes to Financial Statements\t\n9\nTable of Contents\nAll Other\nOur \"All Other\" category includes the results of operations from non-reportable segments, including our Mobileye business, our IMS business, start-up businesses that support our initiatives and historical results of operations from divested businesses, including Altera. Altera, which was previously a wholly owned subsidiary, was deconsolidated from our Consolidated Condensed Financial Statements effective September 12, 2025, following the closing of the sale of 51% of Altera's issued and outstanding common stock. Altera's financial results of operations were included in our \"All Other\" category through September 11, 2025. The financial results of our \"All Other\" category include intersegment product and services revenue and intersegment expenses primarily between Altera and our Intel Foundry segment during the periods in which we consolidated Altera.\nWe allocate operating expenses from our sales and marketing group to the Intel Products operating segments and allocate substantially all our operating expenses from our general and administrative groups to our reportable operating segments.\nWe estimate that the substantial majority of our consolidated depreciation expense in the three and nine months ended September 26, 2026 and September 27, 2025 was incurred by Intel Foundry. Intel Foundry depreciation expense is substantially included in overhead cost pools and then combined with other costs, and subsequently absorbed into inventory as each product passes through the manufacturing process and is sold to Intel Products or other customers. As a result, it is impracticable to determine the total depreciation expense included as a component of each Intel Products operating segment's operating income (loss).",
+                "score": 2,
+                "metadata": {
+                  "ticker": "INTC",
+                  "form": "10-Q",
+                  "accession_number": "0000050863-26-000191",
+                  "report_date": "2026-09-26",
+                  "filed": "2026-10-30",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                  "section": "Primary document",
+                  "retrieved_at": "2026-11-12T08:24:22.392055+00:00",
+                  "sha256": "a9ebfef45711a054ecea22a6ffb07b949e986ac50c908e5d5c013e4aea1bdf61",
+                  "start": 28391,
+                  "end": 31831
+                }
+              },
+              {
+                "text": "We do not allocate the following corporate operating expenses to our operating segments:\n▪restructuring and other charges;\n▪share-based compensation; and\n▪certain acquisition-related costs, including amortization and any impairment of acquisition-related intangibles and goodwill.\nWe do not allocate the following non-operating items to our operating segments:\n▪gains and losses from equity investments;\n▪interest and other, net; and\n▪income taxes.\nOur CEO is our CODM. The CODM uses segment revenue and segment operating income (loss) to evaluate each segment's performance and allocate resources. These financial measures are utilized during our budgeting and forecasting process to assess profitability and enable decision-making regarding strategic initiatives, capital investments and personnel across all operating segments. Segment operating results regularly reviewed by our CODM also include total cost of sales and operating expenses directly attributable to each segment. We centrally manage all procurement, treasury and asset management functions across the enterprise and do not maintain separate balance sheets by segment within our systems of record, nor does our CODM receive total asset information by segment for purposes of assessing segment performance and allocating resources.\nIntersegment eliminations: Intersegment sales and related gross profit on inventory recorded at the end of the period or sold through to third-party customers is eliminated for consolidation purposes. The Intel Products operating segments and Intel Foundry are meant to reflect separate fabless semiconductor and foundry companies, respectively. Thus, certain intersegment activity is captured within the intersegment eliminations upon consolidation and presented at the Intel consolidated level. This activity primarily relates to inventory reserves, which are determined and recorded based on our accounting policies for Intel as a whole but are only recorded by the Intel Products operating segments upon transfer of inventory from Intel Foundry. If a reserve is identified that relates to neither Intel Products operating segments nor Intel Foundry, the reserve is recognized as activity within the intersegment eliminations for Intel on a consolidated basis.\n\tFinancial Statements\t Notes to Financial Statements\t\n10\nTable of Contents\nNet revenue, cost of sales and operating expenses and operating income (loss) for each period were as follows:\n\t\t\tThree Months Ended\n\t(In Millions)\t\tSep 26, 2026\n\t\t\tIntel Products\t\t\t\t\t\t\t\t\t\t\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\tIntel Foundry\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t8,097 \t\t\t$\t7,318 \t\t\t$\t15,415 \t\t\t$\t6,697 \t\t\t$\t692 \t\t\t$\t— \t\t\t$\t(6,291)\t\t\t$\t16,513 \t\nCost of sales and operating expenses\n\t\t5,812 \t\t\t4,279 \t\t\t10,091 \t\t\t8,550 \t\t\t513 \t\t\t1,058 \t\t\t(6,221)\t\t\t13,991 \t\nOperating income (loss)\n\t\t$\t2,285 \t\t\t$\t3,039 \t\t\t$\t5,324 \t\t\t$\t(1,853)\t\t\t$\t179 \t\t\t$\t(1,058)\t\t\t$\t(70)\t\t\t$\t2,522 \t\n\t\t\tThree Months Ended\n\t(In Millions)\t\tSep 27, 2025\nIntel Products\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\t\nIntel Foundry\n\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t8,535 \t\t\t$\t4,117 \t\t\t$\t12,652 \t\t\t$\t4,235 \t\t\t$\t993 \t\t\t$\t— \t\t\t$\t(4,227)\t\t\t$\t13,653 \t\nCost of sales and operating expenses\n\t\t5,841 \t\t\t3,153 \t\t\t8,994 \t\t\t6,556 \t\t\t893 \t\t\t782 \t\t\t(4,255)\t\t\t12,970 \t\n\tOperating income (loss)\t\t$\t2,694 \t\t\t$\t964 \t\t\t$\t3,658 \t\t\t$\t(2,321)\t\t\t$\t100 \t\t\t$\t(782)\t\t\t$\t28 \t\t\t$\t683",
+                "score": 2,
+                "metadata": {
+                  "ticker": "INTC",
+                  "form": "10-Q",
+                  "accession_number": "0000050863-26-000191",
+                  "report_date": "2026-09-26",
+                  "filed": "2026-10-30",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                  "section": "Primary document",
+                  "retrieved_at": "2026-11-12T08:24:22.392055+00:00",
+                  "sha256": "a9ebfef45711a054ecea22a6ffb07b949e986ac50c908e5d5c013e4aea1bdf61",
+                  "start": 31832,
+                  "end": 35312
+                }
+              },
+              {
+                "text": "Escrowed Shares Issued to the U.S. Government\nPer the terms of our previously-disclosed U.S. Government Agreement that we entered into with the DOC on August 22, 2025, upon receipt of cash proceeds for our performance under Secure Enclave, we released approximately 11 million and 24 million Escrowed Shares during the three and nine months ended September 26, 2026, respectively (684 thousand Escrowed Shares during the three and nine months ended September 27, 2025).\nDuring the three and nine months ended September 26, 2026, we recognized a gain of $1.0 billion and a loss of $12.6 billion, respectively, related to the net change in fair value of both Escrowed Shares released and Escrowed Shares still held in escrow at September 26, 2026 (loss of $1.7 billion during the three and nine months ended September 27, 2025). The fair value of the Escrowed Shares derivative liability was $13.7 billion at September 26, 2026 and $2.7 billion at December 27, 2025, which we have recognized within other accrued liabilities and other long-term liabilities.\nOf the 132 million Escrowed Shares not yet released as of September 26, 2026, 66 million are considered not contingently issuable based on the terms of the U.S. Government Agreement and, as such, have been included in our computation of basic earnings (loss) per share for the three and nine months ended September 26, 2026. The remaining 66 million Escrowed Shares not yet released are considered contingently issuable based on the DOC's disbursements under Secure Enclave and, therefore, are excluded from basic and diluted earnings (loss) per share until the contingencies are met. Of the 158 million Escrowed Shares that remained outstanding as of September 27, 2025, 79 million were considered not contingently issuable and 79 million were considered contingently issuable.\nWe also issued warrants to the DOC to purchase up to 241 million shares of our common stock at $20.00 per share (Warrants) that become exercisable if we cease to directly or indirectly own at least 51% of our foundry business. Potentially dilutive shares issuable under the Warrants have been excluded from all basic and diluted earnings (loss) per share calculations for the three and nine months ended September 26, 2026 as the Warrants are neither currently nor expected to become exercisable. If exercised, we can elect to settle the Warrants in net cash or net shares.\nPrivate Placement Share Sale to NVIDIA\nOn September 15, 2025, we entered into an agreement to issue and sell 215 million shares of our common stock to NVIDIA at a price of $23.28 per share, representing an aggregate cash purchase price of $5.0 billion. The issuance and sale of the shares were completed the following quarter on December 26, 2025.\n\tNote 5 : \tOther Financial Statement Details\nRestricted Cash\nWe have $552 million of restricted cash included in other long-term assets within the Consolidated Condensed Balance Sheets as of September 26, 2026 ($447 million as of December 27, 2025). The restricted cash serves as collateral for third-party arrangements we entered into and is considered legally restricted due to limitations on usage and withdrawal.\nAccounts Receivable",
+                "score": 2,
+                "metadata": {
+                  "ticker": "INTC",
+                  "form": "10-Q",
+                  "accession_number": "0000050863-26-000191",
+                  "report_date": "2026-09-26",
+                  "filed": "2026-10-30",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                  "section": "Primary document",
+                  "retrieved_at": "2026-11-12T08:24:22.392055+00:00",
+                  "sha256": "a9ebfef45711a054ecea22a6ffb07b949e986ac50c908e5d5c013e4aea1bdf61",
+                  "start": 47668,
+                  "end": 50861
+                }
+              },
+              {
+                "text": "The increase in the discount rate utilized in our first quarter of 2026 quantitative assessment had a significant adverse effect on the estimated fair value of the Mobileye reporting unit and, as a result of our impairment test, we recognized a non-cash goodwill impairment charge in the first quarter of 2026 as the estimated fair value of the Mobileye reporting unit was lower than the assigned carrying value. To corroborate our estimated fair value of the Mobileye reporting unit, we performed a reconciliation to Mobileye's market capitalization as of March 28, 2026, and concluded that the implied control premium was reasonable as compared to relevant market transactions in similar industries.\nAs of September 26, 2026, our Mobileye reporting unit had $4.3 billion in recorded goodwill ($8.2 billion as of December 27, 2025) and our estimated fair value exceeded the assigned carrying value by less than 10%. We continue to closely monitor the Mobileye reporting unit’s financial performance, business forecasts and market capitalization. Our quarterly qualitative impairment assessment for the third quarter of 2026 did not indicate that a more detailed quantitative analysis was necessary for the Mobileye reporting unit. Should our estimates change based on Mobileye's operating results, market conditions, long-term growth projections or other assumptions underlying our forecast, including changes in the discount rate, the Mobileye reporting unit may become subject to further impairment in future periods. For example, a 1% higher discount rate would have resulted in an additional goodwill impairment of approximately $682 million for the Mobileye reporting unit in the first quarter of 2026.\n\tFinancial Statements\t Notes to Financial Statements\t\n20\nTable of Contents\n\tNote 11 : \tBorrowings\nIn the first quarter of 2026, we settled $1.5 billion of our senior notes due February 2026 and amended our 364-day $5.0 billion credit facility agreement to a three-year $3.0 billion credit facility maturing January 2029.\nIn the second quarter of 2026, we settled $1.0 billion of our senior notes due May 2026, and we issued a total of $6.5 billion aggregate principal amount of senior notes comprised of $1.0 billion in 4.65% senior notes due 2031, $1.0 billion in 5.00% senior notes due 2033, $2.2 billion in 5.30% senior notes due 2036, $1.8 billion in 6.13% senior notes due 2056, and $500 million in 6.20% senior notes due 2066. All of our senior fixed-rate notes pay interest semiannually. We may redeem the fixed-rate notes prior to their maturity at our option at specified redemption prices and subject to certain restrictions. The obligations under our senior fixed-rate notes rank equally in the right of payment with all of our other existing and future senior unsecured indebtedness and effectively rank junior to all liabilities of our subsidiaries.\nIn connection with our repurchase of the 49% minority ownership interest in Ireland SCIP, discussed within \"Note 3: Non-Controlling Interests\" within Notes to Consolidated Condensed Financial Statements, we executed and drew on a $6.5 billion 364-day senior unsecured term loan facility with an interest rate of 4.79% in the second quarter of 2026. We repaid the term loan facility in full during the same period.",
+                "score": 2,
+                "metadata": {
+                  "ticker": "INTC",
+                  "form": "10-Q",
+                  "accession_number": "0000050863-26-000191",
+                  "report_date": "2026-09-26",
+                  "filed": "2026-10-30",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                  "section": "Primary document",
+                  "retrieved_at": "2026-11-12T08:24:22.392055+00:00",
+                  "sha256": "a9ebfef45711a054ecea22a6ffb07b949e986ac50c908e5d5c013e4aea1bdf61",
+                  "start": 74746,
+                  "end": 78031
+                }
+              }
+            ],
+            "warnings": [],
+            "coverage": {
+              "form": "10-Q",
+              "filings_considered": 4,
+              "documents_loaded": 4,
+              "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+            },
+            "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+          },
+          "elapsed_seconds": 1.4310053329973016
+        },
+        {
+          "type": "tool",
+          "task_id": "task_2",
+          "agent": "filing_rag",
+          "step": 2,
+          "call_id": 4,
+          "name": "search_company_updates",
+          "arguments": {
+            "form": "8-K",
+            "ticker": "INTC",
+            "query": "recent developments",
+            "top_k": 5
+          },
+          "status": "completed",
+          "result": {
+            "company": {
+              "ticker": "INTC",
+              "name": "INTEL CORP",
+              "cik": "0000050863"
+            },
+            "matches": [
+              {
+                "text": "▪expected timing and impact of acquisitions, divestitures and other significant transactions;\nIntel/Page 4\n▪expected completion and impacts of restructuring activities and cost-saving or efficiency initiatives;\n▪social and environmental performance goals, measures, strategies and results;\n▪our anticipated growth, future market share, customer demand and trends in our businesses and operations;\n▪projected growth and trends in markets relevant to our businesses;\n▪anticipated trends and impacts related to industry component, substrate and foundry capacity utilization, shortages and constraints;\n▪expectations regarding government funding, incentives, policies and priorities;\n▪technology trends and developments, including with respect to AI;\n▪macroeconomic conditions;\n▪geopolitical tensions and conflicts, including with respect to international trade policies in areas such as tariffs and export controls, and their potential impact on our business;\n▪tax- and accounting-related expectations;\n▪expectations regarding our relationships with certain sanctioned parties; and\n▪other characterizations of future events or circumstances.\nSuch statements involve many risks and uncertainties that could cause our actual results to differ materially from those expressed or implied, including those associated with:\n▪the high level of competition and rapid technological change in our industry;\n▪the significant, long-term and inherently risky investments we are making in R&D and manufacturing facilities that may not realize a favorable return;\n▪the complexities and uncertainties in developing and implementing new semiconductor products and manufacturing process technologies;\n▪our pursuit of Intel 14A and other next-generation leading-edge process technologies, our investments in manufacturing expansion projects to manufacture products using such technologies and our efforts to secure product design wins with and demand commitments from potential significant external customers for the manufacture of products using such technologies;\n▪alternative financing arrangements and pursuit of government grants;\n▪the U.S. government's acquisition of significant equity interests in us;\n▪changes in product demand and margins;\n▪macroeconomic conditions and geopolitical tensions and conflicts, including geopolitical and trade tensions between the U.S. and China, tensions and conflict affecting Israel and the Middle East, rising tensions between mainland China and Taiwan and the impacts of Russia's war on Ukraine;\n▪recently elevated geopolitical tensions, volatility and uncertainty with respect to international trade policies, including tariffs and export controls, impacting our business, the markets in which we compete and the world economy;\n▪the evolving market for products with AI capabilities;\n▪our complex global supply chain supporting our manufacturing facilities and incorporating external foundries, including from disruptions, delays, trade tensions and conflicts, or shortages, including current industry-wide substrate and memory shortages;\n▪product defects, errata and other product issues, particularly as we develop next-generation products and implement next-generation manufacturing process technologies;\n▪potential security vulnerabilities in our products;\n▪increasing and evolving cybersecurity threats and privacy risks;\n▪IP risks including related litigation and regulatory proceedings;\n▪the need to attract, retain and motivate key talent;",
+                "score": 1,
+                "metadata": {
+                  "ticker": "INTC",
+                  "form": "8-K",
+                  "accession_number": "0000050863-26-000188",
+                  "report_date": "2026-10-29",
+                  "filed": "2026-10-29",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+                  "section": "EX-99 exhibit",
+                  "retrieved_at": "2026-11-12T08:24:30.132136+00:00",
+                  "sha256": "b7754e17192414157747ec72ac7928714dace58100a6d812fff0da9bf32a7015",
+                  "start": 9499,
+                  "end": 12970
+                }
+              },
+              {
+                "text": "▪potential security vulnerabilities in our products;\n▪increasing and evolving cybersecurity threats and privacy risks;\n▪IP risks including related litigation and regulatory proceedings;\n▪the need to attract, retain and motivate key talent;\n▪strategic transactions and investments;\n▪sales-related risks, including customer concentration and the use of distributors and other third parties;\n▪our debt obligations and our ability to access sources of capital;\n▪complex and evolving laws and regulations across many jurisdictions;\n▪catastrophic events;\nIntel/Page 5\n▪fluctuations in currency exchange rates;\n▪changes in our effective tax rate and applicable tax regimes;\n▪environmental, health, safety and product regulations; and\n▪other risks and uncertainties described in this report, our 2025 Form 10-K, our Q1 2026 Form 10-Q, our Q2 2026 Form 10-Q, our Q3 2026 Form 10-Q and our other filings with the SEC.\nGiven these risks and uncertainties, readers are cautioned not to place undue reliance on such forward-looking statements. Readers are urged to carefully review and consider the various disclosures made in this release and in other documents we file from time to time with the SEC that disclose risks and uncertainties that may affect our business.\nUnless specifically indicated otherwise, the forward-looking statements in this release do not reflect the potential impact of any divestitures, mergers, acquisitions or other business combinations that have not been completed as of the date of this filing. In addition, the forward-looking statements in this release are based on management's expectations as of the date of this release, unless an earlier date is specified, including expectations based on third-party information and projections that management believes to be reputable. We do not undertake, and expressly disclaim any duty, to update such statements, whether as a result of new information, new developments, or otherwise, except to the extent that disclosure may be required by law.\nAbout Intel\nIntel (Nasdaq: INTC) designs and manufactures advanced semiconductors that connect and power the modern world. Every day, our engineers create new technologies that enhance and shape the future of computing to enable new possibilities for every customer we serve. Learn more at www.intel.com.\n© Intel Corporation. Intel, the Intel logo, and other Intel marks are trademarks of Intel Corporation or its subsidiaries. Other names and brands may be claimed as the property of others.\nIntel/Page 6\nIntel Corporation\nConsolidated Condensed Statements of Operations and Other Information\n\t\t\tThree Months Ended\n(In Millions, Except Per Share Amounts; Unaudited)\n\t\tSep 26, 2026\t\tSep 27, 2025\n\tNet revenue\t\t$\t16,513 \t\t\t$\t13,653 \t\n\tCost of sales\t\t9,417 \t\t\t8,435 \t\n\tGross profit\t\t7,096 \t\t\t5,218 \t\n\tResearch and development\t\t3,490 \t\t\t3,231 \t\n\tMarketing, general, and administrative\t\t1,030 \t\t\t1,129 \t\n\tRestructuring and other charges\t\t54 \t\t\t175 \t\n\tOperating expenses\t\t4,574 \t\t\t4,535 \t\n\tOperating income (loss)\t\t2,522 \t\t\t683 \t\n\tGains (losses) on equity investments, net\t\t330 \t\t\t221 \t\n\tInterest and other, net\t\t1,130 \t\t\t3,670 \t\n\tIncome (loss) before taxes\t\t3,982 \t\t\t4,574 \t\n\tProvision for (benefit from) taxes\t\t462 \t\t\t304 \t\n\tNet income (loss)\t\t3,520 \t\t\t4,270 \t\n\tLess: net income (loss) attributable to non-controlling interests\t\t200 \t\t\t207 \t\n\tNet income (loss) attributable to Intel\t\t$\t3,320 \t\t\t$\t4,063 \t\n\tEarnings (loss) per share attributable to Intel—basic\t\t$\t0.63 \t\t\t$\t0.90",
+                "score": 1,
+                "metadata": {
+                  "ticker": "INTC",
+                  "form": "8-K",
+                  "accession_number": "0000050863-26-000188",
+                  "report_date": "2026-10-29",
+                  "filed": "2026-10-29",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+                  "section": "EX-99 exhibit",
+                  "retrieved_at": "2026-11-12T08:24:30.132136+00:00",
+                  "sha256": "b7754e17192414157747ec72ac7928714dace58100a6d812fff0da9bf32a7015",
+                  "start": 12731,
+                  "end": 16216
+                }
+              },
+              {
+                "text": "•\nmacroeconomic conditions and geopolitical tensions and conflicts, including geopolitical and trade tensions\nbetween the U.S. and China, tensions and conflict affecting Israel and the Middle East, rising tensions between mainland China and Taiwan and the impacts of Russia’s war on Ukraine;\n\t•\nrecently elevated geopolitical tensions, volatility and uncertainty with respect to international trade policies,\nincluding tariffs and export controls, impacting our business, the markets in which we compete and the world economy;\n\t•\nthe evolving market for products with AI capabilities;\n\t•\nour complex global supply chain supporting our manufacturing facilities and incorporating external foundries,\nincluding from disruptions, delays, trade tensions and conflicts, or shortages, including current industry-wide substrate and memory shortages;\n\t•\nproduct defects, errata and other product issues, particularly as we develop next-generation products and\nimplement next-generation manufacturing process technologies;\n\t•\npotential security vulnerabilities in our products;\n\t•\nincreasing and evolving cybersecurity threats and privacy risks;\n\t•\nIP risks including related litigation and regulatory proceedings;\n\t•\nthe need to attract, retain and motivate key talent;\n\t•\nstrategic transactions and investments;\n\t•\nsales-related risks, including customer concentration and the use of distributors and other third parties;\n\t•\nour debt obligations and our ability to access sources of capital;\n\t•\ncomplex and evolving laws and regulations across many jurisdictions;\n\t•\ncatastrophic events;\n\t•\nfluctuations in currency exchange rates;\n\t•\nchanges in our effective tax rate and applicable tax regimes;\n\t•\nenvironmental, health, safety and product regulations; and\n\t•\nother risks and uncertainties described in this release, our 2025 Form\n10-K, our Q1 2026 Form 10-Q, our Q2 2026 Form 10-Q, and our other filings with the SEC.\nGiven these risks and uncertainties, readers are cautioned not to place undue reliance on such\nforward-looking statements. Readers are urged to carefully review and consider the various disclosures made in this release and in other documents we file from time to time with the SEC that disclose risks and uncertainties that may affect our\nbusiness.\nUnless specifically indicated otherwise, the forward-looking statements in this release do not reflect the potential impact of any\ndivestitures, mergers, acquisitions or other business combinations that have not been completed as of the date of this release. In addition, the forward-looking statements in this release are based on management’s expectations as of the date\nof this release, unless an earlier date is specified, including expectations based on third-party information and projections that management believes to be reputable. We do not undertake, and expressly disclaim any duty, to update such statements,\nwhether as a result of new information, new developments, or otherwise, except to the extent that disclosure may be required by law.\nContacts:\nInvestor Relations\ninvestor.relations@intel.com\nAbby Zhang\nMedia Relations\nabby.zhang@intel.com",
+                "score": 1,
+                "metadata": {
+                  "ticker": "INTC",
+                  "form": "8-K",
+                  "accession_number": "0001193125-26-346806",
+                  "report_date": "2026-08-10",
+                  "filed": "2026-08-12",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000119312526346806/d117670dex991.htm",
+                  "section": "EX-99 exhibit",
+                  "retrieved_at": "2026-11-12T08:24:31.348276+00:00",
+                  "sha256": "ed12b0ad2c37a1a92e5907d9bc8d60df35b5019577aff63c31450b72b707a367",
+                  "start": 6168,
+                  "end": 9290
+                }
+              },
+              {
+                "text": "between the U.S. and China, tensions and conflict affecting Israel and the Middle East, rising tensions between mainland China and Taiwan and the impacts of Russia’s war on Ukraine;\n\t•\nrecently elevated geopolitical tensions, volatility and uncertainty with respect to international trade policies,\nincluding tariffs and export controls, impacting our business, the markets in which we compete and the world economy;\n\t•\nthe evolving market for products with AI capabilities;\n\t•\nour complex global supply chain supporting our manufacturing facilities and incorporating external foundries,\nincluding from disruptions, delays, trade tensions and conflicts, or shortages, including current industry-wide substrate and memory shortages;\n\t•\nproduct defects, errata and other product issues, particularly as we develop next-generation products and\nimplement next-generation manufacturing process technologies;\n\t•\npotential security vulnerabilities in our products;\n\t•\nincreasing and evolving cybersecurity threats and privacy risks;\n\t•\nIP risks including related litigation and regulatory proceedings;\n\t•\nthe need to attract, retain and motivate key talent;\n\t•\nstrategic transactions and investments;\n\t•\nsales-related risks, including customer concentration and the use of distributors and other third parties;\n\t•\nour debt obligations and our ability to access sources of capital;\n\t•\ncomplex and evolving laws and regulations across many jurisdictions;\n\t•\ncatastrophic events;\n\t•\nfluctuations in currency exchange rates;\n\t•\nchanges in our effective tax rate and applicable tax regimes;\n\t•\nenvironmental, health, safety and product regulations; and\n\t•\nother risks and uncertainties described in this release, our 2025 Form\n10-K, our Q1 2026 Form 10-Q, our Q2 2026 Form 10-Q, and our other filings with the SEC.\nGiven these risks and uncertainties, readers are cautioned not to place undue reliance on such forward-looking statements. Readers are urged to carefully\nreview and consider the various disclosures made in this release and in other documents we file from time to time with the SEC that disclose risks and uncertainties that may affect our business.\nUnless specifically indicated otherwise, the forward-looking statements in this release do not reflect the potential impact of any divestitures, mergers,\nacquisitions or other business combinations that have not been completed as of the date of this release. In addition, the forward-looking statements in this release are based on management’s expectations as of the date of this release, unless\nan earlier date is specified, including expectations based on third-party information and projections that management believes to be reputable. We do not undertake, and expressly disclaim any duty, to update such statements, whether as a result of\nnew information, new developments, or otherwise, except to the extent that disclosure may be required by law.\nContacts:\nInvestor Relations\ninvestor.relations@intel.com\nAbby Zhang\nMedia Relations\nabby.zhang@intel.com",
+                "score": 1,
+                "metadata": {
+                  "ticker": "INTC",
+                  "form": "8-K",
+                  "accession_number": "0001193125-26-346806",
+                  "report_date": "2026-08-10",
+                  "filed": "2026-08-12",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000119312526346806/d117670dex992.htm",
+                  "section": "EX-99 exhibit",
+                  "retrieved_at": "2026-11-12T08:24:31.691584+00:00",
+                  "sha256": "0bf209c39cd327508a919095cf355e7fe40f1c00a68f8409a6d48b74ada8420c",
+                  "start": 6274,
+                  "end": 9286
+                }
+              },
+              {
+                "text": "Intel/Page 4\n▪internal and external manufacturing plans, including future internal manufacturing volumes, manufacturing expansion plans and the financing therefor, and external foundry usage;\n▪future production capacity and product supply;\n▪supply expectations, including regarding constraints, limitations, pricing, and industry shortages;\n▪plans and goals related to Intel's foundry business, including with respect to anticipated customers, future manufacturing capacity and service, technology and IP offerings;\n▪expected timing and impact of acquisitions, divestitures and other significant transactions;\n▪expected completion and impacts of restructuring activities and cost-saving or efficiency initiatives;\n▪social and environmental performance goals, measures, strategies and results;\n▪our anticipated growth, future market share, customer demand and trends in our businesses and operations;\n▪projected growth and trends in markets relevant to our businesses;\n▪anticipated trends and impacts related to industry component, substrate and foundry capacity utilization, shortages and constraints;\n▪expectations regarding government funding, incentives, policies and priorities;\n▪technology trends and developments, including with respect to AI;\n▪macroeconomic conditions;\n▪geopolitical tensions and conflicts, including with respect to international trade policies in areas such as tariffs and export controls, and their potential impact on our business;\n▪tax- and accounting-related expectations;\n▪expectations regarding our relationships with certain sanctioned parties; and\n▪other characterizations of future events or circumstances.\nSuch statements involve many risks and uncertainties that could cause our actual results to differ materially from those expressed or implied, including those associated with:\n▪the high level of competition and rapid technological change in our industry;\n▪the significant, long-term and inherently risky investments we are making in R&D and manufacturing facilities that may not realize a favorable return;\n▪the complexities and uncertainties in developing and implementing new semiconductor products and manufacturing process technologies;\n▪our pursuit of Intel 14A and other next-generation leading-edge process technologies, our investments in manufacturing expansion projects to manufacture products using such technologies and our efforts to secure product design wins with and demand commitments from potential significant external customers for the manufacture of products using such technologies;\n▪alternative financing arrangements and pursuit of government grants;\n▪the U.S. government's acquisition of significant equity interests in us;\n▪changes in product demand and margins;\n▪macroeconomic conditions and geopolitical tensions and conflicts, including geopolitical and trade tensions between the U.S. and China, tensions and conflict affecting Israel and the Middle East, rising tensions between mainland China and Taiwan and the impacts of Russia's war on Ukraine;\n▪recently elevated geopolitical tensions, volatility and uncertainty with respect to international trade policies, including tariffs and export controls, impacting our business, the markets in which we compete and the world economy;\n▪the evolving market for products with AI capabilities;",
+                "score": 1,
+                "metadata": {
+                  "ticker": "INTC",
+                  "form": "8-K",
+                  "accession_number": "0000050863-26-000155",
+                  "report_date": "2026-07-23",
+                  "filed": "2026-07-23",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000155/q226earningsrelease.htm",
+                  "section": "EX-99 exhibit",
+                  "retrieved_at": "2026-11-12T08:24:33.493715+00:00",
+                  "sha256": "3498f328f4eadb12284f84400b4a5294c357aa2ef64acda059e3148b8e360302",
+                  "start": 9544,
+                  "end": 12854
+                }
+              }
+            ],
+            "warnings": [],
+            "coverage": {
+              "form": "8-K",
+              "filings_considered": 4,
+              "documents_loaded": 8,
+              "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+            },
+            "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+          },
+          "elapsed_seconds": 0.3118457499986107
+        },
+        {
+          "type": "model",
+          "task_id": "task_2",
+          "agent": "filing_rag",
+          "step": 3,
+          "max_output_tokens": 1024,
+          "input_tokens": 12377,
+          "output_tokens": 612,
+          "model": "qwen3:8b",
+          "provider": "ollama",
+          "estimated_cost_usd": 0.0,
+          "status": "completed",
+          "tool_calls": [],
+          "elapsed_seconds": 60.42699666699991
+        },
+        {
+          "type": "agent",
+          "task_id": "task_2",
+          "agent": "filing_rag",
+          "status": "completed",
+          "elapsed_seconds": 70.35496033300296
+        }
+      ],
+      "tool_call_count": 4
+    }
+  ],
+  "draft": "Intel’in yıllık geliri FY2023 döneminde 54228000000 USD (dönem sonu: 2023-12-30), FY2024 döneminde 53101000000 USD (dönem sonu: 2024-12-28) ve FY2025 döneminde 52853000000 USD (dönem sonu: 2025-12-27) oldu. Gelir büyümesi FY2024 döneminde -2.08%, FY2025 döneminde ise -0.47% olarak hesaplandı. Her iki dönemde büyüme negatifti; son dönemde oran daha az negatif olsa da pozitif büyümeye dönmedi. [Source 2] [Source 3]\n\nSunulan güncel dönem 10-Q alıntısında, ileriye dönük finansal performans, maliyet ve verim eğilimleri, sermaye kaynakları ve gelecekteki gelir gibi konular için beklentilerin risk ve belirsizlik içerdiği belirtiliyor; bu alıntı güncel dönem gerçekleşmiş finansal sonuçlarını göstermiyor. Şirket ayrıca makroekonomik koşulları, ürün talebi ve marj değişimlerini, jeopolitik ve ticaret gerilimlerini ve tedarik zinciri kesintilerini olası riskler arasında sayıyor. Bunlar gerçekleşmiş etkiler olarak değil, riskler olarak sunuluyor. [Source 4] [Source 9]",
+  "answer": null,
+  "verification": {
+    "supported": false,
+    "issues": [
+      "Son gelişmelerin şirket tarafından risk olarak sayıldığı iddiası [Source 9] ile desteklenmiyor: alıntı, bunları risk/gerçekleşmiş etki olarak değil, gerçekleşmiş gelişmeler olarak da sunmuyor; sadece risk ve belirsizlik unsurlarını listeliyor."
+    ],
+    "evidence_supported": false,
+    "language_matches": true,
+    "answer_complete": true,
+    "status": "failed",
+    "stage": "grounding_and_language",
+    "deterministic_fields": "passed",
+    "method": "source_fields_and_llm_judge"
+  },
+  "revision_count": 2,
+  "trace": [
+    {
+      "type": "agent",
+      "agent": "planner",
+      "status": "started"
+    },
+    {
+      "type": "agent",
+      "agent": "planner",
+      "status": "completed",
+      "request_type": "mixed",
+      "plan": [
+        {
+          "id": "task_1",
+          "agent": "financial_data",
+          "instruction": "Intel'in son 3 yılın gelir büyüme oranlarını hesapla, years=3 kullan.",
+          "fiscal_year": null
+        },
+        {
+          "id": "task_2",
+          "agent": "filing_rag",
+          "instruction": "Intel'in son 10-Q ve 8-K dosyalarını araştırarak son gelişmeleri ve güncel finansal durumunu analiz et.",
+          "fiscal_year": null
+        }
+      ],
+      "elapsed_seconds": 6.8483812080012285,
+      "input_tokens": 823,
+      "output_tokens": 145,
+      "model": "qwen3:8b",
+      "provider": "ollama",
+      "estimated_cost_usd": 0.0
+    },
+    {
+      "type": "agent",
+      "task_id": "task_1",
+      "agent": "financial_data",
+      "status": "started"
+    },
+    {
+      "type": "model",
+      "task_id": "task_1",
+      "agent": "financial_data",
+      "step": 1,
+      "max_output_tokens": 1024,
+      "input_tokens": 675,
+      "output_tokens": 24,
+      "model": "qwen3:8b",
+      "provider": "ollama",
+      "estimated_cost_usd": 0.0,
+      "status": "completed",
+      "tool_calls": [
+        {
+          "id": "call_jw0pjb0u",
+          "function": {
+            "index": 0,
+            "name": "resolve_ticker_to_cik",
+            "arguments": {
+              "ticker": "Intel"
+            }
+          }
+        }
+      ],
+      "elapsed_seconds": 2.4319381669993163
+    },
+    {
+      "type": "tool",
+      "task_id": "task_1",
+      "agent": "financial_data",
+      "step": 1,
+      "call_id": 1,
+      "name": "resolve_ticker_to_cik",
+      "arguments": {
+        "ticker": "Intel"
+      },
+      "status": "completed",
+      "result": {
+        "ticker": "INTC",
+        "name": "INTEL CORP",
+        "cik": "0000050863"
+      },
+      "elapsed_seconds": 0.028963167002075352
+    },
+    {
+      "type": "model",
+      "task_id": "task_1",
+      "agent": "financial_data",
+      "step": 2,
+      "max_output_tokens": 1024,
+      "input_tokens": 1107,
+      "output_tokens": 51,
+      "model": "qwen3:8b",
+      "provider": "ollama",
+      "estimated_cost_usd": 0.0,
+      "status": "completed",
+      "tool_calls": [
+        {
+          "id": "call_srkiyk9a",
+          "function": {
+            "index": 0,
+            "name": "get_company_facts",
+            "arguments": {
+              "cik": "0000050863",
+              "concept": "revenue",
+              "unit": "USD",
+              "years": 3
+            }
+          }
+        }
+      ],
+      "elapsed_seconds": 3.1649545000000217
+    },
+    {
+      "type": "tool",
+      "task_id": "task_1",
+      "agent": "financial_data",
+      "step": 2,
+      "call_id": 2,
+      "name": "get_company_facts",
+      "arguments": {
+        "cik": "0000050863",
+        "concept": "revenue",
+        "unit": "USD",
+        "years": 3
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "cik": "0000050863",
+          "name": "INTEL CORP"
+        },
+        "concept": "revenue",
+        "definition": {
+          "description": "Annual total revenue",
+          "taxonomy": "us-gaap",
+          "unit": "USD",
+          "tags": [
+            "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "Revenues",
+            "SalesRevenueNet"
+          ]
+        },
+        "unit": "USD",
+        "requested_years": 3,
+        "available_period_count": 3,
+        "history_complete": true,
+        "requested_period_ends": [
+          "2025-12-27",
+          "2024-12-28",
+          "2023-12-30"
+        ],
+        "missing_period_ends": [],
+        "records": [
+          {
+            "cik": 50863,
+            "metric": "revenue",
+            "start": "2024-12-29",
+            "end": "2025-12-27",
+            "value": 52853000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-01-23",
+            "accn": "0000050863-26-000011",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "period_label": "FY2025 (period end: 2025-12-27)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+          },
+          {
+            "cik": 50863,
+            "metric": "revenue",
+            "start": "2023-12-31",
+            "end": "2024-12-28",
+            "value": 53101000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-01-23",
+            "accn": "0000050863-26-000011",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "period_label": "FY2024 (period end: 2024-12-28)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+          },
+          {
+            "cik": 50863,
+            "metric": "revenue",
+            "start": "2023-01-01",
+            "end": "2023-12-30",
+            "value": 54228000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-01-23",
+            "accn": "0000050863-26-000011",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "period_label": "FY2023 (period end: 2023-12-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+          }
+        ]
+      },
+      "elapsed_seconds": 0.012426166998920962
+    },
+    {
+      "type": "model",
+      "task_id": "task_1",
+      "agent": "financial_data",
+      "step": 3,
+      "max_output_tokens": 1024,
+      "input_tokens": 2108,
+      "output_tokens": 39,
+      "model": "qwen3:8b",
+      "provider": "ollama",
+      "estimated_cost_usd": 0.0,
+      "status": "completed",
+      "tool_calls": [
+        {
+          "id": "call_rvzzgugb",
+          "function": {
+            "index": 0,
+            "name": "compute_metrics",
+            "arguments": {
+              "cik": "0000050863",
+              "metrics": [
+                "revenue_growth"
+              ],
+              "years": 3
+            }
+          }
+        }
+      ],
+      "elapsed_seconds": 4.057699707998836
+    },
+    {
+      "type": "tool",
+      "task_id": "task_1",
+      "agent": "financial_data",
+      "step": 3,
+      "call_id": 3,
+      "name": "compute_metrics",
+      "arguments": {
+        "cik": "0000050863",
+        "metrics": [
+          "revenue_growth"
+        ],
+        "years": 3
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "cik": "0000050863",
+          "name": "INTEL CORP"
+        },
+        "requested_years": 3,
+        "results": {
+          "revenue_growth": [
+            {
+              "cik": 50863,
+              "fiscal_year": 2025,
+              "metric": "revenue_growth",
+              "start": "2024-12-29",
+              "end": "2025-12-27",
+              "value": -0.004670345191239322,
+              "unit": "ratio",
+              "formula": "current_revenue / previous_revenue - 1",
+              "inputs": {
+                "previous_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2023-12-31",
+                  "end": "2024-12-28",
+                  "value": 53101000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2024,
+                  "period_label": "FY2024 (period end: 2024-12-28)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                },
+                "current_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2024-12-29",
+                  "end": "2025-12-27",
+                  "value": 52853000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2025,
+                  "period_label": "FY2025 (period end: 2025-12-27)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                }
+              },
+              "period_label": "FY2025 (period end: 2025-12-27)"
+            },
+            {
+              "cik": 50863,
+              "fiscal_year": 2024,
+              "metric": "revenue_growth",
+              "start": "2023-12-31",
+              "end": "2024-12-28",
+              "value": -0.02078262152393595,
+              "unit": "ratio",
+              "formula": "current_revenue / previous_revenue - 1",
+              "inputs": {
+                "previous_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2023-01-01",
+                  "end": "2023-12-30",
+                  "value": 54228000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2023,
+                  "period_label": "FY2023 (period end: 2023-12-30)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                },
+                "current_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2023-12-31",
+                  "end": "2024-12-28",
+                  "value": 53101000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2024,
+                  "period_label": "FY2024 (period end: 2024-12-28)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                }
+              },
+              "period_label": "FY2024 (period end: 2024-12-28)"
+            }
+          ]
+        },
+        "calculation_definitions": {
+          "revenue_growth": {
+            "description": "Annual revenue growth",
+            "function": "calculate_growth",
+            "inputs": [
+              "revenue"
+            ],
+            "unit": "ratio",
+            "period_mode": "consecutive_periods"
+          }
+        },
+        "warnings": [],
+        "availability": {
+          "revenue": {
+            "concept": "revenue",
+            "missing_period_ends": [],
+            "available_period_ends": [
+              "2025-12-27",
+              "2024-12-28",
+              "2023-12-30"
+            ]
+          }
+        }
+      },
+      "elapsed_seconds": 0.025376833000336774
+    },
+    {
+      "type": "model",
+      "task_id": "task_1",
+      "agent": "financial_data",
+      "step": 4,
+      "max_output_tokens": 1024,
+      "input_tokens": 3650,
+      "output_tokens": 183,
+      "model": "qwen3:8b",
+      "provider": "ollama",
+      "estimated_cost_usd": 0.0,
+      "status": "completed",
+      "tool_calls": [],
+      "elapsed_seconds": 9.591943165996781
+    },
+    {
+      "type": "agent",
+      "task_id": "task_1",
+      "agent": "financial_data",
+      "status": "completed",
+      "elapsed_seconds": 19.31345537499874
+    },
+    {
+      "type": "agent",
+      "task_id": "task_2",
+      "agent": "filing_rag",
+      "status": "started"
+    },
+    {
+      "type": "model",
+      "task_id": "task_2",
+      "agent": "filing_rag",
+      "step": 1,
+      "max_output_tokens": 1024,
+      "input_tokens": 1464,
+      "output_tokens": 73,
+      "model": "qwen3:8b",
+      "provider": "ollama",
+      "estimated_cost_usd": 0.0,
+      "status": "completed",
+      "tool_calls": [
+        {
+          "id": "call_kezhooxg",
+          "function": {
+            "index": 0,
+            "name": "search_company_updates",
+            "arguments": {
+              "form": "10-Q",
+              "top_k": 5,
+              "ticker": "INTC"
+            }
+          }
+        },
+        {
+          "id": "call_xy1nglqn",
+          "function": {
+            "index": 1,
+            "name": "search_company_updates",
+            "arguments": {
+              "ticker": "INTC",
+              "form": "8-K",
+              "top_k": 5
+            }
+          }
+        }
+      ],
+      "elapsed_seconds": 5.926210207999247
+    },
+    {
+      "type": "tool",
+      "task_id": "task_2",
+      "agent": "filing_rag",
+      "step": 1,
+      "call_id": 1,
+      "name": "search_company_updates",
+      "arguments": {
+        "form": "10-Q",
+        "top_k": 5,
+        "ticker": "INTC"
+      },
+      "status": "error",
+      "result": {
+        "error": {
+          "type": "MCPToolError",
+          "message": "MCP tool 'search_company_updates' failed: Invalid arguments for search_company_updates: 'query' is a required property"
+        }
+      },
+      "elapsed_seconds": 0.005267209002340678
+    },
+    {
+      "type": "tool",
+      "task_id": "task_2",
+      "agent": "filing_rag",
+      "step": 1,
+      "call_id": 2,
+      "name": "search_company_updates",
+      "arguments": {
+        "ticker": "INTC",
+        "form": "8-K",
+        "top_k": 5
+      },
+      "status": "error",
+      "result": {
+        "error": {
+          "type": "MCPToolError",
+          "message": "MCP tool 'search_company_updates' failed: Invalid arguments for search_company_updates: 'query' is a required property"
+        }
+      },
+      "elapsed_seconds": 0.002677125001355307
+    },
+    {
+      "type": "model",
+      "task_id": "task_2",
+      "agent": "filing_rag",
+      "step": 2,
+      "max_output_tokens": 1024,
+      "input_tokens": 1625,
+      "output_tokens": 69,
+      "model": "qwen3:8b",
+      "provider": "ollama",
+      "estimated_cost_usd": 0.0,
+      "status": "completed",
+      "tool_calls": [
+        {
+          "id": "call_zzmynchk",
+          "function": {
+            "index": 0,
+            "name": "search_company_updates",
+            "arguments": {
+              "form": "10-Q",
+              "ticker": "INTC",
+              "query": "financial performance",
+              "top_k": 5
+            }
+          }
+        },
+        {
+          "id": "call_80fwl4d7",
+          "function": {
+            "index": 1,
+            "name": "search_company_updates",
+            "arguments": {
+              "form": "8-K",
+              "ticker": "INTC",
+              "query": "recent developments",
+              "top_k": 5
+            }
+          }
+        }
+      ],
+      "elapsed_seconds": 2.2505419999979495
+    },
+    {
+      "type": "tool",
+      "task_id": "task_2",
+      "agent": "filing_rag",
+      "step": 2,
+      "call_id": 3,
+      "name": "search_company_updates",
+      "arguments": {
+        "form": "10-Q",
+        "ticker": "INTC",
+        "query": "financial performance",
+        "top_k": 5
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        },
+        "matches": [
+          {
+            "text": "Page\nForward-Looking Statements\n1\nAvailability of Company Information\n2\nConsolidated Condensed Financial Statements and Supplemental Details\n\tConsolidated Condensed Statements of Operations\t\n3\n\tConsolidated Condensed Statements of Comprehensive Income (Loss)\t\n4\n\tConsolidated Condensed Balance Sheets\t\n5\n\tConsolidated Condensed Statements of Cash Flows\t\n6\n\tConsolidated Condensed Statements of Stockholders' Equity\t\n8\n\tNotes to Consolidated Condensed Financial Statements\t\n9\n\tKey Terms\t\n29\nManagement's Discussion and Analysis (MD&A)\n\tOperating Segments Trends and Results\t\n33\n\tConsolidated Condensed Results of Operations\t\n37\n\tLiquidity and Capital Resources\t\n43\nRisk Factors and Other Key Information\n\tRisk Factors\t\n45\n\tQuantitative and Qualitative Disclosures About Market Risk\t\n45\n\tControls and Procedures\t\n45\n\tIssuer Purchases of Equity Securities\t\n45\n\tRule 10b5-1 Trading Arrangements\t\n46\n\tDisclosure Pursuant to Section 13(r) of the Securities Exchange Act of 1934\t\n46\n\tExhibits\t\n47\n\tForm 10-Q Cross-Reference Index\t\n48\nTable of Contents\nForward-Looking Statements\nThis Form 10-Q contains forward-looking statements that involve a number of risks and uncertainties. Words such as \"accelerate\", \"achieve\", \"aim\", \"ambitions\", \"anticipate\", \"believe\", \"committed\", \"continue\", \"could\", \"designed\", \"estimate\", \"expect\", \"forecast\", \"future\", \"goals\", \"grow\", \"guidance\", \"intend\", \"likely\", \"may\", \"might\", \"milestones\", \"next-generation\", \"objective\", \"on track\", \"opportunity\", \"outlook\", \"pending\", \"plan\", \"position\", \"possible\", \"potential\", \"predict\", \"progress\", \"ramp\", \"roadmap\", \"seek\", \"should\", \"strive\", \"targets\", \"to be\", \"upcoming\", \"will\", \"would\" and variations of such words and similar expressions are intended to identify such forward-looking statements, which may include statements regarding:\n▪our business plans and strategy and anticipated benefits therefrom;\n▪projections of our future financial performance, including future revenue, gross profits, capital expenditures and cash flows;\n▪projected costs and yield trends;\n▪future cash requirements, the availability, uses, sufficiency and cost of capital resources, and sources of funding, including for future capital and R&D investments and for returns to stockholders, and credit ratings expectations;\n▪future products, services and technologies, and the expected goals, timeline, ramps, progress, availability, production, regulation and benefits of such products, services and technologies, including future process nodes and packaging technologies, product roadmaps, schedules, future product architectures, expectations regarding process performance, per-watt parity and metrics, and expectations regarding product and process competitiveness;\n▪internal and external manufacturing plans, including future internal manufacturing volumes, manufacturing expansion plans and the financing therefor, and external foundry usage;\n▪future production capacity and product supply;\n▪supply expectations, including regarding constraints, limitations, pricing, and industry shortages;\n▪plans and goals related to Intel's foundry business, including with respect to anticipated customers, future manufacturing capacity and service, technology and IP offerings;\n▪expected timing and impact of acquisitions, divestitures and other significant transactions;\n▪expected completion and impacts of restructuring activities and cost-saving or efficiency initiatives;",
+            "score": 2,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "10-Q",
+              "accession_number": "0000050863-26-000191",
+              "report_date": "2026-09-26",
+              "filed": "2026-10-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+              "section": "Primary document",
+              "retrieved_at": "2026-11-12T08:24:22.392055+00:00",
+              "sha256": "a9ebfef45711a054ecea22a6ffb07b949e986ac50c908e5d5c013e4aea1bdf61",
+              "start": 3286,
+              "end": 6718
+            }
+          },
+          {
+            "text": "▪Segment expenses: consist of intersegment charges for product manufacturing and related services from Intel Foundry, external foundry and other manufacturing expenses, product development costs, allocated expenses as described below and direct operating expenses.\nIntel Foundry\n▪Segment revenue: consists substantially of intersegment product and services revenue for wafer fabrication, substrates and other related products and services sold to Intel Products and certain other Intel internal businesses. We recognize intersegment revenue based on the completion of performance obligations. Product revenue is recognized upon transfer of ownership, which is generally at the completion of wafer sorting. Back-end service revenue is recognized upon the completion of assembly and test milestones, which approximates the recognition of revenue over the service period. Intersegment sales are recorded at prices that are intended to approximate market pricing. Intel Foundry also includes certain third-party foundry and assembly and test revenues from external customers that totaled $411 million in the three months ended September 26, 2026 and $878 million in the first nine months of 2026 ($32 million in the three months ended September 27, 2025 and $85 million in the first nine months of 2025).\n▪Segment expenses: consist of direct expenses for technology development, product manufacturing and services provided by Intel Foundry to internal and external customers, allocated expenses as described below and direct operating expenses. Direct expenses for product manufacturing include excess capacity charges, if any.\n\tFinancial Statements\t Notes to Financial Statements\t\n9\nTable of Contents\nAll Other\nOur \"All Other\" category includes the results of operations from non-reportable segments, including our Mobileye business, our IMS business, start-up businesses that support our initiatives and historical results of operations from divested businesses, including Altera. Altera, which was previously a wholly owned subsidiary, was deconsolidated from our Consolidated Condensed Financial Statements effective September 12, 2025, following the closing of the sale of 51% of Altera's issued and outstanding common stock. Altera's financial results of operations were included in our \"All Other\" category through September 11, 2025. The financial results of our \"All Other\" category include intersegment product and services revenue and intersegment expenses primarily between Altera and our Intel Foundry segment during the periods in which we consolidated Altera.\nWe allocate operating expenses from our sales and marketing group to the Intel Products operating segments and allocate substantially all our operating expenses from our general and administrative groups to our reportable operating segments.\nWe estimate that the substantial majority of our consolidated depreciation expense in the three and nine months ended September 26, 2026 and September 27, 2025 was incurred by Intel Foundry. Intel Foundry depreciation expense is substantially included in overhead cost pools and then combined with other costs, and subsequently absorbed into inventory as each product passes through the manufacturing process and is sold to Intel Products or other customers. As a result, it is impracticable to determine the total depreciation expense included as a component of each Intel Products operating segment's operating income (loss).",
+            "score": 2,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "10-Q",
+              "accession_number": "0000050863-26-000191",
+              "report_date": "2026-09-26",
+              "filed": "2026-10-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+              "section": "Primary document",
+              "retrieved_at": "2026-11-12T08:24:22.392055+00:00",
+              "sha256": "a9ebfef45711a054ecea22a6ffb07b949e986ac50c908e5d5c013e4aea1bdf61",
+              "start": 28391,
+              "end": 31831
+            }
+          },
+          {
+            "text": "We do not allocate the following corporate operating expenses to our operating segments:\n▪restructuring and other charges;\n▪share-based compensation; and\n▪certain acquisition-related costs, including amortization and any impairment of acquisition-related intangibles and goodwill.\nWe do not allocate the following non-operating items to our operating segments:\n▪gains and losses from equity investments;\n▪interest and other, net; and\n▪income taxes.\nOur CEO is our CODM. The CODM uses segment revenue and segment operating income (loss) to evaluate each segment's performance and allocate resources. These financial measures are utilized during our budgeting and forecasting process to assess profitability and enable decision-making regarding strategic initiatives, capital investments and personnel across all operating segments. Segment operating results regularly reviewed by our CODM also include total cost of sales and operating expenses directly attributable to each segment. We centrally manage all procurement, treasury and asset management functions across the enterprise and do not maintain separate balance sheets by segment within our systems of record, nor does our CODM receive total asset information by segment for purposes of assessing segment performance and allocating resources.\nIntersegment eliminations: Intersegment sales and related gross profit on inventory recorded at the end of the period or sold through to third-party customers is eliminated for consolidation purposes. The Intel Products operating segments and Intel Foundry are meant to reflect separate fabless semiconductor and foundry companies, respectively. Thus, certain intersegment activity is captured within the intersegment eliminations upon consolidation and presented at the Intel consolidated level. This activity primarily relates to inventory reserves, which are determined and recorded based on our accounting policies for Intel as a whole but are only recorded by the Intel Products operating segments upon transfer of inventory from Intel Foundry. If a reserve is identified that relates to neither Intel Products operating segments nor Intel Foundry, the reserve is recognized as activity within the intersegment eliminations for Intel on a consolidated basis.\n\tFinancial Statements\t Notes to Financial Statements\t\n10\nTable of Contents\nNet revenue, cost of sales and operating expenses and operating income (loss) for each period were as follows:\n\t\t\tThree Months Ended\n\t(In Millions)\t\tSep 26, 2026\n\t\t\tIntel Products\t\t\t\t\t\t\t\t\t\t\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\tIntel Foundry\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t8,097 \t\t\t$\t7,318 \t\t\t$\t15,415 \t\t\t$\t6,697 \t\t\t$\t692 \t\t\t$\t— \t\t\t$\t(6,291)\t\t\t$\t16,513 \t\nCost of sales and operating expenses\n\t\t5,812 \t\t\t4,279 \t\t\t10,091 \t\t\t8,550 \t\t\t513 \t\t\t1,058 \t\t\t(6,221)\t\t\t13,991 \t\nOperating income (loss)\n\t\t$\t2,285 \t\t\t$\t3,039 \t\t\t$\t5,324 \t\t\t$\t(1,853)\t\t\t$\t179 \t\t\t$\t(1,058)\t\t\t$\t(70)\t\t\t$\t2,522 \t\n\t\t\tThree Months Ended\n\t(In Millions)\t\tSep 27, 2025\nIntel Products\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\t\nIntel Foundry\n\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t8,535 \t\t\t$\t4,117 \t\t\t$\t12,652 \t\t\t$\t4,235 \t\t\t$\t993 \t\t\t$\t— \t\t\t$\t(4,227)\t\t\t$\t13,653 \t\nCost of sales and operating expenses\n\t\t5,841 \t\t\t3,153 \t\t\t8,994 \t\t\t6,556 \t\t\t893 \t\t\t782 \t\t\t(4,255)\t\t\t12,970 \t\n\tOperating income (loss)\t\t$\t2,694 \t\t\t$\t964 \t\t\t$\t3,658 \t\t\t$\t(2,321)\t\t\t$\t100 \t\t\t$\t(782)\t\t\t$\t28 \t\t\t$\t683",
+            "score": 2,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "10-Q",
+              "accession_number": "0000050863-26-000191",
+              "report_date": "2026-09-26",
+              "filed": "2026-10-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+              "section": "Primary document",
+              "retrieved_at": "2026-11-12T08:24:22.392055+00:00",
+              "sha256": "a9ebfef45711a054ecea22a6ffb07b949e986ac50c908e5d5c013e4aea1bdf61",
+              "start": 31832,
+              "end": 35312
+            }
+          },
+          {
+            "text": "Escrowed Shares Issued to the U.S. Government\nPer the terms of our previously-disclosed U.S. Government Agreement that we entered into with the DOC on August 22, 2025, upon receipt of cash proceeds for our performance under Secure Enclave, we released approximately 11 million and 24 million Escrowed Shares during the three and nine months ended September 26, 2026, respectively (684 thousand Escrowed Shares during the three and nine months ended September 27, 2025).\nDuring the three and nine months ended September 26, 2026, we recognized a gain of $1.0 billion and a loss of $12.6 billion, respectively, related to the net change in fair value of both Escrowed Shares released and Escrowed Shares still held in escrow at September 26, 2026 (loss of $1.7 billion during the three and nine months ended September 27, 2025). The fair value of the Escrowed Shares derivative liability was $13.7 billion at September 26, 2026 and $2.7 billion at December 27, 2025, which we have recognized within other accrued liabilities and other long-term liabilities.\nOf the 132 million Escrowed Shares not yet released as of September 26, 2026, 66 million are considered not contingently issuable based on the terms of the U.S. Government Agreement and, as such, have been included in our computation of basic earnings (loss) per share for the three and nine months ended September 26, 2026. The remaining 66 million Escrowed Shares not yet released are considered contingently issuable based on the DOC's disbursements under Secure Enclave and, therefore, are excluded from basic and diluted earnings (loss) per share until the contingencies are met. Of the 158 million Escrowed Shares that remained outstanding as of September 27, 2025, 79 million were considered not contingently issuable and 79 million were considered contingently issuable.\nWe also issued warrants to the DOC to purchase up to 241 million shares of our common stock at $20.00 per share (Warrants) that become exercisable if we cease to directly or indirectly own at least 51% of our foundry business. Potentially dilutive shares issuable under the Warrants have been excluded from all basic and diluted earnings (loss) per share calculations for the three and nine months ended September 26, 2026 as the Warrants are neither currently nor expected to become exercisable. If exercised, we can elect to settle the Warrants in net cash or net shares.\nPrivate Placement Share Sale to NVIDIA\nOn September 15, 2025, we entered into an agreement to issue and sell 215 million shares of our common stock to NVIDIA at a price of $23.28 per share, representing an aggregate cash purchase price of $5.0 billion. The issuance and sale of the shares were completed the following quarter on December 26, 2025.\n\tNote 5 : \tOther Financial Statement Details\nRestricted Cash\nWe have $552 million of restricted cash included in other long-term assets within the Consolidated Condensed Balance Sheets as of September 26, 2026 ($447 million as of December 27, 2025). The restricted cash serves as collateral for third-party arrangements we entered into and is considered legally restricted due to limitations on usage and withdrawal.\nAccounts Receivable",
+            "score": 2,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "10-Q",
+              "accession_number": "0000050863-26-000191",
+              "report_date": "2026-09-26",
+              "filed": "2026-10-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+              "section": "Primary document",
+              "retrieved_at": "2026-11-12T08:24:22.392055+00:00",
+              "sha256": "a9ebfef45711a054ecea22a6ffb07b949e986ac50c908e5d5c013e4aea1bdf61",
+              "start": 47668,
+              "end": 50861
+            }
+          },
+          {
+            "text": "The increase in the discount rate utilized in our first quarter of 2026 quantitative assessment had a significant adverse effect on the estimated fair value of the Mobileye reporting unit and, as a result of our impairment test, we recognized a non-cash goodwill impairment charge in the first quarter of 2026 as the estimated fair value of the Mobileye reporting unit was lower than the assigned carrying value. To corroborate our estimated fair value of the Mobileye reporting unit, we performed a reconciliation to Mobileye's market capitalization as of March 28, 2026, and concluded that the implied control premium was reasonable as compared to relevant market transactions in similar industries.\nAs of September 26, 2026, our Mobileye reporting unit had $4.3 billion in recorded goodwill ($8.2 billion as of December 27, 2025) and our estimated fair value exceeded the assigned carrying value by less than 10%. We continue to closely monitor the Mobileye reporting unit’s financial performance, business forecasts and market capitalization. Our quarterly qualitative impairment assessment for the third quarter of 2026 did not indicate that a more detailed quantitative analysis was necessary for the Mobileye reporting unit. Should our estimates change based on Mobileye's operating results, market conditions, long-term growth projections or other assumptions underlying our forecast, including changes in the discount rate, the Mobileye reporting unit may become subject to further impairment in future periods. For example, a 1% higher discount rate would have resulted in an additional goodwill impairment of approximately $682 million for the Mobileye reporting unit in the first quarter of 2026.\n\tFinancial Statements\t Notes to Financial Statements\t\n20\nTable of Contents\n\tNote 11 : \tBorrowings\nIn the first quarter of 2026, we settled $1.5 billion of our senior notes due February 2026 and amended our 364-day $5.0 billion credit facility agreement to a three-year $3.0 billion credit facility maturing January 2029.\nIn the second quarter of 2026, we settled $1.0 billion of our senior notes due May 2026, and we issued a total of $6.5 billion aggregate principal amount of senior notes comprised of $1.0 billion in 4.65% senior notes due 2031, $1.0 billion in 5.00% senior notes due 2033, $2.2 billion in 5.30% senior notes due 2036, $1.8 billion in 6.13% senior notes due 2056, and $500 million in 6.20% senior notes due 2066. All of our senior fixed-rate notes pay interest semiannually. We may redeem the fixed-rate notes prior to their maturity at our option at specified redemption prices and subject to certain restrictions. The obligations under our senior fixed-rate notes rank equally in the right of payment with all of our other existing and future senior unsecured indebtedness and effectively rank junior to all liabilities of our subsidiaries.\nIn connection with our repurchase of the 49% minority ownership interest in Ireland SCIP, discussed within \"Note 3: Non-Controlling Interests\" within Notes to Consolidated Condensed Financial Statements, we executed and drew on a $6.5 billion 364-day senior unsecured term loan facility with an interest rate of 4.79% in the second quarter of 2026. We repaid the term loan facility in full during the same period.",
+            "score": 2,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "10-Q",
+              "accession_number": "0000050863-26-000191",
+              "report_date": "2026-09-26",
+              "filed": "2026-10-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+              "section": "Primary document",
+              "retrieved_at": "2026-11-12T08:24:22.392055+00:00",
+              "sha256": "a9ebfef45711a054ecea22a6ffb07b949e986ac50c908e5d5c013e4aea1bdf61",
+              "start": 74746,
+              "end": 78031
+            }
+          }
+        ],
+        "warnings": [],
+        "coverage": {
+          "form": "10-Q",
+          "filings_considered": 4,
+          "documents_loaded": 4,
+          "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+        },
+        "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+      },
+      "elapsed_seconds": 1.4310053329973016
+    },
+    {
+      "type": "tool",
+      "task_id": "task_2",
+      "agent": "filing_rag",
+      "step": 2,
+      "call_id": 4,
+      "name": "search_company_updates",
+      "arguments": {
+        "form": "8-K",
+        "ticker": "INTC",
+        "query": "recent developments",
+        "top_k": 5
+      },
+      "status": "completed",
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        },
+        "matches": [
+          {
+            "text": "▪expected timing and impact of acquisitions, divestitures and other significant transactions;\nIntel/Page 4\n▪expected completion and impacts of restructuring activities and cost-saving or efficiency initiatives;\n▪social and environmental performance goals, measures, strategies and results;\n▪our anticipated growth, future market share, customer demand and trends in our businesses and operations;\n▪projected growth and trends in markets relevant to our businesses;\n▪anticipated trends and impacts related to industry component, substrate and foundry capacity utilization, shortages and constraints;\n▪expectations regarding government funding, incentives, policies and priorities;\n▪technology trends and developments, including with respect to AI;\n▪macroeconomic conditions;\n▪geopolitical tensions and conflicts, including with respect to international trade policies in areas such as tariffs and export controls, and their potential impact on our business;\n▪tax- and accounting-related expectations;\n▪expectations regarding our relationships with certain sanctioned parties; and\n▪other characterizations of future events or circumstances.\nSuch statements involve many risks and uncertainties that could cause our actual results to differ materially from those expressed or implied, including those associated with:\n▪the high level of competition and rapid technological change in our industry;\n▪the significant, long-term and inherently risky investments we are making in R&D and manufacturing facilities that may not realize a favorable return;\n▪the complexities and uncertainties in developing and implementing new semiconductor products and manufacturing process technologies;\n▪our pursuit of Intel 14A and other next-generation leading-edge process technologies, our investments in manufacturing expansion projects to manufacture products using such technologies and our efforts to secure product design wins with and demand commitments from potential significant external customers for the manufacture of products using such technologies;\n▪alternative financing arrangements and pursuit of government grants;\n▪the U.S. government's acquisition of significant equity interests in us;\n▪changes in product demand and margins;\n▪macroeconomic conditions and geopolitical tensions and conflicts, including geopolitical and trade tensions between the U.S. and China, tensions and conflict affecting Israel and the Middle East, rising tensions between mainland China and Taiwan and the impacts of Russia's war on Ukraine;\n▪recently elevated geopolitical tensions, volatility and uncertainty with respect to international trade policies, including tariffs and export controls, impacting our business, the markets in which we compete and the world economy;\n▪the evolving market for products with AI capabilities;\n▪our complex global supply chain supporting our manufacturing facilities and incorporating external foundries, including from disruptions, delays, trade tensions and conflicts, or shortages, including current industry-wide substrate and memory shortages;\n▪product defects, errata and other product issues, particularly as we develop next-generation products and implement next-generation manufacturing process technologies;\n▪potential security vulnerabilities in our products;\n▪increasing and evolving cybersecurity threats and privacy risks;\n▪IP risks including related litigation and regulatory proceedings;\n▪the need to attract, retain and motivate key talent;",
+            "score": 1,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "8-K",
+              "accession_number": "0000050863-26-000188",
+              "report_date": "2026-10-29",
+              "filed": "2026-10-29",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+              "section": "EX-99 exhibit",
+              "retrieved_at": "2026-11-12T08:24:30.132136+00:00",
+              "sha256": "b7754e17192414157747ec72ac7928714dace58100a6d812fff0da9bf32a7015",
+              "start": 9499,
+              "end": 12970
+            }
+          },
+          {
+            "text": "▪potential security vulnerabilities in our products;\n▪increasing and evolving cybersecurity threats and privacy risks;\n▪IP risks including related litigation and regulatory proceedings;\n▪the need to attract, retain and motivate key talent;\n▪strategic transactions and investments;\n▪sales-related risks, including customer concentration and the use of distributors and other third parties;\n▪our debt obligations and our ability to access sources of capital;\n▪complex and evolving laws and regulations across many jurisdictions;\n▪catastrophic events;\nIntel/Page 5\n▪fluctuations in currency exchange rates;\n▪changes in our effective tax rate and applicable tax regimes;\n▪environmental, health, safety and product regulations; and\n▪other risks and uncertainties described in this report, our 2025 Form 10-K, our Q1 2026 Form 10-Q, our Q2 2026 Form 10-Q, our Q3 2026 Form 10-Q and our other filings with the SEC.\nGiven these risks and uncertainties, readers are cautioned not to place undue reliance on such forward-looking statements. Readers are urged to carefully review and consider the various disclosures made in this release and in other documents we file from time to time with the SEC that disclose risks and uncertainties that may affect our business.\nUnless specifically indicated otherwise, the forward-looking statements in this release do not reflect the potential impact of any divestitures, mergers, acquisitions or other business combinations that have not been completed as of the date of this filing. In addition, the forward-looking statements in this release are based on management's expectations as of the date of this release, unless an earlier date is specified, including expectations based on third-party information and projections that management believes to be reputable. We do not undertake, and expressly disclaim any duty, to update such statements, whether as a result of new information, new developments, or otherwise, except to the extent that disclosure may be required by law.\nAbout Intel\nIntel (Nasdaq: INTC) designs and manufactures advanced semiconductors that connect and power the modern world. Every day, our engineers create new technologies that enhance and shape the future of computing to enable new possibilities for every customer we serve. Learn more at www.intel.com.\n© Intel Corporation. Intel, the Intel logo, and other Intel marks are trademarks of Intel Corporation or its subsidiaries. Other names and brands may be claimed as the property of others.\nIntel/Page 6\nIntel Corporation\nConsolidated Condensed Statements of Operations and Other Information\n\t\t\tThree Months Ended\n(In Millions, Except Per Share Amounts; Unaudited)\n\t\tSep 26, 2026\t\tSep 27, 2025\n\tNet revenue\t\t$\t16,513 \t\t\t$\t13,653 \t\n\tCost of sales\t\t9,417 \t\t\t8,435 \t\n\tGross profit\t\t7,096 \t\t\t5,218 \t\n\tResearch and development\t\t3,490 \t\t\t3,231 \t\n\tMarketing, general, and administrative\t\t1,030 \t\t\t1,129 \t\n\tRestructuring and other charges\t\t54 \t\t\t175 \t\n\tOperating expenses\t\t4,574 \t\t\t4,535 \t\n\tOperating income (loss)\t\t2,522 \t\t\t683 \t\n\tGains (losses) on equity investments, net\t\t330 \t\t\t221 \t\n\tInterest and other, net\t\t1,130 \t\t\t3,670 \t\n\tIncome (loss) before taxes\t\t3,982 \t\t\t4,574 \t\n\tProvision for (benefit from) taxes\t\t462 \t\t\t304 \t\n\tNet income (loss)\t\t3,520 \t\t\t4,270 \t\n\tLess: net income (loss) attributable to non-controlling interests\t\t200 \t\t\t207 \t\n\tNet income (loss) attributable to Intel\t\t$\t3,320 \t\t\t$\t4,063 \t\n\tEarnings (loss) per share attributable to Intel—basic\t\t$\t0.63 \t\t\t$\t0.90",
+            "score": 1,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "8-K",
+              "accession_number": "0000050863-26-000188",
+              "report_date": "2026-10-29",
+              "filed": "2026-10-29",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+              "section": "EX-99 exhibit",
+              "retrieved_at": "2026-11-12T08:24:30.132136+00:00",
+              "sha256": "b7754e17192414157747ec72ac7928714dace58100a6d812fff0da9bf32a7015",
+              "start": 12731,
+              "end": 16216
+            }
+          },
+          {
+            "text": "•\nmacroeconomic conditions and geopolitical tensions and conflicts, including geopolitical and trade tensions\nbetween the U.S. and China, tensions and conflict affecting Israel and the Middle East, rising tensions between mainland China and Taiwan and the impacts of Russia’s war on Ukraine;\n\t•\nrecently elevated geopolitical tensions, volatility and uncertainty with respect to international trade policies,\nincluding tariffs and export controls, impacting our business, the markets in which we compete and the world economy;\n\t•\nthe evolving market for products with AI capabilities;\n\t•\nour complex global supply chain supporting our manufacturing facilities and incorporating external foundries,\nincluding from disruptions, delays, trade tensions and conflicts, or shortages, including current industry-wide substrate and memory shortages;\n\t•\nproduct defects, errata and other product issues, particularly as we develop next-generation products and\nimplement next-generation manufacturing process technologies;\n\t•\npotential security vulnerabilities in our products;\n\t•\nincreasing and evolving cybersecurity threats and privacy risks;\n\t•\nIP risks including related litigation and regulatory proceedings;\n\t•\nthe need to attract, retain and motivate key talent;\n\t•\nstrategic transactions and investments;\n\t•\nsales-related risks, including customer concentration and the use of distributors and other third parties;\n\t•\nour debt obligations and our ability to access sources of capital;\n\t•\ncomplex and evolving laws and regulations across many jurisdictions;\n\t•\ncatastrophic events;\n\t•\nfluctuations in currency exchange rates;\n\t•\nchanges in our effective tax rate and applicable tax regimes;\n\t•\nenvironmental, health, safety and product regulations; and\n\t•\nother risks and uncertainties described in this release, our 2025 Form\n10-K, our Q1 2026 Form 10-Q, our Q2 2026 Form 10-Q, and our other filings with the SEC.\nGiven these risks and uncertainties, readers are cautioned not to place undue reliance on such\nforward-looking statements. Readers are urged to carefully review and consider the various disclosures made in this release and in other documents we file from time to time with the SEC that disclose risks and uncertainties that may affect our\nbusiness.\nUnless specifically indicated otherwise, the forward-looking statements in this release do not reflect the potential impact of any\ndivestitures, mergers, acquisitions or other business combinations that have not been completed as of the date of this release. In addition, the forward-looking statements in this release are based on management’s expectations as of the date\nof this release, unless an earlier date is specified, including expectations based on third-party information and projections that management believes to be reputable. We do not undertake, and expressly disclaim any duty, to update such statements,\nwhether as a result of new information, new developments, or otherwise, except to the extent that disclosure may be required by law.\nContacts:\nInvestor Relations\ninvestor.relations@intel.com\nAbby Zhang\nMedia Relations\nabby.zhang@intel.com",
+            "score": 1,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "8-K",
+              "accession_number": "0001193125-26-346806",
+              "report_date": "2026-08-10",
+              "filed": "2026-08-12",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000119312526346806/d117670dex991.htm",
+              "section": "EX-99 exhibit",
+              "retrieved_at": "2026-11-12T08:24:31.348276+00:00",
+              "sha256": "ed12b0ad2c37a1a92e5907d9bc8d60df35b5019577aff63c31450b72b707a367",
+              "start": 6168,
+              "end": 9290
+            }
+          },
+          {
+            "text": "between the U.S. and China, tensions and conflict affecting Israel and the Middle East, rising tensions between mainland China and Taiwan and the impacts of Russia’s war on Ukraine;\n\t•\nrecently elevated geopolitical tensions, volatility and uncertainty with respect to international trade policies,\nincluding tariffs and export controls, impacting our business, the markets in which we compete and the world economy;\n\t•\nthe evolving market for products with AI capabilities;\n\t•\nour complex global supply chain supporting our manufacturing facilities and incorporating external foundries,\nincluding from disruptions, delays, trade tensions and conflicts, or shortages, including current industry-wide substrate and memory shortages;\n\t•\nproduct defects, errata and other product issues, particularly as we develop next-generation products and\nimplement next-generation manufacturing process technologies;\n\t•\npotential security vulnerabilities in our products;\n\t•\nincreasing and evolving cybersecurity threats and privacy risks;\n\t•\nIP risks including related litigation and regulatory proceedings;\n\t•\nthe need to attract, retain and motivate key talent;\n\t•\nstrategic transactions and investments;\n\t•\nsales-related risks, including customer concentration and the use of distributors and other third parties;\n\t•\nour debt obligations and our ability to access sources of capital;\n\t•\ncomplex and evolving laws and regulations across many jurisdictions;\n\t•\ncatastrophic events;\n\t•\nfluctuations in currency exchange rates;\n\t•\nchanges in our effective tax rate and applicable tax regimes;\n\t•\nenvironmental, health, safety and product regulations; and\n\t•\nother risks and uncertainties described in this release, our 2025 Form\n10-K, our Q1 2026 Form 10-Q, our Q2 2026 Form 10-Q, and our other filings with the SEC.\nGiven these risks and uncertainties, readers are cautioned not to place undue reliance on such forward-looking statements. Readers are urged to carefully\nreview and consider the various disclosures made in this release and in other documents we file from time to time with the SEC that disclose risks and uncertainties that may affect our business.\nUnless specifically indicated otherwise, the forward-looking statements in this release do not reflect the potential impact of any divestitures, mergers,\nacquisitions or other business combinations that have not been completed as of the date of this release. In addition, the forward-looking statements in this release are based on management’s expectations as of the date of this release, unless\nan earlier date is specified, including expectations based on third-party information and projections that management believes to be reputable. We do not undertake, and expressly disclaim any duty, to update such statements, whether as a result of\nnew information, new developments, or otherwise, except to the extent that disclosure may be required by law.\nContacts:\nInvestor Relations\ninvestor.relations@intel.com\nAbby Zhang\nMedia Relations\nabby.zhang@intel.com",
+            "score": 1,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "8-K",
+              "accession_number": "0001193125-26-346806",
+              "report_date": "2026-08-10",
+              "filed": "2026-08-12",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000119312526346806/d117670dex992.htm",
+              "section": "EX-99 exhibit",
+              "retrieved_at": "2026-11-12T08:24:31.691584+00:00",
+              "sha256": "0bf209c39cd327508a919095cf355e7fe40f1c00a68f8409a6d48b74ada8420c",
+              "start": 6274,
+              "end": 9286
+            }
+          },
+          {
+            "text": "Intel/Page 4\n▪internal and external manufacturing plans, including future internal manufacturing volumes, manufacturing expansion plans and the financing therefor, and external foundry usage;\n▪future production capacity and product supply;\n▪supply expectations, including regarding constraints, limitations, pricing, and industry shortages;\n▪plans and goals related to Intel's foundry business, including with respect to anticipated customers, future manufacturing capacity and service, technology and IP offerings;\n▪expected timing and impact of acquisitions, divestitures and other significant transactions;\n▪expected completion and impacts of restructuring activities and cost-saving or efficiency initiatives;\n▪social and environmental performance goals, measures, strategies and results;\n▪our anticipated growth, future market share, customer demand and trends in our businesses and operations;\n▪projected growth and trends in markets relevant to our businesses;\n▪anticipated trends and impacts related to industry component, substrate and foundry capacity utilization, shortages and constraints;\n▪expectations regarding government funding, incentives, policies and priorities;\n▪technology trends and developments, including with respect to AI;\n▪macroeconomic conditions;\n▪geopolitical tensions and conflicts, including with respect to international trade policies in areas such as tariffs and export controls, and their potential impact on our business;\n▪tax- and accounting-related expectations;\n▪expectations regarding our relationships with certain sanctioned parties; and\n▪other characterizations of future events or circumstances.\nSuch statements involve many risks and uncertainties that could cause our actual results to differ materially from those expressed or implied, including those associated with:\n▪the high level of competition and rapid technological change in our industry;\n▪the significant, long-term and inherently risky investments we are making in R&D and manufacturing facilities that may not realize a favorable return;\n▪the complexities and uncertainties in developing and implementing new semiconductor products and manufacturing process technologies;\n▪our pursuit of Intel 14A and other next-generation leading-edge process technologies, our investments in manufacturing expansion projects to manufacture products using such technologies and our efforts to secure product design wins with and demand commitments from potential significant external customers for the manufacture of products using such technologies;\n▪alternative financing arrangements and pursuit of government grants;\n▪the U.S. government's acquisition of significant equity interests in us;\n▪changes in product demand and margins;\n▪macroeconomic conditions and geopolitical tensions and conflicts, including geopolitical and trade tensions between the U.S. and China, tensions and conflict affecting Israel and the Middle East, rising tensions between mainland China and Taiwan and the impacts of Russia's war on Ukraine;\n▪recently elevated geopolitical tensions, volatility and uncertainty with respect to international trade policies, including tariffs and export controls, impacting our business, the markets in which we compete and the world economy;\n▪the evolving market for products with AI capabilities;",
+            "score": 1,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "8-K",
+              "accession_number": "0000050863-26-000155",
+              "report_date": "2026-07-23",
+              "filed": "2026-07-23",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000155/q226earningsrelease.htm",
+              "section": "EX-99 exhibit",
+              "retrieved_at": "2026-11-12T08:24:33.493715+00:00",
+              "sha256": "3498f328f4eadb12284f84400b4a5294c357aa2ef64acda059e3148b8e360302",
+              "start": 9544,
+              "end": 12854
+            }
+          }
+        ],
+        "warnings": [],
+        "coverage": {
+          "form": "8-K",
+          "filings_considered": 4,
+          "documents_loaded": 8,
+          "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+        },
+        "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+      },
+      "elapsed_seconds": 0.3118457499986107
+    },
+    {
+      "type": "model",
+      "task_id": "task_2",
+      "agent": "filing_rag",
+      "step": 3,
+      "max_output_tokens": 1024,
+      "input_tokens": 12377,
+      "output_tokens": 612,
+      "model": "qwen3:8b",
+      "provider": "ollama",
+      "estimated_cost_usd": 0.0,
+      "status": "completed",
+      "tool_calls": [],
+      "elapsed_seconds": 60.42699666699991
+    },
+    {
+      "type": "agent",
+      "task_id": "task_2",
+      "agent": "filing_rag",
+      "status": "completed",
+      "elapsed_seconds": 70.35496033300296
+    },
+    {
+      "type": "agent",
+      "agent": "writer",
+      "status": "started"
+    },
+    {
+      "type": "model",
+      "phase": "writer",
+      "provider": "openai",
+      "model": "gpt-6-luna",
+      "input_tokens": 8230,
+      "output_tokens": 414,
+      "total_tokens": 8644,
+      "cached_input_tokens": 0,
+      "reasoning_tokens": 0,
+      "response_id": "resp_0528c81f899d8f34016af579de1ea887d28eec2b68204e6d78",
+      "estimated_cost_usd": 0.00103,
+      "pricing_date": "2026-11-06",
+      "status": "completed",
+      "content": "{\"kind\":\"answer\",\"text\":\"Intel’in yıllık geliri FY2023’te {{2:records/2/value}} {{2:records/2/unit}} (dönem sonu: {{2:records/2/end}}), FY2024’te {{2:records/1/value}} {{2:records/1/unit}} (dönem sonu: {{2:records/1/end}}) ve FY2025’te {{2:records/0/value}} {{2:records/0/unit}} (dönem sonu: {{2:records/0/end}}) oldu. Gelir büyümesi FY2024’te {{3:results/revenue_growth/1/value}} ve FY2025’te {{3:results/revenue_growth/0/value}} olarak hesaplandı; her iki yılda da negatif olması ve son yıldaki daralmanın daha sınırlı kalması, gelir bazında büyümenin sürdürülebilir biçimde pozitife dönmediğini gösteriyor. [Source 2] [Source 3]\\n\\nGüncel finansal görünüm açısından mevcut yıllık veriler FY2025’e kadar uzanıyor; daha yeni dönem için sunulan 10-Q alıntısı finansal sonuç rakamları değil, ileriye dönük açıklamalar ve segment muhasebesi içeriyor. Bu açıklamalar, Intel’in yüksek Ar-Ge ve üretim tesisi yatırımlarının beklenen getiriyi sağlamaması, talep ve marjlardaki değişimler, makroekonomik koşullar ile jeopolitik ve ticaret gerilimleri, ayrıca tedarik zinciri kesintileri ve bileşen kıtlıklarını potansiyel riskler olarak sıralıyor. Bunlar gerçekleşmiş finansal etkiler olarak değil, sonuçları etkileyebilecek riskler olarak değerlendirilmelidir. [Source 4] [Source 5] [Source 9]\",\"facts\":[]}",
+      "elapsed_seconds": 9.754864833001193
+    },
+    {
+      "type": "agent",
+      "agent": "writer",
+      "status": "error",
+      "stage": "deterministic",
+      "error": {
+        "type": "ValueError",
+        "message": "Unknown catalog field placeholder: {{3:results/revenue_growth/1/value}}"
+      },
+      "elapsed_seconds": 9.759296542000811
+    },
+    {
+      "type": "revision",
+      "status": "scheduled",
+      "revision_count": 1,
+      "max_revisions": 2,
+      "issues": [
+        "Unknown catalog field placeholder: {{3:results/revenue_growth/1/value}}"
+      ]
+    },
+    {
+      "type": "agent",
+      "agent": "writer",
+      "status": "started"
+    },
+    {
+      "type": "model",
+      "phase": "writer",
+      "provider": "openai",
+      "model": "gpt-6-luna",
+      "input_tokens": 8768,
+      "output_tokens": 465,
+      "total_tokens": 9233,
+      "cached_input_tokens": 8227,
+      "reasoning_tokens": 64,
+      "response_id": "resp_0f7d76cdbae5c254016af579e6403487d29b0f7732ed379ab9",
+      "estimated_cost_usd": 0.00036887,
+      "pricing_date": "2026-11-06",
+      "status": "completed",
+      "content": "{\"kind\":\"answer\",\"text\":\"Intel’in yıllık geliri FY2023’te {{2:records/2/value}} {{2:records/2/unit}} (dönem sonu: {{2:records/2/end}}), FY2024’te {{2:records/1/value}} {{2:records/1/unit}} (dönem sonu: {{2:records/1/end}}) ve FY2025’te {{2:records/0/value}} {{2:records/0/unit}} (dönem sonu: {{2:records/0/end}}) oldu. Gelir büyümesi FY2024’te {{3:results/revenue_growth/1/value|percent}}, FY2025’te ise {{3:results/revenue_growth/0/value|percent}} olarak hesaplandı. Her iki yıldaki negatif büyüme gerilemeye işaret ediyor; son yıldaki oran daha az negatif olsa da gelir büyümesi henüz pozitife dönmedi. [Source 2] [Source 3]\\n\\nMevcut yıllık finansal veriler FY2025’e kadar uzanıyor. Sunulan 10-Q alıntıları güncel dönem için sonuç rakamları vermiyor; bunlardan Intel’in güncel finansal performansına ilişkin ek bir sonuç çıkarılamaz. Şirketin ileriye dönük açıklamalarında yüksek Ar-Ge ve üretim tesisi yatırımlarının beklenen getiriyi sağlamaması, talep ve marjlardaki değişimler, makroekonomik koşullar ve jeopolitik/ticaret gerilimleri ile tedarik zinciri kesintileri ve kıtlıklar potansiyel riskler olarak sıralanıyor; bunlar gerçekleşmiş finansal etkiler değil, olası risklerdir. [Source 4] [Source 9]\",\"facts\":[]}",
+      "elapsed_seconds": 11.854586499997822
+    },
+    {
+      "type": "agent",
+      "agent": "writer",
+      "status": "error",
+      "stage": "deterministic",
+      "error": {
+        "type": "ValueError",
+        "message": "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"FY2025’e\"]. Replace these with the matching {{source_id:path}} token from the catalog, or remove the unsupported claim. Do not calculate or spell out values."
+      },
+      "elapsed_seconds": 11.859301709002466
+    },
+    {
+      "type": "revision",
+      "status": "scheduled",
+      "revision_count": 2,
+      "max_revisions": 2,
+      "issues": [
+        "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"FY2025’e\"]. Replace these with the matching {{source_id:path}} token from the catalog, or remove the unsupported claim. Do not calculate or spell out values."
+      ]
+    },
+    {
+      "type": "agent",
+      "agent": "writer",
+      "status": "started"
+    },
+    {
+      "type": "model",
+      "phase": "writer",
+      "provider": "openai",
+      "model": "gpt-6-luna",
+      "input_tokens": 8795,
+      "output_tokens": 421,
+      "total_tokens": 9216,
+      "cached_input_tokens": 8227,
+      "reasoning_tokens": 0,
+      "response_id": "resp_0c4659eea2991f07016af579f2094087d2a67ecf806cf2b9c6",
+      "estimated_cost_usd": 0.00034957,
+      "pricing_date": "2026-11-06",
+      "status": "completed",
+      "content": "{\"kind\":\"answer\",\"text\":\"Intel’in yıllık geliri FY{{2:records/2/fiscal_year}} döneminde {{2:records/2/value}} {{2:records/2/unit}} (dönem sonu: {{2:records/2/end}}), FY{{2:records/1/fiscal_year}} döneminde {{2:records/1/value}} {{2:records/1/unit}} (dönem sonu: {{2:records/1/end}}) ve FY{{2:records/0/fiscal_year}} döneminde {{2:records/0/value}} {{2:records/0/unit}} (dönem sonu: {{2:records/0/end}}) oldu. Gelir büyümesi FY{{3:results/revenue_growth/1/fiscal_year}} döneminde {{3:results/revenue_growth/1/value|percent}}, FY{{3:results/revenue_growth/0/fiscal_year}} döneminde ise {{3:results/revenue_growth/0/value|percent}} olarak hesaplandı. Her iki dönemde büyüme negatifti; son dönemde oran daha az negatif olsa da pozitif büyümeye dönmedi. [Source 2] [Source 3]\\n\\nSunulan güncel dönem 10-Q alıntısında, ileriye dönük finansal performans, maliyet ve verim eğilimleri, sermaye kaynakları ve gelecekteki gelir gibi konular için beklentilerin risk ve belirsizlik içerdiği belirtiliyor; bu alıntı güncel dönem gerçekleşmiş finansal sonuçlarını göstermiyor. Şirket ayrıca makroekonomik koşulları, ürün talebi ve marj değişimlerini, jeopolitik ve ticaret gerilimlerini ve tedarik zinciri kesintilerini olası riskler arasında sayıyor. Bunlar gerçekleşmiş etkiler olarak değil, riskler olarak sunuluyor. [Source 4] [Source 9]\",\"facts\":[]}",
+      "elapsed_seconds": 7.08982529199784
+    },
+    {
+      "type": "agent",
+      "agent": "writer",
+      "status": "completed",
+      "elapsed_seconds": 7.09363329199914
+    },
+    {
+      "type": "agent",
+      "agent": "critic",
+      "status": "started"
+    },
+    {
+      "type": "model",
+      "phase": "critic",
+      "provider": "openai",
+      "model": "gpt-6-luna",
+      "input_tokens": 5417,
+      "output_tokens": 94,
+      "total_tokens": 5511,
+      "cached_input_tokens": 0,
+      "reasoning_tokens": 0,
+      "response_id": "resp_0afa4e7eff46d352016af579fad29087d284067a3c2810a17d",
+      "estimated_cost_usd": 0.0005887,
+      "pricing_date": "2026-11-06",
+      "status": "completed",
+      "content": "{\"issues\":[\"Son gelişmelerin şirket tarafından risk olarak sayıldığı iddiası [Source 9] ile desteklenmiyor: alıntı, bunları risk/gerçekleşmiş etki olarak değil, gerçekleşmiş gelişmeler olarak da sunmuyor; sadece risk ve belirsizlik unsurlarını listeliyor.\"],\"evidence_supported\":false,\"language_matches\":true,\"answer_complete\":true}",
+      "elapsed_seconds": 7.783694375000778
+    },
+    {
+      "type": "agent",
+      "agent": "critic",
+      "status": "completed",
+      "verification_status": "failed",
+      "issues": [
+        "Son gelişmelerin şirket tarafından risk olarak sayıldığı iddiası [Source 9] ile desteklenmiyor: alıntı, bunları risk/gerçekleşmiş etki olarak değil, gerçekleşmiş gelişmeler olarak da sunmuyor; sadece risk ve belirsizlik unsurlarını listeliyor."
+      ],
+      "elapsed_seconds": 7.786122042001807
+    },
+    {
+      "type": "revision",
+      "status": "exhausted",
+      "revision_count": 2,
+      "max_revisions": 2,
+      "issues": [
+        "Son gelişmelerin şirket tarafından risk olarak sayıldığı iddiası [Source 9] ile desteklenmiyor: alıntı, bunları risk/gerçekleşmiş etki olarak değil, gerçekleşmiş gelişmeler olarak da sunmuyor; sadece risk ve belirsizlik unsurlarını listeliyor."
+      ]
+    }
+  ],
+  "request_type": "mixed",
+  "evidence": [
+    {
+      "source_id": 1,
+      "tool": "resolve_ticker_to_cik",
+      "arguments": {
+        "ticker": "Intel"
+      },
+      "result": {
+        "ticker": "INTC",
+        "name": "INTEL CORP",
+        "cik": "0000050863"
+      }
+    },
+    {
+      "source_id": 2,
+      "tool": "get_company_facts",
+      "arguments": {
+        "cik": "0000050863",
+        "concept": "revenue",
+        "unit": "USD",
+        "years": 3
+      },
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "cik": "0000050863",
+          "name": "INTEL CORP"
+        },
+        "concept": "revenue",
+        "definition": {
+          "description": "Annual total revenue",
+          "taxonomy": "us-gaap",
+          "unit": "USD",
+          "tags": [
+            "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "Revenues",
+            "SalesRevenueNet"
+          ]
+        },
+        "unit": "USD",
+        "requested_years": 3,
+        "available_period_count": 3,
+        "history_complete": true,
+        "requested_period_ends": [
+          "2025-12-27",
+          "2024-12-28",
+          "2023-12-30"
+        ],
+        "missing_period_ends": [],
+        "records": [
+          {
+            "cik": 50863,
+            "metric": "revenue",
+            "start": "2024-12-29",
+            "end": "2025-12-27",
+            "value": 52853000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-01-23",
+            "accn": "0000050863-26-000011",
+            "is_amendment": false,
+            "fiscal_year": 2025,
+            "period_label": "FY2025 (period end: 2025-12-27)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+          },
+          {
+            "cik": 50863,
+            "metric": "revenue",
+            "start": "2023-12-31",
+            "end": "2024-12-28",
+            "value": 53101000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-01-23",
+            "accn": "0000050863-26-000011",
+            "is_amendment": false,
+            "fiscal_year": 2024,
+            "period_label": "FY2024 (period end: 2024-12-28)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+          },
+          {
+            "cik": 50863,
+            "metric": "revenue",
+            "start": "2023-01-01",
+            "end": "2023-12-30",
+            "value": 54228000000,
+            "unit": "USD",
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "form": "10-K",
+            "filed": "2026-01-23",
+            "accn": "0000050863-26-000011",
+            "is_amendment": false,
+            "fiscal_year": 2023,
+            "period_label": "FY2023 (period end: 2023-12-30)",
+            "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+          }
+        ]
+      }
+    },
+    {
+      "source_id": 3,
+      "tool": "compute_metrics",
+      "arguments": {
+        "cik": "0000050863",
+        "metrics": [
+          "revenue_growth"
+        ],
+        "years": 3
+      },
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "cik": "0000050863",
+          "name": "INTEL CORP"
+        },
+        "requested_years": 3,
+        "results": {
+          "revenue_growth": [
+            {
+              "cik": 50863,
+              "fiscal_year": 2025,
+              "metric": "revenue_growth",
+              "start": "2024-12-29",
+              "end": "2025-12-27",
+              "value": -0.004670345191239322,
+              "unit": "ratio",
+              "formula": "current_revenue / previous_revenue - 1",
+              "inputs": {
+                "previous_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2023-12-31",
+                  "end": "2024-12-28",
+                  "value": 53101000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2024,
+                  "period_label": "FY2024 (period end: 2024-12-28)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                },
+                "current_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2024-12-29",
+                  "end": "2025-12-27",
+                  "value": 52853000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2025,
+                  "period_label": "FY2025 (period end: 2025-12-27)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                }
+              },
+              "period_label": "FY2025 (period end: 2025-12-27)"
+            },
+            {
+              "cik": 50863,
+              "fiscal_year": 2024,
+              "metric": "revenue_growth",
+              "start": "2023-12-31",
+              "end": "2024-12-28",
+              "value": -0.02078262152393595,
+              "unit": "ratio",
+              "formula": "current_revenue / previous_revenue - 1",
+              "inputs": {
+                "previous_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2023-01-01",
+                  "end": "2023-12-30",
+                  "value": 54228000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2023,
+                  "period_label": "FY2023 (period end: 2023-12-30)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                },
+                "current_revenue": {
+                  "cik": 50863,
+                  "metric": "revenue",
+                  "start": "2023-12-31",
+                  "end": "2024-12-28",
+                  "value": 53101000000,
+                  "unit": "USD",
+                  "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "form": "10-K",
+                  "filed": "2026-01-23",
+                  "accn": "0000050863-26-000011",
+                  "is_amendment": false,
+                  "fiscal_year": 2024,
+                  "period_label": "FY2024 (period end: 2024-12-28)",
+                  "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                }
+              },
+              "period_label": "FY2024 (period end: 2024-12-28)"
+            }
+          ]
+        },
+        "calculation_definitions": {
+          "revenue_growth": {
+            "description": "Annual revenue growth",
+            "function": "calculate_growth",
+            "inputs": [
+              "revenue"
+            ],
+            "unit": "ratio",
+            "period_mode": "consecutive_periods"
+          }
+        },
+        "warnings": [],
+        "availability": {
+          "revenue": {
+            "concept": "revenue",
+            "missing_period_ends": [],
+            "available_period_ends": [
+              "2025-12-27",
+              "2024-12-28",
+              "2023-12-30"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "source_id": 4,
+      "tool": "search_company_updates",
+      "arguments": {
+        "form": "10-Q",
+        "ticker": "INTC",
+        "query": "financial performance",
+        "top_k": 5
+      },
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        },
+        "matches": [
+          {
+            "text": "Page\nForward-Looking Statements\n1\nAvailability of Company Information\n2\nConsolidated Condensed Financial Statements and Supplemental Details\n\tConsolidated Condensed Statements of Operations\t\n3\n\tConsolidated Condensed Statements of Comprehensive Income (Loss)\t\n4\n\tConsolidated Condensed Balance Sheets\t\n5\n\tConsolidated Condensed Statements of Cash Flows\t\n6\n\tConsolidated Condensed Statements of Stockholders' Equity\t\n8\n\tNotes to Consolidated Condensed Financial Statements\t\n9\n\tKey Terms\t\n29\nManagement's Discussion and Analysis (MD&A)\n\tOperating Segments Trends and Results\t\n33\n\tConsolidated Condensed Results of Operations\t\n37\n\tLiquidity and Capital Resources\t\n43\nRisk Factors and Other Key Information\n\tRisk Factors\t\n45\n\tQuantitative and Qualitative Disclosures About Market Risk\t\n45\n\tControls and Procedures\t\n45\n\tIssuer Purchases of Equity Securities\t\n45\n\tRule 10b5-1 Trading Arrangements\t\n46\n\tDisclosure Pursuant to Section 13(r) of the Securities Exchange Act of 1934\t\n46\n\tExhibits\t\n47\n\tForm 10-Q Cross-Reference Index\t\n48\nTable of Contents\nForward-Looking Statements\nThis Form 10-Q contains forward-looking statements that involve a number of risks and uncertainties. Words such as \"accelerate\", \"achieve\", \"aim\", \"ambitions\", \"anticipate\", \"believe\", \"committed\", \"continue\", \"could\", \"designed\", \"estimate\", \"expect\", \"forecast\", \"future\", \"goals\", \"grow\", \"guidance\", \"intend\", \"likely\", \"may\", \"might\", \"milestones\", \"next-generation\", \"objective\", \"on track\", \"opportunity\", \"outlook\", \"pending\", \"plan\", \"position\", \"possible\", \"potential\", \"predict\", \"progress\", \"ramp\", \"roadmap\", \"seek\", \"should\", \"strive\", \"targets\", \"to be\", \"upcoming\", \"will\", \"would\" and variations of such words and similar expressions are intended to identify such forward-looking statements, which may include statements regarding:\n▪our business plans and strategy and anticipated benefits therefrom;\n▪projections of our future financial performance, including future revenue, gross profits, capital expenditures and cash flows;\n▪projected costs and yield trends;\n▪future cash requirements, the availability, uses, sufficiency and cost of capital resources, and sources of funding, including for future capital and R&D investments and for returns to stockholders, and credit ratings expectations;\n▪future products, services and technologies, and the expected goals, timeline, ramps, progress, availability, production, regulation and benefits of such products, services and technologies, including future process nodes and packaging technologies, product roadmaps, schedules, future product architectures, expectations regarding process performance, per-watt parity and metrics, and expectations regarding product and process competitiveness;\n▪internal and external manufacturing plans, including future internal manufacturing volumes, manufacturing expansion plans and the financing therefor, and external foundry usage;\n▪future production capacity and product supply;\n▪supply expectations, including regarding constraints, limitations, pricing, and industry shortages;\n▪plans and goals related to Intel's foundry business, including with respect to anticipated customers, future manufacturing capacity and service, technology and IP offerings;\n▪expected timing and impact of acquisitions, divestitures and other significant transactions;\n▪expected completion and impacts of restructuring activities and cost-saving or efficiency initiatives;",
+            "score": 2,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "10-Q",
+              "accession_number": "0000050863-26-000191",
+              "report_date": "2026-09-26",
+              "filed": "2026-10-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+              "section": "Primary document",
+              "retrieved_at": "2026-11-12T08:24:22.392055+00:00",
+              "sha256": "a9ebfef45711a054ecea22a6ffb07b949e986ac50c908e5d5c013e4aea1bdf61",
+              "start": 3286,
+              "end": 6718
+            }
+          }
+        ],
+        "warnings": [],
+        "coverage": {
+          "form": "10-Q",
+          "filings_considered": 4,
+          "documents_loaded": 4,
+          "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+        },
+        "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+      }
+    },
+    {
+      "source_id": 5,
+      "tool": "search_company_updates",
+      "arguments": {
+        "form": "10-Q",
+        "ticker": "INTC",
+        "query": "financial performance",
+        "top_k": 5
+      },
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        },
+        "matches": [
+          {
+            "text": "▪Segment expenses: consist of intersegment charges for product manufacturing and related services from Intel Foundry, external foundry and other manufacturing expenses, product development costs, allocated expenses as described below and direct operating expenses.\nIntel Foundry\n▪Segment revenue: consists substantially of intersegment product and services revenue for wafer fabrication, substrates and other related products and services sold to Intel Products and certain other Intel internal businesses. We recognize intersegment revenue based on the completion of performance obligations. Product revenue is recognized upon transfer of ownership, which is generally at the completion of wafer sorting. Back-end service revenue is recognized upon the completion of assembly and test milestones, which approximates the recognition of revenue over the service period. Intersegment sales are recorded at prices that are intended to approximate market pricing. Intel Foundry also includes certain third-party foundry and assembly and test revenues from external customers that totaled $411 million in the three months ended September 26, 2026 and $878 million in the first nine months of 2026 ($32 million in the three months ended September 27, 2025 and $85 million in the first nine months of 2025).\n▪Segment expenses: consist of direct expenses for technology development, product manufacturing and services provided by Intel Foundry to internal and external customers, allocated expenses as described below and direct operating expenses. Direct expenses for product manufacturing include excess capacity charges, if any.\n\tFinancial Statements\t Notes to Financial Statements\t\n9\nTable of Contents\nAll Other\nOur \"All Other\" category includes the results of operations from non-reportable segments, including our Mobileye business, our IMS business, start-up businesses that support our initiatives and historical results of operations from divested businesses, including Altera. Altera, which was previously a wholly owned subsidiary, was deconsolidated from our Consolidated Condensed Financial Statements effective September 12, 2025, following the closing of the sale of 51% of Altera's issued and outstanding common stock. Altera's financial results of operations were included in our \"All Other\" category through September 11, 2025. The financial results of our \"All Other\" category include intersegment product and services revenue and intersegment expenses primarily between Altera and our Intel Foundry segment during the periods in which we consolidated Altera.\nWe allocate operating expenses from our sales and marketing group to the Intel Products operating segments and allocate substantially all our operating expenses from our general and administrative groups to our reportable operating segments.\nWe estimate that the substantial majority of our consolidated depreciation expense in the three and nine months ended September 26, 2026 and September 27, 2025 was incurred by Intel Foundry. Intel Foundry depreciation expense is substantially included in overhead cost pools and then combined with other costs, and subsequently absorbed into inventory as each product passes through the manufacturing process and is sold to Intel Products or other customers. As a result, it is impracticable to determine the total depreciation expense included as a component of each Intel Products operating segment's operating income (loss).",
+            "score": 2,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "10-Q",
+              "accession_number": "0000050863-26-000191",
+              "report_date": "2026-09-26",
+              "filed": "2026-10-30",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+              "section": "Primary document",
+              "retrieved_at": "2026-11-12T08:24:22.392055+00:00",
+              "sha256": "a9ebfef45711a054ecea22a6ffb07b949e986ac50c908e5d5c013e4aea1bdf61",
+              "start": 28391,
+              "end": 31831
+            }
+          }
+        ],
+        "warnings": [],
+        "coverage": {
+          "form": "10-Q",
+          "filings_considered": 4,
+          "documents_loaded": 4,
+          "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+        },
+        "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+      }
+    },
+    {
+      "source_id": 6,
+      "tool": "search_company_updates",
+      "arguments": {
+        "form": "10-Q",
+        "ticker": "INTC",
+        "query": "financial performance",
+        "top_k": 5
+      },
+      "result": {
+        "content_limit": {
+          "reason": "total_report_text_limit",
+          "original_text_characters": 3480,
+          "max_source_characters": 6000,
+          "max_total_characters": 12000,
+          "original_result_sha256": "8f125cadefebf71f65edd4452173bf1cadfb9e38e9881f598fe2e374530fb3c3"
+        }
+      },
+      "content_omitted": true
+    },
+    {
+      "source_id": 7,
+      "tool": "search_company_updates",
+      "arguments": {
+        "form": "10-Q",
+        "ticker": "INTC",
+        "query": "financial performance",
+        "top_k": 5
+      },
+      "result": {
+        "content_limit": {
+          "reason": "total_report_text_limit",
+          "original_text_characters": 3193,
+          "max_source_characters": 6000,
+          "max_total_characters": 12000,
+          "original_result_sha256": "91368c70a717927c8ab68322288ca50009873723f698b5c39684f4d14e613067"
+        }
+      },
+      "content_omitted": true
+    },
+    {
+      "source_id": 8,
+      "tool": "search_company_updates",
+      "arguments": {
+        "form": "10-Q",
+        "ticker": "INTC",
+        "query": "financial performance",
+        "top_k": 5
+      },
+      "result": {
+        "content_limit": {
+          "reason": "total_report_text_limit",
+          "original_text_characters": 3285,
+          "max_source_characters": 6000,
+          "max_total_characters": 12000,
+          "original_result_sha256": "e49564c49150dcb579d9c5a6ce8d3a9ab649a717224f2ac4e7851763f73b579f"
+        }
+      },
+      "content_omitted": true
+    },
+    {
+      "source_id": 9,
+      "tool": "search_company_updates",
+      "arguments": {
+        "form": "8-K",
+        "ticker": "INTC",
+        "query": "recent developments",
+        "top_k": 5
+      },
+      "result": {
+        "company": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        },
+        "matches": [
+          {
+            "text": "▪expected timing and impact of acquisitions, divestitures and other significant transactions;\nIntel/Page 4\n▪expected completion and impacts of restructuring activities and cost-saving or efficiency initiatives;\n▪social and environmental performance goals, measures, strategies and results;\n▪our anticipated growth, future market share, customer demand and trends in our businesses and operations;\n▪projected growth and trends in markets relevant to our businesses;\n▪anticipated trends and impacts related to industry component, substrate and foundry capacity utilization, shortages and constraints;\n▪expectations regarding government funding, incentives, policies and priorities;\n▪technology trends and developments, including with respect to AI;\n▪macroeconomic conditions;\n▪geopolitical tensions and conflicts, including with respect to international trade policies in areas such as tariffs and export controls, and their potential impact on our business;\n▪tax- and accounting-related expectations;\n▪expectations regarding our relationships with certain sanctioned parties; and\n▪other characterizations of future events or circumstances.\nSuch statements involve many risks and uncertainties that could cause our actual results to differ materially from those expressed or implied, including those associated with:\n▪the high level of competition and rapid technological change in our industry;\n▪the significant, long-term and inherently risky investments we are making in R&D and manufacturing facilities that may not realize a favorable return;\n▪the complexities and uncertainties in developing and implementing new semiconductor products and manufacturing process technologies;\n▪our pursuit of Intel 14A and other next-generation leading-edge process technologies, our investments in manufacturing expansion projects to manufacture products using such technologies and our efforts to secure product design wins with and demand commitments from potential significant external customers for the manufacture of products using such technologies;\n▪alternative financing arrangements and pursuit of government grants;\n▪the U.S. government's acquisition of significant equity interests in us;\n▪changes in product demand and margins;\n▪macroeconomic conditions and geopolitical tensions and conflicts, including geopolitical and trade tensions between the U.S. and China, tensions and conflict affecting Israel and the Middle East, rising tensions between mainland China and Taiwan and the impacts of Russia's war on Ukraine;\n▪recently elevated geopolitical tensions, volatility and uncertainty with respect to international trade policies, including tariffs and export controls, impacting our business, the markets in which we compete and the world economy;\n▪the evolving market for products with AI capabilities;\n▪our complex global supply chain supporting our manufacturing facilities and incorporating external foundries, including from disruptions, delays, trade tensions and conflicts, or shortages, including current industry-wide substrate and memory shortages;\n▪product defects, errata and other product issues, particularly as we develop next-generation products and implement next-generation manufacturing process technologies;\n▪potential security vulnerabilities in our products;\n▪increasing and evolving cybersecurity threats and privacy risks;\n▪IP risks including related litigation and regulatory proceedings;\n▪the need to attract, retain and motivate key talent;",
+            "score": 1,
+            "metadata": {
+              "ticker": "INTC",
+              "form": "8-K",
+              "accession_number": "0000050863-26-000188",
+              "report_date": "2026-10-29",
+              "filed": "2026-10-29",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+              "section": "EX-99 exhibit",
+              "retrieved_at": "2026-11-12T08:24:30.132136+00:00",
+              "sha256": "b7754e17192414157747ec72ac7928714dace58100a6d812fff0da9bf32a7015",
+              "start": 9499,
+              "end": 12970
+            }
+          }
+        ],
+        "warnings": [],
+        "coverage": {
+          "form": "8-K",
+          "filings_considered": 4,
+          "documents_loaded": 8,
+          "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+        },
+        "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+      }
+    },
+    {
+      "source_id": 10,
+      "tool": "search_company_updates",
+      "arguments": {
+        "form": "8-K",
+        "ticker": "INTC",
+        "query": "recent developments",
+        "top_k": 5
+      },
+      "result": {
+        "content_limit": {
+          "reason": "total_report_text_limit",
+          "original_text_characters": 3485,
+          "max_source_characters": 6000,
+          "max_total_characters": 12000,
+          "original_result_sha256": "0c4121942d0dca5ffa8b8914a36504b7825775fc25abbdd08c01989356f43cc4"
+        }
+      },
+      "content_omitted": true
+    },
+    {
+      "source_id": 11,
+      "tool": "search_company_updates",
+      "arguments": {
+        "form": "8-K",
+        "ticker": "INTC",
+        "query": "recent developments",
+        "top_k": 5
+      },
+      "result": {
+        "content_limit": {
+          "reason": "total_report_text_limit",
+          "original_text_characters": 3122,
+          "max_source_characters": 6000,
+          "max_total_characters": 12000,
+          "original_result_sha256": "ef2fa2e73a9967bd9b8ea7346efe05fed381b329594417d9acef7757eec2f5eb"
+        }
+      },
+      "content_omitted": true
+    },
+    {
+      "source_id": 12,
+      "tool": "search_company_updates",
+      "arguments": {
+        "form": "8-K",
+        "ticker": "INTC",
+        "query": "recent developments",
+        "top_k": 5
+      },
+      "result": {
+        "content_limit": {
+          "reason": "total_report_text_limit",
+          "original_text_characters": 3012,
+          "max_source_characters": 6000,
+          "max_total_characters": 12000,
+          "original_result_sha256": "c0334fbb266571140231ef9b5813992c3d78776b39dd0f5f9a3619faba05b036"
+        }
+      },
+      "content_omitted": true
+    },
+    {
+      "source_id": 13,
+      "tool": "search_company_updates",
+      "arguments": {
+        "form": "8-K",
+        "ticker": "INTC",
+        "query": "recent developments",
+        "top_k": 5
+      },
+      "result": {
+        "content_limit": {
+          "reason": "total_report_text_limit",
+          "original_text_characters": 3310,
+          "max_source_characters": 6000,
+          "max_total_characters": 12000,
+          "original_result_sha256": "d218b8ea5f80a8de007fbdd851e9c112f66ee88c7fba41fc64b76cca536544b7"
+        }
+      },
+      "content_omitted": true
+    }
+  ],
+  "composition": {
+    "kind": "answer",
+    "text": "Intel’in yıllık geliri FY{{2:records/2/fiscal_year}} döneminde {{2:records/2/value}} {{2:records/2/unit}} (dönem sonu: {{2:records/2/end}}), FY{{2:records/1/fiscal_year}} döneminde {{2:records/1/value}} {{2:records/1/unit}} (dönem sonu: {{2:records/1/end}}) ve FY{{2:records/0/fiscal_year}} döneminde {{2:records/0/value}} {{2:records/0/unit}} (dönem sonu: {{2:records/0/end}}) oldu. Gelir büyümesi FY{{3:results/revenue_growth/1/fiscal_year}} döneminde {{3:results/revenue_growth/1/value|percent}}, FY{{3:results/revenue_growth/0/fiscal_year}} döneminde ise {{3:results/revenue_growth/0/value|percent}} olarak hesaplandı. Her iki dönemde büyüme negatifti; son dönemde oran daha az negatif olsa da pozitif büyümeye dönmedi. [Source 2] [Source 3]\n\nSunulan güncel dönem 10-Q alıntısında, ileriye dönük finansal performans, maliyet ve verim eğilimleri, sermaye kaynakları ve gelecekteki gelir gibi konular için beklentilerin risk ve belirsizlik içerdiği belirtiliyor; bu alıntı güncel dönem gerçekleşmiş finansal sonuçlarını göstermiyor. Şirket ayrıca makroekonomik koşulları, ürün talebi ve marj değişimlerini, jeopolitik ve ticaret gerilimlerini ve tedarik zinciri kesintilerini olası riskler arasında sayıyor. Bunlar gerçekleşmiş etkiler olarak değil, riskler olarak sunuluyor. [Source 4] [Source 9]",
+    "facts": []
+  },
+  "usage": {
+    "model_calls_with_usage": 12,
+    "model_calls_without_usage": 0,
+    "tool_calls": 7,
+    "input_tokens": 55039,
+    "output_tokens": 2590,
+    "estimated_cost_usd": 0.00233714,
+    "calls_without_cost_estimate": 0,
+    "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+  },
+  "trace_path": "/Users/denizardasanal/FinSight/logs/runs/20261112T083405855238Z_4f760a5f.json"
+}

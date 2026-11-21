@@ -1,0 +1,31 @@
+{
+  "case": "progressive_05_intel_updates",
+  "mode": "saved_evidence_live_coverage_review",
+  "coverage": {
+    "complete": false,
+    "gaps": [
+      "Intel’in son çeyreklik raporundaki gelir ve dönemsel performans bilgisi yok; yıllık 10-K verileri bunu karşılamıyor.",
+      "Son şirket açıklamalarının içeriği yok; 10-K risk faktörleri güncel açıklamaların yerine geçmiyor.",
+      "Yıllık sonuçları ara dönem verileri ve beklentilerden ayırmak için son çeyrek raporundaki ara dönem sonuçları ve beklenti/guidance bilgisi eksik."
+    ],
+    "tasks": [
+      {
+        "id": "latest_quarter",
+        "agent": "filing_rag",
+        "instruction": "Intel (INTC) için search_company_updates kullanarak form='10-Q' ile en son çeyreklik raporu getir. Geliri, karşılaştırma dönemini ve ara dönem sonuçlarını; varsa şirketin beklenti/guidance bilgilerini ve gerçekleşen yıllık sonuçlardan ayrımını bul.",
+        "filing_scope": "recent",
+        "years": 1,
+        "fiscal_year": null
+      },
+      {
+        "id": "recent_announcements",
+        "agent": "filing_rag",
+        "instruction": "Intel (INTC) için search_company_updates kullanarak form='8-K' ile en son şirket açıklamalarını getir. Açıklama tarihlerini ve gelir eğilimi, güncel görünüm veya beklentilerle ilgili somut içeriği belirle.",
+        "filing_scope": "recent",
+        "years": 1,
+        "fiscal_year": null
+      }
+    ],
+    "status": "partial"
+  }
+}

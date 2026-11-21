@@ -1,0 +1,32 @@
+[
+  {
+    "id": "user_01_intc",
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "answer": "Intel’in yıllık gelir büyümesi son iki dönemde negatif kaldı; ancak daralma 2025’te hafifledi. FY2024 (dönem sonu 2024-12-28) geliri 53101000000 USD, yıllık büyümesi -2.08% oldu. FY2025 (dönem sonu 2025-12-27) geliri 52853000000 USD’a, yıllık büyümesi ise -0.47%’e ulaştı. [Source 2] [Source 3]\n\nGüncel finansal duruma ilişkin erişilebilen 10-Q kesitinde, dönem sonu 2026-06-27 olan altı aylık dönem için faaliyetlerden sağlanan net nakit akışı pozitifti; kesit gelir veya faaliyet kârı bilgisi içermediğinden bu dönemde gelir büyümesinin ve kârlılığın yönü değerlendirilemiyor. [Source 5] FY2025 yıllık raporu, operasyonlardan sağlanan nakdin önceki yıla göre arttığını ve yatırım faaliyetlerinde kullanılan nakdin azaldığını belirtiyor; rapor bu değişimleri net kâr, personel giderleri, sermaye harcamaları ve elden çıkarmalardan gelen tahsilatlar gibi etkenlerle ilişkilendiriyor. [Source 14]\n\nSon gelişmeler arasında Intel’in Oracle ile Xeon tabanlı bulut bilişimini genişletmeye yönelik çok yıllı işbirliği planı yer alıyor. [Source 9]"
+  },
+  {
+    "id": "user_03_aapl",
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "answer": "Apple’ın FY2025 mali yılında, 2025-09-27’te sona eren dönemde geliri 416161000000 USD, satış maliyeti 220960000000 USD ve faaliyet giderleri 62151000000 USD oldu. Gelir bu iki gider kaleminin her birinden yüksekti; satış maliyeti de faaliyet giderlerinden yüksekti. Satış maliyeti ile faaliyet giderleri ayrı kategorilerdir. [Source 2] [Source 3] [Source 4]\n\nBir önceki mali yıl olan FY2024’te, 2024-09-28’te sona eren dönemde gelir 391035000000 USD idi. FY2025 geliri yıllık bazda 6.43% büyüdü; dolayısıyla bir önceki yıla göre artış gösterdi. [Source 6] [Source 7]"
+  }
+]

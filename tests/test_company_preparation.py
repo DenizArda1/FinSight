@@ -75,6 +75,12 @@ class PreparationTests(unittest.TestCase):
             # Resolution of a non-listed CIK can enter the lock while preparation holds it.
             with preparation_lock(), preparation_lock():
                 pass
+            # Old caches without fiscal-year provenance must be rebuilt once.
+            save_json([{'end': '2026-01-31', 'fiscal_year': 2025}],
+                      root / 'financial_data/processed/0000796343/revenue.json')
+            prepare_company('ADBE')
+            metrics.assert_called_once_with(company['cik'])
+            client.assert_not_called()
 
     def test_invalid_tool_arguments_never_trigger_preparation(self):
         with patch('src.tools.dispatcher.prepare_for_tool') as prepare:

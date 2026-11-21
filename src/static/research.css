@@ -45,3 +45,27 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .source-location strong{font-size:13px;font-weight:500;color:#57694c}
 .source-location small{font-size:10px;line-height:1.7;color:#97a08d}
 @media(max-width:700px){.new-research{padding:70px 22px 35px}.composer-intro p{font-size:13px}.chat-composer{padding:15px}.composer-bottom>span{font-size:10px}.suggested-questions{justify-content:flex-start}.composer-footnote{text-align:left}}
+
+/* Conversation view: one persistent composer and reply-scoped sources. */
+.chat-layout{min-height:calc(100vh - 80px);background:var(--canvas)}
+.chat-main{width:100%;max-width:860px;margin:0 auto;padding:clamp(70px,12vh,140px) 36px 30px}
+.chat-main.has-messages{padding-top:30px}
+#chat-messages:empty{display:none}
+.chat-turn{margin-bottom:38px}
+.user-message{margin-left:auto;max-width:82%;width:fit-content;background:#e9eee5;border:1px solid #dfe6d8;border-radius:19px 19px 4px 19px;padding:15px 20px;font-size:14px;line-height:1.8;overflow-wrap:anywhere}
+.assistant-message{padding-top:25px;font-size:14px}
+.assistant-label{font-weight:600;font-size:12px;letter-spacing:.3px;color:var(--green);margin-bottom:14px}
+.assistant-message p{font-size:14px;color:#465346;line-height:1.95}
+.message-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:14px}
+.message-actions small{margin-left:auto;font-size:10px;color:#8d9685}
+.message-details{border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:14px 0}
+.message-details summary{cursor:pointer;color:#66765b;font-size:12px}
+.pending-message{display:flex;align-items:center;gap:8px}
+.chat-main.has-messages .chat-composer{position:sticky;bottom:16px;z-index:5;box-shadow:0 4px 28px #26332e12}
+.chat-main.has-messages textarea{min-height:60px}
+.chat-layout .source-panel{min-height:calc(100vh - 80px);max-height:100vh;overflow:auto}
+.chat-layout.sources-hidden{grid-template-columns:1fr}
+.breadcrumb strong{max-width:380px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.history-item b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.source-tabs{flex-wrap:wrap}
+@media(max-width:700px){.chat-main{padding:65px 20px 24px}.chat-main.has-messages{padding-top:22px}.user-message{max-width:92%;font-size:13px}.assistant-message p{font-size:13px}.message-actions{gap:8px}.breadcrumb strong{max-width:140px}.chat-main.has-messages .chat-composer{bottom:8px}}

@@ -47,6 +47,16 @@ def limit_report_evidence(evidence, max_source_chars=MAX_REPORT_SOURCE_CHARS,
         priorities.append((source["tool"] == "get_filing_section", rank, index, source))
     # Admit the top result from each query before the next result from one query.
     candidates = [item[-1] for item in sorted(priorities, key=lambda item: item[:3])]
+    # Round-robin source families too: repeated annual queries must not crowd
+    # out a different company or quarterly/event evidence collected later.
+    family_ranks, family_order = {}, []
+    for index, source in enumerate(candidates):
+        arguments = source.get('arguments', {})
+        family = (source['tool'], arguments.get('ticker'), arguments.get('form'))
+        rank = family_ranks.get(family, 0)
+        family_ranks[family] = rank + 1
+        family_order.append((rank, index, source))
+    candidates = [item[-1] for item in sorted(family_order, key=lambda item: item[:2])]
     for source in candidates:
         if source["tool"] not in REPORT_SEARCH_TOOLS | {"get_filing_section"}:
             continue

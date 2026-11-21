@@ -6,6 +6,7 @@ from copy import deepcopy
 from unittest.mock import AsyncMock, patch
 
 from src.agents.orchestrator import run_orchestrator
+from src.agents.specialist import SpecialistLimitError
 from src.agents.runtime import run_mcp_orchestrator
 from src.agents.writer import run_writer
 from src.tools.agentic_tools import TOOL_SCHEMAS
@@ -28,7 +29,85 @@ async def write_with_initial_corruption(state, llm_config, feedback=None):
 
 
 class OrchestratorTests(unittest.IsolatedAsyncioTestCase):
+    async def test_coverage_repair_runs_once_and_retains_partial_status(self):
+        task = {'id': 'missing', 'agent': 'financial_data', 'instruction': 'Retrieve earlier revenue.',
+                'filing_scope': 'annual', 'fiscal_year': None, 'years': 2}
+        partial = {'complete': False, 'status': 'partial', 'gaps': ['Earlier period missing.'], 'tasks': [task]}
+        self.coverage_check.side_effect = [partial, partial]
+        self.chat.side_effect = list(self.chat.side_effect) + [
+            tool_message('resolve_ticker_to_cik', {'ticker': 'AAPL'}),
+            tool_message('get_company_facts', {'cik': '0000320193', 'concept': 'revenue', 'years': 2}),
+            self.done,
+        ]
+        self.call_tool.side_effect = list(self.call_tool.side_effect) + [
+            {'cik': '0000320193'}, {'records': []}]
+        state = await run_orchestrator('Compare revenue and risks.', self.config, self.client, TOOL_SCHEMAS)
+        self.assertEqual(self.coverage_check.await_count, 2)
+        self.assertEqual(state['coverage']['repair_tasks_attempted'], 1)
+        self.assertEqual(state['coverage']['status'], 'partial')
+        self.assertEqual(state['verification']['status'], 'passed')
+        self.assertEqual(self.call_tool.await_count, 5)
+
+    async def test_reserved_content_repair_is_bounded_and_still_withholds_failed_answer(self):
+        self.writer_response.side_effect = [
+            'bad JSON', 'bad JSON', json.dumps(self.composition), json.dumps(self.rejection),
+            json.dumps(self.composition), json.dumps(self.rejection),
+        ]
+        state = await run_orchestrator('Apple revenue and risks?', self.config, self.client, TOOL_SCHEMAS)
+        self.assertIsNone(state['answer'])
+        self.assertEqual(state['revision_count'], 3)
+        self.assertEqual(state['trace'][-1]['status'], 'exhausted')
+        self.assertEqual(self.writer_response.call_count, 6)
+
+    async def test_first_content_review_gets_one_repair_after_syntax_repairs(self):
+        self.writer_response.side_effect = [
+            'bad JSON', 'bad JSON', json.dumps(self.composition), json.dumps(self.rejection),
+            json.dumps(self.composition), json.dumps(self.approval),
+        ]
+        state = await run_orchestrator('Apple revenue and risks?', self.config, self.client, TOOL_SCHEMAS)
+        self.assertEqual(state['revision_count'], 3)
+        self.assertEqual(state['verification']['status'], 'passed')
+        self.assertEqual(self.writer_response.call_count, 6)
+
+    async def test_budget_failure_in_first_task_does_not_skip_next_task(self):
+        report_trace = [{'type': 'tool', 'status': 'completed', 'name': 'search_filings',
+                         'arguments': {}, 'result': {'matches': [{'text': 'Risk evidence.', 'metadata': {}}]}}]
+        report = {'task_id': 'task_2', 'agent': 'filing_rag', 'trace': report_trace}
+        # The real specialist writes into the provided trace, including on errors.
+        async def specialist(task, config, client, schemas, trace):
+            if task['id'] == 'task_1':
+                raise SpecialistLimitError('Specialist reached the maximum number of steps')
+            trace.extend(deepcopy(report_trace))
+            return report
+        composition = {'kind': 'answer', 'text': 'Financial retrieval is incomplete. Risk evidence is available. [Source 1]', 'facts': []}
+        self.writer_response.side_effect = [json.dumps(composition), json.dumps(self.approval)]
+        with patch('src.agents.orchestrator.run_specialist', side_effect=specialist) as mocked:
+            state = await run_orchestrator('Apple revenue and risks?', self.config, self.client, TOOL_SCHEMAS)
+        self.assertEqual(mocked.await_count, 2)
+        self.assertTrue(state['financial_results'][0]['incomplete'])
+        self.assertEqual(len(state['filing_results']), 1)
+        self.assertEqual(state['verification']['status'], 'passed')
+
+    async def test_step_limit_keeps_evidence_and_reaches_verification(self):
+        self.chat.side_effect = list(self.chat.side_effect)[:3] + [
+            tool_message('search_filings', {'ticker': 'AAPL', 'query': f'risk {index}'})
+            for index in range(6)
+        ]
+        self.call_tool.side_effect = list(self.call_tool.side_effect)[:2] + [self.report] * 6
+        state = await run_orchestrator('Apple revenue and risks?', self.config, self.client, TOOL_SCHEMAS)
+        self.assertTrue(state['filing_results'][0]['incomplete'])
+        self.assertEqual(state['verification']['status'], 'passed')
+        self.assertEqual(len([event for event in state['trace'] if event.get('type') == 'tool']), 8)
+        messages = self.writer_response.call_args_list[0].args[0]
+        payload = json.loads(messages[1]['content'])
+        self.assertEqual(payload['retrieval_limitations'][0]['reason'], 'retrieval_budget_exhausted')
+        self.assertTrue(any(source['tool'] == 'get_company_facts' for source in payload['tool_evidence']))
+
     def setUp(self):
+        coverage_patcher = patch('src.agents.orchestrator.check_coverage', new_callable=AsyncMock)
+        self.coverage_check = coverage_patcher.start()
+        self.coverage_check.return_value = {'complete': True, 'status': 'complete', 'gaps': [], 'tasks': []}
+        self.addCleanup(coverage_patcher.stop)
         planner_patcher = patch("src.agents.orchestrator.generate_plan")
         self.planner = planner_patcher.start()
         self.addCleanup(planner_patcher.stop)
