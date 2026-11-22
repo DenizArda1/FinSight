@@ -11,6 +11,29 @@ from src.verification.agent_answer import (
 
 
 class AgentVerificationTests(unittest.TestCase):
+    def test_grouped_citations_render_without_treating_source_ids_as_amounts(self):
+        evidence = [
+            {'source_id': number, 'tool': 'get_company_facts',
+             'result': {'records': [{'value': 100, 'unit': 'USD'}]}}
+            for number in range(1, 7)
+        ]
+        catalog = build_fact_catalog(evidence)
+        for citation in ('[Source 2; Source 6]', '[Source 2, 6]', '[Kaynak 2; Kaynak 6]'):
+            with self.subTest(citation=citation):
+                payload = {'kind': 'answer', 'text': 'Revenue increased. ' + citation, 'facts': []}
+                self.assertEqual(render_agent_template(compose_template(payload, catalog), evidence),
+                                 'Revenue increased. [Source 2] [Source 6]')
+        for text in ('Revenue increased. [Source 2; Source 99]',
+                     'Revenue is 100 USD. [Source 2; Source 6]'):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                render_agent_template(compose_template(
+                    {'kind': 'answer', 'text': text, 'facts': []}, catalog), evidence)
+        evidence[5]['content_omitted'] = True
+        with self.assertRaises(ValueError):
+            render_agent_template(compose_template(
+                {'kind': 'answer', 'text': 'Revenue increased. [Source 2; Source 6]', 'facts': []},
+                catalog), evidence)
+
     def test_natural_year_binds_to_cited_financial_year_without_allowing_amounts(self):
         evidence = [{'source_id': 1, 'tool': 'get_company_facts', 'result': {
             'records': [{'value': 100, 'unit': 'USD', 'fiscal_year': 2025}]}}]

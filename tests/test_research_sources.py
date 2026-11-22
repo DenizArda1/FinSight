@@ -10,6 +10,31 @@ from src.verification.evidence import evidence_for_prompt, limit_report_evidence
 
 
 class ResearchSourceTests(unittest.TestCase):
+    def test_ranked_heading_includes_following_table_rows_from_same_document(self):
+        heading = 'Net revenue (in millions)\nThree Months Ended\nSeptember 30,\n'
+        rows = '2025\t2026\nNet sales\t100\t125\nNine Months Ended\nNet sales\t300\t350\n'
+        document = {'text': heading + rows, 'metadata': {'source_url': 'quarter'}}
+        # Reproduce a splitter boundary at the table header.
+        chunks = [{'text': heading, 'start': 0, 'end': len(heading)}]
+        with patch('src.tools.research_sources.split_text', return_value=chunks):
+            match = rank_documents([document], 'net revenue', 1)[0]
+        self.assertEqual(match['text'], heading + rows)
+        self.assertEqual(match['metadata']['source_url'], 'quarter')
+        self.assertEqual(document['text'][match['metadata']['start']:match['metadata']['end']], match['text'])
+
+    def test_expanded_excerpts_stay_bounded_and_do_not_mix_documents(self):
+        documents = [
+            {'text': ('First company revenue.\n' * 400), 'metadata': {'source_url': 'first'}},
+            {'text': ('Second company outlook.\n' * 400), 'metadata': {'source_url': 'second'}},
+        ]
+        for match in rank_documents(documents, 'revenue outlook', 4):
+            metadata = match['metadata']
+            original = next(doc['text'] for doc in documents
+                            if doc['metadata']['source_url'] == metadata['source_url'])
+            self.assertEqual(match['text'], original[metadata['start']:metadata['end']])
+            self.assertLessEqual(len(match['text']), 4500)
+            self.assertFalse('First company' in match['text'] and 'Second company' in match['text'])
+
     def test_excerpt_retains_preceding_duration_heading_with_exact_offsets(self):
         heading = 'Nine Months Ended March 31, 2026 Compared with Nine Months Ended March 31, 2025'
         text = 'Three Months Ended March 31, 2026\nQuarter discussion.\n' + heading + '\n' + 'Background. ' * 240 + '\nCloud gross margin decreased. '

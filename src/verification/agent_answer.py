@@ -14,6 +14,10 @@ from src.verification.evidence import REPORT_SEARCH_TOOLS, limit_report_evidence
 
 from src.verification.field_references import FIELD_REFERENCE, normalize_catalog_references
 TURKISH_SOURCE_REFERENCE = re.compile(r"\[Kaynak ([1-9][0-9]*)\]")
+GROUPED_SOURCE_REFERENCE = re.compile(
+    r"\[(?:Source|Kaynak)\s+[1-9][0-9]*"
+    r"(?:\s*[,;]\s*(?:(?:Source|Kaynak)\s+)?[1-9][0-9]*)+\]"
+)
 DISPLAY_FIELDS = {
     "value", "unit", "start", "end", "fiscal_year", "period_label", "form",
     "filed", "accn", "ticker", "name", "cik", "accession_number", "report_date",
@@ -140,6 +144,11 @@ def composition_schema(catalog, request_type=None, evidence=None):
 def normalize_prose_citations(prose, catalog):
     # Some structured responses encode visible line breaks a second time.
     prose = prose.replace("\\n", "\n")
+    # Normalize citation syntax only; source existence is still checked at render time.
+    prose = GROUPED_SOURCE_REFERENCE.sub(
+        lambda match: " ".join(f"[Source {number}]" for number in re.findall(r"[0-9]+", match.group())),
+        prose,
+    )
     prose = TURKISH_SOURCE_REFERENCE.sub(r"[Source \1]", prose)
     for identifier, entry in catalog.items():
         prose = prose.replace(f"[{identifier}]", f"[Source {entry['source_id']}]")

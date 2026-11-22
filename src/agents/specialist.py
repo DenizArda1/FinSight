@@ -190,7 +190,7 @@ async def run_specialist(task, llm_config, mcp_client, tool_schemas,max_steps=6,
                             messages.append({"role": "user", "content":
                                              "Your response was empty. Continue the assigned task using tools, or summarize collected evidence and limitations."})
                             continue
-                        raise ValueError("Specialist summary must be a non-empty string")
+                        raise SpecialistLimitError("Specialist exhausted the empty-response retry limit")
                     if not isinstance(content, str):
                         raise ValueError("Specialist summary must be a non-empty string")
                         

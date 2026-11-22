@@ -1,0 +1,99 @@
+{
+  "batch": "eval/results/docker_acceptance_20261122T182618Z.json",
+  "tested_commit": "35a3fb8",
+  "transport": "Running Docker web API, separate conversation per question",
+  "results": [
+    {
+      "case_id": "new_company",
+      "assessment": "pass",
+      "note": "New company ingestion succeeded. Revenue and net margin checked against cached source records; margin independently recalculated. Extra and duplicated financial table rows remain a presentation issue.",
+      "supported": true,
+      "coverage": {
+        "complete": true,
+        "gaps": [],
+        "status": "complete",
+        "repair_tasks_attempted": 0
+      },
+      "elapsed_seconds": 69.4,
+      "estimated_cost_usd": 0.0013668999999999999
+    },
+    {
+      "case_id": "historical_growth",
+      "assessment": "fail",
+      "note": "Grouped citation [Source 2; Source 6] was misread as unbound financial numbers. Fixed locally and replayed saved Writer response successfully; Docker and Critic have not been rerun after this fix.",
+      "supported": false,
+      "coverage": {
+        "complete": true,
+        "gaps": [],
+        "status": "complete",
+        "repair_tasks_attempted": 1
+      },
+      "elapsed_seconds": 53.3,
+      "estimated_cost_usd": 0.0014714
+    },
+    {
+      "case_id": "different_calendars",
+      "assessment": "pass",
+      "note": "Both revenues and operating margins checked against source records and independently calculated; different fiscal year ends correctly explained.",
+      "supported": true,
+      "coverage": {
+        "complete": true,
+        "gaps": [],
+        "status": "complete",
+        "repair_tasks_attempted": 0
+      },
+      "elapsed_seconds": 61.2,
+      "estimated_cost_usd": 0.00143242
+    },
+    {
+      "case_id": "quarterly_outlook",
+      "assessment": "partial",
+      "note": "No fabricated quarter or guidance values, but requested analysis not delivered. Retrieval returned table headings without required sales values and searched 10-Q for outlook rather than obtaining the company announcement. Coverage correctly reported partial. Remains unresolved.",
+      "supported": true,
+      "coverage": {
+        "complete": false,
+        "gaps": [
+          "Amazon’un en son 10-Q’sinde net satışlar tablosunun başlığı var, ancak 2026 ve 2025’te 30 Eylül’de sona eren üç aylık dönemlerin satış tutarları kanıtta yer almıyor. Bu nedenle çeyreklik satışların önceki yılın aynı çeyreğine göre değişimi hesaplanamıyor; dokuz aylık yılbaşından bugüne rakamlar bunun yerine kullanılamaz.",
+          "Amazon’un gelecek çeyreğe ilişkin beklentisi kanıtlanmamış. Bulunan 10-Q alıntısı ileriye dönük riskleri anlatıyor, fakat gelecek çeyrek için satış beklentisi sunmuyor; beklentinin gerçekleşmiş sonuçtan ayrı değerlendirilmesi için şirket açıklaması gerekiyor."
+        ],
+        "status": "partial",
+        "repair_tasks_attempted": 1
+      },
+      "elapsed_seconds": 96.1,
+      "estimated_cost_usd": 0.00418167
+    },
+    {
+      "case_id": "unavailable_detail",
+      "assessment": "pass_with_limitation",
+      "note": "Correctly limited missing Turkey sales statement to supplied evidence and did not substitute regional totals. Does not prove the absence of a Turkey figure throughout all filings; coverage remains partial.",
+      "supported": true,
+      "coverage": {
+        "complete": false,
+        "gaps": [
+          "Apple'ın 2025 mali yılı için Türkiye'ye ait satış geliri USD olarak desteklenmiyor. 10-K'daki bölgesel toplamlar Türkiye'ye özgü değil; mevcut alıntılar Türkiye'nin ayrıca açıklanıp açıklanmadığını kesinleştirmiyor."
+        ],
+        "status": "partial",
+        "repair_tasks_attempted": 1
+      },
+      "elapsed_seconds": 64.8,
+      "estimated_cost_usd": 0.00289238
+    }
+  ],
+  "total_estimated_cost_usd": 0.01134477,
+  "fix": {
+    "files": [
+      "src/verification/agent_answer.py",
+      "tests/test_agent_verification.py"
+    ],
+    "description": "Normalize strictly recognized grouped Source/Kaynak citations before metadata binding and numeric validation. Existing source validation unchanged.",
+    "unit_tests_passed": 553,
+    "saved_writer_replay": {
+      "rendered": "Microsoft’un FY2024 mali yılı geliri, dönem sonu 2024-06-30 itibarıyla 245122000000 USD oldu. [Source 2]\n\nBir önceki mali yıl olan FY2023’ün bitiş tarihi 2023-06-30, geliri ise 211915000000 USD idi. FY2024 gelir büyümesi, FY2023’e kıyasla 15.67% olarak hesaplandı. [Source 2] [Source 6]",
+      "expected_growth_percent": "15.67",
+      "validation": "Saved Writer response replay through composition and deterministic rendering; no new model or Critic call."
+    },
+    "container_rebuilt": false,
+    "post_fix_live_critic_test": false
+  },
+  "next_priority": "Fix quarterly table context retrieval and announcement selection, then rerun only the two affected scenarios."
+}

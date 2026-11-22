@@ -3,7 +3,7 @@ import unittest
 from copy import deepcopy
 from unittest.mock import AsyncMock, call, patch
 
-from src.agents.specialist import execute_specialist_tool, run_specialist
+from src.agents.specialist import SpecialistLimitError, execute_specialist_tool, run_specialist
 from src.llm.client import IncompleteResponseError
 from src.llm.prompts import build_specialist_messages
 from src.mcp.client import MCPToolError
@@ -414,14 +414,14 @@ class SpecialistLoopTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_repeated_empty_response_stops_after_one_retry(self):
         self.chat.return_value = {"content": ""}
-        with self.assertRaisesRegex(ValueError, 'non-empty'):
+        with self.assertRaisesRegex(SpecialistLimitError, 'empty-response retry limit'):
             await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS)
         self.assertEqual(self.chat.call_count, 2)
         self.call_tool.assert_not_awaited()
 
     async def test_malformed_model_messages_fail_without_executing_tools(self):
         messages = [None, {"role": "tool"}, {"tool_calls": {}}, {"tool_calls": [None]},
-                    {"tool_calls": [{"function": {"name": " "}}]}, {"content": " "},
+                    {"tool_calls": [{"function": {"name": " "}}]},
                     model_tool_message("resolve_ticker_to_cik", {"ticker": float("nan")})]
         for message in messages:
             with self.subTest(message=message):

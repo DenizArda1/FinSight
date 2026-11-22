@@ -43,21 +43,35 @@ def period_headings(text):
 def rank_documents(documents, query, top_k):
     """Lexical excerpt retrieval over a bounded recent corpus, with exact offsets."""
     records = []
-    for document in documents:
-        headings = period_headings(document['text'])
+    for document_index, document in enumerate(documents):
         for chunk in split_text(document['text'], max_chars=2500, overlap=300):
-            preceding = [heading for heading in headings if heading['end'] <= chunk['start']]
             metadata = {**document['metadata'], 'start': chunk['start'], 'end': chunk['end']}
-            if preceding:
-                metadata['preceding_period_heading'] = preceding[-1]
-                metadata['period_scope_note'] = (
-                    'This is the preceding source heading, not an inferred duration. '
-                    'Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data.'
-                )
             records.append({'chunk_id': f'{len(records):08d}', 'text': chunk['text'],
-                            'metadata': metadata})
-    return [{'text': record['text'], 'score': record['bm25_score'], 'metadata': record['metadata']}
-            for record in bm25_rank(query, records, top_k)]
+                            'metadata': metadata, 'document_index': document_index})
+    matches = []
+    for record in bm25_rank(query, records, top_k):
+        text = documents[record['document_index']]['text']
+        metadata = dict(record['metadata'])
+        # A ranked chunk may end at a table heading. Keep nearby rows and column
+        # labels together, bounded to 1,000 extra characters on either side.
+        start = max(0, metadata['start'] - 1000)
+        end = min(len(text), metadata['end'] + 1000)
+        if start:
+            boundary = text.find('\n', start, metadata['start'])
+            start = boundary + 1 if boundary >= 0 else metadata['start']
+        if end < len(text):
+            boundary = text.rfind('\n', metadata['end'], end)
+            end = boundary if boundary >= 0 else metadata['end']
+        metadata.update(start=start, end=end)
+        preceding = [heading for heading in period_headings(text) if heading['end'] <= start]
+        if preceding:
+            metadata['preceding_period_heading'] = preceding[-1]
+            metadata['period_scope_note'] = (
+                'This is the preceding source heading, not an inferred duration. '
+                'Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data.'
+            )
+        matches.append({'text': text[start:end], 'score': record['bm25_score'], 'metadata': metadata})
+    return matches
 
 
 def select_updates(rows, form, limit):

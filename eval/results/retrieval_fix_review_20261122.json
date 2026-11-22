@@ -1,0 +1,34 @@
+{
+  "scope": "Fix quarterly retrieval context, earnings outlook source selection, grouped citations and bounded empty specialist replies. No Docker rebuild.",
+  "unit_tests": {
+    "passed": 555,
+    "command": "python -m unittest discover -s tests -q"
+  },
+  "live_tests": [
+    {
+      "case": "historical_growth",
+      "artifact": "eval/results/targeted_retest_20261122T184926Z.json",
+      "verification": "passed",
+      "coverage": "complete",
+      "manual_check": "FY2024 245122000000 USD; FY2023 211915000000 USD; year ends 2024-06-30 and 2023-06-30; growth 15.67%, independently recalculated."
+    },
+    {
+      "case": "quarterly_outlook",
+      "artifact": "eval/results/outlook_retest_20261122T185359Z.json",
+      "verification": "passed",
+      "coverage": "complete",
+      "manual_check": "Actual quarterly sales evidence from latest 10-Q; outlook from 2026-10-29 8-K EX-99.1. Cited text supports increases and forward-looking uncertainty. Output is qualitative rather than a numeric quotation of quarterly amounts."
+    }
+  ],
+  "changes": [
+    "Expand BM25-selected excerpts by at most 1000 characters per side within the same document, preserve offsets and complete nearby lines.",
+    "Clarify 10-Q actuals vs 8-K outlook in Planner and specialist instructions and a generic planning example.",
+    "Treat two empty specialist replies as exhausted bounded retrieval, retaining evidence and coverage validation.",
+    "Normalize grouped source citations without relaxing source or numeric validation."
+  ],
+  "limitations": [
+    "Live retests use host MCP runtime, not rebuilt Docker image.",
+    "Model outputs are nondeterministic; these cases do not establish universal reliability.",
+    "Amazon shorthand resolution still required retrying with ticker AMZN; no company-specific alias workaround was added."
+  ]
+}

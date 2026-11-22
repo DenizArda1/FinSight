@@ -275,6 +275,8 @@ def build_planner_messages(question):
         "For filing_rag, set filing_scope=annual and use search_filings for annual-report explanations/risks. "
         "Use get_filing_section only for a requested complete section. "
         "Set filing_scope=recent for quarterly 10-Q results and recent 8-K developments using search_company_updates. "
+        "For quarterly results plus next-quarter outlook, assign one recent filing_rag task: "
+        "10-Q for actual results and 8-K earnings-release exhibits for outlook. "
         "For requested current macro context, create a SEPARATE filing_rag task with filing_scope=recent: "
         "search_fed_releases for Fed policy and get_bls_series for BLS indicators. These tools are unavailable "
         "to annual-only tasks. Do not bury Fed/BLS research in an annual-report task. "
@@ -293,6 +295,10 @@ def build_planner_messages(question):
         "financial_data must never have filing_scope=recent; quarterly numbers come from filing_rag."
     )
     examples = [
+        ("Company A'nın son çeyrek satışları geçen yılın aynı çeyreğine göre nasıl değişti? Gelecek çeyrek beklentisiyle değerlendir.",
+         {"request_type": "filing", "tasks": [
+             {"id": "quarter_and_outlook", "agent": "filing_rag", "instruction": "For Company A, search latest quarterly sales using search_company_updates form=10-Q limit=1. Separately search next-quarter sales outlook in earnings-release exhibits using form=8-K limit=4. Keep quarterly and year-to-date columns separate and distinguish actual results from outlook. Do not use annual compute_metrics for quarterly calculations.", "filing_scope": "recent", "years": 1, "fiscal_year": None},
+         ]}),
         ("Company A'nın son üç yıllık gelir eğilimini, son çeyrek sonuçlarını ve son açıklamalarını incele.",
          {"request_type": "mixed", "tasks": [
              {"id": "annual", "agent": "financial_data", "instruction": "For Company A, retrieve three annual revenue records and compute revenue_growth with years=3.", "filing_scope": "annual", "years": 3, "fiscal_year": None},
@@ -368,13 +374,16 @@ def build_specialist_messages(task):
             "Every search call requires a non-empty query. "
             "Use search_company_updates with form=10-Q for quarterly results, form=8-K for recent events and earnings-release exhibits. "
             "For the latest quarter use form=10-Q, limit=1 and top_k=3. Search only requested metrics: "
-            "use 'net revenue three months' for quarterly revenue; do not add cash flows unless requested. "
+            "use 'net sales revenue three months' for quarterly revenue; do not add cash flows unless requested. "
             "For recent earnings use form=8-K, top_k=3 and 'revenue earnings results'. "
-            "When outlook is also requested, search separately for 'revenue outlook guidance'; "
+            "For next-quarter outlook, use form=8-K, limit=4 and top_k=3 with 'net sales revenue outlook guidance'. "
+            "A 10-Q forward-looking disclaimer is not an earnings outlook. "
             "do not combine results and guidance into one broad query. "
             "For other events use their specific subject; generic 'financial performance' "
             "or 'recent developments' queries often retrieve forward-looking disclaimers instead of actual results. "
             "If retrieved excerpts contain only forward-looking statements, refine the query before finishing. "
+            "If a sales table is missing values, retry with 'net sales increased' or the exact source terminology; "
+            "do not repeat an identical unsuccessful query. Preserve units and quarterly versus year-to-date column headings. "
             "Use search_fed_releases for current monetary-policy context and get_bls_series for CPI, unemployment or payroll levels. "
             "Search queries must use English keywords; preserve the user's company. Do not use recent-source tools for explicit historical-year tasks. "
             "Report coverage warnings and missing sources. Annual financial tools cannot supply quarterly values. "

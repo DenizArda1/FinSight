@@ -1,0 +1,499 @@
+{
+  "started_at": "20261122T182618Z",
+  "transport": "HTTP API of running Docker app",
+  "cases": [
+    {
+      "id": "new_company",
+      "question": "PepsiCo'nun yerel verideki en son mali yıl gelirini ve net kâr marjını açıkla. Mali yıl ve dönem bitiş tarihini belirt."
+    },
+    {
+      "id": "historical_growth",
+      "question": "Microsoft'un 2024 mali yılı gelirini ve bir önceki mali yıla göre gelir büyüme oranını hesapla. İki dönemin bitiş tarihlerini de belirt."
+    },
+    {
+      "id": "different_calendars",
+      "question": "Microsoft ve NVIDIA'nın 2025 mali yılı gelirlerini ve faaliyet kâr marjlarını karşılaştır. Mali yıl bitiş tarihleri farklıysa bunu açıkla."
+    },
+    {
+      "id": "quarterly_outlook",
+      "question": "Amazon'un en son çeyreklik raporunda satışları önceki yılın aynı çeyreğine göre nasıl değişmiş? Son şirket açıklamasındaki gelecek çeyrek beklentisiyle birlikte değerlendir. Yıllık, çeyreklik ve yılbaşından bugüne verileri birbirine karıştırma; beklentiyi gerçekleşmiş sonuçtan ayır."
+    },
+    {
+      "id": "unavailable_detail",
+      "question": "Apple'ın 2025 mali yılında yalnızca Türkiye'de elde ettiği satış gelirini USD olarak söyle. Türkiye ayrı açıklanmıyorsa bunu açıkça belirt; bölgesel toplamı Türkiye geliri olarak kullanma."
+    }
+  ],
+  "results": [
+    {
+      "case_id": "new_company",
+      "job_id": "bd4e9828b3dd4f87b4db79ebfd033aa6",
+      "job": {
+        "id": "bd4e9828b3dd4f87b4db79ebfd033aa6",
+        "conversation_id": "7dfe8861539b4196ab9365c8c38315f3",
+        "company": "",
+        "question": "PepsiCo'nun yerel verideki en son mali yıl gelirini ve net kâr marjını açıkla. Mali yıl ve dönem bitiş tarihini belirt.",
+        "created_at": "2026-11-22T18:26:18.727907+00:00",
+        "status": "completed",
+        "result": {
+          "supported": true,
+          "prose": "PepsiCo’nun yerel verideki en son mali yılı FY2025 olup dönem 2025-12-27 tarihinde sona ermiştir. Bu dönemde satış geliri 93925000000 USD, net kâr marjı ise 8.77% olmuştur. [Source 2] [Source 4]\n\nNet kâr marjı, aynı mali dönemdeki net kârın satış gelirine oranı olarak hesaplanmıştır. [Source 4]",
+          "details": "",
+          "rows": [
+            {
+              "Şirket": "PEP",
+              "Metrik": "revenue",
+              "Değer": 93925000000,
+              "Birim": "USD",
+              "Mali yıl": 2025,
+              "Dönem sonu": "2025-12-27",
+              "Form": "10-K",
+              "Etiket": "Revenues",
+              "Kaynak": 2
+            },
+            {
+              "Şirket": "PEP",
+              "Metrik": "net_income",
+              "Değer": 8240000000,
+              "Birim": "USD",
+              "Mali yıl": 2025,
+              "Dönem sonu": "2025-12-27",
+              "Form": "10-K",
+              "Etiket": "NetIncomeLoss",
+              "Kaynak": 3
+            },
+            {
+              "Şirket": "PEP",
+              "Metrik": "net_margin",
+              "Değer": 0.08772957146659568,
+              "Birim": "ratio",
+              "Mali yıl": 2025,
+              "Dönem sonu": "2025-12-27",
+              "Form": "",
+              "Etiket": "",
+              "Kaynak": 4
+            },
+            {
+              "Şirket": "PEP",
+              "Metrik": "revenue",
+              "Değer": 93925000000,
+              "Birim": "USD",
+              "Mali yıl": 2025,
+              "Dönem sonu": "2025-12-27",
+              "Form": "10-K",
+              "Etiket": "Revenues",
+              "Kaynak": 6
+            },
+            {
+              "Şirket": "PEP",
+              "Metrik": "net_income",
+              "Değer": 8240000000,
+              "Birim": "USD",
+              "Mali yıl": 2025,
+              "Dönem sonu": "2025-12-27",
+              "Form": "10-K",
+              "Etiket": "NetIncomeLoss",
+              "Kaynak": 7
+            },
+            {
+              "Şirket": "PEP",
+              "Metrik": "operating_income",
+              "Değer": 11498000000,
+              "Birim": "USD",
+              "Mali yıl": 2025,
+              "Dönem sonu": "2025-12-27",
+              "Form": "10-K",
+              "Etiket": "OperatingIncomeLoss",
+              "Kaynak": 8
+            },
+            {
+              "Şirket": "PEP",
+              "Metrik": "gross_profit",
+              "Değer": 50859000000,
+              "Birim": "USD",
+              "Mali yıl": 2025,
+              "Dönem sonu": "2025-12-27",
+              "Form": "10-K",
+              "Etiket": "GrossProfit",
+              "Kaynak": 9
+            },
+            {
+              "Şirket": "PEP",
+              "Metrik": "cost_of_revenue",
+              "Değer": 43066000000,
+              "Birim": "USD",
+              "Mali yıl": 2025,
+              "Dönem sonu": "2025-12-27",
+              "Form": "10-K",
+              "Etiket": "CostOfGoodsAndServicesSold",
+              "Kaynak": 10
+            }
+          ],
+          "sources": [
+            {
+              "id": 2,
+              "reference": "[Source 2] PEP | 10-K | 0000077476-26-000007 | FY2025 | 2025-12-27 | Revenues | 2026-02-03 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm"
+            },
+            {
+              "id": 4,
+              "reference": "[Source 4] PEP | 10-K | 0000077476-26-000007 | FY2025 | 2025-12-27 | NetIncomeLoss | 2026-02-03 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm\n[Source 4] PEP | 10-K | 0000077476-26-000007 | FY2025 | 2025-12-27 | Revenues | 2026-02-03 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm"
+            }
+          ],
+          "issues": [],
+          "coverage": {
+            "complete": true,
+            "gaps": [],
+            "status": "complete",
+            "repair_tasks_attempted": 0
+          },
+          "usage": {
+            "model_calls_with_usage": 15,
+            "model_calls_without_usage": 0,
+            "tool_calls": 10,
+            "input_tokens": 34581,
+            "output_tokens": 1252,
+            "estimated_cost_usd": 0.0013668999999999999,
+            "calls_without_cost_estimate": 0,
+            "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+          },
+          "markdown": "# FinSight\n\n**Soru / Question:** PepsiCo'nun yerel verideki en son mali yıl gelirini ve net kâr marjını açıkla. Mali yıl ve dönem bitiş tarihini belirt.\n\nPepsiCo’nun yerel verideki en son mali yılı FY2025 olup dönem 2025-12-27 tarihinde sona ermiştir. Bu dönemde satış geliri 93925000000 USD, net kâr marjı ise 8.77% olmuştur. [^2] [^4]\n\nNet kâr marjı, aynı mali dönemdeki net kârın satış gelirine oranı olarak hesaplanmıştır. [^4]\n\n## Kaynaklar / Sources\n\n[^2]: PEP | 10-K | 0000077476-26-000007 | FY2025 | 2025-12-27 | Revenues | 2026-02-03 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm\n\n[^4]: PEP | 10-K | 0000077476-26-000007 | FY2025 | 2025-12-27 | NetIncomeLoss | 2026-02-03 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm; PEP | 10-K | 0000077476-26-000007 | FY2025 | 2025-12-27 | Revenues | 2026-02-03 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm\n\nBu not SEC filing'lerine dayalı otomatik bir taslaktır; yatırım tavsiyesi değildir; analist onayı olmadan kullanılmaz.\n"
+        },
+        "elapsed_seconds": 69.4
+      }
+    },
+    {
+      "case_id": "historical_growth",
+      "job_id": "21d411bbebf5463d9d204b57f45c43e8",
+      "job": {
+        "id": "21d411bbebf5463d9d204b57f45c43e8",
+        "conversation_id": "77ba75ece40047d8911c6f4c2f17f807",
+        "company": "",
+        "question": "Microsoft'un 2024 mali yılı gelirini ve bir önceki mali yıla göre gelir büyüme oranını hesapla. İki dönemin bitiş tarihlerini de belirt.",
+        "created_at": "2026-11-22T18:27:28.834303+00:00",
+        "status": "completed",
+        "result": {
+          "supported": false,
+          "prose": "",
+          "details": "",
+          "rows": [
+            {
+              "Şirket": "MSFT",
+              "Metrik": "revenue",
+              "Değer": 245122000000,
+              "Birim": "USD",
+              "Mali yıl": 2024,
+              "Dönem sonu": "2024-06-30",
+              "Form": "10-K",
+              "Etiket": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Kaynak": 2
+            },
+            {
+              "Şirket": "MSFT",
+              "Metrik": "revenue",
+              "Değer": 211915000000,
+              "Birim": "USD",
+              "Mali yıl": 2023,
+              "Dönem sonu": "2023-06-30",
+              "Form": "10-K",
+              "Etiket": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Kaynak": 2
+            },
+            {
+              "Şirket": "MSFT",
+              "Metrik": "revenue_growth",
+              "Değer": 0.17788686799846665,
+              "Birim": "ratio",
+              "Mali yıl": 2026,
+              "Dönem sonu": "2026-06-30",
+              "Form": "",
+              "Etiket": "",
+              "Kaynak": 3
+            },
+            {
+              "Şirket": "MSFT",
+              "Metrik": "revenue",
+              "Değer": 245122000000,
+              "Birim": "USD",
+              "Mali yıl": 2024,
+              "Dönem sonu": "2024-06-30",
+              "Form": "10-K",
+              "Etiket": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Kaynak": 5
+            },
+            {
+              "Şirket": "MSFT",
+              "Metrik": "revenue",
+              "Değer": 211915000000,
+              "Birim": "USD",
+              "Mali yıl": 2023,
+              "Dönem sonu": "2023-06-30",
+              "Form": "10-K",
+              "Etiket": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Kaynak": 5
+            },
+            {
+              "Şirket": "MSFT",
+              "Metrik": "revenue_growth",
+              "Değer": 0.1566996201307127,
+              "Birim": "ratio",
+              "Mali yıl": 2024,
+              "Dönem sonu": "2024-06-30",
+              "Form": "",
+              "Etiket": "",
+              "Kaynak": 6
+            }
+          ],
+          "sources": [
+            {
+              "id": 2,
+              "reference": "[Source 2] MSFT | 10-K | 0000950170-25-100235 | FY2023 | 2023-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2025-07-30 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm\n[Source 2] MSFT | 10-K | 0001193125-26-323660 | FY2024 | 2024-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-07-29 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            },
+            {
+              "id": 3,
+              "reference": "[Source 3] MSFT | 10-K | 0001193125-26-323660 | FY2025 | 2025-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-07-29 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm\n[Source 3] MSFT | 10-K | 0001193125-26-323660 | FY2026 | 2026-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-07-29 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            },
+            {
+              "id": 5,
+              "reference": "[Source 5] MSFT | 10-K | 0000950170-25-100235 | FY2023 | 2023-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2025-07-30 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm\n[Source 5] MSFT | 10-K | 0001193125-26-323660 | FY2024 | 2024-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-07-29 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            },
+            {
+              "id": 6,
+              "reference": "[Source 6] MSFT | 10-K | 0000950170-25-100235 | FY2023 | 2023-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2025-07-30 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm\n[Source 6] MSFT | 10-K | 0001193125-26-323660 | FY2024 | 2024-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-07-29 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ],
+          "issues": [
+            "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"2;\", \"6]\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values."
+          ],
+          "coverage": {
+            "complete": true,
+            "gaps": [],
+            "status": "complete",
+            "repair_tasks_attempted": 1
+          },
+          "usage": {
+            "model_calls_with_usage": 15,
+            "model_calls_without_usage": 0,
+            "tool_calls": 6,
+            "input_tokens": 36987,
+            "output_tokens": 1648,
+            "estimated_cost_usd": 0.0014714,
+            "calls_without_cost_estimate": 0,
+            "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+          },
+          "markdown": null
+        },
+        "elapsed_seconds": 53.3
+      }
+    },
+    {
+      "case_id": "different_calendars",
+      "job_id": "f429b701139f47878e6ecbb301a6ba20",
+      "job": {
+        "id": "f429b701139f47878e6ecbb301a6ba20",
+        "conversation_id": "124ee96a95654417b23a24d44cff1768",
+        "company": "",
+        "question": "Microsoft ve NVIDIA'nın 2025 mali yılı gelirlerini ve faaliyet kâr marjlarını karşılaştır. Mali yıl bitiş tarihleri farklıysa bunu açıkla.",
+        "created_at": "2026-11-22T18:28:23.927645+00:00",
+        "status": "completed",
+        "result": {
+          "supported": true,
+          "prose": "Microsoft’un 2025 mali yılı (2025-06-30’te sona erdi) satış geliri 281724000000 USD, faaliyet kâr marjı ise 45.62% düzeyindeydi. [Source 2] [Source 3]\n\nNVIDIA’nın 2025 mali yılı (2025-01-26’te sona erdi) satış geliri 130497000000 USD, faaliyet kâr marjı ise 62.42% olarak kaydedildi. [Source 5] [Source 6]\n\nBuna göre Microsoft’un satış geliri daha yüksekken, NVIDIA’nın faaliyet kâr marjı daha yüksekti. Mali yıl bitiş tarihleri farklı olduğundan rakamlar aynı takvim aralığını kapsamıyor; karşılaştırma her şirketin kendi mali yılına dayanıyor. [Source 2] [Source 3] [Source 5] [Source 6]",
+          "details": "",
+          "rows": [
+            {
+              "Şirket": "MSFT",
+              "Metrik": "revenue",
+              "Değer": 281724000000,
+              "Birim": "USD",
+              "Mali yıl": 2025,
+              "Dönem sonu": "2025-06-30",
+              "Form": "10-K",
+              "Etiket": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Kaynak": 2
+            },
+            {
+              "Şirket": "MSFT",
+              "Metrik": "operating_margin",
+              "Değer": 0.4562195624085985,
+              "Birim": "ratio",
+              "Mali yıl": 2025,
+              "Dönem sonu": "2025-06-30",
+              "Form": "",
+              "Etiket": "",
+              "Kaynak": 3
+            },
+            {
+              "Şirket": "NVDA",
+              "Metrik": "revenue",
+              "Değer": 130497000000,
+              "Birim": "USD",
+              "Mali yıl": 2025,
+              "Dönem sonu": "2025-01-26",
+              "Form": "10-K",
+              "Etiket": "Revenues",
+              "Kaynak": 5
+            },
+            {
+              "Şirket": "NVDA",
+              "Metrik": "operating_margin",
+              "Değer": 0.6241752683969747,
+              "Birim": "ratio",
+              "Mali yıl": 2025,
+              "Dönem sonu": "2025-01-26",
+              "Form": "",
+              "Etiket": "",
+              "Kaynak": 6
+            }
+          ],
+          "sources": [
+            {
+              "id": 2,
+              "reference": "[Source 2] MSFT | 10-K | 0001193125-26-323660 | FY2025 | 2025-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-07-29 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            },
+            {
+              "id": 3,
+              "reference": "[Source 3] MSFT | 10-K | 0001193125-26-323660 | FY2025 | 2025-06-30 | OperatingIncomeLoss | 2026-07-29 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm\n[Source 3] MSFT | 10-K | 0001193125-26-323660 | FY2025 | 2025-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-07-29 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            },
+            {
+              "id": 5,
+              "reference": "[Source 5] NVDA | 10-K | 0001045810-26-000021 | FY2025 | 2025-01-26 | Revenues | 2026-02-25 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+            },
+            {
+              "id": 6,
+              "reference": "[Source 6] NVDA | 10-K | 0001045810-26-000021 | FY2025 | 2025-01-26 | OperatingIncomeLoss | 2026-02-25 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm\n[Source 6] NVDA | 10-K | 0001045810-26-000021 | FY2025 | 2025-01-26 | Revenues | 2026-02-25 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+            }
+          ],
+          "issues": [],
+          "coverage": {
+            "complete": true,
+            "gaps": [],
+            "status": "complete",
+            "repair_tasks_attempted": 0
+          },
+          "usage": {
+            "model_calls_with_usage": 15,
+            "model_calls_without_usage": 0,
+            "tool_calls": 7,
+            "input_tokens": 32054,
+            "output_tokens": 1968,
+            "estimated_cost_usd": 0.00143242,
+            "calls_without_cost_estimate": 0,
+            "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+          },
+          "markdown": "# FinSight\n\n**Soru / Question:** Microsoft ve NVIDIA'nın 2025 mali yılı gelirlerini ve faaliyet kâr marjlarını karşılaştır. Mali yıl bitiş tarihleri farklıysa bunu açıkla.\n\nMicrosoft’un 2025 mali yılı (2025-06-30’te sona erdi) satış geliri 281724000000 USD, faaliyet kâr marjı ise 45.62% düzeyindeydi. [^2] [^3]\n\nNVIDIA’nın 2025 mali yılı (2025-01-26’te sona erdi) satış geliri 130497000000 USD, faaliyet kâr marjı ise 62.42% olarak kaydedildi. [^5] [^6]\n\nBuna göre Microsoft’un satış geliri daha yüksekken, NVIDIA’nın faaliyet kâr marjı daha yüksekti. Mali yıl bitiş tarihleri farklı olduğundan rakamlar aynı takvim aralığını kapsamıyor; karşılaştırma her şirketin kendi mali yılına dayanıyor. [^2] [^3] [^5] [^6]\n\n## Kaynaklar / Sources\n\n[^2]: MSFT | 10-K | 0001193125-26-323660 | FY2025 | 2025-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-07-29 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm\n\n[^3]: MSFT | 10-K | 0001193125-26-323660 | FY2025 | 2025-06-30 | OperatingIncomeLoss | 2026-07-29 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm; MSFT | 10-K | 0001193125-26-323660 | FY2025 | 2025-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-07-29 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm\n\n[^5]: NVDA | 10-K | 0001045810-26-000021 | FY2025 | 2025-01-26 | Revenues | 2026-02-25 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm\n\n[^6]: NVDA | 10-K | 0001045810-26-000021 | FY2025 | 2025-01-26 | OperatingIncomeLoss | 2026-02-25 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm; NVDA | 10-K | 0001045810-26-000021 | FY2025 | 2025-01-26 | Revenues | 2026-02-25 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm\n\nBu not SEC filing'lerine dayalı otomatik bir taslaktır; yatırım tavsiyesi değildir; analist onayı olmadan kullanılmaz.\n"
+        },
+        "elapsed_seconds": 61.2
+      }
+    },
+    {
+      "case_id": "quarterly_outlook",
+      "job_id": "cceff54b1f964a659e4f615cf2f5dc39",
+      "job": {
+        "id": "cceff54b1f964a659e4f615cf2f5dc39",
+        "conversation_id": "e3a2510cc0604e5aa17fadac285fdd33",
+        "company": "",
+        "question": "Amazon'un en son çeyreklik raporunda satışları önceki yılın aynı çeyreğine göre nasıl değişmiş? Son şirket açıklamasındaki gelecek çeyrek beklentisiyle birlikte değerlendir. Yıllık, çeyreklik ve yılbaşından bugüne verileri birbirine karıştırma; beklentiyi gerçekleşmiş sonuçtan ayır.",
+        "created_at": "2026-11-22T18:29:29.036843+00:00",
+        "status": "completed",
+        "result": {
+          "supported": true,
+          "prose": "Amazon’un en son raporunda raporlama dönemi 2026-09-30 tarihinde sona eriyor. Sağlanan alıntıda aynı çeyreğe ait önceki yıl karşılaştırması için satış tutarları yer almadığından, satışların yıllık değişimi belirlenemiyor; yılbaşından bugüne veriler bu çeyreklik karşılaştırmanın yerine kullanılamaz. [Source 1]\n\nSağlanan kanıt, gelecek çeyrek için şirket satış beklentisi içermiyor. Raporda çeşitli makroekonomik ve jeopolitik koşulların ve yapay zekâ yatırımlarının faaliyet sonuçlarını etkileyebileceği belirtiliyor; bu, gelecek çeyreğe ilişkin satış rehberliği değil, olası etkiler hakkındaki bir açıklamadır. Bu nedenle gerçekleşmiş çeyrek satışlarıyla gelecek çeyrek beklentisini birlikte değerlendirmek için yeterli bilgi yok. [Source 1] [Source 5]",
+          "details": "",
+          "rows": [],
+          "sources": [
+            {
+              "id": 1,
+              "reference": "[Source 1] AMZN | AMZN | 10-Q | 0001018724-26-000040 | 2026-09-30 | Primary document | 2026-10-30 | https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm"
+            },
+            {
+              "id": 5,
+              "reference": "[Source 5] AMZN | AMZN | 10-Q | 0001018724-26-000040 | 2026-09-30 | Primary document | 2026-10-30 | https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm"
+            }
+          ],
+          "issues": [],
+          "coverage": {
+            "complete": false,
+            "gaps": [
+              "Amazon’un en son 10-Q’sinde net satışlar tablosunun başlığı var, ancak 2026 ve 2025’te 30 Eylül’de sona eren üç aylık dönemlerin satış tutarları kanıtta yer almıyor. Bu nedenle çeyreklik satışların önceki yılın aynı çeyreğine göre değişimi hesaplanamıyor; dokuz aylık yılbaşından bugüne rakamlar bunun yerine kullanılamaz.",
+              "Amazon’un gelecek çeyreğe ilişkin beklentisi kanıtlanmamış. Bulunan 10-Q alıntısı ileriye dönük riskleri anlatıyor, fakat gelecek çeyrek için satış beklentisi sunmuyor; beklentinin gerçekleşmiş sonuçtan ayrı değerlendirilmesi için şirket açıklaması gerekiyor."
+            ],
+            "status": "partial",
+            "repair_tasks_attempted": 1
+          },
+          "usage": {
+            "model_calls_with_usage": 17,
+            "model_calls_without_usage": 0,
+            "tool_calls": 8,
+            "input_tokens": 65319,
+            "output_tokens": 3440,
+            "estimated_cost_usd": 0.00418167,
+            "calls_without_cost_estimate": 0,
+            "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+          },
+          "markdown": "# FinSight\n\n**Soru / Question:** Amazon'un en son çeyreklik raporunda satışları önceki yılın aynı çeyreğine göre nasıl değişmiş? Son şirket açıklamasındaki gelecek çeyrek beklentisiyle birlikte değerlendir. Yıllık, çeyreklik ve yılbaşından bugüne verileri birbirine karıştırma; beklentiyi gerçekleşmiş sonuçtan ayır.\n\n**Kısmi yanıt / Partial coverage:** İstenen bilgilerin bir kısmı tamamlanamadı.\n\nAmazon’un en son raporunda raporlama dönemi 2026-09-30 tarihinde sona eriyor. Sağlanan alıntıda aynı çeyreğe ait önceki yıl karşılaştırması için satış tutarları yer almadığından, satışların yıllık değişimi belirlenemiyor; yılbaşından bugüne veriler bu çeyreklik karşılaştırmanın yerine kullanılamaz. [^1]\n\nSağlanan kanıt, gelecek çeyrek için şirket satış beklentisi içermiyor. Raporda çeşitli makroekonomik ve jeopolitik koşulların ve yapay zekâ yatırımlarının faaliyet sonuçlarını etkileyebileceği belirtiliyor; bu, gelecek çeyreğe ilişkin satış rehberliği değil, olası etkiler hakkındaki bir açıklamadır. Bu nedenle gerçekleşmiş çeyrek satışlarıyla gelecek çeyrek beklentisini birlikte değerlendirmek için yeterli bilgi yok. [^1] [^5]\n\n## Kaynaklar / Sources\n\n[^1]: AMZN | AMZN | 10-Q | 0001018724-26-000040 | 2026-09-30 | Primary document | 2026-10-30 | https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm\n\n[^5]: AMZN | AMZN | 10-Q | 0001018724-26-000040 | 2026-09-30 | Primary document | 2026-10-30 | https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm\n\nBu not SEC filing'lerine dayalı otomatik bir taslaktır; yatırım tavsiyesi değildir; analist onayı olmadan kullanılmaz.\n"
+        },
+        "elapsed_seconds": 96.1
+      }
+    },
+    {
+      "case_id": "unavailable_detail",
+      "job_id": "2092d05316684c578b8f9852a4cde55d",
+      "job": {
+        "id": "2092d05316684c578b8f9852a4cde55d",
+        "conversation_id": "544421b7ff9b493d92486cfdd16607da",
+        "company": "",
+        "question": "Apple'ın 2025 mali yılında yalnızca Türkiye'de elde ettiği satış gelirini USD olarak söyle. Türkiye ayrı açıklanmıyorsa bunu açıkça belirt; bölgesel toplamı Türkiye geliri olarak kullanma.",
+        "created_at": "2026-11-22T18:31:09.203260+00:00",
+        "status": "completed",
+        "result": {
+          "supported": true,
+          "prose": "Apple'ın 2025 mali yılında yalnızca Türkiye'de elde ettiği satış gelirinin USD tutarı sunulan kaynaklarda yer almıyor. 10-K alıntısı bölgesel satış toplamlarını veriyor, ancak Türkiye'ye özgü bir tutar göstermiyor; bu nedenle bölgesel toplamı Türkiye geliri olarak kullanamam. [Source 5] [Source 2]",
+          "details": "",
+          "rows": [
+            {
+              "Şirket": "AAPL",
+              "Metrik": "revenue",
+              "Değer": 416161000000,
+              "Birim": "USD",
+              "Mali yıl": 2025,
+              "Dönem sonu": "2025-09-27",
+              "Form": "10-K",
+              "Etiket": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Kaynak": 2
+            }
+          ],
+          "sources": [
+            {
+              "id": 2,
+              "reference": "[Source 2] AAPL | 10-K | 0000320193-26-000026 | FY2025 | 2025-09-27 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-11-03 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/aapl-20260926.htm"
+            },
+            {
+              "id": 5,
+              "reference": "[Source 5] AAPL | AAPL | 10-K | 0000320193-25-000079 | FY2025 | 2025-09-27 | Item 7 | 2025-10-31 | Original annual filing section. | https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm"
+            }
+          ],
+          "issues": [],
+          "coverage": {
+            "complete": false,
+            "gaps": [
+              "Apple'ın 2025 mali yılı için Türkiye'ye ait satış geliri USD olarak desteklenmiyor. 10-K'daki bölgesel toplamlar Türkiye'ye özgü değil; mevcut alıntılar Türkiye'nin ayrıca açıklanıp açıklanmadığını kesinleştirmiyor."
+            ],
+            "status": "partial",
+            "repair_tasks_attempted": 1
+          },
+          "usage": {
+            "model_calls_with_usage": 15,
+            "model_calls_without_usage": 0,
+            "tool_calls": 5,
+            "input_tokens": 45746,
+            "output_tokens": 2489,
+            "estimated_cost_usd": 0.00289238,
+            "calls_without_cost_estimate": 0,
+            "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+          },
+          "markdown": "# FinSight\n\n**Soru / Question:** Apple'ın 2025 mali yılında yalnızca Türkiye'de elde ettiği satış gelirini USD olarak söyle. Türkiye ayrı açıklanmıyorsa bunu açıkça belirt; bölgesel toplamı Türkiye geliri olarak kullanma.\n\n**Kısmi yanıt / Partial coverage:** İstenen bilgilerin bir kısmı tamamlanamadı.\n\nApple'ın 2025 mali yılında yalnızca Türkiye'de elde ettiği satış gelirinin USD tutarı sunulan kaynaklarda yer almıyor. 10-K alıntısı bölgesel satış toplamlarını veriyor, ancak Türkiye'ye özgü bir tutar göstermiyor; bu nedenle bölgesel toplamı Türkiye geliri olarak kullanamam. [^5] [^2]\n\n## Kaynaklar / Sources\n\n[^2]: AAPL | 10-K | 0000320193-26-000026 | FY2025 | 2025-09-27 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-11-03 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/aapl-20260926.htm\n\n[^5]: AAPL | AAPL | 10-K | 0000320193-25-000079 | FY2025 | 2025-09-27 | Item 7 | 2025-10-31 | Original annual filing section. | https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm\n\nBu not SEC filing'lerine dayalı otomatik bir taslaktır; yatırım tavsiyesi değildir; analist onayı olmadan kullanılmaz.\n"
+        },
+        "elapsed_seconds": 64.8
+      }
+    }
+  ]
+}
