@@ -1,0 +1,53 @@
+name: Validate AWS deployment files
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - deploy/aws/**
+      - .github/workflows/aws-package.yml
+  push:
+    paths:
+      - deploy/aws/**
+      - .github/workflows/aws-package.yml
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Offline deployment validation (no AWS resources)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install CloudFormation linter
+        run: python -m pip install 'cfn-lint>=1.40,<2'
+      - name: Validate infrastructure and scripts
+        run: |
+          cfn-lint deploy/aws/infrastructure.yaml
+          bash -n deploy/aws/bootstrap.sh deploy/aws/deploy.sh
+          shellcheck deploy/aws/bootstrap.sh deploy/aws/deploy.sh
+      - name: Validate Compose with dummy configuration
+        env:
+          FINSIGHT_IMAGE: ghcr.io/example/finsight:sha-validation
+          OLLAMA_IMAGE: ollama/ollama:validation
+          SEC_USER_AGENT: FinSight CI ci@invalid.test
+          OPENAI_API_KEY: ci-placeholder-not-a-real-key
+        run: docker compose --env-file deploy/aws/.env.example -f deploy/aws/compose.yaml config --quiet
+      - name: Create deployment bundle
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          tar -czf finsight-aws-deployment.tar.gz -C deploy/aws \
+            infrastructure.yaml compose.yaml .env.example bootstrap.sh deploy.sh README.md
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'workflow_dispatch'
+        with:
+          name: finsight-aws-deployment
+          path: finsight-aws-deployment.tar.gz
+          retention-days: 7

@@ -1,0 +1,57 @@
+name: finsight-aws
+
+services:
+  app:
+    image: ${FINSIGHT_IMAGE:?Set a tested GHCR image digest or sha tag}
+    platform: linux/amd64
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 5m
+    ports:
+      - "127.0.0.1:8766:8766"
+    environment:
+      SEC_USER_AGENT: ${SEC_USER_AGENT:?Set your SEC contact User-Agent}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OLLAMA_BASE_URL: http://ollama:11434
+      TOKENIZERS_PARALLELISM: "false"
+      LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
+      LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
+      LANGFUSE_BASE_URL: ${LANGFUSE_BASE_URL:-}
+    volumes:
+      - ./data/financial_data:/app/financial_data
+      - ./data/logs:/app/logs
+    depends_on:
+      ollama:
+        condition: service_healthy
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  ollama:
+    image: ${OLLAMA_IMAGE:?Set a tested Ollama image tag or digest}
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      OLLAMA_HOST: 0.0.0.0:11434
+      OLLAMA_MAX_LOADED_MODELS: '1'
+      OLLAMA_NUM_PARALLEL: '1'
+    volumes:
+      - ollama_models:/root/.ollama
+    healthcheck:
+      test: [CMD, ollama, list]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  ollama_models:

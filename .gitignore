@@ -17,3 +17,4 @@ docs
 /docs
 
 logs/conversations.json
+/deploy/aws/data/

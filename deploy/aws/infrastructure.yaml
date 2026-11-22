@@ -1,0 +1,80 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: FinSight private demo host. Creating this stack provisions billable AWS resources.
+
+Parameters:
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: Existing VPC with internet access.
+  SubnetId:
+    Type: AWS::EC2::Subnet::Id
+    Description: Existing public subnet in that VPC, routed to an internet gateway.
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Existing EC2 SSH key pair in the chosen region.
+  AdminCidr:
+    Type: String
+    Description: Your public IPv4 address followed by /32. Only this address can use SSH.
+    AllowedPattern: '(?:[0-9]{1,3}\.){3}[0-9]{1,3}/32'
+  InstanceType:
+    Type: String
+    Default: t3.xlarge
+    AllowedValues: [t3.large, t3.xlarge, t3.2xlarge]
+    Description: x86 CPU host. Size and model latency must be measured before real use.
+  VolumeSize:
+    Type: Number
+    Default: 80
+    MinValue: 30
+    MaxValue: 200
+    Description: Root disk in GiB; billed while the instance is stopped too.
+  ImageId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64
+
+Resources:
+  DemoSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: SSH tunnel only; no public application or Ollama ports.
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref AdminCidr
+      SecurityGroupEgress:
+        - IpProtocol: '-1'
+          CidrIp: 0.0.0.0/0
+  DemoInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref ImageId
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyName
+      CreditSpecification:
+        CPUCredits: standard
+      MetadataOptions:
+        HttpTokens: required
+        HttpEndpoint: enabled
+      NetworkInterfaces:
+        - DeviceIndex: '0'
+          AssociatePublicIpAddress: true
+          SubnetId: !Ref SubnetId
+          GroupSet: [!Ref DemoSecurityGroup]
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: !Ref VolumeSize
+            VolumeType: gp3
+            Encrypted: true
+            DeleteOnTermination: true
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-demo'
+
+Outputs:
+  InstanceId:
+    Value: !Ref DemoInstance
+  PublicIp:
+    Value: !GetAtt DemoInstance.PublicIp
+  Access:
+    Value: !Sub 'ssh -i YOUR_KEY.pem -N -L 8766:127.0.0.1:8766 ec2-user@${DemoInstance.PublicIp}'
