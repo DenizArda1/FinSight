@@ -158,6 +158,9 @@ def build_agent_verification_messages(question, answer, evidence, kind, prose, p
         'English prose. The same rule applies to all languages. Check the actual answer language, excluding '
         'company names, technical identifiers, placeholders, citation labels and generated supporting '
         'records. answer_complete means each requested part is answered or its evidence limitation is stated.'
+        ' A qualitative comparison or outlook description is sufficient when the user did not request exact '
+        'amounts. Do not demand extra numerical detail merely because it appears in an excerpt: Writer may '
+        'only insert numbers available as catalog fields. Still reject wrong comparisons or unsupported claims.'
         ' This is answer honesty, not research coverage; coverage is checked separately. A three-observation '
         'annual revenue trend yields two growth rates. Do not demand a third rate unless the user explicitly '
         'requests three growth rates or growth for every one of those years. A precise explanation that a '
@@ -275,6 +278,9 @@ def build_planner_messages(question):
         "For requested current macro context, create a SEPARATE filing_rag task with filing_scope=recent: "
         "search_fed_releases for Fed policy and get_bls_series for BLS indicators. These tools are unavailable "
         "to annual-only tasks. Do not bury Fed/BLS research in an annual-report task. "
+        "A question about macro effects in a specified fiscal year is a historical company-report task, "
+        "not a request for today's macro data. Do not add current Fed/BLS retrieval unless the user "
+        "separately asks for current context. Keep historical and explicitly requested current context separate. "
         "An explicit annual-report request must NOT be replaced by quarterly evidence. "
         "For annual filing tasks, fiscal_year is the user's explicit fiscal year or null for latest; never guess. "
         "Quarterly figures require filing_rag; financial_data tools provide annual figures only. "
@@ -296,6 +302,11 @@ def build_planner_messages(question):
          {"request_type": "comparison", "tasks": [
              {"id": "company_a", "agent": "financial_data", "instruction": "For Company A, retrieve three annual revenue records and compute revenue_growth with years=3.", "filing_scope": "annual", "years": 3, "fiscal_year": None},
              {"id": "company_b", "agent": "financial_data", "instruction": "For Company B, retrieve three annual revenue records and compute revenue_growth with years=3.", "filing_scope": "annual", "years": 3, "fiscal_year": None},
+         ]}),
+        ("Company A'nın 2024 mali yılındaki geliri ve net kârı nedir? Dönem bitişini belirt. Makroekonomik gelişmeler şirketi nasıl etkilemiş? Gerçekleşmiş etkilerle olası riskleri ayır.",
+         {"request_type": "mixed", "tasks": [
+             {"id": "historical_financial", "agent": "financial_data", "instruction": "For Company A, retrieve revenue and net_income for fiscal_year=2024. Use period-end metadata from those records.", "filing_scope": "annual", "years": 1, "fiscal_year": 2024},
+             {"id": "historical_effects", "agent": "filing_rag", "instruction": "Search Company A FY2024 Item 7 and Item 1A for reported macroeconomic effects and potential risks. Preserve any explicit limitations on isolating or quantifying effects.", "filing_scope": "annual", "years": 1, "fiscal_year": 2024},
          ]}),
         ("Analyze Company A's annual revenue and costs, its annual-report economic risks, and recent Fed policy and BLS inflation data.",
          {"request_type": "mixed", "tasks": [
@@ -341,7 +352,7 @@ def build_specialist_messages(task):
             "For identity/CIK requests resolve_ticker_to_cik alone is sufficient. "
             "Resolve the company before requesting financial data. "
             "Preserve fiscal years, periods, units, and source metadata. "
-            "Use compute_metrics for calculations. Finish only after all requested metrics and periods have been retrieved. "
+            "Finish only after all assigned metrics and periods have been retrieved. "
             "For annual margin comparisons use at least two source years; for changes in growth rates use at least three. "
             "Map annual growth to revenue_growth with years=2 for the latest growth rate; "
             "map CAGR to revenue_cagr with the requested number of source years. "
@@ -371,11 +382,10 @@ def build_specialist_messages(task):
             "Section guide: Item 1 describes the business/products/segments; Item 1A covers risks; "
             "Item 7 discusses financial performance and macroeconomic effects. For macro effects "
             "start with Item 7, adding Item 1A for potential risks. Do not use Item 1 alone. "
-            "Use search_filings for targeted evidence and get_filing_section "
-            "when the full section is explicitly needed. "
+            "Use search_filings for targeted evidence. "
             "A request to summarize important risks is a targeted evidence task, not a request "
             "for the entire section. Use relevant search excerpts and report the limited scope. "
-            "Do not fetch the full section merely to make a summary more comprehensive. "
+
             "Use get_filing_section only when the task explicitly requests the complete section. "
             "When task.fiscal_year is an integer, search_filings must use that exact fiscal_year "
             "and must not use latest=true; get_filing_section must use the same year. "

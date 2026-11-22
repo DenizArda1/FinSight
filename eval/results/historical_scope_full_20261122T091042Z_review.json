@@ -1,0 +1,36 @@
+{
+  "result_file": "eval/results/historical_scope_full_20261122T091042Z.json",
+  "unit_tests_passed": 552,
+  "elapsed_seconds": 78.50322233299812,
+  "coverage": {
+    "complete": true,
+    "gaps": [],
+    "status": "complete",
+    "repair_tasks_attempted": 0
+  },
+  "verification": {
+    "supported": true,
+    "issues": [],
+    "evidence_supported": true,
+    "language_matches": true,
+    "answer_complete": true,
+    "status": "passed",
+    "stage": "grounding_and_language",
+    "deterministic_fields": "passed",
+    "method": "source_fields_and_llm_judge"
+  },
+  "macro_tools_called": [],
+  "manual_status": "pass_with_editorial_note",
+  "notes": [
+    "FY2025 figures and period end match prepared source records.",
+    "No unrequested current CPI/Fed evidence collected.",
+    "Explicit source measurement limitation retained without invented effect size.",
+    "Third paragraph has redundant wording; no new stylistic changes made.",
+    "Historical versus explicit-current-context planner and missing-report negative controls saved in historical_scope_targeted_20261122.json."
+  ],
+  "limitations": [
+    "Single end-to-end run; not a general reliability guarantee.",
+    "Existing saved conversations are not rewritten.",
+    "Container needs rebuild to load code changes."
+  ]
+}

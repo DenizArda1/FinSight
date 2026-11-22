@@ -404,6 +404,21 @@ class SpecialistLoopTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(trace[-2]["type"], "model")
         self.assertEqual(trace[-2]["status"], "error")
 
+    async def test_empty_response_is_retried_once_without_fabricating_evidence(self):
+        self.chat.side_effect = [{"content": ""}, self.resolve, self.facts, self.done]
+        self.call_tool.side_effect = [self.company, {'records': []}]
+        result = await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS)
+        self.assertEqual(self.chat.call_count, 4)
+        self.assertEqual(self.call_tool.await_count, 2)
+        self.assertEqual(result['trace'][1]['status'], 'empty_response')
+
+    async def test_repeated_empty_response_stops_after_one_retry(self):
+        self.chat.return_value = {"content": ""}
+        with self.assertRaisesRegex(ValueError, 'non-empty'):
+            await run_specialist(self.task, {}, self.client, TOOL_SCHEMAS)
+        self.assertEqual(self.chat.call_count, 2)
+        self.call_tool.assert_not_awaited()
+
     async def test_malformed_model_messages_fail_without_executing_tools(self):
         messages = [None, {"role": "tool"}, {"tool_calls": {}}, {"tool_calls": [None]},
                     {"tool_calls": [{"function": {"name": " "}}]}, {"content": " "},

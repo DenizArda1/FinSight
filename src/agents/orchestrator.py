@@ -54,7 +54,7 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
         task_trace = []
         try:
             try:
-                scoped_task = {**task, 'question': state['question']}
+                scoped_task = dict(task)
                 if task['agent'] == 'financial_data':
                     scoped_task['years'] = financial_years
                 with observation(task["agent"], "agent", metadata={"task_number": task_number}):
@@ -83,7 +83,7 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
         repair_tasks = coverage['tasks']
         for index, task in enumerate(repair_tasks, 1):
             repair_trace = []
-            scoped_task = {**task, 'id': f'coverage_repair_{index}', 'question': state['question']}
+            scoped_task = {**task, 'id': f'coverage_repair_{index}'}
             try:
                 with observation(task["agent"], "agent", metadata={"task_id": scoped_task["id"]}):
                     await run_specialist(scoped_task, llm_config, mcp_client, tool_schemas,

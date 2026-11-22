@@ -208,7 +208,7 @@ class PlannerGenerationTests(unittest.TestCase):
         generate_response.assert_called_once()
         args, kwargs = generate_response.call_args
         self.assertIs(args[1], config)
-        self.assertEqual([message["role"] for message in args[0]], ["system", "user", "assistant", "user", "assistant", "user", "assistant", "user"])
+        self.assertEqual([message["role"] for message in args[0]], ["system", "user", "assistant", "user", "assistant", "user", "assistant", "user", "assistant", "user"])
         self.assertEqual(json.loads(args[0][-1]["content"]), {"question": "Apple revenue?"})
         self.assertEqual(kwargs, {"response_format": PLANNER_RESPONSE_SCHEMA, "telemetry": None})
 

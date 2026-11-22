@@ -1,0 +1,67 @@
+{
+  "initial_results": "eval/results/cleanup_acceptance_20261122T084035Z.json",
+  "retry_results": "eval/results/cleanup_repair_20261122T084628Z.json",
+  "unit_tests_passed": 552,
+  "initial_completed": 3,
+  "retried_cases": 2,
+  "changes": [
+    "Shared annual/recent tool groups; removed unused original-question forwarding and redundant prompt lines.",
+    "One bounded retry for empty specialist output, verified with mocked first-empty/second-success and repeated-empty cases.",
+    "Critic accepts supported qualitative comparisons when user has not requested exact amounts; deterministic number validation retained."
+  ],
+  "cases": [
+    {
+      "id": "specified_year",
+      "initial_status": "completed",
+      "final_status": "completed",
+      "manual_review": "pass",
+      "elapsed_seconds": 31.715417792000153,
+      "coverage": "complete",
+      "verification": "passed"
+    },
+    {
+      "id": "latest_year",
+      "initial_status": "completed",
+      "final_status": "completed",
+      "manual_review": "pass",
+      "elapsed_seconds": 57.6326520829989,
+      "coverage": "complete",
+      "verification": "passed"
+    },
+    {
+      "id": "comparison",
+      "initial_status": "error",
+      "final_status": "completed",
+      "manual_review": "pass",
+      "elapsed_seconds": 82.82412083300005,
+      "coverage": "complete",
+      "verification": "passed"
+    },
+    {
+      "id": "latest_quarter",
+      "initial_status": "withheld",
+      "final_status": "completed",
+      "manual_review": "pass",
+      "elapsed_seconds": 144.7775486670016,
+      "coverage": "complete",
+      "verification": "passed"
+    },
+    {
+      "id": "macro_context",
+      "initial_status": "completed",
+      "final_status": "completed",
+      "manual_review": "pass",
+      "elapsed_seconds": 94.25822333399992,
+      "coverage": "complete",
+      "verification": "passed"
+    }
+  ],
+  "total_estimated_api_cost_usd": 0.01517883,
+  "limitations": [
+    "Only failed cases were rerun after fixes; not five successful first attempts or a full same-version rerun.",
+    "Specialists can still receive redundant fiscal-year tasks and attempt invalid fiscal_year concepts.",
+    "Some supplemental numeric figures can only be summarized qualitatively until structured extraction is available.",
+    "Small acceptance set does not establish universal reliability or production readiness.",
+    "Repeated empty outputs still fail after one retry; no indefinite retries."
+  ]
+}

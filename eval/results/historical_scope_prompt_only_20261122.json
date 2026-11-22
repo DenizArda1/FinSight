@@ -1,0 +1,83 @@
+{
+  "historical_plan": {
+    "request_type": "mixed",
+    "tasks": [
+      {
+        "id": "financial_2025",
+        "agent": "financial_data",
+        "instruction": "For NVIDIA, retrieve 2025 fiscal year revenue, net_income and fiscal_year_end.",
+        "filing_scope": "annual",
+        "years": 1,
+        "fiscal_year": 2025
+      },
+      {
+        "id": "macro_effects",
+        "agent": "filing_rag",
+        "instruction": "For NVIDIA, search latest annual Item 7 for reported economic effects and Item 1A for potential economic risks. Distinguish actual impacts from outlook.",
+        "filing_scope": "annual",
+        "years": 1,
+        "fiscal_year": 2025
+      },
+      {
+        "id": "macro_context",
+        "agent": "filing_rag",
+        "instruction": "Retrieve recent Fed policy using search_fed_releases and latest CPI using get_bls_series indicator=cpi months=1. Preserve period and units; an index level is not an inflation rate.",
+        "filing_scope": "recent",
+        "years": 1,
+        "fiscal_year": null
+      }
+    ]
+  },
+  "mixed_period_plan": {
+    "request_type": "mixed",
+    "tasks": [
+      {
+        "id": "financial_2025",
+        "agent": "financial_data",
+        "instruction": "For NVIDIA, retrieve 2025 fiscal year revenue, net_income and fiscal_year_end.",
+        "filing_scope": "annual",
+        "years": 1,
+        "fiscal_year": 2025
+      },
+      {
+        "id": "annual_risks",
+        "agent": "filing_rag",
+        "instruction": "For NVIDIA, search latest annual Item 7 for reported economic effects and Item 1A for potential economic risks.",
+        "filing_scope": "annual",
+        "years": 1,
+        "fiscal_year": 2025
+      },
+      {
+        "id": "macro",
+        "agent": "filing_rag",
+        "instruction": "Retrieve recent Fed policy using search_fed_releases and latest CPI using get_bls_series indicator=cpi months=1. Preserve period and units; an index level is not an inflation rate.",
+        "filing_scope": "recent",
+        "years": 1,
+        "fiscal_year": null
+      }
+    ]
+  },
+  "coverage_replay": {
+    "complete": true,
+    "gaps": [],
+    "tasks": [],
+    "status": "complete"
+  },
+  "missing_reports_control": {
+    "complete": false,
+    "gaps": [
+      "NVIDIA’nın FY2025’te makroekonomik gelişmelerden gerçekleşmiş etkileri ve olası makroekonomik riskleri ayırmaya yetecek şirket açıklamaları mevcut değil; rapor içeriği sunulmamış."
+    ],
+    "tasks": [
+      {
+        "id": "nvidia_fy2025_macro",
+        "agent": "filing_rag",
+        "instruction": "NVIDIA’nın FY2025 yıllık 10-K’sinde makroekonomik gelişmelerin gerçekleşmiş etkilerini ve açıklanan olası riskleri bul; etkilerin ölçülemediği veya ayrılamadığı belirtiliyorsa bunu da getir.",
+        "filing_scope": "annual",
+        "years": 1,
+        "fiscal_year": 2025
+      }
+    ],
+    "status": "partial"
+  }
+}

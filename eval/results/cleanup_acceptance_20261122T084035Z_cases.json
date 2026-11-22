@@ -1,0 +1,51 @@
+[
+  {
+    "id": "specified_year",
+    "question": "NVIDIA'nın 2025 mali yılındaki geliri ve net kârı nedir? Dönem bitiş tarihini de belirt.",
+    "answer_language": "tr",
+    "expected": {
+      "fiscal_year": 2025,
+      "revenue": 130497000000,
+      "net_income": 72880000000
+    }
+  },
+  {
+    "id": "latest_year",
+    "question": "Apple'ın yerel verideki en son yıllık gelirini ve net kârını açıkla. Hangi mali yıla ve dönem bitiş tarihine ait olduğunu belirt.",
+    "answer_language": "tr",
+    "expected": {
+      "companies": "AAPL",
+      "review_criteria": "Latest local annual period, revenue and net income with fiscal label and end."
+    }
+  },
+  {
+    "id": "comparison",
+    "question": "Costco ve Salesforce'un yerel veride ortak bulunan en son mali yıldaki gelirlerini ve faaliyet kâr marjlarını karşılaştır. Dönem bitiş tarihlerindeki farkı da belirt.",
+    "answer_language": "tr",
+    "expected": {
+      "companies": [
+        "COST",
+        "CRM"
+      ],
+      "review_criteria": "Common fiscal label; correct revenues and computed operating margins; distinct period ends."
+    }
+  },
+  {
+    "id": "latest_quarter",
+    "question": "Intel'in son çeyreklik raporunda satış gelirleri önceki yılın aynı çeyreğine göre nasıl değişmiş? Son şirket açıklamasındaki beklentilerle birlikte değerlendir; gerçekleşmiş sonuçlarla beklentileri ayır.",
+    "answer_language": "tr",
+    "expected": {
+      "companies": "INTC",
+      "review_criteria": "Latest 10-Q consolidated quarterly revenue, correct comparative direction and 8-K outlook, no YTD conflation."
+    }
+  },
+  {
+    "id": "macro_context",
+    "question": "Analyze Microsoft's latest annual revenue, cost of revenue and operating expenses. Discuss the economic risks described in its latest annual report alongside recent Fed policy and BLS inflation data. Distinguish reported company effects from potential risks, and do not treat the CPI index level as an inflation rate.",
+    "answer_language": "en",
+    "expected": {
+      "companies": "MSFT",
+      "review_criteria": "Annual figures; latest annual report risk evidence plus Fed and BLS evidence; English; CPI level not inflation rate; no unsupported macro causation."
+    }
+  }
+]

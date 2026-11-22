@@ -13,8 +13,13 @@ function rememberSelection() {
   try { localStorage.setItem('finsight-conversation', conversationId || ''); } catch {}
 }
 async function api(path, options = {}) {
-  const response = await fetch(path, options);
-  const result = await response.json();
+  const recovery = options.method === 'POST' ? ' Mesajınız geçmişe eklenmiş olabilir; yeniden göndermeden önce geçmişi kontrol edin.' : '';
+  let response;
+  try { response = await fetch(path, options); }
+  catch { throw new Error('Sunucuya ulaşılamıyor. Bağlantıyı kontrol edin.' + recovery); }
+  let result;
+  try { result = await response.json(); }
+  catch { throw new Error('Sunucudan geçerli bir yanıt alınamadı.' + recovery); }
   if (!response.ok) throw new Error(result.error || 'İstek tamamlanamadı.');
   return result;
 }

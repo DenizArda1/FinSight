@@ -10,6 +10,9 @@ from src.tools.agentic_tools import AGENT_TOOL_NAMES, get_agent_tool_schemas
 from src.verification.evidence import REPORT_SEARCH_TOOLS, MAX_REPORT_SOURCE_CHARS, limit_report_evidence, evidence_for_prompt
 
 
+ANNUAL_REPORT_TOOLS = frozenset({"search_filings", "get_filing_section"})
+RECENT_SOURCE_TOOLS = frozenset({"search_company_updates", "search_fed_releases", "get_bls_series"})
+
 class SpecialistLimitError(RuntimeError):
     """A bounded retrieval task stopped; its trace remains usable evidence."""
 
@@ -46,15 +49,15 @@ async def execute_specialist_tool(agent_name, tool_name, arguments, mcp_client, 
         raise ValueError("Unknown filing scope")
     if type(requested_years) is not int or not 1 <= requested_years <= 5:
         raise ValueError("Requested years must be an integer from 1 to 5")
-    if filing_scope == "annual" and tool_name in {"search_company_updates", "search_fed_releases", "get_bls_series"}:
+    if filing_scope == "annual" and tool_name in RECENT_SOURCE_TOOLS:
         raise ValueError("This task requires annual-report evidence, not recent quarterly or event sources")
-    if filing_scope == 'recent' and tool_name in {'search_filings', 'get_filing_section'}:
+    if filing_scope == 'recent' and tool_name in ANNUAL_REPORT_TOOLS:
         raise ValueError('Use search_company_updates for quarterly or event evidence; annual reports cannot satisfy this recent-source task')
     arguments = scoped_tool_arguments(tool_name, arguments, filing_scope, requested_years, requested_fiscal_year)
     if requested_fiscal_year is not None:
         if type(requested_fiscal_year) is not int or requested_fiscal_year <= 0:
             raise ValueError("Requested fiscal year must be a positive integer or null")
-        if tool_name in {"search_company_updates", "search_fed_releases", "get_bls_series"}:
+        if tool_name in RECENT_SOURCE_TOOLS:
             raise ValueError("Recent supplemental sources cannot satisfy an explicit historical fiscal-year task.")
         if tool_name == "search_filings":
             if (arguments.get("latest", False) is not False
@@ -122,11 +125,9 @@ async def run_specialist(task, llm_config, mcp_client, tool_schemas,max_steps=6,
     if type(requested_years) is not int or not 1 <= requested_years <= 5:
         raise ValueError("Requested years must be an integer from 1 to 5")
     if filing_scope == "annual":
-        available_tools = [tool for tool in available_tools if tool["function"]["name"] not in
-                           {"search_company_updates", "search_fed_releases", "get_bls_series"}]
+        available_tools = [tool for tool in available_tools if tool["function"]["name"] not in RECENT_SOURCE_TOOLS]
     elif filing_scope == 'recent':
-        available_tools = [tool for tool in available_tools if tool['function']['name'] not in
-                           {'search_filings', 'get_filing_section'}]
+        available_tools = [tool for tool in available_tools if tool['function']['name'] not in ANNUAL_REPORT_TOOLS]
     messages = build_specialist_messages(deepcopy(task))
     identity = {"task_id": task["id"], "agent": task["agent"]}
     resolved_ciks = set()
@@ -135,6 +136,7 @@ async def run_specialist(task, llm_config, mcp_client, tool_schemas,max_steps=6,
     successful_calls = set()
     failed_calls = {}
     has_research_result = False
+    empty_response_retried = False
     started = perf_counter()
     trace.append({"type": "agent", **identity, "status": "started"})
     # Tool arguments and a short retrieval summary do not need a long generation.
@@ -180,7 +182,16 @@ async def run_specialist(task, llm_config, mcp_client, tool_schemas,max_steps=6,
                 json.dumps(tool_calls, allow_nan=False)
                 if not tool_calls:
                     content = message.get("content")
-                    if not isinstance(content, str) or not content.strip():
+                    if content is None or (isinstance(content, str) and not content.strip()):
+                        if not empty_response_retried:
+                            empty_response_retried = True
+                            model_event.update(status="empty_response", elapsed_seconds=perf_counter() - model_started)
+                            trace.append(model_event)
+                            messages.append({"role": "user", "content":
+                                             "Your response was empty. Continue the assigned task using tools, or summarize collected evidence and limitations."})
+                            continue
+                        raise ValueError("Specialist summary must be a non-empty string")
+                    if not isinstance(content, str):
                         raise ValueError("Specialist summary must be a non-empty string")
                         
             except Exception as error:

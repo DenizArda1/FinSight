@@ -1,0 +1,3709 @@
+[
+  {
+    "id": "comparison",
+    "question": "Costco ve Salesforce'un yerel veride ortak bulunan en son mali yıldaki gelirlerini ve faaliyet kâr marjlarını karşılaştır. Dönem bitiş tarihlerindeki farkı da belirt.",
+    "expected": {
+      "companies": [
+        "COST",
+        "CRM"
+      ],
+      "review_criteria": "Common fiscal label; correct revenues and computed operating margins; distinct period ends."
+    },
+    "answer_language": "tr",
+    "category": null,
+    "usage": {
+      "model_calls_with_usage": 24,
+      "model_calls_without_usage": 0,
+      "tool_calls": 14,
+      "input_tokens": 46526,
+      "output_tokens": 2078,
+      "estimated_cost_usd": 0.0017415,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    },
+    "answer": "Costco’nun FY2026 mali yılında (dönem sonu 2026-08-30) satış geliri 303154000000 USD, faaliyet kâr marjı 3.85% oldu. Salesforce’un FY2026 mali yılında (dönem sonu 2026-01-31) satış geliri 41525000000 USD, faaliyet kâr marjı ise 20.06% olarak gerçekleşti. Dolayısıyla bu iki şirketin ortak verideki son mali yılında Costco’nun satış geliri daha yüksekken, Salesforce’un faaliyet kâr marjı daha yüksekti. [Source 2] [Source 4] [Source 6] [Source 8]\n\nMali yıl etiketleri aynı olsa da dönem bitişleri farklıdır: Costco’nunki 2026-08-30, Salesforce’unkinden 2026-01-31 daha sonradır. Bu nedenle karşılaştırma ortak mali yıl etiketi üzerinden yapılsa da iki şirketin raporlama dönemleri aynı tarihte sona ermemektedir. [Source 2] [Source 6]",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": null,
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "coverage": {
+      "complete": true,
+      "gaps": [],
+      "status": "complete",
+      "repair_tasks_attempted": 0
+    },
+    "draft": "Costco’nun FY2026 mali yılında (dönem sonu 2026-08-30) satış geliri 303154000000 USD, faaliyet kâr marjı 3.85% oldu. Salesforce’un FY2026 mali yılında (dönem sonu 2026-01-31) satış geliri 41525000000 USD, faaliyet kâr marjı ise 20.06% olarak gerçekleşti. Dolayısıyla bu iki şirketin ortak verideki son mali yılında Costco’nun satış geliri daha yüksekken, Salesforce’un faaliyet kâr marjı daha yüksekti. [Source 2] [Source 4] [Source 6] [Source 8]\n\nMali yıl etiketleri aynı olsa da dönem bitişleri farklıdır: Costco’nunki 2026-08-30, Salesforce’unkinden 2026-01-31 daha sonradır. Bu nedenle karşılaştırma ortak mali yıl etiketi üzerinden yapılsa da iki şirketin raporlama dönemleri aynı tarihte sona ermemektedir. [Source 2] [Source 6]",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "answer",
+      "text": "Costco’nun FY{{F2_fiscal_year}} mali yılında (dönem sonu {{F2_end}}) satış geliri {{F2_value}} {{F2_unit}}, faaliyet kâr marjı {{F4_value}} oldu. Salesforce’un FY{{F8_fiscal_year}} mali yılında (dönem sonu {{F8_end}}) satış geliri {{F8_value}} {{F8_unit}}, faaliyet kâr marjı ise {{F10_value}} olarak gerçekleşti. Dolayısıyla bu iki şirketin ortak verideki son mali yılında Costco’nun satış geliri daha yüksekken, Salesforce’un faaliyet kâr marjı daha yüksekti. [Source 2] [Source 4] [Source 6] [Source 8]\n\nMali yıl etiketleri aynı olsa da dönem bitişleri farklıdır: Costco’nunki {{F2_end}}, Salesforce’unkinden {{F8_end}} daha sonradır. Bu nedenle karşılaştırma ortak mali yıl etiketi üzerinden yapılsa da iki şirketin raporlama dönemleri aynı tarihte sona ermemektedir. [Source 2] [Source 6]",
+      "facts": []
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "collection_task": "costco_financial",
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "COST"
+        },
+        "result": {
+          "ticker": "COST",
+          "name": "COSTCO WHOLESALE CORP /NEW",
+          "cik": "0000909832"
+        }
+      },
+      {
+        "source_id": 2,
+        "collection_task": "costco_financial",
+        "tool": "get_company_facts",
+        "arguments": {
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1,
+          "cik": "0000909832"
+        },
+        "result": {
+          "company": {
+            "ticker": "COST",
+            "cik": "0000909832",
+            "name": "COSTCO WHOLESALE CORP /NEW"
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_fiscal_year": null,
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-08-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 909832,
+              "metric": "revenue",
+              "start": "2025-09-01",
+              "end": "2026-08-30",
+              "value": 303154000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-10-07",
+              "accn": "0000909832-26-000093",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2026 (period end: 2026-08-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 3,
+        "collection_task": "costco_financial",
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0000909832",
+          "concept": "operating_income",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "COST",
+            "cik": "0000909832",
+            "name": "COSTCO WHOLESALE CORP /NEW"
+          },
+          "concept": "operating_income",
+          "definition": {
+            "description": "Operating Income",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "OperatingIncomeLoss"
+            ]
+          },
+          "unit": "USD",
+          "requested_fiscal_year": null,
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-08-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 909832,
+              "metric": "operating_income",
+              "start": "2025-09-01",
+              "end": "2026-08-30",
+              "value": 11685000000,
+              "unit": "USD",
+              "tag": "OperatingIncomeLoss",
+              "form": "10-K",
+              "filed": "2026-10-07",
+              "accn": "0000909832-26-000093",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2026 (period end: 2026-08-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 4,
+        "collection_task": "costco_financial",
+        "tool": "compute_metrics",
+        "arguments": {
+          "cik": "0000909832",
+          "metrics": [
+            "operating_margin"
+          ],
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "COST",
+            "cik": "0000909832",
+            "name": "COSTCO WHOLESALE CORP /NEW"
+          },
+          "requested_years": 1,
+          "results": {
+            "operating_margin": [
+              {
+                "cik": 909832,
+                "fiscal_year": 2026,
+                "start": "2025-09-01",
+                "end": "2026-08-30",
+                "value": 0.03854476602650798,
+                "unit": "ratio",
+                "metric": "operating_margin",
+                "formula": "operating_income / revenue",
+                "inputs": {
+                  "operating_income": {
+                    "cik": 909832,
+                    "metric": "operating_income",
+                    "start": "2025-09-01",
+                    "end": "2026-08-30",
+                    "value": 11685000000,
+                    "unit": "USD",
+                    "tag": "OperatingIncomeLoss",
+                    "form": "10-K",
+                    "filed": "2026-10-07",
+                    "accn": "0000909832-26-000093",
+                    "is_amendment": false,
+                    "fiscal_year": 2026,
+                    "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                    "period_label": "FY2026 (period end: 2026-08-30)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm"
+                  },
+                  "revenue": {
+                    "cik": 909832,
+                    "metric": "revenue",
+                    "start": "2025-09-01",
+                    "end": "2026-08-30",
+                    "value": 303154000000,
+                    "unit": "USD",
+                    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                    "form": "10-K",
+                    "filed": "2026-10-07",
+                    "accn": "0000909832-26-000093",
+                    "is_amendment": false,
+                    "fiscal_year": 2026,
+                    "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                    "period_label": "FY2026 (period end: 2026-08-30)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm"
+                  }
+                },
+                "period_label": "FY2026 (period end: 2026-08-30)"
+              }
+            ]
+          },
+          "calculation_definitions": {
+            "operating_margin": {
+              "description": "Annual operating profit margin",
+              "function": "calculate_margin",
+              "inputs": [
+                "operating_income",
+                "revenue"
+              ],
+              "unit": "ratio",
+              "period_mode": "same_period"
+            }
+          },
+          "warnings": [],
+          "availability": {
+            "operating_income": {
+              "concept": "operating_income",
+              "missing_period_ends": [],
+              "available_period_ends": [
+                "2026-08-30"
+              ]
+            },
+            "revenue": {
+              "concept": "revenue",
+              "missing_period_ends": [],
+              "available_period_ends": [
+                "2026-08-30"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "source_id": 5,
+        "collection_task": "salesforce_financial",
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "CRM"
+        },
+        "result": {
+          "ticker": "CRM",
+          "name": "Salesforce, Inc.",
+          "cik": "0001108524"
+        }
+      },
+      {
+        "source_id": 6,
+        "collection_task": "salesforce_financial",
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0001108524",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "CRM",
+            "cik": "0001108524",
+            "name": "Salesforce, Inc."
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_fiscal_year": null,
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-01-31"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 1108524,
+              "metric": "revenue",
+              "start": "2025-02-01",
+              "end": "2026-01-31",
+              "value": 41525000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-03-02",
+              "accn": "0001108524-26-000060",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "explicit_report_definition",
+              "fiscal_year_warning": "DocumentFiscalYearFocus declares 2025; the explicit fiscal-year definition for this report period takes precedence.",
+              "period_label": "FY2026 (period end: 2026-01-31)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 7,
+        "collection_task": "salesforce_financial",
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0001108524",
+          "concept": "operating_income",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "CRM",
+            "cik": "0001108524",
+            "name": "Salesforce, Inc."
+          },
+          "concept": "operating_income",
+          "definition": {
+            "description": "Operating Income",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "OperatingIncomeLoss"
+            ]
+          },
+          "unit": "USD",
+          "requested_fiscal_year": null,
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-01-31"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 1108524,
+              "metric": "operating_income",
+              "start": "2025-02-01",
+              "end": "2026-01-31",
+              "value": 8331000000,
+              "unit": "USD",
+              "tag": "OperatingIncomeLoss",
+              "form": "10-K",
+              "filed": "2026-03-02",
+              "accn": "0001108524-26-000060",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "explicit_report_definition",
+              "fiscal_year_warning": "DocumentFiscalYearFocus declares 2025; the explicit fiscal-year definition for this report period takes precedence.",
+              "period_label": "FY2026 (period end: 2026-01-31)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 8,
+        "collection_task": "salesforce_financial",
+        "tool": "compute_metrics",
+        "arguments": {
+          "cik": "0001108524",
+          "metrics": [
+            "operating_margin"
+          ],
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "CRM",
+            "cik": "0001108524",
+            "name": "Salesforce, Inc."
+          },
+          "requested_years": 1,
+          "results": {
+            "operating_margin": [
+              {
+                "cik": 1108524,
+                "fiscal_year": 2026,
+                "start": "2025-02-01",
+                "end": "2026-01-31",
+                "value": 0.20062612883804937,
+                "unit": "ratio",
+                "metric": "operating_margin",
+                "formula": "operating_income / revenue",
+                "inputs": {
+                  "operating_income": {
+                    "cik": 1108524,
+                    "metric": "operating_income",
+                    "start": "2025-02-01",
+                    "end": "2026-01-31",
+                    "value": 8331000000,
+                    "unit": "USD",
+                    "tag": "OperatingIncomeLoss",
+                    "form": "10-K",
+                    "filed": "2026-03-02",
+                    "accn": "0001108524-26-000060",
+                    "is_amendment": false,
+                    "fiscal_year": 2026,
+                    "fiscal_year_source": "explicit_report_definition",
+                    "fiscal_year_warning": "DocumentFiscalYearFocus declares 2025; the explicit fiscal-year definition for this report period takes precedence.",
+                    "period_label": "FY2026 (period end: 2026-01-31)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+                  },
+                  "revenue": {
+                    "cik": 1108524,
+                    "metric": "revenue",
+                    "start": "2025-02-01",
+                    "end": "2026-01-31",
+                    "value": 41525000000,
+                    "unit": "USD",
+                    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                    "form": "10-K",
+                    "filed": "2026-03-02",
+                    "accn": "0001108524-26-000060",
+                    "is_amendment": false,
+                    "fiscal_year": 2026,
+                    "fiscal_year_source": "explicit_report_definition",
+                    "fiscal_year_warning": "DocumentFiscalYearFocus declares 2025; the explicit fiscal-year definition for this report period takes precedence.",
+                    "period_label": "FY2026 (period end: 2026-01-31)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+                  }
+                },
+                "period_label": "FY2026 (period end: 2026-01-31)"
+              }
+            ]
+          },
+          "calculation_definitions": {
+            "operating_margin": {
+              "description": "Annual operating profit margin",
+              "function": "calculate_margin",
+              "inputs": [
+                "operating_income",
+                "revenue"
+              ],
+              "unit": "ratio",
+              "period_mode": "same_period"
+            }
+          },
+          "warnings": [],
+          "availability": {
+            "operating_income": {
+              "concept": "operating_income",
+              "missing_period_ends": [],
+              "available_period_ends": [
+                "2026-01-31"
+              ]
+            },
+            "revenue": {
+              "concept": "revenue",
+              "missing_period_ends": [],
+              "available_period_ends": [
+                "2026-01-31"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "source_id": 9,
+        "collection_task": "costco_fiscal_year",
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "COST"
+        },
+        "result": {
+          "ticker": "COST",
+          "name": "COSTCO WHOLESALE CORP /NEW",
+          "cik": "0000909832"
+        }
+      },
+      {
+        "source_id": 10,
+        "collection_task": "costco_fiscal_year",
+        "tool": "get_company_facts",
+        "arguments": {
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1,
+          "cik": "0000909832"
+        },
+        "result": {
+          "company": {
+            "ticker": "COST",
+            "cik": "0000909832",
+            "name": "COSTCO WHOLESALE CORP /NEW"
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_fiscal_year": null,
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-08-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 909832,
+              "metric": "revenue",
+              "start": "2025-09-01",
+              "end": "2026-08-30",
+              "value": 303154000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-10-07",
+              "accn": "0000909832-26-000093",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2026 (period end: 2026-08-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 11,
+        "collection_task": "salesforce_fiscal_year",
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "CRM"
+        },
+        "result": {
+          "ticker": "CRM",
+          "name": "Salesforce, Inc.",
+          "cik": "0001108524"
+        }
+      },
+      {
+        "source_id": 12,
+        "collection_task": "salesforce_fiscal_year",
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0001108524",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "CRM",
+            "cik": "0001108524",
+            "name": "Salesforce, Inc."
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_fiscal_year": null,
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-01-31"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 1108524,
+              "metric": "revenue",
+              "start": "2025-02-01",
+              "end": "2026-01-31",
+              "value": 41525000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-03-02",
+              "accn": "0001108524-26-000060",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "explicit_report_definition",
+              "fiscal_year_warning": "DocumentFiscalYearFocus declares 2025; the explicit fiscal-year definition for this report period takes precedence.",
+              "period_label": "FY2026 (period end: 2026-01-31)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+            }
+          ]
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "comparison",
+        "plan": [
+          {
+            "id": "costco_financial",
+            "agent": "financial_data",
+            "instruction": "For Costco, retrieve latest annual revenue and operating_income to compute operating_margin.",
+            "filing_scope": "annual",
+            "years": 1,
+            "fiscal_year": null
+          },
+          {
+            "id": "salesforce_financial",
+            "agent": "financial_data",
+            "instruction": "For Salesforce, retrieve latest annual revenue and operating_income to compute operating_margin.",
+            "filing_scope": "annual",
+            "years": 1,
+            "fiscal_year": null
+          },
+          {
+            "id": "costco_fiscal_year",
+            "agent": "financial_data",
+            "instruction": "For Costco, retrieve fiscal_year from latest annual report.",
+            "filing_scope": "annual",
+            "years": 1,
+            "fiscal_year": null
+          },
+          {
+            "id": "salesforce_fiscal_year",
+            "agent": "financial_data",
+            "instruction": "For Salesforce, retrieve fiscal_year from latest annual report.",
+            "filing_scope": "annual",
+            "years": 1,
+            "fiscal_year": null
+          }
+        ],
+        "elapsed_seconds": 5.876511624999694,
+        "input_tokens": 1221,
+        "output_tokens": 230,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0
+      },
+      {
+        "type": "agent",
+        "task_id": "costco_financial",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "costco_financial",
+        "agent": "financial_data",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 758,
+        "output_tokens": 49,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "empty_response",
+        "elapsed_seconds": 3.4236654579999595
+      },
+      {
+        "type": "model",
+        "task_id": "costco_financial",
+        "agent": "financial_data",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 777,
+        "output_tokens": 25,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_gwx9j97w",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "COST"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 0.7639384579997568
+      },
+      {
+        "type": "tool",
+        "task_id": "costco_financial",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "COST"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "COST",
+          "name": "COSTCO WHOLESALE CORP /NEW",
+          "cik": "0000909832"
+        },
+        "elapsed_seconds": 0.020177709000563482
+      },
+      {
+        "type": "model",
+        "task_id": "costco_financial",
+        "agent": "financial_data",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 1287,
+        "output_tokens": 51,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_or4zyv5q",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 1,
+                "cik": "0000909832"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 3.474956874999407
+      },
+      {
+        "type": "tool",
+        "task_id": "costco_financial",
+        "agent": "financial_data",
+        "step": 3,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1,
+          "cik": "0000909832"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "COST",
+            "cik": "0000909832",
+            "name": "COSTCO WHOLESALE CORP /NEW"
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_fiscal_year": null,
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-08-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 909832,
+              "metric": "revenue",
+              "start": "2025-09-01",
+              "end": "2026-08-30",
+              "value": 303154000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-10-07",
+              "accn": "0000909832-26-000093",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2026 (period end: 2026-08-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 2.043821665998621
+      },
+      {
+        "type": "model",
+        "task_id": "costco_financial",
+        "agent": "financial_data",
+        "step": 4,
+        "max_output_tokens": 1024,
+        "input_tokens": 1782,
+        "output_tokens": 45,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_4pxfmxdf",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000909832",
+                "concept": "operating_income",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.691959667001356
+      },
+      {
+        "type": "tool",
+        "task_id": "costco_financial",
+        "agent": "financial_data",
+        "step": 4,
+        "call_id": 3,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000909832",
+          "concept": "operating_income",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "COST",
+            "cik": "0000909832",
+            "name": "COSTCO WHOLESALE CORP /NEW"
+          },
+          "concept": "operating_income",
+          "definition": {
+            "description": "Operating Income",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "OperatingIncomeLoss"
+            ]
+          },
+          "unit": "USD",
+          "requested_fiscal_year": null,
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-08-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 909832,
+              "metric": "operating_income",
+              "start": "2025-09-01",
+              "end": "2026-08-30",
+              "value": 11685000000,
+              "unit": "USD",
+              "tag": "OperatingIncomeLoss",
+              "form": "10-K",
+              "filed": "2026-10-07",
+              "accn": "0000909832-26-000093",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2026 (period end: 2026-08-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.098832499999844
+      },
+      {
+        "type": "model",
+        "task_id": "costco_financial",
+        "agent": "financial_data",
+        "step": 5,
+        "max_output_tokens": 1024,
+        "input_tokens": 2255,
+        "output_tokens": 39,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_o410gyi0",
+            "function": {
+              "index": 0,
+              "name": "compute_metrics",
+              "arguments": {
+                "cik": "0000909832",
+                "metrics": [
+                  "operating_margin"
+                ],
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.4280100830001174
+      },
+      {
+        "type": "tool",
+        "task_id": "costco_financial",
+        "agent": "financial_data",
+        "step": 5,
+        "call_id": 4,
+        "name": "compute_metrics",
+        "arguments": {
+          "cik": "0000909832",
+          "metrics": [
+            "operating_margin"
+          ],
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "COST",
+            "cik": "0000909832",
+            "name": "COSTCO WHOLESALE CORP /NEW"
+          },
+          "requested_years": 1,
+          "results": {
+            "operating_margin": [
+              {
+                "cik": 909832,
+                "fiscal_year": 2026,
+                "start": "2025-09-01",
+                "end": "2026-08-30",
+                "value": 0.03854476602650798,
+                "unit": "ratio",
+                "metric": "operating_margin",
+                "formula": "operating_income / revenue",
+                "inputs": {
+                  "operating_income": {
+                    "cik": 909832,
+                    "metric": "operating_income",
+                    "start": "2025-09-01",
+                    "end": "2026-08-30",
+                    "value": 11685000000,
+                    "unit": "USD",
+                    "tag": "OperatingIncomeLoss",
+                    "form": "10-K",
+                    "filed": "2026-10-07",
+                    "accn": "0000909832-26-000093",
+                    "is_amendment": false,
+                    "fiscal_year": 2026,
+                    "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                    "period_label": "FY2026 (period end: 2026-08-30)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm"
+                  },
+                  "revenue": {
+                    "cik": 909832,
+                    "metric": "revenue",
+                    "start": "2025-09-01",
+                    "end": "2026-08-30",
+                    "value": 303154000000,
+                    "unit": "USD",
+                    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                    "form": "10-K",
+                    "filed": "2026-10-07",
+                    "accn": "0000909832-26-000093",
+                    "is_amendment": false,
+                    "fiscal_year": 2026,
+                    "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                    "period_label": "FY2026 (period end: 2026-08-30)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm"
+                  }
+                },
+                "period_label": "FY2026 (period end: 2026-08-30)"
+              }
+            ]
+          },
+          "calculation_definitions": {
+            "operating_margin": {
+              "description": "Annual operating profit margin",
+              "function": "calculate_margin",
+              "inputs": [
+                "operating_income",
+                "revenue"
+              ],
+              "unit": "ratio",
+              "period_mode": "same_period"
+            }
+          },
+          "warnings": [],
+          "availability": {
+            "operating_income": {
+              "concept": "operating_income",
+              "missing_period_ends": [],
+              "available_period_ends": [
+                "2026-08-30"
+              ]
+            },
+            "revenue": {
+              "concept": "revenue",
+              "missing_period_ends": [],
+              "available_period_ends": [
+                "2026-08-30"
+              ]
+            }
+          }
+        },
+        "elapsed_seconds": 0.029795000000376604
+      },
+      {
+        "type": "model",
+        "task_id": "costco_financial",
+        "agent": "financial_data",
+        "step": 6,
+        "max_output_tokens": 1024,
+        "input_tokens": 3185,
+        "output_tokens": 133,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 6.578881708001063
+      },
+      {
+        "type": "agent",
+        "task_id": "costco_financial",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 21.554380542000217
+      },
+      {
+        "type": "agent",
+        "task_id": "salesforce_financial",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "salesforce_financial",
+        "agent": "financial_data",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 758,
+        "output_tokens": 49,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "empty_response",
+        "elapsed_seconds": 2.0448786659999314
+      },
+      {
+        "type": "model",
+        "task_id": "salesforce_financial",
+        "agent": "financial_data",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 777,
+        "output_tokens": 24,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_a1j19uot",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "CRM"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 0.7419653749984718
+      },
+      {
+        "type": "tool",
+        "task_id": "salesforce_financial",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "CRM"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "CRM",
+          "name": "Salesforce, Inc.",
+          "cik": "0001108524"
+        },
+        "elapsed_seconds": 0.014410540999961086
+      },
+      {
+        "type": "model",
+        "task_id": "salesforce_financial",
+        "agent": "financial_data",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 1278,
+        "output_tokens": 51,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_lwyetlfq",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0001108524",
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 3.469638667000254
+      },
+      {
+        "type": "tool",
+        "task_id": "salesforce_financial",
+        "agent": "financial_data",
+        "step": 3,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0001108524",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "CRM",
+            "cik": "0001108524",
+            "name": "Salesforce, Inc."
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_fiscal_year": null,
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-01-31"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 1108524,
+              "metric": "revenue",
+              "start": "2025-02-01",
+              "end": "2026-01-31",
+              "value": 41525000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-03-02",
+              "accn": "0001108524-26-000060",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "explicit_report_definition",
+              "fiscal_year_warning": "DocumentFiscalYearFocus declares 2025; the explicit fiscal-year definition for this report period takes precedence.",
+              "period_label": "FY2026 (period end: 2026-01-31)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 5.005967500001134
+      },
+      {
+        "type": "model",
+        "task_id": "salesforce_financial",
+        "agent": "financial_data",
+        "step": 4,
+        "max_output_tokens": 1024,
+        "input_tokens": 1793,
+        "output_tokens": 45,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_rcoc6ide",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0001108524",
+                "concept": "operating_income",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.7519437079990894
+      },
+      {
+        "type": "tool",
+        "task_id": "salesforce_financial",
+        "agent": "financial_data",
+        "step": 4,
+        "call_id": 3,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0001108524",
+          "concept": "operating_income",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "CRM",
+            "cik": "0001108524",
+            "name": "Salesforce, Inc."
+          },
+          "concept": "operating_income",
+          "definition": {
+            "description": "Operating Income",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "OperatingIncomeLoss"
+            ]
+          },
+          "unit": "USD",
+          "requested_fiscal_year": null,
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-01-31"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 1108524,
+              "metric": "operating_income",
+              "start": "2025-02-01",
+              "end": "2026-01-31",
+              "value": 8331000000,
+              "unit": "USD",
+              "tag": "OperatingIncomeLoss",
+              "form": "10-K",
+              "filed": "2026-03-02",
+              "accn": "0001108524-26-000060",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "explicit_report_definition",
+              "fiscal_year_warning": "DocumentFiscalYearFocus declares 2025; the explicit fiscal-year definition for this report period takes precedence.",
+              "period_label": "FY2026 (period end: 2026-01-31)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.028998084000704694
+      },
+      {
+        "type": "model",
+        "task_id": "salesforce_financial",
+        "agent": "financial_data",
+        "step": 5,
+        "max_output_tokens": 1024,
+        "input_tokens": 2286,
+        "output_tokens": 39,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_wvaqzqwh",
+            "function": {
+              "index": 0,
+              "name": "compute_metrics",
+              "arguments": {
+                "cik": "0001108524",
+                "metrics": [
+                  "operating_margin"
+                ],
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.5067103750006936
+      },
+      {
+        "type": "tool",
+        "task_id": "salesforce_financial",
+        "agent": "financial_data",
+        "step": 5,
+        "call_id": 4,
+        "name": "compute_metrics",
+        "arguments": {
+          "cik": "0001108524",
+          "metrics": [
+            "operating_margin"
+          ],
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "CRM",
+            "cik": "0001108524",
+            "name": "Salesforce, Inc."
+          },
+          "requested_years": 1,
+          "results": {
+            "operating_margin": [
+              {
+                "cik": 1108524,
+                "fiscal_year": 2026,
+                "start": "2025-02-01",
+                "end": "2026-01-31",
+                "value": 0.20062612883804937,
+                "unit": "ratio",
+                "metric": "operating_margin",
+                "formula": "operating_income / revenue",
+                "inputs": {
+                  "operating_income": {
+                    "cik": 1108524,
+                    "metric": "operating_income",
+                    "start": "2025-02-01",
+                    "end": "2026-01-31",
+                    "value": 8331000000,
+                    "unit": "USD",
+                    "tag": "OperatingIncomeLoss",
+                    "form": "10-K",
+                    "filed": "2026-03-02",
+                    "accn": "0001108524-26-000060",
+                    "is_amendment": false,
+                    "fiscal_year": 2026,
+                    "fiscal_year_source": "explicit_report_definition",
+                    "fiscal_year_warning": "DocumentFiscalYearFocus declares 2025; the explicit fiscal-year definition for this report period takes precedence.",
+                    "period_label": "FY2026 (period end: 2026-01-31)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+                  },
+                  "revenue": {
+                    "cik": 1108524,
+                    "metric": "revenue",
+                    "start": "2025-02-01",
+                    "end": "2026-01-31",
+                    "value": 41525000000,
+                    "unit": "USD",
+                    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                    "form": "10-K",
+                    "filed": "2026-03-02",
+                    "accn": "0001108524-26-000060",
+                    "is_amendment": false,
+                    "fiscal_year": 2026,
+                    "fiscal_year_source": "explicit_report_definition",
+                    "fiscal_year_warning": "DocumentFiscalYearFocus declares 2025; the explicit fiscal-year definition for this report period takes precedence.",
+                    "period_label": "FY2026 (period end: 2026-01-31)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+                  }
+                },
+                "period_label": "FY2026 (period end: 2026-01-31)"
+              }
+            ]
+          },
+          "calculation_definitions": {
+            "operating_margin": {
+              "description": "Annual operating profit margin",
+              "function": "calculate_margin",
+              "inputs": [
+                "operating_income",
+                "revenue"
+              ],
+              "unit": "ratio",
+              "period_mode": "same_period"
+            }
+          },
+          "warnings": [],
+          "availability": {
+            "operating_income": {
+              "concept": "operating_income",
+              "missing_period_ends": [],
+              "available_period_ends": [
+                "2026-01-31"
+              ]
+            },
+            "revenue": {
+              "concept": "revenue",
+              "missing_period_ends": [],
+              "available_period_ends": [
+                "2026-01-31"
+              ]
+            }
+          }
+        },
+        "elapsed_seconds": 0.04779441600112477
+      },
+      {
+        "type": "model",
+        "task_id": "salesforce_financial",
+        "agent": "financial_data",
+        "step": 6,
+        "max_output_tokens": 1024,
+        "input_tokens": 3264,
+        "output_tokens": 99,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 5.623628332999942
+      },
+      {
+        "type": "agent",
+        "task_id": "salesforce_financial",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 22.236201083000196
+      },
+      {
+        "type": "agent",
+        "task_id": "costco_fiscal_year",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "costco_fiscal_year",
+        "agent": "financial_data",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 755,
+        "output_tokens": 25,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_rqr2uqyn",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "COST"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.451155208000273
+      },
+      {
+        "type": "tool",
+        "task_id": "costco_fiscal_year",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "COST"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "COST",
+          "name": "COSTCO WHOLESALE CORP /NEW",
+          "cik": "0000909832"
+        },
+        "elapsed_seconds": 0.015107999999599997
+      },
+      {
+        "type": "model",
+        "task_id": "costco_fiscal_year",
+        "agent": "financial_data",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 1265,
+        "output_tokens": 51,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_xwdskp9q",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 1,
+                "cik": "0000909832"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 3.4465466660003585
+      },
+      {
+        "type": "tool",
+        "task_id": "costco_fiscal_year",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1,
+          "cik": "0000909832"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "COST",
+            "cik": "0000909832",
+            "name": "COSTCO WHOLESALE CORP /NEW"
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_fiscal_year": null,
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-08-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 909832,
+              "metric": "revenue",
+              "start": "2025-09-01",
+              "end": "2026-08-30",
+              "value": 303154000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-10-07",
+              "accn": "0000909832-26-000093",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2026 (period end: 2026-08-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.029888665998441866
+      },
+      {
+        "type": "model",
+        "task_id": "costco_fiscal_year",
+        "agent": "financial_data",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 1760,
+        "output_tokens": 45,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_aytipw8w",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000909832",
+                "concept": "fiscal_year",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.583790750000844
+      },
+      {
+        "type": "tool",
+        "task_id": "costco_fiscal_year",
+        "agent": "financial_data",
+        "step": 3,
+        "call_id": 3,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000909832",
+          "concept": "fiscal_year",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "error",
+        "result": {
+          "error": {
+            "type": "MCPToolError",
+            "message": "MCP tool 'get_company_facts' failed: Invalid arguments for get_company_facts: 'fiscal_year' is not one of ['revenue', 'net_income', 'operating_income', 'gross_profit', 'cost_of_revenue', 'operating_expenses']"
+          }
+        },
+        "elapsed_seconds": 0.004545375000816421
+      },
+      {
+        "type": "model",
+        "task_id": "costco_fiscal_year",
+        "agent": "financial_data",
+        "step": 4,
+        "max_output_tokens": 1024,
+        "input_tokens": 1891,
+        "output_tokens": 81,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 2.4357846250004513
+      },
+      {
+        "type": "agent",
+        "task_id": "costco_fiscal_year",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 9.967260749999696
+      },
+      {
+        "type": "agent",
+        "task_id": "salesforce_fiscal_year",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "salesforce_fiscal_year",
+        "agent": "financial_data",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 755,
+        "output_tokens": 24,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_5zqtmay6",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "CRM"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.3849274169988348
+      },
+      {
+        "type": "tool",
+        "task_id": "salesforce_fiscal_year",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "CRM"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "CRM",
+          "name": "Salesforce, Inc.",
+          "cik": "0001108524"
+        },
+        "elapsed_seconds": 0.01650866700038023
+      },
+      {
+        "type": "model",
+        "task_id": "salesforce_fiscal_year",
+        "agent": "financial_data",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 1256,
+        "output_tokens": 51,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_9gq99rjx",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0001108524",
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 3.483885208999709
+      },
+      {
+        "type": "tool",
+        "task_id": "salesforce_fiscal_year",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0001108524",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "CRM",
+            "cik": "0001108524",
+            "name": "Salesforce, Inc."
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_fiscal_year": null,
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-01-31"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 1108524,
+              "metric": "revenue",
+              "start": "2025-02-01",
+              "end": "2026-01-31",
+              "value": 41525000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-03-02",
+              "accn": "0001108524-26-000060",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "explicit_report_definition",
+              "fiscal_year_warning": "DocumentFiscalYearFocus declares 2025; the explicit fiscal-year definition for this report period takes precedence.",
+              "period_label": "FY2026 (period end: 2026-01-31)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.16494970799976727
+      },
+      {
+        "type": "model",
+        "task_id": "salesforce_fiscal_year",
+        "agent": "financial_data",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 1771,
+        "output_tokens": 45,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_2qsa96p5",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0001108524",
+                "concept": "fiscal_year",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.8263550419997046
+      },
+      {
+        "type": "tool",
+        "task_id": "salesforce_fiscal_year",
+        "agent": "financial_data",
+        "step": 3,
+        "call_id": 3,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0001108524",
+          "concept": "fiscal_year",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "error",
+        "result": {
+          "error": {
+            "type": "MCPToolError",
+            "message": "MCP tool 'get_company_facts' failed: Invalid arguments for get_company_facts: 'fiscal_year' is not one of ['revenue', 'net_income', 'operating_income', 'gross_profit', 'cost_of_revenue', 'operating_expenses']"
+          }
+        },
+        "elapsed_seconds": 0.0046532500000466825
+      },
+      {
+        "type": "model",
+        "task_id": "salesforce_fiscal_year",
+        "agent": "financial_data",
+        "step": 4,
+        "max_output_tokens": 1024,
+        "input_tokens": 1902,
+        "output_tokens": 144,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 4.00139499999932
+      },
+      {
+        "type": "agent",
+        "task_id": "salesforce_fiscal_year",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 11.883003167000425
+      },
+      {
+        "type": "model",
+        "phase": "coverage",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 2980,
+        "output_tokens": 187,
+        "total_tokens": 3167,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 163,
+        "response_id": "resp_09c5bd31f249a2f0016b02ac2ca9f887d287325120412ec8ba",
+        "estimated_cost_usd": 0.0003915,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"complete\":true,\"gaps\":[],\"tasks\":[]}",
+        "elapsed_seconds": 2.4875355000003765
+      },
+      {
+        "type": "coverage",
+        "complete": true,
+        "gaps": [],
+        "status": "complete",
+        "repair_tasks_attempted": 0
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 6959,
+        "output_tokens": 263,
+        "total_tokens": 7222,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "response_id": "resp_0e605175e8b74a03016b02ac2f249487d2a1f9d75d0a69f3b6",
+        "estimated_cost_usd": 0.0008274,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"Costco’nun FY{{F2_fiscal_year}} mali yılında (dönem sonu {{F2_end}}) satış geliri {{F2_value}} {{F2_unit}}, faaliyet kâr marjı {{F4_value}} oldu. Salesforce’un FY{{F8_fiscal_year}} mali yılında (dönem sonu {{F8_end}}) satış geliri {{F8_value}} {{F8_unit}}, faaliyet kâr marjı ise {{F10_value}} olarak gerçekleşti. Dolayısıyla bu iki şirketin ortak verideki son mali yılında Costco’nun satış geliri daha yüksekken, Salesforce’un faaliyet kâr marjı daha yüksekti. [Source 2] [Source 4] [Source 6] [Source 8]\\n\\nMali yıl etiketleri aynı olsa da dönem bitişleri farklıdır: Costco’nunki {{F2_end}}, Salesforce’unkinden {{F8_end}} daha sonradır. Bu nedenle karşılaştırma ortak mali yıl etiketi üzerinden yapılsa da iki şirketin raporlama dönemleri aynı tarihte sona ermemektedir. [Source 2] [Source 6]\",\"facts\":[]}",
+        "elapsed_seconds": 2.8506533750005474
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 2.8606053330004215
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 3811,
+        "output_tokens": 283,
+        "total_tokens": 4094,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 251,
+        "response_id": "resp_05aa5d8ca047664b016b02ac3374a087d2abee8908719cdc37",
+        "estimated_cost_usd": 0.0005226,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"issues\":[],\"evidence_supported\":true,\"language_matches\":true,\"answer_complete\":true}",
+        "elapsed_seconds": 5.186543416000859
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 5.189724875001048
+      }
+    ],
+    "elapsed_seconds": 82.82412083300005,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "think": false,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      },
+      "roles": {
+        "writer": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "max_output_tokens": 8192
+        },
+        "critic": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "max_output_tokens": 8192
+        }
+      }
+    },
+    "dataset_sha256": "bd92ab8e7a2fe8d8ec936e6388b2443818c4fecd1deecf34299c5a37eba356d0",
+    "recorded_at": "2026-11-22T08:47:51.010028+00:00",
+    "transport": "mcp"
+  },
+  {
+    "id": "latest_quarter",
+    "question": "Intel'in son çeyreklik raporunda satış gelirleri önceki yılın aynı çeyreğine göre nasıl değişmiş? Son şirket açıklamasındaki beklentilerle birlikte değerlendir; gerçekleşmiş sonuçlarla beklentileri ayır.",
+    "expected": {
+      "companies": "INTC",
+      "review_criteria": "Latest 10-Q consolidated quarterly revenue, correct comparative direction and 8-K outlook, no YTD conflation."
+    },
+    "answer_language": "tr",
+    "category": null,
+    "usage": {
+      "model_calls_with_usage": 15,
+      "model_calls_without_usage": 0,
+      "tool_calls": 6,
+      "input_tokens": 90356,
+      "output_tokens": 3361,
+      "estimated_cost_usd": 0.0036302800000000005,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    },
+    "answer": "Intel’in son çeyreği, mali yılın 2026-09-26 tarihinde sona eren dönemdir. Satış gelirleri önceki yılın aynı çeyreğine göre arttı; bu gerçekleşmiş bir sonuçtur. [Source 8] [Source 11]\n\nŞirket, 2026’nın dördüncü çeyreği için satış geliri beklentisi açıkladı. Bu ileriye dönük beklenti aralığı, son çeyrekte gerçekleşen satış gelirinden daha düşük bir seviyeye işaret ediyor; beklenti henüz gerçekleşmiş sonuç değildir. [Source 11]",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": null,
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "coverage": {
+      "complete": true,
+      "gaps": [],
+      "status": "complete",
+      "repair_tasks_attempted": 1
+    },
+    "draft": "Intel’in son çeyreği, mali yılın 2026-09-26 tarihinde sona eren dönemdir. Satış gelirleri önceki yılın aynı çeyreğine göre arttı; bu gerçekleşmiş bir sonuçtur. [Source 8] [Source 11]\n\nŞirket, 2026’nın dördüncü çeyreği için satış geliri beklentisi açıkladı. Bu ileriye dönük beklenti aralığı, son çeyrekte gerçekleşen satış gelirinden daha düşük bir seviyeye işaret ediyor; beklenti henüz gerçekleşmiş sonuç değildir. [Source 11]",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "answer",
+      "text": "Intel’in son çeyreği, mali yılın {{F2_report_date}} tarihinde sona eren dönemdir. Satış gelirleri önceki yılın aynı çeyreğine göre arttı; bu gerçekleşmiş bir sonuçtur. [Source 8] [Source 11]\n\nŞirket, 2026’nın dördüncü çeyreği için satış geliri beklentisi açıkladı. Bu ileriye dönük beklenti aralığı, son çeyrekte gerçekleşen satış gelirinden daha düşük bir seviyeye işaret ediyor; beklenti henüz gerçekleşmiş sonuç değildir. [Source 11]",
+      "facts": []
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "collection_task": "quarterly_results",
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "INTC"
+        },
+        "result": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        }
+      },
+      {
+        "source_id": 2,
+        "collection_task": "quarterly_results",
+        "tool": "search_company_updates",
+        "arguments": {
+          "form": "10-Q",
+          "limit": 1,
+          "query": "net revenue three months",
+          "ticker": "INTC",
+          "top_k": 3
+        },
+        "result": {
+          "content_limit": {
+            "reason": "total_report_text_limit",
+            "original_text_characters": 2449,
+            "max_source_characters": 6000,
+            "max_total_characters": 12000,
+            "original_result_sha256": "81eb15f0349312f526aeb32cc992ea418f99aa84891c743997568b4bc84b9adc"
+          }
+        },
+        "content_omitted": true
+      },
+      {
+        "source_id": 3,
+        "collection_task": "quarterly_results",
+        "tool": "search_company_updates",
+        "arguments": {
+          "form": "10-Q",
+          "limit": 1,
+          "query": "net revenue three months",
+          "ticker": "INTC",
+          "top_k": 3
+        },
+        "result": {
+          "content_limit": {
+            "reason": "total_report_text_limit",
+            "original_text_characters": 2315,
+            "max_source_characters": 6000,
+            "max_total_characters": 12000,
+            "original_result_sha256": "3fd62ca3311c0ac774e07c697fa02075ac159fd44dcbb2c62a40974d0a5f551d"
+          }
+        },
+        "content_omitted": true
+      },
+      {
+        "source_id": 4,
+        "collection_task": "quarterly_results",
+        "tool": "search_company_updates",
+        "arguments": {
+          "form": "10-Q",
+          "limit": 1,
+          "query": "net revenue three months",
+          "ticker": "INTC",
+          "top_k": 3
+        },
+        "result": {
+          "content_limit": {
+            "reason": "total_report_text_limit",
+            "original_text_characters": 2090,
+            "max_source_characters": 6000,
+            "max_total_characters": 12000,
+            "original_result_sha256": "69417682a61a608609b418821cecc1c846b31e54e57fce1d6cdfbb9bec6b5e7c"
+          }
+        },
+        "content_omitted": true
+      },
+      {
+        "source_id": 5,
+        "collection_task": "management_outlook",
+        "tool": "search_company_updates",
+        "arguments": {
+          "query": "actual results and management outlook",
+          "ticker": "INTC",
+          "top_k": 3,
+          "form": "10-Q",
+          "limit": 1
+        },
+        "result": {
+          "content_limit": {
+            "reason": "total_report_text_limit",
+            "original_text_characters": 2490,
+            "max_source_characters": 6000,
+            "max_total_characters": 12000,
+            "original_result_sha256": "062db5ffc211db600270fb05400d47b0fdc2325fdf114ba1bfd020d495d5feed"
+          }
+        },
+        "content_omitted": true
+      },
+      {
+        "source_id": 6,
+        "collection_task": "management_outlook",
+        "tool": "search_company_updates",
+        "arguments": {
+          "query": "actual results and management outlook",
+          "ticker": "INTC",
+          "top_k": 3,
+          "form": "10-Q",
+          "limit": 1
+        },
+        "result": {
+          "content_limit": {
+            "reason": "total_report_text_limit",
+            "original_text_characters": 2331,
+            "max_source_characters": 6000,
+            "max_total_characters": 12000,
+            "original_result_sha256": "4f261fc382a195f697e0f6123f88e53008d1e162c88c4e0e1525218f5047b168"
+          }
+        },
+        "content_omitted": true
+      },
+      {
+        "source_id": 7,
+        "collection_task": "management_outlook",
+        "tool": "search_company_updates",
+        "arguments": {
+          "query": "actual results and management outlook",
+          "ticker": "INTC",
+          "top_k": 3,
+          "form": "10-Q",
+          "limit": 1
+        },
+        "result": {
+          "content_limit": {
+            "reason": "total_report_text_limit",
+            "original_text_characters": 2397,
+            "max_source_characters": 6000,
+            "max_total_characters": 12000,
+            "original_result_sha256": "3476289425159c09a50e04ade27a52d4c0a1f8a613ed41490ee4039a33d77d10"
+          }
+        },
+        "content_omitted": true
+      },
+      {
+        "source_id": 8,
+        "collection_task": "coverage_repair_1",
+        "tool": "search_company_updates",
+        "arguments": {
+          "form": "10-Q",
+          "limit": 1,
+          "query": "net revenue three months",
+          "ticker": "INTC",
+          "top_k": 3
+        },
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "All Other Financial Performance1\n\t\t\tThree Months Ended\t\tNine Months Ended\n\t($ In Millions)\t\tSep 26, 2026\t\tSep 27, 2025\t\tSep 26, 2026\t\tSep 27, 2025\n\tRevenue\t\t$\t692 \t\t\t$\t993 \t\t\t$\t2,021 \t\t\t$\t2,989 \t\n\tCost of sales and operating expenses\t\t513 \t\t\t893 \t\t\t1,510 \t\t\t2,717 \t\n\tOperating income\t\t$\t179 \t\t\t$\t100 \t\t\t$\t511 \t\t\t$\t272 \t\n\tOperating margin %\t\t26%\t\t10%\t\t25%\t\t9%\n1 Operating segment results include intersegment financial activity; refer to \"Note 2: Operating Segments\" within Notes to Consolidated Condensed Financial Statements for a reconciliation between our operating segment and consolidated financial results for the periods presented.\nOperating Segment Revenue Summary\nQ3 2026 vs. Q3 2025\nAll Other revenue was $692 million, down $301 million from Q3 2025, primarily as a result of the Q3 2025 deconsolidation of Altera. Mobileye revenue was $493 million in Q3 2026, roughly flat with Q3 2025.\nYTD 2026 vs. YTD 2025\nAll Other revenue was $2.0 billion, down $968 million from YTD 2025, primarily as a result of the Q3 2025 deconsolidation of Altera. This decrease was partially offset by higher Mobileye revenue in YTD 2026, which totaled $1.6 billion, up $109 million from YTD 2025, driven by higher demand for Mobileye EyeQ* products.\nSegment Operating Income Summary\nQ3 2026 vs. Q3 2025 and YTD 2026 vs. YTD 2025\nAll Other operating income was $179 million in Q3 2026, up $79 million from Q3 2025, and $511 million in YTD 2026, up $239 million from YTD 2025, driven by higher operating income from our other businesses in Q3 2026 and YTD 2026, partially offset by the absence of Altera operating margin in Q3 2026 and YTD 2026.\n\tMD&A\t\n36\nTable of Contents\n\tConsolidated Condensed Results of Operations\t\n\t\t\tThree Months Ended\t\tNine Months Ended\n\t\t\tSep 26, 2026\t\tSep 27, 2025\t\tSep 26, 2026\t\tSep 27, 2025\n\t(In Millions, Except Per Share Amounts)\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\tNet revenue\t\t$\t16,513 \t\t\t100.0 \t%\t\t$\t13,653 \t\t\t100.0 \t%\t\t$\t46,218 \t\t\t100.0 \t%\t\t$\t39,179 \t\t\t100.0 \t%\n\tCost of sales\t\t9,417 \t\t\t57.0 \t%\t\t8,435 \t\t\t61.8 \t%\t\t27,266 \t\t\t59.0 \t%\t\t25,747 \t\t\t65.7 \t%\n\tGross profit\t\t7,096 \t\t\t43.0 \t%\t\t5,218 \t\t\t38.2 \t%\t\t18,952 \t\t\t41.0 \t%\t\t13,432 \t\t\t34.3 \t%\n\tResearch and development\t\t3,490 \t\t\t21.1 \t%\t\t3,231 \t\t\t23.7 \t%\t\t10,233 \t\t\t22.1 \t%\t\t10,555 \t\t\t26.9 \t%\n\tMarketing, general, and administrative\t\t1,030 \t\t\t6.2 \t%\t\t1,129 \t\t\t8.3 \t%\t\t3,243 \t\t\t7.0 \t%\t\t3,450 \t\t\t8.8 \t%",
+              "score": 6.2208554452648706,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 138892,
+                "end": 141341,
+                "preceding_period_heading": {
+                  "text": "\t\t\tThree Months Ended\t\tNine Months Ended",
+                  "start": 134268,
+                  "end": 134308
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "10-Q",
+            "filings_considered": 1,
+            "documents_loaded": 1,
+            "latest_considered_report_date": "2026-09-26",
+            "latest_considered_filing_date": "2026-10-30",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        }
+      },
+      {
+        "source_id": 9,
+        "collection_task": "coverage_repair_1",
+        "tool": "search_company_updates",
+        "arguments": {
+          "form": "10-Q",
+          "limit": 1,
+          "query": "net revenue three months",
+          "ticker": "INTC",
+          "top_k": 3
+        },
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "Financial Statements\t Notes to Financial Statements\t\n10\nTable of Contents\nNet revenue, cost of sales and operating expenses and operating income (loss) for each period were as follows:\n\t\t\tThree Months Ended\n\t(In Millions)\t\tSep 26, 2026\n\t\t\tIntel Products\t\t\t\t\t\t\t\t\t\t\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\tIntel Foundry\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t8,097 \t\t\t$\t7,318 \t\t\t$\t15,415 \t\t\t$\t6,697 \t\t\t$\t692 \t\t\t$\t— \t\t\t$\t(6,291)\t\t\t$\t16,513 \t\nCost of sales and operating expenses\n\t\t5,812 \t\t\t4,279 \t\t\t10,091 \t\t\t8,550 \t\t\t513 \t\t\t1,058 \t\t\t(6,221)\t\t\t13,991 \t\nOperating income (loss)\n\t\t$\t2,285 \t\t\t$\t3,039 \t\t\t$\t5,324 \t\t\t$\t(1,853)\t\t\t$\t179 \t\t\t$\t(1,058)\t\t\t$\t(70)\t\t\t$\t2,522 \t\n\t\t\tThree Months Ended\n\t(In Millions)\t\tSep 27, 2025\nIntel Products\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\t\nIntel Foundry\n\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t8,535 \t\t\t$\t4,117 \t\t\t$\t12,652 \t\t\t$\t4,235 \t\t\t$\t993 \t\t\t$\t— \t\t\t$\t(4,227)\t\t\t$\t13,653 \t\nCost of sales and operating expenses\n\t\t5,841 \t\t\t3,153 \t\t\t8,994 \t\t\t6,556 \t\t\t893 \t\t\t782 \t\t\t(4,255)\t\t\t12,970 \t\n\tOperating income (loss)\t\t$\t2,694 \t\t\t$\t964 \t\t\t$\t3,658 \t\t\t$\t(2,321)\t\t\t$\t100 \t\t\t$\t(782)\t\t\t$\t28 \t\t\t$\t683 \t\n\t\t\tNine Months Ended\n\t(In Millions)\t\tSep 26, 2026\n\t\t\tIntel Products\t\t\t\t\t\t\t\t\t\t\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\tIntel Foundry\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t24,701 \t\t\t$\t18,632 \t\t\t$\t43,333 \t\t\t$\t17,883 \t\t\t$\t2,021 \t\t\t$\t— \t\t\t$\t(17,019)\t\t\t$\t46,218 \t\nCost of sales and operating expenses\n\t\t17,557 \t\t\t11,577 \t\t\t29,134 \t\t\t24,262 \t\t\t1,510 \t\t\t7,554 \t\t\t(17,424)\t\t\t45,036 \t\nOperating income (loss)\n\t\t$\t7,144 \t\t\t$\t7,055 \t\t\t$\t14,199 \t\t\t$\t(6,379)\t\t\t$\t511 \t\t\t$\t(7,554)\t\t\t$\t405 \t\t\t$\t1,182 \t\n\t\t\tNine Months Ended\n\t(In Millions)\t\tSep 27, 2025\nIntel Products\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\t\nIntel Foundry\n\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t24,035 \t\t\t$\t12,182 \t\t\t$\t36,217 \t\t\t$\t13,319 \t\t\t$\t2,989 \t\t\t$\t— \t\t\t$\t(13,346)\t\t\t$\t39,179 \t\nCost of sales and operating expenses\n\t\t16,927 \t\t\t10,010 \t\t\t26,937 \t\t\t21,128 \t\t\t2,717 \t\t\t4,797 \t\t\t(13,606)\t\t\t41,973 \t\n\tOperating income (loss)\t\t$\t7,108 \t\t\t$\t2,172 \t\t\t$\t9,280 \t\t\t$\t(7,809)\t\t\t$\t272 \t\t\t$\t(4,797)\t\t\t$\t260 \t\t\t$\t(2,794)\t\nCorporate Unallocated Expenses",
+              "score": 5.678593659220147,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 34097,
+                "end": 36412,
+                "preceding_period_heading": {
+                  "text": "\tNine Months Ended\t\t\t\t\t\t\t\t\t\t\t\t",
+                  "start": 23846,
+                  "end": 23876
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "10-Q",
+            "filings_considered": 1,
+            "documents_loaded": 1,
+            "latest_considered_report_date": "2026-09-26",
+            "latest_considered_filing_date": "2026-10-30",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        }
+      },
+      {
+        "source_id": 10,
+        "collection_task": "coverage_repair_1",
+        "tool": "search_company_updates",
+        "arguments": {
+          "form": "10-Q",
+          "limit": 1,
+          "query": "net revenue three months",
+          "ticker": "INTC",
+          "top_k": 3
+        },
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "Gross profit\t\t7,096 \t\t\t43.0 \t%\t\t5,218 \t\t\t38.2 \t%\t\t18,952 \t\t\t41.0 \t%\t\t13,432 \t\t\t34.3 \t%\n\tResearch and development\t\t3,490 \t\t\t21.1 \t%\t\t3,231 \t\t\t23.7 \t%\t\t10,233 \t\t\t22.1 \t%\t\t10,555 \t\t\t26.9 \t%\n\tMarketing, general, and administrative\t\t1,030 \t\t\t6.2 \t%\t\t1,129 \t\t\t8.3 \t%\t\t3,243 \t\t\t7.0 \t%\t\t3,450 \t\t\t8.8 \t%\n\tRestructuring and other charges\t\t54 \t\t\t0.3 \t%\t\t175 \t\t\t1.3 \t%\t\t4,294 \t\t\t9.3 \t%\t\t2,221 \t\t\t5.7 \t%\n\tOperating income (loss)\t\t2,522 \t\t\t15.3 \t%\t\t683 \t\t\t5.0 \t%\t\t1,182 \t\t\t2.6 \t%\t\t(2,794)\t\t\t(7.1)\t%\n\tGains (losses) on equity investments, net\t\t330 \t\t\t2.0 \t%\t\t221 \t\t\t1.6 \t%\t\t219 \t\t\t0.5 \t%\t\t611 \t\t\t1.6 \t%\n\tInterest and other, net\t\t1,130 \t\t\t6.8 \t%\t\t3,670 \t\t\t26.9 \t%\t\t(12,184)\t\t\t(26.4)\t%\t\t3,402 \t\t\t8.7 \t%\n\tIncome (loss) before taxes\t\t3,982 \t\t\t24.1 \t%\t\t4,574 \t\t\t33.5 \t%\t\t(10,783)\t\t\t(23.3)\t%\t\t1,219 \t\t\t3.1 \t%\n\tProvision for (benefit from) taxes\t\t462 \t\t\t2.8 \t%\t\t304 \t\t\t2.2 \t%\t\t826 \t\t\t1.8 \t%\t\t860 \t\t\t2.2 \t%\n\tNet income (loss)\t\t3,520 \t\t\t21.3 \t%\t\t4,270 \t\t\t31.3 \t%\t\t(11,609)\t\t\t(25.1)\t%\t\t359 \t\t\t0.9 \t%\n\tLess: net income (loss) attributable to non-controlling interests\t\t200 \t\t\t1.2 \t%\t\t207 \t\t\t1.5 \t%\t\t(168)\t\t\t(0.4)\t%\t\t35 \t\t\t0.1 \t%\n\tNet income (loss) attributable to Intel\t\t$\t3,320 \t\t\t20.1 \t%\t\t$\t4,063 \t\t\t29.8 \t%\t\t$\t(11,441)\t\t\t(24.8)\t%\t\t$\t324 \t\t\t0.8 \t%\nEarnings (loss) per share attributable to Intel—diluted2\n\t\t$\t0.60 \t\t\t\t\t$\t0.90 \t\t\t\t\t$\t(2.22)\t\t\t\t\t$\t0.07 \t\t\t\n1 Totals may not sum due to rounding.\n2 For the three months ended September 26, 2026 and three and nine months ended September 27, 2025, earnings per share attributable to Intel-diluted has been calculated by adjusting net income attributable to Intel for the gain of $120 million and loss of $2 million, respectively, related to the mark-to-market of that portion of the derivative liability that is attributable to 5 million and 342 thousand, respectively, contingent Escrowed Shares that were included in the weighted average shares of common stock outstanding-diluted during the period.\n\tMD&A\t\n37\nTable of Contents\nConsolidated Revenue\nConsolidated Revenue Walk $B1\n1 Excludes intersegment revenue; totals may not sum due to rounding.\nQ3 2026 vs. Q3 2025",
+              "score": 5.612485522378239,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 141047,
+                "end": 143137,
+                "preceding_period_heading": {
+                  "text": "\t\t\tThree Months Ended\t\tNine Months Ended",
+                  "start": 140601,
+                  "end": 140641
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "10-Q",
+            "filings_considered": 1,
+            "documents_loaded": 1,
+            "latest_considered_report_date": "2026-09-26",
+            "latest_considered_filing_date": "2026-10-30",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        }
+      },
+      {
+        "source_id": 11,
+        "collection_task": "coverage_repair_1",
+        "tool": "search_company_updates",
+        "arguments": {
+          "query": "revenue earnings results",
+          "ticker": "INTC",
+          "top_k": 3,
+          "form": "8-K",
+          "limit": 3
+        },
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "EX-99.1\n2\nq326earningsrelease.htm\nEX-99.1\nExhibit 99.1\nIntel Corporation\n2200 Mission College Blvd.\nSanta Clara, CA 95054-1549\nNews Release\nIntel Reports Third-Quarter 2026 Financial Results\nNews Summary\n▪Third-quarter revenue was $16.5 billion, up 21% year-over-year (YoY).\n▪Third-quarter earnings per share (EPS) attributable to Intel was $0.60; non-GAAP EPS attributable to Intel was $0.52.\n▪Forecasting fourth-quarter 2026 revenue of $15.0 billion to $16.0 billion; forecasting fourth-quarter EPS attributable to Intel of $0.10 and non-GAAP EPS attributable to Intel of $0.25.\nSANTA CLARA, Calif., October 29, 2026 – Intel Corporation today reported third-quarter 2026 financial results.\n“Our Q3 results demonstrate improving execution, meaningful progress expanding supply and continued advancement of our process technology,” said Lip-Bu Tan, Intel CEO. “Despite near-term headwinds across the PC industry, demand for our CPUs remains robust, reinforcing our confidence in the long-term growth opportunities for our business. Our immediate priority is to unlock additional supply to meet extraordinary demand for our Xeon family, while strengthening our product portfolio and roadmap. We are moving with urgency and focus to capitalize on these opportunities to deliver sustainable growth and long-term shareholder value.”\n“We delivered another solid quarter. Revenue, gross margin and earnings per share exceeded guidance, including our strongest data center revenue growth in 15 years,” said David Zinsner, Intel CFO. “Looking ahead, we see the PC slowdown continuing at least through the first half of next year, but we remain optimistic about the opportunities across our broader portfolio, and we will continue making disciplined investments in capacity and working capital to increase supply and support future growth.”\nQ3 2026 Financial Results\n\t\tGAAP\t\tNon-GAAP\n\t\tQ3 2026\tQ3 2025\tvs. Q3 2025\t\tQ3 2026\tQ3 2025\tvs. Q3 2025\n\tRevenue ($B)\t$16.5\t$13.7\tup 21%\t\t\t\t\n\tGross margin\t43.0%\t38.2%\tup 4.8 ppts\t\t44.1%\t40.0%\tup 4.1 ppts\n\tR&D and MG&A ($B)\t$4.5\t$4.4\tup 4%\t\t$4.1\t$3.9\tup 3%\n\tOperating margin\t15.3%\t5.0%\tup 10.3 ppts\t\t19.6%\t11.2%\tup 8.4 ppts\n\tTax rate\t11.6%\t6.6%\tup 5 ppts\t\t11.0%\t12.0%\tdown 1 ppt\n\tNet income attributable to Intel ($B)\t$3.3\t$4.1\tdown 18%\t\t$2.8\t$1.0\tup 169%\n\tEarnings per share attributable to Intel—diluted\t$0.60\t$0.90\tdown 33%\t\t$0.52\t$0.23\tup 126%\nFull reconciliations between GAAP and non-GAAP measures are provided below.",
+              "score": 4.570870370749115,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "8-K",
+                "accession_number": "0000050863-26-000188",
+                "report_date": "2026-10-29",
+                "filed": "2026-10-29",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:46:35.314389+00:00",
+                "sha256": "ca5f2e73c5b64d6c72692e5e974b18c456200247d7f9b76a3790c0688f0feb97",
+                "start": 0,
+                "end": 2452
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "8-K",
+            "filings_considered": 3,
+            "documents_loaded": 7,
+            "latest_considered_report_date": "2026-10-29",
+            "latest_considered_filing_date": "2026-10-29",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000188",
+                "report_date": "2026-10-29",
+                "filed": "2026-10-29"
+              },
+              {
+                "accession_number": "0001193125-26-346806",
+                "report_date": "2026-08-10",
+                "filed": "2026-08-12"
+              },
+              {
+                "accession_number": "0000050863-26-000155",
+                "report_date": "2026-07-23",
+                "filed": "2026-07-23"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        }
+      },
+      {
+        "source_id": 12,
+        "collection_task": "coverage_repair_1",
+        "tool": "search_company_updates",
+        "arguments": {
+          "query": "revenue earnings results",
+          "ticker": "INTC",
+          "top_k": 3,
+          "form": "8-K",
+          "limit": 3
+        },
+        "result": {
+          "content_limit": {
+            "reason": "total_report_text_limit",
+            "original_text_characters": 2328,
+            "max_source_characters": 6000,
+            "max_total_characters": 12000,
+            "original_result_sha256": "f50961103a4832828a0c1da25abf463fa4f9657cddd10614075d53a51ba229ac"
+          }
+        },
+        "content_omitted": true
+      },
+      {
+        "source_id": 13,
+        "collection_task": "coverage_repair_1",
+        "tool": "search_company_updates",
+        "arguments": {
+          "query": "revenue earnings results",
+          "ticker": "INTC",
+          "top_k": 3,
+          "form": "8-K",
+          "limit": 3
+        },
+        "result": {
+          "content_limit": {
+            "reason": "total_report_text_limit",
+            "original_text_characters": 1831,
+            "max_source_characters": 6000,
+            "max_total_characters": 12000,
+            "original_result_sha256": "5c355d7344edfb79c8ba8ca7473284e016901364b9dda05ec7711e1f4e9bbbe6"
+          }
+        },
+        "content_omitted": true
+      },
+      {
+        "source_id": 14,
+        "collection_task": "coverage_repair_1",
+        "tool": "search_company_updates",
+        "arguments": {
+          "query": "revenue outlook guidance",
+          "ticker": "INTC",
+          "top_k": 3,
+          "form": "8-K",
+          "limit": 3
+        },
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "▪Intel expanded Bowers campus capacity, increasing Intel Mask Operations capability to support current and future leading-edge process technology development and manufacturing.\nCulture & Leadership\n▪Intel strengthened its leadership team with the appointments of Alex Katouzian to lead the Client Computing and Physical AI Group, Pushkar Ranade as chief technology officer, Seok-Hee Lee to lead advanced packaging, and Aparna Bawa to lead Intel’s global legal, ethics, compliance, people, and culture organization. These appointments further align Intel’s product, technology, manufacturing, and culture organizations with the company’s innovation and execution priorities.\n▪Intel and Google Cloud expanded their multi-year strategic collaboration to scale AI capabilities across Intel’s workforce and strengthen existing workflows as part of Intel’s AI-powered transformation.\nBusiness Outlook\nIntel's guidance for the third quarter of 2026 includes both GAAP and non-GAAP estimates as follows:\n\tQ3 2026\t\tGAAP\t\tNon-GAAP\n\tRevenue\t\t\n$15.8-16.8 billion\n\tGross margin\t\t41.0%\t\t42.0%\n\tTax Rate\t\t1%\t\t11%\n\tEarnings (Loss) Per Share Attributable to Intel—Diluted\t\t$0.31\t\t$0.38\nReconciliations between GAAP and non-GAAP financial measures are included below. Actual results may differ materially from Intel’s business outlook as a result of, among other things, the factors described under “Forward-Looking Statements” below. The gross margin and EPS outlooks are based on the midpoint of the revenue range.\nEarnings Webcast\nIntel will hold a public webcast at 2 p.m. PT today to discuss the results for its second quarter. The live public webcast can be accessed on Intel's Investor Relations website at www.intc.com. The corresponding earnings presentation and webcast replay will also be available on the site.\nForward-Looking Statements",
+              "score": 5.562172219622877,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "8-K",
+                "accession_number": "0000050863-26-000155",
+                "report_date": "2026-07-23",
+                "filed": "2026-07-23",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000155/q226earningsrelease.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:46:37.447620+00:00",
+                "sha256": "33058ab1082887d9f9472a6d82b83583232ef8c1466d26242a949db12cd769b0",
+                "start": 6054,
+                "end": 7885
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "8-K",
+            "filings_considered": 3,
+            "documents_loaded": 7,
+            "latest_considered_report_date": "2026-10-29",
+            "latest_considered_filing_date": "2026-10-29",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000188",
+                "report_date": "2026-10-29",
+                "filed": "2026-10-29"
+              },
+              {
+                "accession_number": "0001193125-26-346806",
+                "report_date": "2026-08-10",
+                "filed": "2026-08-12"
+              },
+              {
+                "accession_number": "0000050863-26-000155",
+                "report_date": "2026-07-23",
+                "filed": "2026-07-23"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        }
+      },
+      {
+        "source_id": 15,
+        "collection_task": "coverage_repair_1",
+        "tool": "search_company_updates",
+        "arguments": {
+          "query": "revenue outlook guidance",
+          "ticker": "INTC",
+          "top_k": 3,
+          "form": "8-K",
+          "limit": 3
+        },
+        "result": {
+          "content_limit": {
+            "reason": "total_report_text_limit",
+            "original_text_characters": 2467,
+            "max_source_characters": 6000,
+            "max_total_characters": 12000,
+            "original_result_sha256": "5831e6f993137d7f21aa608a5edfdd0e6cf1808df7c7a3823395c695a360601f"
+          }
+        },
+        "content_omitted": true
+      },
+      {
+        "source_id": 16,
+        "collection_task": "coverage_repair_1",
+        "tool": "search_company_updates",
+        "arguments": {
+          "query": "revenue outlook guidance",
+          "ticker": "INTC",
+          "top_k": 3,
+          "form": "8-K",
+          "limit": 3
+        },
+        "result": {
+          "content_limit": {
+            "reason": "total_report_text_limit",
+            "original_text_characters": 2477,
+            "max_source_characters": 6000,
+            "max_total_characters": 12000,
+            "original_result_sha256": "da765d9e7d682c1123e248eca8cb163c8436b77b8a172a4f0d08b340f479f7ff"
+          }
+        },
+        "content_omitted": true
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "filing",
+        "plan": [
+          {
+            "id": "quarterly_results",
+            "agent": "filing_rag",
+            "instruction": "For Intel, retrieve latest quarterly revenue using search_company_updates form=10-Q limit=1 and compare to prior-year same quarter using compute_metrics with years=1.",
+            "filing_scope": "recent",
+            "years": 1,
+            "fiscal_year": null
+          },
+          {
+            "id": "management_outlook",
+            "agent": "filing_rag",
+            "instruction": "For Intel, extract actual results and management outlook from the latest quarterly earnings call transcript or 10-Q filing using search_company_updates form=10-Q limit=1.",
+            "filing_scope": "recent",
+            "years": 1,
+            "fiscal_year": null
+          }
+        ],
+        "elapsed_seconds": 4.30124595900088,
+        "input_tokens": 1225,
+        "output_tokens": 165,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0
+      },
+      {
+        "type": "agent",
+        "task_id": "quarterly_results",
+        "agent": "filing_rag",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "quarterly_results",
+        "agent": "filing_rag",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 1224,
+        "output_tokens": 25,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_s4map608",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "INTC"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 0.9720423329999903
+      },
+      {
+        "type": "tool",
+        "task_id": "quarterly_results",
+        "agent": "filing_rag",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "INTC"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        },
+        "elapsed_seconds": 0.014394541001820471
+      },
+      {
+        "type": "model",
+        "task_id": "quarterly_results",
+        "agent": "filing_rag",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 1292,
+        "output_tokens": 52,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_7vfrqpkp",
+            "function": {
+              "index": 0,
+              "name": "search_company_updates",
+              "arguments": {
+                "form": "10-Q",
+                "limit": 1,
+                "query": "net revenue three months",
+                "ticker": "INTC",
+                "top_k": 3
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.5139047499978915
+      },
+      {
+        "type": "tool",
+        "task_id": "quarterly_results",
+        "agent": "filing_rag",
+        "step": 2,
+        "call_id": 2,
+        "name": "search_company_updates",
+        "arguments": {
+          "form": "10-Q",
+          "limit": 1,
+          "query": "net revenue three months",
+          "ticker": "INTC",
+          "top_k": 3
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "All Other Financial Performance1\n\t\t\tThree Months Ended\t\tNine Months Ended\n\t($ In Millions)\t\tSep 26, 2026\t\tSep 27, 2025\t\tSep 26, 2026\t\tSep 27, 2025\n\tRevenue\t\t$\t692 \t\t\t$\t993 \t\t\t$\t2,021 \t\t\t$\t2,989 \t\n\tCost of sales and operating expenses\t\t513 \t\t\t893 \t\t\t1,510 \t\t\t2,717 \t\n\tOperating income\t\t$\t179 \t\t\t$\t100 \t\t\t$\t511 \t\t\t$\t272 \t\n\tOperating margin %\t\t26%\t\t10%\t\t25%\t\t9%\n1 Operating segment results include intersegment financial activity; refer to \"Note 2: Operating Segments\" within Notes to Consolidated Condensed Financial Statements for a reconciliation between our operating segment and consolidated financial results for the periods presented.\nOperating Segment Revenue Summary\nQ3 2026 vs. Q3 2025\nAll Other revenue was $692 million, down $301 million from Q3 2025, primarily as a result of the Q3 2025 deconsolidation of Altera. Mobileye revenue was $493 million in Q3 2026, roughly flat with Q3 2025.\nYTD 2026 vs. YTD 2025\nAll Other revenue was $2.0 billion, down $968 million from YTD 2025, primarily as a result of the Q3 2025 deconsolidation of Altera. This decrease was partially offset by higher Mobileye revenue in YTD 2026, which totaled $1.6 billion, up $109 million from YTD 2025, driven by higher demand for Mobileye EyeQ* products.\nSegment Operating Income Summary\nQ3 2026 vs. Q3 2025 and YTD 2026 vs. YTD 2025\nAll Other operating income was $179 million in Q3 2026, up $79 million from Q3 2025, and $511 million in YTD 2026, up $239 million from YTD 2025, driven by higher operating income from our other businesses in Q3 2026 and YTD 2026, partially offset by the absence of Altera operating margin in Q3 2026 and YTD 2026.\n\tMD&A\t\n36\nTable of Contents\n\tConsolidated Condensed Results of Operations\t\n\t\t\tThree Months Ended\t\tNine Months Ended\n\t\t\tSep 26, 2026\t\tSep 27, 2025\t\tSep 26, 2026\t\tSep 27, 2025\n\t(In Millions, Except Per Share Amounts)\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\tNet revenue\t\t$\t16,513 \t\t\t100.0 \t%\t\t$\t13,653 \t\t\t100.0 \t%\t\t$\t46,218 \t\t\t100.0 \t%\t\t$\t39,179 \t\t\t100.0 \t%\n\tCost of sales\t\t9,417 \t\t\t57.0 \t%\t\t8,435 \t\t\t61.8 \t%\t\t27,266 \t\t\t59.0 \t%\t\t25,747 \t\t\t65.7 \t%\n\tGross profit\t\t7,096 \t\t\t43.0 \t%\t\t5,218 \t\t\t38.2 \t%\t\t18,952 \t\t\t41.0 \t%\t\t13,432 \t\t\t34.3 \t%\n\tResearch and development\t\t3,490 \t\t\t21.1 \t%\t\t3,231 \t\t\t23.7 \t%\t\t10,233 \t\t\t22.1 \t%\t\t10,555 \t\t\t26.9 \t%\n\tMarketing, general, and administrative\t\t1,030 \t\t\t6.2 \t%\t\t1,129 \t\t\t8.3 \t%\t\t3,243 \t\t\t7.0 \t%\t\t3,450 \t\t\t8.8 \t%",
+              "score": 6.2208554452648706,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 138892,
+                "end": 141341,
+                "preceding_period_heading": {
+                  "text": "\t\t\tThree Months Ended\t\tNine Months Ended",
+                  "start": 134268,
+                  "end": 134308
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            },
+            {
+              "text": "Financial Statements\t Notes to Financial Statements\t\n10\nTable of Contents\nNet revenue, cost of sales and operating expenses and operating income (loss) for each period were as follows:\n\t\t\tThree Months Ended\n\t(In Millions)\t\tSep 26, 2026\n\t\t\tIntel Products\t\t\t\t\t\t\t\t\t\t\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\tIntel Foundry\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t8,097 \t\t\t$\t7,318 \t\t\t$\t15,415 \t\t\t$\t6,697 \t\t\t$\t692 \t\t\t$\t— \t\t\t$\t(6,291)\t\t\t$\t16,513 \t\nCost of sales and operating expenses\n\t\t5,812 \t\t\t4,279 \t\t\t10,091 \t\t\t8,550 \t\t\t513 \t\t\t1,058 \t\t\t(6,221)\t\t\t13,991 \t\nOperating income (loss)\n\t\t$\t2,285 \t\t\t$\t3,039 \t\t\t$\t5,324 \t\t\t$\t(1,853)\t\t\t$\t179 \t\t\t$\t(1,058)\t\t\t$\t(70)\t\t\t$\t2,522 \t\n\t\t\tThree Months Ended\n\t(In Millions)\t\tSep 27, 2025\nIntel Products\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\t\nIntel Foundry\n\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t8,535 \t\t\t$\t4,117 \t\t\t$\t12,652 \t\t\t$\t4,235 \t\t\t$\t993 \t\t\t$\t— \t\t\t$\t(4,227)\t\t\t$\t13,653 \t\nCost of sales and operating expenses\n\t\t5,841 \t\t\t3,153 \t\t\t8,994 \t\t\t6,556 \t\t\t893 \t\t\t782 \t\t\t(4,255)\t\t\t12,970 \t\n\tOperating income (loss)\t\t$\t2,694 \t\t\t$\t964 \t\t\t$\t3,658 \t\t\t$\t(2,321)\t\t\t$\t100 \t\t\t$\t(782)\t\t\t$\t28 \t\t\t$\t683 \t\n\t\t\tNine Months Ended\n\t(In Millions)\t\tSep 26, 2026\n\t\t\tIntel Products\t\t\t\t\t\t\t\t\t\t\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\tIntel Foundry\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t24,701 \t\t\t$\t18,632 \t\t\t$\t43,333 \t\t\t$\t17,883 \t\t\t$\t2,021 \t\t\t$\t— \t\t\t$\t(17,019)\t\t\t$\t46,218 \t\nCost of sales and operating expenses\n\t\t17,557 \t\t\t11,577 \t\t\t29,134 \t\t\t24,262 \t\t\t1,510 \t\t\t7,554 \t\t\t(17,424)\t\t\t45,036 \t\nOperating income (loss)\n\t\t$\t7,144 \t\t\t$\t7,055 \t\t\t$\t14,199 \t\t\t$\t(6,379)\t\t\t$\t511 \t\t\t$\t(7,554)\t\t\t$\t405 \t\t\t$\t1,182 \t\n\t\t\tNine Months Ended\n\t(In Millions)\t\tSep 27, 2025\nIntel Products\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\t\nIntel Foundry\n\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t24,035 \t\t\t$\t12,182 \t\t\t$\t36,217 \t\t\t$\t13,319 \t\t\t$\t2,989 \t\t\t$\t— \t\t\t$\t(13,346)\t\t\t$\t39,179 \t\nCost of sales and operating expenses\n\t\t16,927 \t\t\t10,010 \t\t\t26,937 \t\t\t21,128 \t\t\t2,717 \t\t\t4,797 \t\t\t(13,606)\t\t\t41,973 \t\n\tOperating income (loss)\t\t$\t7,108 \t\t\t$\t2,172 \t\t\t$\t9,280 \t\t\t$\t(7,809)\t\t\t$\t272 \t\t\t$\t(4,797)\t\t\t$\t260 \t\t\t$\t(2,794)\t\nCorporate Unallocated Expenses",
+              "score": 5.678593659220147,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 34097,
+                "end": 36412,
+                "preceding_period_heading": {
+                  "text": "\tNine Months Ended\t\t\t\t\t\t\t\t\t\t\t\t",
+                  "start": 23846,
+                  "end": 23876
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            },
+            {
+              "text": "Gross profit\t\t7,096 \t\t\t43.0 \t%\t\t5,218 \t\t\t38.2 \t%\t\t18,952 \t\t\t41.0 \t%\t\t13,432 \t\t\t34.3 \t%\n\tResearch and development\t\t3,490 \t\t\t21.1 \t%\t\t3,231 \t\t\t23.7 \t%\t\t10,233 \t\t\t22.1 \t%\t\t10,555 \t\t\t26.9 \t%\n\tMarketing, general, and administrative\t\t1,030 \t\t\t6.2 \t%\t\t1,129 \t\t\t8.3 \t%\t\t3,243 \t\t\t7.0 \t%\t\t3,450 \t\t\t8.8 \t%\n\tRestructuring and other charges\t\t54 \t\t\t0.3 \t%\t\t175 \t\t\t1.3 \t%\t\t4,294 \t\t\t9.3 \t%\t\t2,221 \t\t\t5.7 \t%\n\tOperating income (loss)\t\t2,522 \t\t\t15.3 \t%\t\t683 \t\t\t5.0 \t%\t\t1,182 \t\t\t2.6 \t%\t\t(2,794)\t\t\t(7.1)\t%\n\tGains (losses) on equity investments, net\t\t330 \t\t\t2.0 \t%\t\t221 \t\t\t1.6 \t%\t\t219 \t\t\t0.5 \t%\t\t611 \t\t\t1.6 \t%\n\tInterest and other, net\t\t1,130 \t\t\t6.8 \t%\t\t3,670 \t\t\t26.9 \t%\t\t(12,184)\t\t\t(26.4)\t%\t\t3,402 \t\t\t8.7 \t%\n\tIncome (loss) before taxes\t\t3,982 \t\t\t24.1 \t%\t\t4,574 \t\t\t33.5 \t%\t\t(10,783)\t\t\t(23.3)\t%\t\t1,219 \t\t\t3.1 \t%\n\tProvision for (benefit from) taxes\t\t462 \t\t\t2.8 \t%\t\t304 \t\t\t2.2 \t%\t\t826 \t\t\t1.8 \t%\t\t860 \t\t\t2.2 \t%\n\tNet income (loss)\t\t3,520 \t\t\t21.3 \t%\t\t4,270 \t\t\t31.3 \t%\t\t(11,609)\t\t\t(25.1)\t%\t\t359 \t\t\t0.9 \t%\n\tLess: net income (loss) attributable to non-controlling interests\t\t200 \t\t\t1.2 \t%\t\t207 \t\t\t1.5 \t%\t\t(168)\t\t\t(0.4)\t%\t\t35 \t\t\t0.1 \t%\n\tNet income (loss) attributable to Intel\t\t$\t3,320 \t\t\t20.1 \t%\t\t$\t4,063 \t\t\t29.8 \t%\t\t$\t(11,441)\t\t\t(24.8)\t%\t\t$\t324 \t\t\t0.8 \t%\nEarnings (loss) per share attributable to Intel—diluted2\n\t\t$\t0.60 \t\t\t\t\t$\t0.90 \t\t\t\t\t$\t(2.22)\t\t\t\t\t$\t0.07 \t\t\t\n1 Totals may not sum due to rounding.\n2 For the three months ended September 26, 2026 and three and nine months ended September 27, 2025, earnings per share attributable to Intel-diluted has been calculated by adjusting net income attributable to Intel for the gain of $120 million and loss of $2 million, respectively, related to the mark-to-market of that portion of the derivative liability that is attributable to 5 million and 342 thousand, respectively, contingent Escrowed Shares that were included in the weighted average shares of common stock outstanding-diluted during the period.\n\tMD&A\t\n37\nTable of Contents\nConsolidated Revenue\nConsolidated Revenue Walk $B1\n1 Excludes intersegment revenue; totals may not sum due to rounding.\nQ3 2026 vs. Q3 2025",
+              "score": 5.612485522378239,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 141047,
+                "end": 143137,
+                "preceding_period_heading": {
+                  "text": "\t\t\tThree Months Ended\t\tNine Months Ended",
+                  "start": 140601,
+                  "end": 140641
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "10-Q",
+            "filings_considered": 1,
+            "documents_loaded": 1,
+            "latest_considered_report_date": "2026-09-26",
+            "latest_considered_filing_date": "2026-10-30",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        },
+        "elapsed_seconds": 0.40064916600022116
+      },
+      {
+        "type": "model",
+        "task_id": "quarterly_results",
+        "agent": "filing_rag",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 6529,
+        "output_tokens": 43,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_i4lhiibf",
+            "function": {
+              "index": 0,
+              "name": "search_company_updates",
+              "arguments": {
+                "query": "net revenue three months",
+                "ticker": "INTC",
+                "top_k": 3,
+                "form": "10-Q",
+                "limit": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 18.728362458001357
+      },
+      {
+        "type": "agent",
+        "task_id": "quarterly_results",
+        "agent": "filing_rag",
+        "status": "completed",
+        "stop_reason": "repeated_requests",
+        "elapsed_seconds": 21.629663708001317
+      },
+      {
+        "type": "agent",
+        "task_id": "management_outlook",
+        "agent": "filing_rag",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "management_outlook",
+        "agent": "filing_rag",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 1225,
+        "output_tokens": 53,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_n4gs1n8g",
+            "function": {
+              "index": 0,
+              "name": "search_company_updates",
+              "arguments": {
+                "query": "actual results and management outlook",
+                "ticker": "INTC",
+                "top_k": 3,
+                "form": "10-Q",
+                "limit": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.5427765840031498
+      },
+      {
+        "type": "tool",
+        "task_id": "management_outlook",
+        "agent": "filing_rag",
+        "step": 1,
+        "call_id": 1,
+        "name": "search_company_updates",
+        "arguments": {
+          "query": "actual results and management outlook",
+          "ticker": "INTC",
+          "top_k": 3,
+          "form": "10-Q",
+          "limit": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "▪supply expectations, including regarding constraints, limitations, pricing, and industry shortages;\n▪plans and goals related to Intel's foundry business, including with respect to anticipated customers, future manufacturing capacity and service, technology and IP offerings;\n▪expected timing and impact of acquisitions, divestitures and other significant transactions;\n▪expected completion and impacts of restructuring activities and cost-saving or efficiency initiatives;\n▪social and environmental performance goals, measures, strategies and results;\n▪our anticipated growth, future market share, customer demand and trends in our businesses and operations;\n▪projected growth and trends in markets relevant to our businesses;\n▪anticipated trends and impacts related to industry component, substrate and foundry capacity utilization, shortages and constraints;\n▪expectations regarding government funding, incentives, policies and priorities;\n▪technology trends and developments, including with respect to AI;\n▪macroeconomic conditions;\n▪geopolitical tensions and conflicts, including with respect to international trade policies in areas such as tariffs and export controls, and their potential impact on our business;\n▪tax- and accounting-related expectations;\n▪expectations regarding our relationships with certain sanctioned parties; and\n▪other characterizations of future events or circumstances.\nSuch statements involve many risks and uncertainties that could cause our actual results to differ materially from those expressed or implied, including those associated with:\n▪the high level of competition and rapid technological change in our industry;\n▪the significant, long-term and inherently risky investments we are making in R&D and manufacturing facilities that may not realize a favorable return;\n▪the complexities and uncertainties in developing and implementing new semiconductor products and manufacturing process technologies;\n▪our pursuit of Intel 14A and other next-generation leading-edge process technologies, our investments in manufacturing expansion projects to manufacture products using such technologies and our efforts to secure product design wins with and demand commitments from potential significant external customers for the manufacture of products using such technologies;\n▪alternative financing arrangements and pursuit of government grants;\n▪the U.S. government's acquisition of significant equity interests in us;\n▪changes in product demand and margins;",
+              "score": 5.413647673719121,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 6245,
+                "end": 8735
+              }
+            },
+            {
+              "text": "Notes to Consolidated Condensed Financial Statements\n\tNote 1 : \tBasis of Presentation\nWe prepared our interim Consolidated Condensed Financial Statements that accompany these notes in conformity with U.S. GAAP, consistent in all material respects with those applied in our 2025 Form 10-K.\nWe have made estimates and judgments affecting the amounts reported in our Consolidated Condensed Financial Statements and the accompanying notes. The actual results that we experience may differ materially from our estimates. The interim financial information is unaudited, and reflects all normal adjustments that are, in our opinion, necessary to provide a fair statement of results for the interim periods presented. This report should be read in conjunction with our 2025 Form 10-K where we include additional information on our accounting policies and the methods and assumptions used in our estimates.\nWe made certain reclassifications within our Consolidated Condensed Financial Statements, and, in certain cases, adjusted prior periods to conform to the current period presentation. These reclassifications had no impact on previously reported net income (loss), cash flows or stockholders' equity.\n\tNote 2 : \tOperating Segments\nWe organize and manage our business as follows:\n▪Intel Products:\n▪Client Computing and Physical AI Group (CCPG), formerly the Client Computing Group (CCG)\n▪Data Center and AI (DCAI)\n▪Intel Foundry\n▪All Other\n▪Mobileye\n▪Other\nCCPG, DCAI and Intel Foundry are our reportable operating segments. In addition to these reportable segments, we present an \"All Other\" category, which is not a reportable segment. When we enter into federal contracts, the contracts are aligned to the sponsoring operating segment.\nThe accounting policies applied to our segments follow those used by Intel as a whole. A summary of the basis on which we report our operating segment revenues and operating income (loss) is as follows:\nIntel Products: CCPG and DCAI\n▪Segment revenue: consists of revenues from external customers. Our Intel Products operating segments represent most of our consolidated revenue and are derived from our principal products that incorporate various components and technologies, including a microprocessor and chipset, a stand-alone SoC, or a multichip package, which are based on Intel architecture.",
+              "score": 5.277381457985987,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 26059,
+                "end": 28390,
+                "preceding_period_heading": {
+                  "text": "\tNine Months Ended\t\t\t\t\t\t\t\t\t\t\t\t",
+                  "start": 23846,
+                  "end": 23876
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            },
+            {
+              "text": "MD&A\t\tManagement's Discussion and Analysis\n\tMentee Robotics\t\tMentee Robotics Ltd.\n\tMG&A\t\tMarketing, general, and administrative\n\tMobileye\t\tMobileye Global Inc.\n\tNAND\t\tNAND flash memory\n\tFinancial Statements\t Notes to Financial Statements\t\n29\nTable of Contents\n\tNIC\t\tNetwork interface controller\nOFAC\nOffice of Foreign Assets Control\n\tPC\t\tPersonal computer\n\tR&D\t\tResearch and development\n\tRSU \t\tRestricted stock unit\n\tSCIP\t\tSemiconductor Co-Investment Program\n\tSEC\t\tU.S. Securities and Exchange Commission\n\tSecure Enclave\t\tSecure Enclave program under the CHIPS Act\n\tSemiconductor Process Technology\t\tProcesses and technologies applied in the production of semiconductor logic chips\n\tSK hynix\t\tSK hynix Inc.\nSLP\n\t\tSilver Lake Partners\n\tSoC\t\tSystem on a chip, which integrates most of the components of a computer or other electronic system into a single silicon chip. We offer a range of SoC products across many market segments for a variety of applications\n\tU.S.\t\tUnited States\n\tU.S. GAAP\t\tU.S. Generally Accepted Accounting Principles\n\tVIE\t\tVariable interest entity\n\tFinancial Statements\t Notes to Financial Statements\t\n30\nTable of Contents\n\tManagement's Discussion and Analysis\t\nOverview\nThis report should be read in conjunction with our 2025 Form 10-K where we include additional information on our business, operating segments, risk factors, critical accounting estimates, policies, methods and assumptions used in our estimates, among other important information.\nSignificant Events and Trends Impacting Results\nThe following discussion highlights significant events, key developments and trends that we believe meaningfully impacted our consolidated financial results and financial position during Q3 2026 or that we believe may continue to influence our future operating results and financial position, as well as specific matters that occurred in 2025 that impact the comparability of our results.\nCommon Stock Issuance\nOn August 12, 2026, we issued approximately 242 million shares of our common stock through a public offering. We intend to use the net proceeds of $22.6 billion for general corporate purposes, including capital expenditures and working capital. Refer to \"Note 4: Earnings (Loss) Per Share and Stockholders' Equity\" within the Notes to Consolidated Condensed Financial Statements for additional information.\nFuture Node Development and Manufacturing Expansion Projects",
+              "score": 4.801532424468327,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 113564,
+                "end": 115961,
+                "preceding_period_heading": {
+                  "text": "\t\t\t\t\tThree Months Ended\t\tNine Months Ended",
+                  "start": 87733,
+                  "end": 87775
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "10-Q",
+            "filings_considered": 1,
+            "documents_loaded": 1,
+            "latest_considered_report_date": "2026-09-26",
+            "latest_considered_filing_date": "2026-10-30",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        },
+        "elapsed_seconds": 0.3612147499989078
+      },
+      {
+        "type": "model",
+        "task_id": "management_outlook",
+        "agent": "filing_rag",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 4048,
+        "output_tokens": 481,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 21.9392112500027
+      },
+      {
+        "type": "agent",
+        "task_id": "management_outlook",
+        "agent": "filing_rag",
+        "status": "completed",
+        "elapsed_seconds": 23.843403083999874
+      },
+      {
+        "type": "model",
+        "phase": "coverage",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 8485,
+        "output_tokens": 381,
+        "total_tokens": 8866,
+        "cached_input_tokens": 8482,
+        "reasoning_tokens": 209,
+        "response_id": "resp_0f50094ffc6ba833016b02ac69fd1087d286ac4314fcc0cb24",
+        "estimated_cost_usd": 0.00027562,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"complete\":false,\"gaps\":[\"Intel’in son şirket açıklamasındaki gelir beklentileri ve bunların gerçekleşen son çeyrek gelirleriyle karşılaştırması için kanıt yok; toplanan 10-Q alıntıları beklenti vermiyor.\"],\"tasks\":[{\"id\":\"intel_latest_expectations\",\"agent\":\"filing_rag\",\"instruction\":\"INTC’nin en son şirket açıklamasını bul: 10-Q’daki gerçekleşen 2026 Q3 net gelirini (16,513 milyon $, önceki yıl 13,653 milyon $) ayrı tutarak, açıklamadaki gelir beklentilerini ve ilgili dönemini getir. Beklentileri gerçekleşmiş sonuçlarla karıştırma.\",\"filing_scope\":\"recent\",\"years\":1,\"fiscal_year\":null}]}",
+        "elapsed_seconds": 3.563413167001272
+      },
+      {
+        "type": "agent",
+        "task_id": "coverage_repair_1",
+        "agent": "filing_rag",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "coverage_repair_1",
+        "agent": "filing_rag",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 1288,
+        "output_tokens": 52,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_9xf0s37z",
+            "function": {
+              "index": 0,
+              "name": "search_company_updates",
+              "arguments": {
+                "form": "10-Q",
+                "limit": 1,
+                "query": "net revenue three months",
+                "ticker": "INTC",
+                "top_k": 3
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.8424883750012668
+      },
+      {
+        "type": "tool",
+        "task_id": "coverage_repair_1",
+        "agent": "filing_rag",
+        "step": 1,
+        "call_id": 1,
+        "name": "search_company_updates",
+        "arguments": {
+          "form": "10-Q",
+          "limit": 1,
+          "query": "net revenue three months",
+          "ticker": "INTC",
+          "top_k": 3
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "All Other Financial Performance1\n\t\t\tThree Months Ended\t\tNine Months Ended\n\t($ In Millions)\t\tSep 26, 2026\t\tSep 27, 2025\t\tSep 26, 2026\t\tSep 27, 2025\n\tRevenue\t\t$\t692 \t\t\t$\t993 \t\t\t$\t2,021 \t\t\t$\t2,989 \t\n\tCost of sales and operating expenses\t\t513 \t\t\t893 \t\t\t1,510 \t\t\t2,717 \t\n\tOperating income\t\t$\t179 \t\t\t$\t100 \t\t\t$\t511 \t\t\t$\t272 \t\n\tOperating margin %\t\t26%\t\t10%\t\t25%\t\t9%\n1 Operating segment results include intersegment financial activity; refer to \"Note 2: Operating Segments\" within Notes to Consolidated Condensed Financial Statements for a reconciliation between our operating segment and consolidated financial results for the periods presented.\nOperating Segment Revenue Summary\nQ3 2026 vs. Q3 2025\nAll Other revenue was $692 million, down $301 million from Q3 2025, primarily as a result of the Q3 2025 deconsolidation of Altera. Mobileye revenue was $493 million in Q3 2026, roughly flat with Q3 2025.\nYTD 2026 vs. YTD 2025\nAll Other revenue was $2.0 billion, down $968 million from YTD 2025, primarily as a result of the Q3 2025 deconsolidation of Altera. This decrease was partially offset by higher Mobileye revenue in YTD 2026, which totaled $1.6 billion, up $109 million from YTD 2025, driven by higher demand for Mobileye EyeQ* products.\nSegment Operating Income Summary\nQ3 2026 vs. Q3 2025 and YTD 2026 vs. YTD 2025\nAll Other operating income was $179 million in Q3 2026, up $79 million from Q3 2025, and $511 million in YTD 2026, up $239 million from YTD 2025, driven by higher operating income from our other businesses in Q3 2026 and YTD 2026, partially offset by the absence of Altera operating margin in Q3 2026 and YTD 2026.\n\tMD&A\t\n36\nTable of Contents\n\tConsolidated Condensed Results of Operations\t\n\t\t\tThree Months Ended\t\tNine Months Ended\n\t\t\tSep 26, 2026\t\tSep 27, 2025\t\tSep 26, 2026\t\tSep 27, 2025\n\t(In Millions, Except Per Share Amounts)\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\tNet revenue\t\t$\t16,513 \t\t\t100.0 \t%\t\t$\t13,653 \t\t\t100.0 \t%\t\t$\t46,218 \t\t\t100.0 \t%\t\t$\t39,179 \t\t\t100.0 \t%\n\tCost of sales\t\t9,417 \t\t\t57.0 \t%\t\t8,435 \t\t\t61.8 \t%\t\t27,266 \t\t\t59.0 \t%\t\t25,747 \t\t\t65.7 \t%\n\tGross profit\t\t7,096 \t\t\t43.0 \t%\t\t5,218 \t\t\t38.2 \t%\t\t18,952 \t\t\t41.0 \t%\t\t13,432 \t\t\t34.3 \t%\n\tResearch and development\t\t3,490 \t\t\t21.1 \t%\t\t3,231 \t\t\t23.7 \t%\t\t10,233 \t\t\t22.1 \t%\t\t10,555 \t\t\t26.9 \t%\n\tMarketing, general, and administrative\t\t1,030 \t\t\t6.2 \t%\t\t1,129 \t\t\t8.3 \t%\t\t3,243 \t\t\t7.0 \t%\t\t3,450 \t\t\t8.8 \t%",
+              "score": 6.2208554452648706,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 138892,
+                "end": 141341,
+                "preceding_period_heading": {
+                  "text": "\t\t\tThree Months Ended\t\tNine Months Ended",
+                  "start": 134268,
+                  "end": 134308
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            },
+            {
+              "text": "Financial Statements\t Notes to Financial Statements\t\n10\nTable of Contents\nNet revenue, cost of sales and operating expenses and operating income (loss) for each period were as follows:\n\t\t\tThree Months Ended\n\t(In Millions)\t\tSep 26, 2026\n\t\t\tIntel Products\t\t\t\t\t\t\t\t\t\t\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\tIntel Foundry\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t8,097 \t\t\t$\t7,318 \t\t\t$\t15,415 \t\t\t$\t6,697 \t\t\t$\t692 \t\t\t$\t— \t\t\t$\t(6,291)\t\t\t$\t16,513 \t\nCost of sales and operating expenses\n\t\t5,812 \t\t\t4,279 \t\t\t10,091 \t\t\t8,550 \t\t\t513 \t\t\t1,058 \t\t\t(6,221)\t\t\t13,991 \t\nOperating income (loss)\n\t\t$\t2,285 \t\t\t$\t3,039 \t\t\t$\t5,324 \t\t\t$\t(1,853)\t\t\t$\t179 \t\t\t$\t(1,058)\t\t\t$\t(70)\t\t\t$\t2,522 \t\n\t\t\tThree Months Ended\n\t(In Millions)\t\tSep 27, 2025\nIntel Products\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\t\nIntel Foundry\n\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t8,535 \t\t\t$\t4,117 \t\t\t$\t12,652 \t\t\t$\t4,235 \t\t\t$\t993 \t\t\t$\t— \t\t\t$\t(4,227)\t\t\t$\t13,653 \t\nCost of sales and operating expenses\n\t\t5,841 \t\t\t3,153 \t\t\t8,994 \t\t\t6,556 \t\t\t893 \t\t\t782 \t\t\t(4,255)\t\t\t12,970 \t\n\tOperating income (loss)\t\t$\t2,694 \t\t\t$\t964 \t\t\t$\t3,658 \t\t\t$\t(2,321)\t\t\t$\t100 \t\t\t$\t(782)\t\t\t$\t28 \t\t\t$\t683 \t\n\t\t\tNine Months Ended\n\t(In Millions)\t\tSep 26, 2026\n\t\t\tIntel Products\t\t\t\t\t\t\t\t\t\t\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\tIntel Foundry\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t24,701 \t\t\t$\t18,632 \t\t\t$\t43,333 \t\t\t$\t17,883 \t\t\t$\t2,021 \t\t\t$\t— \t\t\t$\t(17,019)\t\t\t$\t46,218 \t\nCost of sales and operating expenses\n\t\t17,557 \t\t\t11,577 \t\t\t29,134 \t\t\t24,262 \t\t\t1,510 \t\t\t7,554 \t\t\t(17,424)\t\t\t45,036 \t\nOperating income (loss)\n\t\t$\t7,144 \t\t\t$\t7,055 \t\t\t$\t14,199 \t\t\t$\t(6,379)\t\t\t$\t511 \t\t\t$\t(7,554)\t\t\t$\t405 \t\t\t$\t1,182 \t\n\t\t\tNine Months Ended\n\t(In Millions)\t\tSep 27, 2025\nIntel Products\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\t\nIntel Foundry\n\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t24,035 \t\t\t$\t12,182 \t\t\t$\t36,217 \t\t\t$\t13,319 \t\t\t$\t2,989 \t\t\t$\t— \t\t\t$\t(13,346)\t\t\t$\t39,179 \t\nCost of sales and operating expenses\n\t\t16,927 \t\t\t10,010 \t\t\t26,937 \t\t\t21,128 \t\t\t2,717 \t\t\t4,797 \t\t\t(13,606)\t\t\t41,973 \t\n\tOperating income (loss)\t\t$\t7,108 \t\t\t$\t2,172 \t\t\t$\t9,280 \t\t\t$\t(7,809)\t\t\t$\t272 \t\t\t$\t(4,797)\t\t\t$\t260 \t\t\t$\t(2,794)\t\nCorporate Unallocated Expenses",
+              "score": 5.678593659220147,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 34097,
+                "end": 36412,
+                "preceding_period_heading": {
+                  "text": "\tNine Months Ended\t\t\t\t\t\t\t\t\t\t\t\t",
+                  "start": 23846,
+                  "end": 23876
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            },
+            {
+              "text": "Gross profit\t\t7,096 \t\t\t43.0 \t%\t\t5,218 \t\t\t38.2 \t%\t\t18,952 \t\t\t41.0 \t%\t\t13,432 \t\t\t34.3 \t%\n\tResearch and development\t\t3,490 \t\t\t21.1 \t%\t\t3,231 \t\t\t23.7 \t%\t\t10,233 \t\t\t22.1 \t%\t\t10,555 \t\t\t26.9 \t%\n\tMarketing, general, and administrative\t\t1,030 \t\t\t6.2 \t%\t\t1,129 \t\t\t8.3 \t%\t\t3,243 \t\t\t7.0 \t%\t\t3,450 \t\t\t8.8 \t%\n\tRestructuring and other charges\t\t54 \t\t\t0.3 \t%\t\t175 \t\t\t1.3 \t%\t\t4,294 \t\t\t9.3 \t%\t\t2,221 \t\t\t5.7 \t%\n\tOperating income (loss)\t\t2,522 \t\t\t15.3 \t%\t\t683 \t\t\t5.0 \t%\t\t1,182 \t\t\t2.6 \t%\t\t(2,794)\t\t\t(7.1)\t%\n\tGains (losses) on equity investments, net\t\t330 \t\t\t2.0 \t%\t\t221 \t\t\t1.6 \t%\t\t219 \t\t\t0.5 \t%\t\t611 \t\t\t1.6 \t%\n\tInterest and other, net\t\t1,130 \t\t\t6.8 \t%\t\t3,670 \t\t\t26.9 \t%\t\t(12,184)\t\t\t(26.4)\t%\t\t3,402 \t\t\t8.7 \t%\n\tIncome (loss) before taxes\t\t3,982 \t\t\t24.1 \t%\t\t4,574 \t\t\t33.5 \t%\t\t(10,783)\t\t\t(23.3)\t%\t\t1,219 \t\t\t3.1 \t%\n\tProvision for (benefit from) taxes\t\t462 \t\t\t2.8 \t%\t\t304 \t\t\t2.2 \t%\t\t826 \t\t\t1.8 \t%\t\t860 \t\t\t2.2 \t%\n\tNet income (loss)\t\t3,520 \t\t\t21.3 \t%\t\t4,270 \t\t\t31.3 \t%\t\t(11,609)\t\t\t(25.1)\t%\t\t359 \t\t\t0.9 \t%\n\tLess: net income (loss) attributable to non-controlling interests\t\t200 \t\t\t1.2 \t%\t\t207 \t\t\t1.5 \t%\t\t(168)\t\t\t(0.4)\t%\t\t35 \t\t\t0.1 \t%\n\tNet income (loss) attributable to Intel\t\t$\t3,320 \t\t\t20.1 \t%\t\t$\t4,063 \t\t\t29.8 \t%\t\t$\t(11,441)\t\t\t(24.8)\t%\t\t$\t324 \t\t\t0.8 \t%\nEarnings (loss) per share attributable to Intel—diluted2\n\t\t$\t0.60 \t\t\t\t\t$\t0.90 \t\t\t\t\t$\t(2.22)\t\t\t\t\t$\t0.07 \t\t\t\n1 Totals may not sum due to rounding.\n2 For the three months ended September 26, 2026 and three and nine months ended September 27, 2025, earnings per share attributable to Intel-diluted has been calculated by adjusting net income attributable to Intel for the gain of $120 million and loss of $2 million, respectively, related to the mark-to-market of that portion of the derivative liability that is attributable to 5 million and 342 thousand, respectively, contingent Escrowed Shares that were included in the weighted average shares of common stock outstanding-diluted during the period.\n\tMD&A\t\n37\nTable of Contents\nConsolidated Revenue\nConsolidated Revenue Walk $B1\n1 Excludes intersegment revenue; totals may not sum due to rounding.\nQ3 2026 vs. Q3 2025",
+              "score": 5.612485522378239,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 141047,
+                "end": 143137,
+                "preceding_period_heading": {
+                  "text": "\t\t\tThree Months Ended\t\tNine Months Ended",
+                  "start": 140601,
+                  "end": 140641
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "10-Q",
+            "filings_considered": 1,
+            "documents_loaded": 1,
+            "latest_considered_report_date": "2026-09-26",
+            "latest_considered_filing_date": "2026-10-30",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        },
+        "elapsed_seconds": 0.4188350000003993
+      },
+      {
+        "type": "model",
+        "task_id": "coverage_repair_1",
+        "agent": "filing_rag",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 6525,
+        "output_tokens": 42,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_lxrsjrw0",
+            "function": {
+              "index": 0,
+              "name": "search_company_updates",
+              "arguments": {
+                "query": "revenue earnings results",
+                "ticker": "INTC",
+                "top_k": 3,
+                "form": "8-K",
+                "limit": 3
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 19.46677666600226
+      },
+      {
+        "type": "tool",
+        "task_id": "coverage_repair_1",
+        "agent": "filing_rag",
+        "step": 2,
+        "call_id": 2,
+        "name": "search_company_updates",
+        "arguments": {
+          "query": "revenue earnings results",
+          "ticker": "INTC",
+          "top_k": 3,
+          "form": "8-K",
+          "limit": 3
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "EX-99.1\n2\nq326earningsrelease.htm\nEX-99.1\nExhibit 99.1\nIntel Corporation\n2200 Mission College Blvd.\nSanta Clara, CA 95054-1549\nNews Release\nIntel Reports Third-Quarter 2026 Financial Results\nNews Summary\n▪Third-quarter revenue was $16.5 billion, up 21% year-over-year (YoY).\n▪Third-quarter earnings per share (EPS) attributable to Intel was $0.60; non-GAAP EPS attributable to Intel was $0.52.\n▪Forecasting fourth-quarter 2026 revenue of $15.0 billion to $16.0 billion; forecasting fourth-quarter EPS attributable to Intel of $0.10 and non-GAAP EPS attributable to Intel of $0.25.\nSANTA CLARA, Calif., October 29, 2026 – Intel Corporation today reported third-quarter 2026 financial results.\n“Our Q3 results demonstrate improving execution, meaningful progress expanding supply and continued advancement of our process technology,” said Lip-Bu Tan, Intel CEO. “Despite near-term headwinds across the PC industry, demand for our CPUs remains robust, reinforcing our confidence in the long-term growth opportunities for our business. Our immediate priority is to unlock additional supply to meet extraordinary demand for our Xeon family, while strengthening our product portfolio and roadmap. We are moving with urgency and focus to capitalize on these opportunities to deliver sustainable growth and long-term shareholder value.”\n“We delivered another solid quarter. Revenue, gross margin and earnings per share exceeded guidance, including our strongest data center revenue growth in 15 years,” said David Zinsner, Intel CFO. “Looking ahead, we see the PC slowdown continuing at least through the first half of next year, but we remain optimistic about the opportunities across our broader portfolio, and we will continue making disciplined investments in capacity and working capital to increase supply and support future growth.”\nQ3 2026 Financial Results\n\t\tGAAP\t\tNon-GAAP\n\t\tQ3 2026\tQ3 2025\tvs. Q3 2025\t\tQ3 2026\tQ3 2025\tvs. Q3 2025\n\tRevenue ($B)\t$16.5\t$13.7\tup 21%\t\t\t\t\n\tGross margin\t43.0%\t38.2%\tup 4.8 ppts\t\t44.1%\t40.0%\tup 4.1 ppts\n\tR&D and MG&A ($B)\t$4.5\t$4.4\tup 4%\t\t$4.1\t$3.9\tup 3%\n\tOperating margin\t15.3%\t5.0%\tup 10.3 ppts\t\t19.6%\t11.2%\tup 8.4 ppts\n\tTax rate\t11.6%\t6.6%\tup 5 ppts\t\t11.0%\t12.0%\tdown 1 ppt\n\tNet income attributable to Intel ($B)\t$3.3\t$4.1\tdown 18%\t\t$2.8\t$1.0\tup 169%\n\tEarnings per share attributable to Intel—diluted\t$0.60\t$0.90\tdown 33%\t\t$0.52\t$0.23\tup 126%\nFull reconciliations between GAAP and non-GAAP measures are provided below.",
+              "score": 4.570870370749115,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "8-K",
+                "accession_number": "0000050863-26-000188",
+                "report_date": "2026-10-29",
+                "filed": "2026-10-29",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:46:35.314389+00:00",
+                "sha256": "ca5f2e73c5b64d6c72692e5e974b18c456200247d7f9b76a3790c0688f0feb97",
+                "start": 0,
+                "end": 2452
+              }
+            },
+            {
+              "text": "EX-99.1\n2\nq226earningsrelease.htm\nEX-99.1\nExhibit 99.1\nIntel Corporation\n2200 Mission College Blvd.\nSanta Clara, CA 95054-1549\nNews Release\nIntel Reports Second-Quarter 2026 Financial Results\nNews Summary\n▪Second-quarter revenue was $16.1 billion, up 25% year-over-year (YoY).\n▪Second-quarter earnings (loss) per share (EPS) attributable to Intel was $(2.16); non-GAAP EPS attributable to Intel was $0.42.\n▪Forecasting third-quarter 2026 revenue of $15.8 billion to $16.8 billion; expecting third-quarter EPS attributable to Intel of $0.31 and non-GAAP EPS attributable to Intel of $0.38.\nSANTA CLARA, Calif., July 23, 2026 – Intel Corporation today reported second-quarter 2026 financial results.\n“AI is driving unprecedented demand for compute, and as we continue to execute, Intel is well-positioned to capture sustainable growth across our CPU franchise, ASICs, advanced packaging and vast wafer foundry network,” said Lip-Bu Tan, Intel CEO. “Our Q2 results represent our strongest revenue growth in more than fifteen years, enabled by greater speed, accountability, and customer focus.”\n“We delivered a strong second quarter, exceeding our financial guidance on robust demand and improved execution, including volume upside driven by higher factory yields and improved cycle times,” said Dave Zinsner, Intel CFO. “AI-driven compute continues to strengthen, and to support expected growth this year and next across products and foundry, we are meaningfully increasing our investments in equipment, clean room space, and substrates.”\nQ2 2026 Financial Results\n\t\tGAAP\t\tNon-GAAP\n\t \tQ2 2026\tQ2 2025\tvs. Q2 2025\t\tQ2 2026\tQ2 2025\tvs. Q2 2025\n\tRevenue ($B)\t$16.1\t$12.9\tup 25%\t\t\t\t\n\tGross margin\t40.4%\t27.5%\tup 12.9 ppts\t\t41.8%\t29.7%\tup 12.1 ppts\n\tR&D and MG&A ($B)\t$4.5\t$4.8\tdown 6%\t\t$4.0\t$4.3\tdown 8%\n\tOperating margin (loss)\t11.1%\t(24.7)%\tup 35.8 ppts\t\t17.2%\t(3.9)%\tup 21.1 ppts\n\tTax rate\t(0.3)%\t(9.2)%\tup 8.9 ppts\t\t11.0%\t12.0%\tdown 1 ppt\n\tNet income (loss) attributable to Intel ($B)\t$(11.0)\t$(2.9)\tn/m*\t\t$2.2\t$(0.4)\tn/m*\n\tEarnings (loss) per share attributable to Intel—diluted\t$(2.16)\t$(0.67)\tn/m*\t\t$0.42\t$(0.10)\tn/m*\nFull reconciliations between GAAP and non-GAAP measures are provided below.\n*Not meaningful\nIn the second quarter, the company generated $7.0 billion in cash from operations.\nIntel/Page 2\nBusiness Unit Summary",
+              "score": 4.2859215633346155,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "8-K",
+                "accession_number": "0000050863-26-000155",
+                "report_date": "2026-07-23",
+                "filed": "2026-07-23",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000155/q226earningsrelease.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:46:37.447620+00:00",
+                "sha256": "33058ab1082887d9f9472a6d82b83583232ef8c1466d26242a949db12cd769b0",
+                "start": 0,
+                "end": 2328
+              }
+            },
+            {
+              "text": "▪Intel expanded Bowers campus capacity, increasing Intel Mask Operations capability to support current and future leading-edge process technology development and manufacturing.\nCulture & Leadership\n▪Intel strengthened its leadership team with the appointments of Alex Katouzian to lead the Client Computing and Physical AI Group, Pushkar Ranade as chief technology officer, Seok-Hee Lee to lead advanced packaging, and Aparna Bawa to lead Intel’s global legal, ethics, compliance, people, and culture organization. These appointments further align Intel’s product, technology, manufacturing, and culture organizations with the company’s innovation and execution priorities.\n▪Intel and Google Cloud expanded their multi-year strategic collaboration to scale AI capabilities across Intel’s workforce and strengthen existing workflows as part of Intel’s AI-powered transformation.\nBusiness Outlook\nIntel's guidance for the third quarter of 2026 includes both GAAP and non-GAAP estimates as follows:\n\tQ3 2026\t\tGAAP\t\tNon-GAAP\n\tRevenue\t\t\n$15.8-16.8 billion\n\tGross margin\t\t41.0%\t\t42.0%\n\tTax Rate\t\t1%\t\t11%\n\tEarnings (Loss) Per Share Attributable to Intel—Diluted\t\t$0.31\t\t$0.38\nReconciliations between GAAP and non-GAAP financial measures are included below. Actual results may differ materially from Intel’s business outlook as a result of, among other things, the factors described under “Forward-Looking Statements” below. The gross margin and EPS outlooks are based on the midpoint of the revenue range.\nEarnings Webcast\nIntel will hold a public webcast at 2 p.m. PT today to discuss the results for its second quarter. The live public webcast can be accessed on Intel's Investor Relations website at www.intc.com. The corresponding earnings presentation and webcast replay will also be available on the site.\nForward-Looking Statements",
+              "score": 4.190221718220339,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "8-K",
+                "accession_number": "0000050863-26-000155",
+                "report_date": "2026-07-23",
+                "filed": "2026-07-23",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000155/q226earningsrelease.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:46:37.447620+00:00",
+                "sha256": "33058ab1082887d9f9472a6d82b83583232ef8c1466d26242a949db12cd769b0",
+                "start": 6054,
+                "end": 7885
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "8-K",
+            "filings_considered": 3,
+            "documents_loaded": 7,
+            "latest_considered_report_date": "2026-10-29",
+            "latest_considered_filing_date": "2026-10-29",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000188",
+                "report_date": "2026-10-29",
+                "filed": "2026-10-29"
+              },
+              {
+                "accession_number": "0001193125-26-346806",
+                "report_date": "2026-08-10",
+                "filed": "2026-08-12"
+              },
+              {
+                "accession_number": "0000050863-26-000155",
+                "report_date": "2026-07-23",
+                "filed": "2026-07-23"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        },
+        "elapsed_seconds": 0.2833671670014155
+      },
+      {
+        "type": "model",
+        "task_id": "coverage_repair_1",
+        "agent": "filing_rag",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 9907,
+        "output_tokens": 42,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_8k8b6xgr",
+            "function": {
+              "index": 0,
+              "name": "search_company_updates",
+              "arguments": {
+                "query": "revenue outlook guidance",
+                "ticker": "INTC",
+                "top_k": 3,
+                "form": "8-K",
+                "limit": 3
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 15.837519958000485
+      },
+      {
+        "type": "tool",
+        "task_id": "coverage_repair_1",
+        "agent": "filing_rag",
+        "step": 3,
+        "call_id": 3,
+        "name": "search_company_updates",
+        "arguments": {
+          "query": "revenue outlook guidance",
+          "ticker": "INTC",
+          "top_k": 3,
+          "form": "8-K",
+          "limit": 3
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "▪Intel expanded Bowers campus capacity, increasing Intel Mask Operations capability to support current and future leading-edge process technology development and manufacturing.\nCulture & Leadership\n▪Intel strengthened its leadership team with the appointments of Alex Katouzian to lead the Client Computing and Physical AI Group, Pushkar Ranade as chief technology officer, Seok-Hee Lee to lead advanced packaging, and Aparna Bawa to lead Intel’s global legal, ethics, compliance, people, and culture organization. These appointments further align Intel’s product, technology, manufacturing, and culture organizations with the company’s innovation and execution priorities.\n▪Intel and Google Cloud expanded their multi-year strategic collaboration to scale AI capabilities across Intel’s workforce and strengthen existing workflows as part of Intel’s AI-powered transformation.\nBusiness Outlook\nIntel's guidance for the third quarter of 2026 includes both GAAP and non-GAAP estimates as follows:\n\tQ3 2026\t\tGAAP\t\tNon-GAAP\n\tRevenue\t\t\n$15.8-16.8 billion\n\tGross margin\t\t41.0%\t\t42.0%\n\tTax Rate\t\t1%\t\t11%\n\tEarnings (Loss) Per Share Attributable to Intel—Diluted\t\t$0.31\t\t$0.38\nReconciliations between GAAP and non-GAAP financial measures are included below. Actual results may differ materially from Intel’s business outlook as a result of, among other things, the factors described under “Forward-Looking Statements” below. The gross margin and EPS outlooks are based on the midpoint of the revenue range.\nEarnings Webcast\nIntel will hold a public webcast at 2 p.m. PT today to discuss the results for its second quarter. The live public webcast can be accessed on Intel's Investor Relations website at www.intc.com. The corresponding earnings presentation and webcast replay will also be available on the site.\nForward-Looking Statements",
+              "score": 5.562172219622877,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "8-K",
+                "accession_number": "0000050863-26-000155",
+                "report_date": "2026-07-23",
+                "filed": "2026-07-23",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000155/q226earningsrelease.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:46:37.447620+00:00",
+                "sha256": "33058ab1082887d9f9472a6d82b83583232ef8c1466d26242a949db12cd769b0",
+                "start": 6054,
+                "end": 7885
+              }
+            },
+            {
+              "text": "•Showcased three architectures for Agentic AI and Enterprise-scale workloads at Hot Chips 2026: next-generation Intel Xeon code-named Diamond Rapids for high-performance orchestration, Intel GPU D-series for efficient inference, and Intel® Core™ Series 3 for intelligent client and edge computing. \n•Announced the first Googlebook devices powered by Intel Core Ultra Series 3 processors with premium devices from Acer, ASUS and Lenovo, bringing together Google's next-generation computing and Intel's flagship client platform. \n•Collaborated with AMD to bring x86 CPU optimizations for PyTorch together in oneDNN, simplifying AI development and deployment across Intel and AMD CPUs.\n•Announced a collaboration with SAP to bridge business IT systems and the operational technology that controls physical equipment and processes through Physical AI.\nFoundry Momentum \n•Released Intel 14A 0.9 process design kit (PDK) in October.\n•Announced a collaboration with Lens Technology, combining Intel's advanced packaging expertise with Lens Technology's precision glass processing capabilities to enable advanced semiconductor packaging for the AI era. \n•Completed the RAMP-C program, enabling validated prototypes, ecosystem readiness and early customer engagement to accelerate momentum for Secure Enclave.\n•Announced a collaboration with ASML to accelerate industry readiness for High-NA EUV manufacturing. \nIntel/Page 3\n•Collaborated with Lam Research and Applied Materials on new facilities to expand capacity and enable joint R&D in process technology and manufacturing equipment.\nCulture & Leadership \n•Appointed Dean Jarnac as executive vice president and chief sales officer, leading Intel's global sales organization and strengthening customer relationships and go-to-market execution across the company's product portfolio. \nBusiness Outlook\nIntel's guidance for the fourth quarter of 2026 includes both GAAP and non-GAAP estimates as follows:\n\tQ4 2026\t\tGAAP\t\tNon-GAAP\n\tRevenue ($B)\t\t\n$15.0 - $16.0\n\tGross margin\t\t37.1%\t\t38.0%\n\tTax Rate\t\t31%\t\t11%\n\tEarnings (Loss) Per Share Attributable to Intel—Diluted\t\t$0.10\t\t$0.25\nReconciliations between GAAP and non-GAAP financial measures are included below. Actual results may differ materially from Intel’s business outlook as a result of, among other things, the factors described under “Forward-Looking Statements” below. The gross margin and EPS outlooks are based on the midpoint of the revenue range.\nEarnings Webcast",
+              "score": 5.055847791171723,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "8-K",
+                "accession_number": "0000050863-26-000188",
+                "report_date": "2026-10-29",
+                "filed": "2026-10-29",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:46:35.314389+00:00",
+                "sha256": "ca5f2e73c5b64d6c72692e5e974b18c456200247d7f9b76a3790c0688f0feb97",
+                "start": 4555,
+                "end": 7022
+              }
+            },
+            {
+              "text": "Forward-Looking Statements\nThis release contains forward-looking statements that involve a number of risks and uncertainties. Words such as \"accelerate\", \"achieve\", \"aim\", \"ambitions\", \"anticipate\", \"believe\", \"committed\", \"continue\", \"could\", \"designed\", \"estimate\", \"expect\", \"forecast\", \"future\", \"goals\", \"grow\", \"guidance\", \"intend\", \"likely\", \"may\", \"might\", \"milestones\", \"next-generation\", \"objective\", \"on track\", \"opportunity\", \"outlook\", \"pending\", \"plan\", \"position\", \"possible\", \"potential\", \"predict\", \"progress\", \"ramp\", \"roadmap\", \"seek\", \"should\", \"strive\", \"targets\", \"to be\", \"upcoming\", \"will\", \"would\" and variations of such words and similar expressions are intended to identify such forward-looking statements, which may include statements regarding:\n▪our business plans and strategy and anticipated benefits therefrom;\n▪projections of our future financial performance, including future revenue, gross profits, capital expenditures and cash flows;\n▪projected costs and yield trends;\n▪future cash requirements, the availability, uses, sufficiency and cost of capital resources, and sources of funding, including for future capital and R&D investments and for returns to stockholders, and credit ratings expectations;\n▪future products, services and technologies, and the expected goals, timeline, ramps, progress, availability, production, regulation and benefits of such products, services and technologies, including future process nodes and packaging technologies, product roadmaps, schedules, future product architectures, expectations regarding process performance, per-watt parity and metrics, and expectations regarding product and process competitiveness;\nIntel/Page 4\n▪internal and external manufacturing plans, including future internal manufacturing volumes, manufacturing expansion plans and the financing therefor, and external foundry usage;\n▪future production capacity and product supply;\n▪supply expectations, including regarding constraints, limitations, pricing, and industry shortages;\n▪plans and goals related to Intel's foundry business, including with respect to anticipated customers, future manufacturing capacity and service, technology and IP offerings;\n▪expected timing and impact of acquisitions, divestitures and other significant transactions;\n▪expected completion and impacts of restructuring activities and cost-saving or efficiency initiatives;\n▪social and environmental performance goals, measures, strategies and results;",
+              "score": 4.38338946641124,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "8-K",
+                "accession_number": "0000050863-26-000155",
+                "report_date": "2026-07-23",
+                "filed": "2026-07-23",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000155/q226earningsrelease.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:46:37.447620+00:00",
+                "sha256": "33058ab1082887d9f9472a6d82b83583232ef8c1466d26242a949db12cd769b0",
+                "start": 7859,
+                "end": 10336
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "8-K",
+            "filings_considered": 3,
+            "documents_loaded": 7,
+            "latest_considered_report_date": "2026-10-29",
+            "latest_considered_filing_date": "2026-10-29",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000188",
+                "report_date": "2026-10-29",
+                "filed": "2026-10-29"
+              },
+              {
+                "accession_number": "0001193125-26-346806",
+                "report_date": "2026-08-10",
+                "filed": "2026-08-12"
+              },
+              {
+                "accession_number": "0000050863-26-000155",
+                "report_date": "2026-07-23",
+                "filed": "2026-07-23"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        },
+        "elapsed_seconds": 0.31821745799970813
+      },
+      {
+        "type": "model",
+        "task_id": "coverage_repair_1",
+        "agent": "filing_rag",
+        "step": 4,
+        "max_output_tokens": 1024,
+        "input_tokens": 12720,
+        "output_tokens": 604,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 36.70192579099967
+      },
+      {
+        "type": "agent",
+        "task_id": "coverage_repair_1",
+        "agent": "filing_rag",
+        "status": "completed",
+        "elapsed_seconds": 74.86961037500078
+      },
+      {
+        "type": "model",
+        "phase": "coverage",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 10454,
+        "output_tokens": 366,
+        "total_tokens": 10820,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 342,
+        "response_id": "resp_0b1b004034fd4f66016b02acb8702087d29ea404529e00df2f",
+        "estimated_cost_usd": 0.0012284000000000002,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"complete\":true,\"gaps\":[],\"tasks\":[]}",
+        "elapsed_seconds": 3.0349333329977526
+      },
+      {
+        "type": "coverage",
+        "complete": true,
+        "gaps": [],
+        "status": "complete",
+        "repair_tasks_attempted": 1
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 10499,
+        "output_tokens": 512,
+        "total_tokens": 11011,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 281,
+        "response_id": "resp_013cb3b173a5bf80016b02acbbdc7887d2b68ac0a5bcbec085",
+        "estimated_cost_usd": 0.0013059,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"Intel’in 26 Eylül 2026’da sona eren son çeyreğinde satış gelirleri, bir önceki yılın aynı çeyreğine göre arttı; şirketin sonuç açıklamasında yıllık artış %21 olarak verildi. Bu, gerçekleşmiş çeyrek sonucudur. [Source 8] [Source 11]\\n\\nSon şirket açıklaması ayrıca 2026’nın dördüncü çeyreği için satış geliri beklentisi yayımladı; bu, henüz gerçekleşmiş bir sonuç değil, ileriye dönük yönetim beklentisidir. Beklenti aralığı, gerçekleşen üçüncü çeyrek satış gelirinin altında olduğuna işaret ediyor. Dolayısıyla karşılaştırma, üçüncü çeyrekte yıllık büyüme ile sonraki çeyrek için öngörülen daha düşük gelir seviyesi arasındadır; beklentinin gerçekleşip gerçekleşmediği mevcut kanıttan anlaşılamaz. [Source 11]\",\"facts\":[]}",
+        "elapsed_seconds": 6.0482838329990045
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"%21\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values."
+        },
+        "elapsed_seconds": 6.052053999999771
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "reserved_content_repair": false,
+        "issues": [
+          "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"%21\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 10913,
+        "output_tokens": 328,
+        "total_tokens": 11241,
+        "cached_input_tokens": 10496,
+        "reasoning_tokens": 175,
+        "response_id": "resp_02cd8613be0b245c016b02acc1814087d2b971aabe5e7ec7bf",
+        "estimated_cost_usd": 0.00031066000000000004,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"Intel’in son çeyreği, mali yılın {{F2_report_date}} tarihinde sona eren dönemdir. Satış gelirleri önceki yılın aynı çeyreğine göre arttı; bu gerçekleşmiş bir sonuçtur. [Source 8] [Source 11]\\n\\nŞirket, 2026’nın dördüncü çeyreği için satış geliri beklentisi açıkladı. Bu ileriye dönük beklenti aralığı, son çeyrekte gerçekleşen satış gelirinden daha düşük bir seviyeye işaret ediyor; beklenti henüz gerçekleşmiş sonuç değildir. [Source 11]\",\"facts\":[]}",
+        "elapsed_seconds": 3.81300258400006
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 3.8160638340013975
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 4022,
+        "output_tokens": 215,
+        "total_tokens": 4237,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 183,
+        "response_id": "resp_0fe0f78d751a795b016b02acc548f487d2b1afe7a6f775d574",
+        "estimated_cost_usd": 0.0005097000000000001,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"issues\":[],\"evidence_supported\":true,\"language_matches\":true,\"answer_complete\":true}",
+        "elapsed_seconds": 2.6991385000001173
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 2.7024332500004675
+      }
+    ],
+    "elapsed_seconds": 144.7775486670016,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "think": false,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      },
+      "roles": {
+        "writer": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "max_output_tokens": 8192
+        },
+        "critic": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "max_output_tokens": 8192
+        }
+      }
+    },
+    "dataset_sha256": "bd92ab8e7a2fe8d8ec936e6388b2443818c4fecd1deecf34299c5a37eba356d0",
+    "recorded_at": "2026-11-22T08:50:15.788032+00:00",
+    "transport": "mcp"
+  }
+]
