@@ -1,0 +1,47 @@
+{
+  "cases": [
+    {
+      "id": "acceptance_microsoft",
+      "before_seconds": 222.1997712500015,
+      "after_seconds": 111.21313541699965,
+      "before_tool_calls": 22,
+      "after_tool_calls": 7,
+      "before_repairs": 1,
+      "after_repairs": 0,
+      "verification": "passed",
+      "coverage": "partial",
+      "estimated_cost_usd": 0.00412352,
+      "manual_status": "incomplete",
+      "notes": [
+        "Fed and BLS missing; coverage identified gaps but returned no repair tasks.",
+        "Annual report and macro topics were combined into annual-only task; speedup is not a complete success."
+      ]
+    },
+    {
+      "id": "acceptance_intel",
+      "before_seconds": 264.3903948750012,
+      "after_seconds": 109.69811291599945,
+      "before_tool_calls": 19,
+      "after_tool_calls": 5,
+      "before_repairs": 2,
+      "after_repairs": 0,
+      "verification": "passed",
+      "coverage": "complete",
+      "estimated_cost_usd": 0.00459146,
+      "manual_status": "needs_wording_correction",
+      "notes": [
+        "Annual and quarterly evidence and outlook were collected without repairs.",
+        "Net revenue rendered as net gelir; use sales/revenue terminology to avoid confusion with net income.",
+        "Revenue decline versus change in growth rate remains imprecisely worded."
+      ]
+    }
+  ],
+  "unit_tests_passed": 547,
+  "initial_microsoft_attempt": "Planner route label mismatch caused error before retrieval; corrected by deriving research route label from valid task agents. First attempt retained in orchestration_retest_20261122T080623Z.json.",
+  "comparability": "Single runs, not controlled benchmarks. New freshness checks/metric migrations ran in this batch; Intel started before the label-normalization change, which only affected Microsoft recovery.",
+  "next_work": [
+    "Planner must separate annual filing research from requested current macro sources.",
+    "Coverage needs to know Fed/BLS retrieval capabilities to propose repairs for missing macro evidence.",
+    "Improve Turkish revenue/growth terminology without changing supported figures."
+  ]
+}

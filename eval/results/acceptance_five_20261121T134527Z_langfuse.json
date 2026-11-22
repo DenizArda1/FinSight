@@ -1,0 +1,26 @@
+{
+  "authentication": true,
+  "roots": [
+    {
+      "id": "5b860d4d186113ad",
+      "name": "finsight.multi_agent",
+      "level": "DEFAULT"
+    },
+    {
+      "id": "a6860957203802ac",
+      "name": "finsight.multi_agent",
+      "level": "DEFAULT"
+    },
+    {
+      "id": "448e5560c5a667ef",
+      "name": "finsight.multi_agent",
+      "level": "DEFAULT"
+    },
+    {
+      "id": "37a73874ce794b9c",
+      "name": "finsight.multi_agent",
+      "level": "DEFAULT"
+    }
+  ],
+  "count": 4
+}

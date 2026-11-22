@@ -1,0 +1,50 @@
+{
+  "started_at": "2026-11-21T13:45:27.360198+00:00",
+  "cases": [
+    {
+      "id": "acceptance_costco",
+      "question": "Costco'nun son iki mali yıldaki gelirini ve faaliyet kâr marjını karşılaştır. Gelir artarken kârlılık da iyileşmiş mi?",
+      "answer_language": "tr",
+      "expected": {
+        "companies": "COST",
+        "review_criteria": "Both annual revenues and computed operating margins; distinguish revenue growth from profitability."
+      }
+    },
+    {
+      "id": "acceptance_salesforce",
+      "question": "Salesforce'un son iki mali yıldaki gelirini, faaliyet kârını ve faaliyet kâr marjını incele. Mali yıl adlarıyla dönem bitiş tarihlerini belirt ve finansal görünümünü değerlendir.",
+      "answer_language": "tr",
+      "expected": {
+        "companies": "CRM",
+        "review_criteria": "Correct distinct fiscal years and ends, revenues, operating income and two computed margins; no unsupported causes."
+      }
+    },
+    {
+      "id": "acceptance_oracle",
+      "question": "Oracle'ın son üç mali yıldaki gelirini ve yıllık gelir büyüme oranlarını karşılaştır. Gelir artışı hızlanıyor mu, yavaşlıyor mu? Mali yıl bitiş tarihlerini de belirt.",
+      "answer_language": "tr",
+      "expected": {
+        "companies": "ORCL",
+        "review_criteria": "Three annual revenues, two growth rates and distinct period ends; trend correctly explained."
+      }
+    },
+    {
+      "id": "acceptance_microsoft",
+      "question": "Analyze Microsoft's latest annual revenue, cost of revenue and operating expenses. Discuss the economic risks described in its latest annual report alongside recent Fed policy and BLS inflation data. Distinguish reported company effects from potential risks, and do not treat the CPI index level as an inflation rate.",
+      "answer_language": "en",
+      "expected": {
+        "companies": "MSFT",
+        "review_criteria": "Annual figures; latest annual report risk evidence plus Fed and BLS evidence; English; CPI level not inflation rate; no unsupported macro causation."
+      }
+    },
+    {
+      "id": "acceptance_intel",
+      "question": "Intel'in yıllık gelir büyümesinde gerileme var mı? Son üç mali yılın eğilimini, son çeyreklik raporunu ve son şirket açıklamalarını birlikte değerlendir. Yıllık sonuçları ara dönem verileri ve beklentilerden ayır.",
+      "answer_language": "tr",
+      "expected": {
+        "companies": "INTC",
+        "review_criteria": "Annual revenues and two growth rates, latest 10-Q revenue evidence and 8-K actuals/outlook; distinguish periods and conditional risks."
+      }
+    }
+  ]
+}

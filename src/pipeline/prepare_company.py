@@ -1,5 +1,8 @@
 #Prepare a requested SEC company using the existing download/metric/RAG stages
 from contextlib import redirect_stdout
+from datetime import datetime, timedelta, timezone
+import hashlib
+import json
 import os
 from pathlib import Path
 import sys
@@ -15,22 +18,51 @@ from src.utils.utils import load_json, load_yaml, save_json
 
 
 ROOT = Path(__file__).resolve().parents[2]
+REFRESH_INTERVAL = timedelta(hours=24)
 
 
-def prepare_company(identifier, *, filings=False):
+def refresh_due(manifest, now=None):
+    now = now or datetime.now(timezone.utc)
+    try:
+        checked = datetime.fromisoformat(manifest['manifest_generated_at'])
+        return not timedelta(0) <= now - checked < REFRESH_INTERVAL
+    except (KeyError, TypeError, ValueError):
+        return True
+
+
+def source_signature(raw, *, metrics=False, config=None):
+    # Ignore check timestamps: unchanged downloads do not invalidate derived data.
+    manifest = load_json(raw / 'manifest.json')
+    digest = hashlib.sha256(json.dumps(manifest['filings'], sort_keys=True).encode())
+    if metrics:
+        digest.update((raw / 'companyfacts.json').read_bytes())
+        digest.update(json.dumps(config, sort_keys=True).encode())
+    return digest.hexdigest()
+
+
+def source_matches(path, signature):
+    return path.is_file() and load_json(path).get('source_signature') == signature
+
+
+def prepare_company(identifier, *, filings=False, refresh=False):
     company = resolve_company(identifier)
     raw = ROOT / 'financial_data/raw' / company['cik']
     processed = ROOT / 'financial_data/processed'
     config = load_yaml(ROOT / 'configs/metrics.yaml')
     with preparation_lock(), redirect_stdout(sys.stderr):
-        if not (raw / 'manifest.json').is_file():
-            print(f"Preparing SEC data for {company['ticker']}...", file=sys.stderr, flush=True)
-            sec_client().download_company(company['ticker'], {'cik_str': int(company['cik'])}, 5)
+        manifest_path = raw / 'manifest.json'
+        manifest = load_json(manifest_path) if manifest_path.is_file() else {}
+        if refresh or refresh_due(manifest):
+            print(f"Checking SEC data for {company['ticker']}...", file=sys.stderr, flush=True)
+            sec_client(refresh=True).download_company(company['ticker'], {'cik_str': int(company['cik'])}, 5)
+        signature = source_signature(raw, metrics=True, config=config)
+        state_path = processed / company['cik'] / 'metrics_source.json'
         metric_paths = [processed / company['cik'] / f'{name}.json' for name in config['metrics']]
-        if not all(path.is_file() for path in metric_paths) or any(
+        if not source_matches(state_path, signature) or not all(path.is_file() for path in metric_paths) or any(
             'fiscal_year_source' not in row for path in metric_paths for row in load_json(path)
         ):
             process_company(company['cik'])
+            save_json({'source_signature': signature}, state_path)
         if filings:
             prepare_company_index(company, processed)
     return company
@@ -38,6 +70,8 @@ def prepare_company(identifier, *, filings=False):
 
 def prepare_company_index(company, processed):
 
+    signature = source_signature(ROOT / 'financial_data/raw' / company['cik'])
+    state_path = processed / company['cik'] / 'index_source.json'
     settings = load_yaml(ROOT / 'configs/settings.yaml')
     collection = get_vector_collection(settings['vector_store'])
     summary_path = processed / 'filing_preparation_summary.json'
@@ -55,7 +89,7 @@ def prepare_company_index(company, processed):
     fiscal_years = {row['end']: row['fiscal_year'] for row in load_json(revenue_path)} if revenue_path.is_file() else {}
     years_match = all(chunk['metadata'].get('fiscal_year') == fiscal_years.get(
         chunk['metadata'].get('report_date'), chunk['metadata'].get('fiscal_year')) for chunk in expected.values())
-    if years_match and reports and expected and all(
+    if source_matches(state_path, signature) and years_match and reports and expected and all(
         key in present and present[key] == (chunk['text'], chunk['metadata'])
         for key, chunk in expected.items()
     ) and set(expected) == set(present):
@@ -87,6 +121,7 @@ def prepare_company_index(company, processed):
     summary['failed_count'] = sum(r['status'] == 'failed' for r in summary['reports'])
     save_json(summary, summary_path)
     collection.modify(metadata={**collection.metadata, 'ready': True})
+    save_json({'source_signature': signature}, state_path)
 
 
 def prepare_for_tool(name, arguments):

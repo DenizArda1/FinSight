@@ -1,0 +1,101 @@
+{
+  "mode": "five_full_mcp_orchestrator_runs",
+  "code_changed_during_tests": false,
+  "results": [
+    {
+      "id": "acceptance_costco",
+      "manual_status": "passed",
+      "note": "Correct two-period revenue, computed growth and operating margins; concise two-paragraph answer.",
+      "answer_returned": true,
+      "verification": "passed",
+      "coverage": "complete",
+      "paragraphs": 2,
+      "seconds": 74.6,
+      "estimated_api_cost_usd": 0.0022285,
+      "tool_calls": 11,
+      "writer_attempts": 2
+    },
+    {
+      "id": "acceptance_salesforce",
+      "manual_status": "passed",
+      "note": "Correct FY2025/FY2026 labels, ends, revenues, income and margins; no unsupported sustainability prediction.",
+      "answer_returned": true,
+      "verification": "passed",
+      "coverage": "complete",
+      "paragraphs": 2,
+      "seconds": 108.3,
+      "estimated_api_cost_usd": 0.0028668,
+      "tool_calls": 9,
+      "writer_attempts": 1
+    },
+    {
+      "id": "acceptance_oracle",
+      "manual_status": "passed_with_efficiency_note",
+      "note": "Correct revenue, two growth rates and distinct dates. Coverage requested a fourth source year, while final answer uses three revenue periods/two growth rates; review requirement consistency.",
+      "answer_returned": true,
+      "verification": "passed",
+      "coverage": "complete",
+      "paragraphs": 2,
+      "seconds": 106.8,
+      "estimated_api_cost_usd": 0.0028716,
+      "tool_calls": 9,
+      "writer_attempts": 1
+    },
+    {
+      "id": "acceptance_microsoft",
+      "manual_status": "needs_correction",
+      "note": "Three paragraphs and correct language, annual values, Fed statements and CPI level. However Source 19 comes from Nine Months Ended March 31, 2026 and answer describes its cloud-margin explanation as quarterly. Period header is outside the retrieved excerpt; semantic checker missed the citation-period mismatch.",
+      "answer_returned": true,
+      "verification": "passed",
+      "coverage": "complete",
+      "paragraphs": 3,
+      "seconds": 216.6,
+      "estimated_api_cost_usd": 0.0058297800000000006,
+      "tool_calls": 21,
+      "writer_attempts": 2
+    },
+    {
+      "id": "acceptance_intel",
+      "manual_status": "partial",
+      "note": "Three paragraphs and disclosed missing latest 10-Q evidence. Initial 10-Q search covered four filings and admitted an older period. All three latest-quarter repair excerpts (sources 32–34) were omitted by total_report_text_limit, so successful repair retrieval did not reach Writer.",
+      "answer_returned": true,
+      "verification": "passed",
+      "coverage": "partial",
+      "paragraphs": 3,
+      "seconds": 277.9,
+      "estimated_api_cost_usd": 0.00797868,
+      "tool_calls": 19,
+      "writer_attempts": 3
+    }
+  ],
+  "total_seconds": 784.165505084,
+  "estimated_api_cost_usd": 0.02177536,
+  "automatic_summary": {
+    "answers_returned": 5,
+    "verification_passed": 5,
+    "coverage_complete": 4,
+    "coverage_partial": 1
+  },
+  "manual_summary": {
+    "passed": 3,
+    "needs_correction": 1,
+    "partial": 1
+  },
+  "langfuse": {
+    "authenticated": true,
+    "roots_read_back": 5,
+    "generation_observations": 108,
+    "generations_with_usage": 108,
+    "generations_with_cost": 108
+  },
+  "next_actions": [
+    "Preserve quarter versus year-to-date headings with report excerpts; never infer duration only from report_date.",
+    "Prioritize requested latest-period and repair evidence over older/repeated excerpts within the same budget.",
+    "Retest only Microsoft and Intel after these changes, then implement annual refresh policy."
+  ],
+  "limitations": [
+    "No new UI/browser or deployment test in this batch.",
+    "Five cases do not establish general reliability.",
+    "API token costs exclude local hardware and are estimates."
+  ]
+}

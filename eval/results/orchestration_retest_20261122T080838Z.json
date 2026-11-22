@@ -1,0 +1,1782 @@
+[
+  {
+    "id": "acceptance_microsoft",
+    "question": "Analyze Microsoft's latest annual revenue, cost of revenue and operating expenses. Discuss the economic risks described in its latest annual report alongside recent Fed policy and BLS inflation data. Distinguish reported company effects from potential risks, and do not treat the CPI index level as an inflation rate.",
+    "expected": {
+      "companies": "MSFT",
+      "review_criteria": "Annual figures; latest annual report risk evidence plus Fed and BLS evidence; English; CPI level not inflation rate; no unsupported macro causation."
+    },
+    "answer_language": "en",
+    "category": null,
+    "usage": {
+      "model_calls_with_usage": 15,
+      "model_calls_without_usage": 0,
+      "tool_calls": 7,
+      "input_tokens": 72503,
+      "output_tokens": 3704,
+      "estimated_cost_usd": 0.00412352,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    },
+    "answer": "Microsoft’s FY2026, ended 2026-06-30, revenue was 331839000000 USD, cost of revenue was 106374000000 USD, and operating expenses were 70228000000 USD. Revenue increased from the prior fiscal year, cost of revenue increased faster than revenue, and operating expenses increased more slowly than revenue. The company attributed revenue growth primarily to Microsoft Cloud, including Azure and commercial cloud services. It said cost-of-revenue growth was driven by Microsoft Cloud, and that gross margin percentage decreased slightly, primarily due to continued AI-infrastructure investment and growing AI-product usage, partly offset by efficiency gains across Microsoft Cloud. [Source 9] [Source 12] [Source 2] [Source 3] [Source 4]\n\nMicrosoft lists global and regional economic developments, monetary policy, geopolitical tension, trade restrictions, inflation and recession as potential risks to results. It also says geopolitical events could negatively affect sales and collections, increase operating costs or disrupt operations, and could add uncertainty to customers’ technology-investment timing and budgets. These are risks identified by the company; the supplied excerpts do not establish them as causes of the reported financial results. [Source 5] [Source 6]\n\nThe supplied evidence does not include recent Federal Reserve policy information or BLS inflation data, so those developments cannot be compared with Microsoft’s disclosed risks. It provides no CPI measure, period or inflation rate; an index level alone would not establish an inflation rate. Accordingly, the evidence supports analysis of Microsoft’s reported annual figures and stated potential risks, but not a company-specific assessment of recent Fed policy or inflation effects.",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": null,
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "coverage": {
+      "complete": false,
+      "gaps": [
+        "Recent Federal Reserve policy information is missing, so the annual-report risks cannot be compared with the Fed’s current stance.",
+        "Recent BLS inflation data is missing, including the measure, period, and inflation rate. The supplied evidence contains no CPI data; an index level alone would not provide an inflation rate."
+      ],
+      "status": "partial",
+      "repair_tasks_attempted": 0
+    },
+    "draft": "Microsoft’s FY2026, ended 2026-06-30, revenue was 331839000000 USD, cost of revenue was 106374000000 USD, and operating expenses were 70228000000 USD. Revenue increased from the prior fiscal year, cost of revenue increased faster than revenue, and operating expenses increased more slowly than revenue. The company attributed revenue growth primarily to Microsoft Cloud, including Azure and commercial cloud services. It said cost-of-revenue growth was driven by Microsoft Cloud, and that gross margin percentage decreased slightly, primarily due to continued AI-infrastructure investment and growing AI-product usage, partly offset by efficiency gains across Microsoft Cloud. [Source 9] [Source 12] [Source 2] [Source 3] [Source 4]\n\nMicrosoft lists global and regional economic developments, monetary policy, geopolitical tension, trade restrictions, inflation and recession as potential risks to results. It also says geopolitical events could negatively affect sales and collections, increase operating costs or disrupt operations, and could add uncertainty to customers’ technology-investment timing and budgets. These are risks identified by the company; the supplied excerpts do not establish them as causes of the reported financial results. [Source 5] [Source 6]\n\nThe supplied evidence does not include recent Federal Reserve policy information or BLS inflation data, so those developments cannot be compared with Microsoft’s disclosed risks. It provides no CPI measure, period or inflation rate; an index level alone would not establish an inflation rate. Accordingly, the evidence supports analysis of Microsoft’s reported annual figures and stated potential risks, but not a company-specific assessment of recent Fed policy or inflation effects.",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "insufficient_data",
+      "text": "Microsoft’s FY{{F2_fiscal_year}}, ended {{F2_end}}, revenue was {{F2_value}} {{F2_unit}}, cost of revenue was {{F3_value}} {{F3_unit}}, and operating expenses were {{F4_value}} {{F4_unit}}. Revenue increased from the prior fiscal year, cost of revenue increased faster than revenue, and operating expenses increased more slowly than revenue. The company attributed revenue growth primarily to Microsoft Cloud, including Azure and commercial cloud services. It said cost-of-revenue growth was driven by Microsoft Cloud, and that gross margin percentage decreased slightly, primarily due to continued AI-infrastructure investment and growing AI-product usage, partly offset by efficiency gains across Microsoft Cloud. [Source 9] [Source 12]\n\nMicrosoft lists global and regional economic developments, monetary policy, geopolitical tension, trade restrictions, inflation and recession as potential risks to results. It also says geopolitical events could negatively affect sales and collections, increase operating costs or disrupt operations, and could add uncertainty to customers’ technology-investment timing and budgets. These are risks identified by the company; the supplied excerpts do not establish them as causes of the reported financial results. [Source 5] [Source 6]\n\nThe supplied evidence does not include recent Federal Reserve policy information or BLS inflation data, so those developments cannot be compared with Microsoft’s disclosed risks. It provides no CPI measure, period or inflation rate; an index level alone would not establish an inflation rate. Accordingly, the evidence supports analysis of Microsoft’s reported annual figures and stated potential risks, but not a company-specific assessment of recent Fed policy or inflation effects.",
+      "facts": []
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "collection_task": "annual_revenue",
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "Microsoft"
+        },
+        "result": {
+          "ticker": "MSFT",
+          "name": "MICROSOFT CORP",
+          "cik": "0000789019"
+        }
+      },
+      {
+        "source_id": 2,
+        "collection_task": "annual_revenue",
+        "tool": "get_company_facts",
+        "arguments": {
+          "unit": "USD",
+          "years": 1,
+          "cik": "0000789019",
+          "concept": "revenue"
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 331839000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 3,
+        "collection_task": "annual_revenue",
+        "tool": "get_company_facts",
+        "arguments": {
+          "years": 1,
+          "cik": "0000789019",
+          "concept": "cost_of_revenue",
+          "unit": "USD"
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "cost_of_revenue",
+          "definition": {
+            "description": "Annual cost of goods and services sold; not total expenses",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "CostOfGoodsAndServicesSold",
+              "CostOfRevenue"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "cost_of_revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 106374000000,
+              "unit": "USD",
+              "tag": "CostOfGoodsAndServicesSold",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 4,
+        "collection_task": "annual_revenue",
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0000789019",
+          "concept": "operating_expenses",
+          "unit": "USD",
+          "years": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "operating_expenses",
+          "definition": {
+            "description": "Annual operating expenses excluding cost of revenue, interest and income taxes",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "OperatingExpenses"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "operating_expenses",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 70228000000,
+              "unit": "USD",
+              "tag": "OperatingExpenses",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 5,
+        "collection_task": "annual_report_rag",
+        "tool": "search_filings",
+        "arguments": {
+          "section": "Item 1A",
+          "ticker": "MSFT",
+          "top_k": 3,
+          "latest": true,
+          "query": "economic risks"
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "query": "economic risks",
+          "fiscal_year": 2026,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0001193125-26-323660:item_1a:74",
+              "text": "Our global business exposes us to operational and economic risks. Our customers, employees, and infrastructure are located throughout the world and a significant part of our revenue comes from international sales. The global nature of our business creates operational, economic, and geopolitical risks. Global, regional, and local economic developments, monetary policy, geopolitical tension, restrictions on international trade, such as tariffs and other controls on imports or exports, inflation, and recession, as well as political and military disputes, could adversely affect our results of operations. Non-compliance with sanctions as well as general ecosystem disruptions could result in reputational harm, operational delays, monetary fines, loss of revenue, increased costs, loss of export privileges, or criminal sanctions, which could adversely affect our business, financial condition, and results of operations.",
+              "metadata": {
+                "fiscal_year": 2026,
+                "cik": "0000789019",
+                "section": "Item 1A",
+                "ticker": "MSFT",
+                "form": "10-K",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "end": 126460,
+                "start": 125536,
+                "amendment_note": "Original annual filing section.",
+                "section_title": "Risk Factors",
+                "report_date": "2026-06-30",
+                "accession_number": "0001193125-26-323660",
+                "section_start": 48557,
+                "filed": "2026-07-29",
+                "section_end": 129753
+              },
+              "distance": 0.34354138374328613,
+              "score": 0.03278688524590164,
+              "ranks": {
+                "dense": 1,
+                "bm25": 1
+              },
+              "context": {
+                "text": "unclear. Environmental regulations or changes in the supply, demand, or available sources of energy or other resources may affect the availability or cost of goods and services, including natural resources, necessary to run our business. Changes in climate where we operate may increase the costs of powering and cooling computer hardware we use to develop software and provide cloud-based services.\nOur global business exposes us to operational and economic risks. Our customers, employees, and infrastructure are located throughout the world and a significant part of our revenue comes from international sales. The global nature of our business creates operational, economic, and geopolitical risks. Global, regional, and local economic developments, monetary policy, geopolitical tension, restrictions on international trade, such as tariffs and other controls on imports or exports, inflation, and recession, as well as political and military disputes, could adversely affect our results of operations. Non-compliance with sanctions as well as general ecosystem disruptions could result in reputational harm, operational delays, monetary fines, loss of revenue, increased costs, loss of export privileges, or criminal sanctions, which could adversely affect our business, financial condition, and results of operations.\nIn addition, our international growth strategy includes certain markets, the developing nature of which presents several risks, including deterioration of social, political, labor, or economic conditions in a country or region, and difficulties in staffing and managing foreign operations. Emerging nationalist and protectionist trends and concerns about human rights, the environment, and political",
+                "start": 125136,
+                "end": 126860
+              }
+            }
+          ],
+          "latest": true,
+          "selected_report": {
+            "fiscal_year": 2026,
+            "report_date": "2026-06-30",
+            "accession_number": "0001193125-26-323660"
+          }
+        }
+      },
+      {
+        "source_id": 6,
+        "collection_task": "annual_report_rag",
+        "tool": "search_filings",
+        "arguments": {
+          "section": "Item 1A",
+          "ticker": "MSFT",
+          "top_k": 3,
+          "latest": true,
+          "query": "economic risks"
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "query": "economic risks",
+          "fiscal_year": 2026,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0001193125-26-323660:item_1a:72",
+              "text": "Abrupt political change, terrorist activity, and armed conflict, such as the conflicts in Ukraine and the Middle East, pose economic and other risks, which may negatively impact our ability to sell to and collect from customers, increase our operating costs, or otherwise disrupt our operations in markets both directly and indirectly impacted by such events. These conditions also may add uncertainty to the timing and budget for technology investment decisions by our customers and may cause supply chain disruptions. Geopolitical change may result in changing regulatory systems and requirements and market interventions that could impact our operating strategies, access to national, regional, and global markets, hiring, and profitability. Geopolitical instability may lead to sanctions and impact our ability to do business in some markets or with some public-sector customers. Any of these changes could adversely affect our results of operations. Changes in geopolitical conditions also increase the security risks described elsewhere in these risk factors.\n27\nPART I\nItem 1A",
+              "metadata": {
+                "fiscal_year": 2026,
+                "amendment_note": "Original annual filing section.",
+                "section": "Item 1A",
+                "start": 123385,
+                "form": "10-K",
+                "section_start": 48557,
+                "accession_number": "0001193125-26-323660",
+                "section_title": "Risk Factors",
+                "report_date": "2026-06-30",
+                "end": 124468,
+                "cik": "0000789019",
+                "filed": "2026-07-29",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "section_end": 129753,
+                "ticker": "MSFT"
+              },
+              "distance": 0.363803505897522,
+              "score": 0.031754032258064516,
+              "ranks": {
+                "dense": 2,
+                "bm25": 4
+              },
+              "context": {
+                "text": "s they rely on, such as power grids, could harm our ability to conduct normal business operations or adversely affect our results of operations. Providing our customers with more services and solutions in the cloud puts a premium on the resilience of our systems and strength of our business continuity management plans and magnifies the potential negative consequences of prolonged service outages.\nAbrupt political change, terrorist activity, and armed conflict, such as the conflicts in Ukraine and the Middle East, pose economic and other risks, which may negatively impact our ability to sell to and collect from customers, increase our operating costs, or otherwise disrupt our operations in markets both directly and indirectly impacted by such events. These conditions also may add uncertainty to the timing and budget for technology investment decisions by our customers and may cause supply chain disruptions. Geopolitical change may result in changing regulatory systems and requirements and market interventions that could impact our operating strategies, access to national, regional, and global markets, hiring, and profitability. Geopolitical instability may lead to sanctions and impact our ability to do business in some markets or with some public-sector customers. Any of these changes could adversely affect our results of operations. Changes in geopolitical conditions also increase the security risks described elsewhere in these risk factors.\n27\nPART I\nItem 1A\nThe occurrence of regional epidemics or a global pandemic could adversely affect our business, operations, financial condition, and results of operations. The extent to which global pandemics impact our business going forward will depend on factors such as the duration and scope of the pandemic; governmental, business, and individuals' actions in response to the pandemic; and the impact on econom",
+                "start": 122985,
+                "end": 124868
+              }
+            }
+          ],
+          "latest": true,
+          "selected_report": {
+            "fiscal_year": 2026,
+            "report_date": "2026-06-30",
+            "accession_number": "0001193125-26-323660"
+          }
+        }
+      },
+      {
+        "source_id": 7,
+        "collection_task": "annual_report_rag",
+        "tool": "search_filings",
+        "arguments": {
+          "section": "Item 1A",
+          "ticker": "MSFT",
+          "top_k": 3,
+          "latest": true,
+          "query": "economic risks"
+        },
+        "result": {
+          "content_limit": {
+            "reason": "total_report_text_limit",
+            "original_text_characters": 2128,
+            "max_source_characters": 6000,
+            "max_total_characters": 12000,
+            "original_result_sha256": "f86e45acc677ec8473dae9ac70b8e619a3f49b88d4fb4b0555bb8e07b3f59569"
+          }
+        },
+        "content_omitted": true
+      },
+      {
+        "source_id": 8,
+        "collection_task": "annual_report_rag",
+        "tool": "search_filings",
+        "arguments": {
+          "query": "revenue earnings results",
+          "section": "Item 7",
+          "ticker": "MSFT",
+          "top_k": 3,
+          "latest": true
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "query": "revenue earnings results",
+          "fiscal_year": 2026,
+          "section": "Item 7",
+          "matches": [
+            {
+              "chunk_id": "0001193125-26-323660:item_7:23",
+              "text": "(4,963\n)\n3,620\n1,126\n(237)%\n221%\nAdjusted net income (non-GAAP)\n$\n128,786\n$\n105,452\n$\n89,262\n22%\n18%\nDiluted earnings per share\n$\n17.95\n$\n13.64\n$\n11.80\n32%\n16%\nNet (gains) losses from investments in OpenAI\n(0.67\n)\n0.49\n0.15\n(237)%\n227%\nAdjusted diluted earnings per share (non-GAAP)\n$\n17.28\n$\n14.13\n$\n11.95\n22%\n18%\nLIQUIDITY AND CAPITAL RESOURCES\nWe expect existing cash, cash equivalents, short-term investments, cash flows from operations, and access to capital markets to continue to be sufficient to fund our operating activities and cash commitments for investing and financing activities, such as dividends, share repurchases, debt maturities, and material capital expenditures, for at least the next 12 months and thereafter for the foreseeable future.\n42\nPART II\nItem 7\nCash, Cash Equivalents, and Investments",
+              "metadata": {
+                "start": 169324,
+                "amendment_note": "Original annual filing section.",
+                "form": "10-K",
+                "section": "Item 7",
+                "cik": "0000789019",
+                "filed": "2026-07-29",
+                "section_end": 192797,
+                "section_start": 141540,
+                "fiscal_year": 2026,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "report_date": "2026-06-30",
+                "accession_number": "0001193125-26-323660",
+                "section_title": "Management's Discussion and Analysis",
+                "ticker": "MSFT",
+                "end": 170141
+              },
+              "distance": 0.4269178509712219,
+              "score": 0.032266458495966696,
+              "ranks": {
+                "dense": 1,
+                "bm25": 3
+              },
+              "context": {
+                "text": "ge\nChange 2025 Versus 2024\nOther income (expense), net\n$\n10,697\n$\n(4,901\n)\n$\n(1,646\n)\n318%\n(198)%\nNet (gains) losses from investments in OpenAI\n(6,530\n)\n4,763\n1,482\n(237)%\n221%\nAdjusted other income (expense), net (non-GAAP)\n$\n4,167\n$\n(138\n)\n$\n(164\n)\n3,120%\n16%\nNet income\n$\n133,749\n$\n101,832\n$\n88,136\n31%\n16%\nNet (gains) losses from investments in OpenAI, net of tax of $1,567, $(1,143), and $(356)\n(4,963\n)\n3,620\n1,126\n(237)%\n221%\nAdjusted net income (non-GAAP)\n$\n128,786\n$\n105,452\n$\n89,262\n22%\n18%\nDiluted earnings per share\n$\n17.95\n$\n13.64\n$\n11.80\n32%\n16%\nNet (gains) losses from investments in OpenAI\n(0.67\n)\n0.49\n0.15\n(237)%\n227%\nAdjusted diluted earnings per share (non-GAAP)\n$\n17.28\n$\n14.13\n$\n11.95\n22%\n18%\nLIQUIDITY AND CAPITAL RESOURCES\nWe expect existing cash, cash equivalents, short-term investments, cash flows from operations, and access to capital markets to continue to be sufficient to fund our operating activities and cash commitments for investing and financing activities, such as dividends, share repurchases, debt maturities, and material capital expenditures, for at least the next 12 months and thereafter for the foreseeable future.\n42\nPART II\nItem 7\nCash, Cash Equivalents, and Investments\nCash, cash equivalents, and short-term investments totaled $76.8 billion and $94.6 billion as of June 30, 2026 and 2025, respectively. Equity and other investments were $36.3 billion and $15.4 billion as of June 30, 2026 and 2025, respectively. Our short-term investments are primarily intended to facilitate liquidity and capital preservation. They consist predominantly of highly liquid investment",
+                "start": 168924,
+                "end": 170541
+              }
+            }
+          ],
+          "latest": true,
+          "selected_report": {
+            "fiscal_year": 2026,
+            "report_date": "2026-06-30",
+            "accession_number": "0001193125-26-323660"
+          }
+        }
+      },
+      {
+        "source_id": 9,
+        "collection_task": "annual_report_rag",
+        "tool": "search_filings",
+        "arguments": {
+          "query": "revenue earnings results",
+          "section": "Item 7",
+          "ticker": "MSFT",
+          "top_k": 3,
+          "latest": true
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "query": "revenue earnings results",
+          "fiscal_year": 2026,
+          "section": "Item 7",
+          "matches": [
+            {
+              "chunk_id": "0001193125-26-323660:item_7:10",
+              "text": "Search advertising revenue (ex TAC) growth\nRevenue from search advertising excluding traffic acquisition costs (“TAC”) paid to Bing Ads network publishers and content partners\nSUMMARY RESULTS OF OPERATIONS\n(In millions, except percentages and per share amounts)\n2026\n2025\nPercentage\nChange\nRevenue\n$\n331,839\n$\n281,724\n18%\nGross margin\n225,465\n193,893\n16%\nOperating income\n155,237\n128,528\n21%\nNet income\n133,749\n101,832\n31%\nDiluted earnings per share\n17.95\n13.64\n32%\nAdjusted net income (non-GAAP)\n128,786\n105,452\n22%\nAdjusted diluted earnings per share (non-GAAP)\n17.28\n14.13\n22%\nAdjusted net income and adjusted diluted earnings per share (“EPS”) are non-GAAP financial measures. These non-GAAP financial measures exclude net gains and losses from investments in OpenAI. Refer to the Non-GAAP Financial Measures section below for a reconciliation of our financial results reported in accordance with GAAP to non-GAAP financial results.\nFiscal Year 2026 Compared with Fiscal Year 2025\nRevenue increased $50.1 billion or 18% driven by growth in Microsoft Cloud. Intelligent Cloud revenue increased driven by Azure. Productivity and Business Processes revenue increased driven by Microsoft 365 Commercial cloud. More Personal Computing revenue decreased driven by XBOX (formerly Gaming), offset in part by growth in Search advertising.\nCost of revenue increased $18.5 billion or 21% driven by growth in Microsoft Cloud.",
+              "metadata": {
+                "section": "Item 7",
+                "end": 154561,
+                "cik": "0000789019",
+                "start": 153144,
+                "section_title": "Management's Discussion and Analysis",
+                "section_end": 192797,
+                "filed": "2026-07-29",
+                "accession_number": "0001193125-26-323660",
+                "ticker": "MSFT",
+                "amendment_note": "Original annual filing section.",
+                "report_date": "2026-06-30",
+                "fiscal_year": 2026,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "form": "10-K",
+                "section_start": 141540
+              },
+              "distance": 0.456892192363739,
+              "score": 0.032018442622950824,
+              "ranks": {
+                "dense": 4,
+                "bm25": 1
+              },
+              "context": {
+                "text": "ales of Windows Pro and non-Pro licenses sold through the OEM channel and sales of first-party Devices, including Surface and PC accessories\nXBOX content and services revenue growth\nRevenue from XBOX content and services, comprising first- and third-party content (including games and in-game content), XBOX Game Pass and other subscriptions, XBOX Cloud Gaming, advertising, and other cloud services\nSearch advertising revenue (ex TAC) growth\nRevenue from search advertising excluding traffic acquisition costs (“TAC”) paid to Bing Ads network publishers and content partners\nSUMMARY RESULTS OF OPERATIONS\n(In millions, except percentages and per share amounts)\n2026\n2025\nPercentage\nChange\nRevenue\n$\n331,839\n$\n281,724\n18%\nGross margin\n225,465\n193,893\n16%\nOperating income\n155,237\n128,528\n21%\nNet income\n133,749\n101,832\n31%\nDiluted earnings per share\n17.95\n13.64\n32%\nAdjusted net income (non-GAAP)\n128,786\n105,452\n22%\nAdjusted diluted earnings per share (non-GAAP)\n17.28\n14.13\n22%\nAdjusted net income and adjusted diluted earnings per share (“EPS”) are non-GAAP financial measures. These non-GAAP financial measures exclude net gains and losses from investments in OpenAI. Refer to the Non-GAAP Financial Measures section below for a reconciliation of our financial results reported in accordance with GAAP to non-GAAP financial results.\nFiscal Year 2026 Compared with Fiscal Year 2025\nRevenue increased $50.1 billion or 18% driven by growth in Microsoft Cloud. Intelligent Cloud revenue increased driven by Azure. Productivity and Business Processes revenue increased driven by Microsoft 365 Commercial cloud. More Personal Computing revenue decreased driven by XBOX (formerly Gaming), offset in part by growth in Search advertising.\nCost of revenue increased $18.5 billion or 21% driven by growth in Microsoft Cloud.\nGross margin increased $31.6 billion or 16% with growth across each of our segments.\n•\nGross margin percentage decreased slightly driven by continued investments in AI infrastructure and growing AI product usage, offset in part by efficiency gains across the Microsoft Cloud.\n•\nMicrosoft Cloud gross margin percentage decreased to 66% driven by continued investments in AI infrastructure and growing",
+                "start": 152744,
+                "end": 154961
+              }
+            }
+          ],
+          "latest": true,
+          "selected_report": {
+            "fiscal_year": 2026,
+            "report_date": "2026-06-30",
+            "accession_number": "0001193125-26-323660"
+          }
+        }
+      },
+      {
+        "source_id": 10,
+        "collection_task": "annual_report_rag",
+        "tool": "search_filings",
+        "arguments": {
+          "query": "revenue earnings results",
+          "section": "Item 7",
+          "ticker": "MSFT",
+          "top_k": 3,
+          "latest": true
+        },
+        "result": {
+          "content_limit": {
+            "reason": "total_report_text_limit",
+            "original_text_characters": 2203,
+            "max_source_characters": 6000,
+            "max_total_characters": 12000,
+            "original_result_sha256": "e11ec28332640e72838151a167e5416ba5f52c52b9bad5c24379644420f7d551"
+          }
+        },
+        "content_omitted": true
+      },
+      {
+        "source_id": 11,
+        "collection_task": "annual_report_rag",
+        "tool": "search_filings",
+        "arguments": {
+          "section": "Item 7",
+          "ticker": "MSFT",
+          "top_k": 3,
+          "latest": true,
+          "query": "revenue outlook guidance"
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "query": "revenue outlook guidance",
+          "fiscal_year": 2026,
+          "section": "Item 7",
+          "matches": [
+            {
+              "chunk_id": "0001193125-26-323660:item_7:32",
+              "text": "RECENT ACCOUNTING GUIDANCE\nRefer to Note 1 – Accounting Policies of the Notes to Financial Statements (Part II, Item 8 of this Form 10-K).\nCRITICAL ACCOUNTING ESTIMATES\nOur consolidated financial statements and accompanying notes are prepared in accordance with GAAP. Preparing consolidated financial statements requires management to make estimates and assumptions that affect the reported amounts of assets, liabilities, revenue, and expenses. Critical accounting estimates are those estimates that involve a significant level of estimation uncertainty and could have a material impact on our financial condition or results of operations. We have critical accounting estimates in the areas of revenue recognition, measurement and impairment of investment securities, goodwill, research and development costs, legal and other contingencies, and income taxes.\nRevenue Recognition",
+              "metadata": {
+                "end": 180050,
+                "report_date": "2026-06-30",
+                "section_title": "Management's Discussion and Analysis",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "filed": "2026-07-29",
+                "cik": "0000789019",
+                "form": "10-K",
+                "ticker": "MSFT",
+                "fiscal_year": 2026,
+                "section": "Item 7",
+                "start": 179171,
+                "section_end": 192797,
+                "amendment_note": "Original annual filing section.",
+                "accession_number": "0001193125-26-323660",
+                "section_start": 141540
+              },
+              "distance": 0.4715694785118103,
+              "score": 0.030886196246139225,
+              "ranks": {
+                "dense": 9,
+                "bm25": 1
+              },
+              "context": {
+                "text": "astructure. We have operating and finance leases for datacenters and related infrastructure, servers and network equipment, corporate offices, and research and development facilities. We have not engaged in any related party transactions or arrangements with unconsolidated entities or other persons that are reasonably likely to materially affect liquidity or the availability of capital resources.\nRECENT ACCOUNTING GUIDANCE\nRefer to Note 1 – Accounting Policies of the Notes to Financial Statements (Part II, Item 8 of this Form 10-K).\nCRITICAL ACCOUNTING ESTIMATES\nOur consolidated financial statements and accompanying notes are prepared in accordance with GAAP. Preparing consolidated financial statements requires management to make estimates and assumptions that affect the reported amounts of assets, liabilities, revenue, and expenses. Critical accounting estimates are those estimates that involve a significant level of estimation uncertainty and could have a material impact on our financial condition or results of operations. We have critical accounting estimates in the areas of revenue recognition, measurement and impairment of investment securities, goodwill, research and development costs, legal and other contingencies, and income taxes.\nRevenue Recognition\nOur contracts with customers often include promises to transfer multiple products and services to a customer. Determining whether products and services are considered distinct performance obligations that should be accounted for separately versus together may require significant judgment. When a cloud-based service includes both on-premises software licenses and cloud services, judgment is requir",
+                "start": 178771,
+                "end": 180450
+              }
+            }
+          ],
+          "latest": true,
+          "selected_report": {
+            "fiscal_year": 2026,
+            "report_date": "2026-06-30",
+            "accession_number": "0001193125-26-323660"
+          }
+        }
+      },
+      {
+        "source_id": 12,
+        "collection_task": "annual_report_rag",
+        "tool": "search_filings",
+        "arguments": {
+          "section": "Item 7",
+          "ticker": "MSFT",
+          "top_k": 3,
+          "latest": true,
+          "query": "revenue outlook guidance"
+        },
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "query": "revenue outlook guidance",
+          "fiscal_year": 2026,
+          "section": "Item 7",
+          "matches": [
+            {
+              "chunk_id": "0001193125-26-323660:item_7:12",
+              "text": "Revenue and operating income both included a favorable foreign currency impact of 2%.\n37\nPART II\nItem 7\nCurrent year net income and diluted EPS were positively impacted by net gains from investments in OpenAI, which resulted in an increase in net income and diluted EPS of $5.0 billion and $0.67, respectively. Prior year net income and diluted EPS were negatively impacted by net losses from investments in OpenAI, which resulted in a decrease in net income and diluted EPS of $3.6 billion and $0.49, respectively.\nSEGMENT RESULTS OF OPERATIONS\n(In millions, except percentages)\n2026\n2025\nPercentage\nChange\nProductivity and Business Processes\nRevenue\n$\n139,996\n$\n120,810\n16%\nCost of revenue\n25,017\n22,422\n12%\nOperating expenses\n31,100\n28,615\n9%\nOperating income\n$\n83,879\n$\n69,773\n20%\nIntelligent Cloud\nRevenue\n$\n137,791\n$\n106,265\n30%\nCost of revenue\n57,876\n40,171\n44%\nOperating expenses\n22,943\n21,505\n7%\nOperating income\n$\n56,972\n$\n44,589\n28%\nMore Personal Computing\nRevenue\n$\n54,052\n$\n54,649\n(1)%\nCost of revenue\n23,481\n25,238\n(7)%\nOperating expenses\n16,185\n15,245\n6%\nOperating income\n$\n14,386\n$\n14,166\n2%\nTotal\nRevenue\n$\n331,839\n$\n281,724\n18%\nCost of revenue\n106,374\n87,831\n21%\nOperating expenses\n70,228\n65,365\n7%\nOperating income\n$\n155,237\n$\n128,528\n21%\nReportable Segments\nFiscal Year 2026 Compared with Fiscal Year 2025\nProductivity and Business Processes\nRevenue increased $19.2 billion or 16%.\n•",
+              "metadata": {
+                "fiscal_year": 2026,
+                "form": "10-K",
+                "start": 155534,
+                "report_date": "2026-06-30",
+                "section_start": 141540,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "accession_number": "0001193125-26-323660",
+                "filed": "2026-07-29",
+                "section": "Item 7",
+                "cik": "0000789019",
+                "end": 156937,
+                "ticker": "MSFT",
+                "section_title": "Management's Discussion and Analysis",
+                "amendment_note": "Original annual filing section.",
+                "section_end": 192797
+              },
+              "distance": 0.443912148475647,
+              "score": 0.030621785881252923,
+              "ranks": {
+                "dense": 2,
+                "bm25": 9
+              },
+              "context": {
+                "text": "ments in research and development compute capacity, AI talent, and data to support product development that benefits the entire portfolio, impairment and other related expenses in our XBOX business, investments in commercial sales, and higher Copilot advertising expenses.\nOperating income increased $26.7 billion or 21% driven by growth in Productivity and Business Processes and Intelligent Cloud.\nRevenue and operating income both included a favorable foreign currency impact of 2%.\n37\nPART II\nItem 7\nCurrent year net income and diluted EPS were positively impacted by net gains from investments in OpenAI, which resulted in an increase in net income and diluted EPS of $5.0 billion and $0.67, respectively. Prior year net income and diluted EPS were negatively impacted by net losses from investments in OpenAI, which resulted in a decrease in net income and diluted EPS of $3.6 billion and $0.49, respectively.\nSEGMENT RESULTS OF OPERATIONS\n(In millions, except percentages)\n2026\n2025\nPercentage\nChange\nProductivity and Business Processes\nRevenue\n$\n139,996\n$\n120,810\n16%\nCost of revenue\n25,017\n22,422\n12%\nOperating expenses\n31,100\n28,615\n9%\nOperating income\n$\n83,879\n$\n69,773\n20%\nIntelligent Cloud\nRevenue\n$\n137,791\n$\n106,265\n30%\nCost of revenue\n57,876\n40,171\n44%\nOperating expenses\n22,943\n21,505\n7%\nOperating income\n$\n56,972\n$\n44,589\n28%\nMore Personal Computing\nRevenue\n$\n54,052\n$\n54,649\n(1)%\nCost of revenue\n23,481\n25,238\n(7)%\nOperating expenses\n16,185\n15,245\n6%\nOperating income\n$\n14,386\n$\n14,166\n2%\nTotal\nRevenue\n$\n331,839\n$\n281,724\n18%\nCost of revenue\n106,374\n87,831\n21%\nOperating expenses\n70,228\n65,365\n7%\nOperating income\n$\n155,237\n$\n128,528\n21%\nReportable Segments\nFiscal Year 2026 Compared with Fiscal Year 2025\nProductivity and Business Processes\nRevenue increased $19.2 billion or 16%.\n•\nMicrosoft 365 Commercial products and cloud services revenue increased $14.2 billion or 16%. Microsoft 365 Commercial cloud revenue grew 17% with growth in revenue per user driven by Microsoft 365 Copilot and Microsoft 365 E5. Microsoft 365 Commercial seats grew 6% driven by small and medium businesses and frontline worker offerings. Microsoft 365 Commercial products revenue grew 13% driven by gr",
+                "start": 155134,
+                "end": 157337
+              }
+            }
+          ],
+          "latest": true,
+          "selected_report": {
+            "fiscal_year": 2026,
+            "report_date": "2026-06-30",
+            "accession_number": "0001193125-26-323660"
+          }
+        }
+      },
+      {
+        "source_id": 13,
+        "collection_task": "annual_report_rag",
+        "tool": "search_filings",
+        "arguments": {
+          "section": "Item 7",
+          "ticker": "MSFT",
+          "top_k": 3,
+          "latest": true,
+          "query": "revenue outlook guidance"
+        },
+        "result": {
+          "content_limit": {
+            "reason": "total_report_text_limit",
+            "original_text_characters": 2247,
+            "max_source_characters": 6000,
+            "max_total_characters": 12000,
+            "original_result_sha256": "4eb37db9e95b608b364ecd12a409223800909f67f3e5265ca49837aa0e233016"
+          }
+        },
+        "content_omitted": true
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "mixed",
+        "plan": [
+          {
+            "id": "annual_revenue",
+            "agent": "financial_data",
+            "instruction": "For Microsoft, retrieve latest annual revenue, cost of revenue, and operating expenses using get_company_facts.",
+            "filing_scope": "annual",
+            "years": 1,
+            "fiscal_year": null
+          },
+          {
+            "id": "annual_report_rag",
+            "agent": "filing_rag",
+            "instruction": "For Microsoft, retrieve economic risks from its latest annual report using search_filings form=10-K and explain how they relate to recent Fed policy and BLS inflation data.",
+            "filing_scope": "annual",
+            "years": 1,
+            "fiscal_year": null
+          }
+        ],
+        "elapsed_seconds": 3.975745208999797,
+        "input_tokens": 924,
+        "output_tokens": 151,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0
+      },
+      {
+        "type": "agent",
+        "task_id": "annual_revenue",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "annual_revenue",
+        "agent": "financial_data",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 769,
+        "output_tokens": 24,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_ox808nnw",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "Microsoft"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.649909707999541
+      },
+      {
+        "type": "tool",
+        "task_id": "annual_revenue",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "Microsoft"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "MSFT",
+          "name": "MICROSOFT CORP",
+          "cik": "0000789019"
+        },
+        "elapsed_seconds": 0.03160862500044459
+      },
+      {
+        "type": "model",
+        "task_id": "annual_revenue",
+        "agent": "financial_data",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 1203,
+        "output_tokens": 51,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_xm8d0uax",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "unit": "USD",
+                "years": 1,
+                "cik": "0000789019",
+                "concept": "revenue"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 3.2666714580009284
+      },
+      {
+        "type": "tool",
+        "task_id": "annual_revenue",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "unit": "USD",
+          "years": 1,
+          "cik": "0000789019",
+          "concept": "revenue"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 331839000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 5.527197916999285
+      },
+      {
+        "type": "model",
+        "task_id": "annual_revenue",
+        "agent": "financial_data",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 1685,
+        "output_tokens": 46,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_6dcma5sj",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "years": 1,
+                "cik": "0000789019",
+                "concept": "cost_of_revenue",
+                "unit": "USD"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.6080305420000514
+      },
+      {
+        "type": "tool",
+        "task_id": "annual_revenue",
+        "agent": "financial_data",
+        "step": 3,
+        "call_id": 3,
+        "name": "get_company_facts",
+        "arguments": {
+          "years": 1,
+          "cik": "0000789019",
+          "concept": "cost_of_revenue",
+          "unit": "USD"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "cost_of_revenue",
+          "definition": {
+            "description": "Annual cost of goods and services sold; not total expenses",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "CostOfGoodsAndServicesSold",
+              "CostOfRevenue"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "cost_of_revenue",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 106374000000,
+              "unit": "USD",
+              "tag": "CostOfGoodsAndServicesSold",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.024681082999450155
+      },
+      {
+        "type": "model",
+        "task_id": "annual_revenue",
+        "agent": "financial_data",
+        "step": 4,
+        "max_output_tokens": 1024,
+        "input_tokens": 2169,
+        "output_tokens": 46,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_4zrbedel",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000789019",
+                "concept": "operating_expenses",
+                "unit": "USD",
+                "years": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.61214795900014
+      },
+      {
+        "type": "tool",
+        "task_id": "annual_revenue",
+        "agent": "financial_data",
+        "step": 4,
+        "call_id": 4,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000789019",
+          "concept": "operating_expenses",
+          "unit": "USD",
+          "years": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "cik": "0000789019",
+            "name": "MICROSOFT CORP"
+          },
+          "concept": "operating_expenses",
+          "definition": {
+            "description": "Annual operating expenses excluding cost of revenue, interest and income taxes",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "OperatingExpenses"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 1,
+          "available_period_count": 1,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2026-06-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 789019,
+              "metric": "operating_expenses",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "value": 70228000000,
+              "unit": "USD",
+              "tag": "OperatingExpenses",
+              "form": "10-K",
+              "filed": "2026-07-29",
+              "accn": "0001193125-26-323660",
+              "is_amendment": false,
+              "fiscal_year": 2026,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2026 (period end: 2026-06-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.026919707999695675
+      },
+      {
+        "type": "model",
+        "task_id": "annual_revenue",
+        "agent": "financial_data",
+        "step": 5,
+        "max_output_tokens": 1024,
+        "input_tokens": 2642,
+        "output_tokens": 156,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 5.2844923749999
+      },
+      {
+        "type": "agent",
+        "task_id": "annual_revenue",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 22.0319667090007
+      },
+      {
+        "type": "agent",
+        "task_id": "annual_report_rag",
+        "agent": "filing_rag",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "annual_report_rag",
+        "agent": "filing_rag",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 1347,
+        "output_tokens": 50,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_bgsfmcxa",
+            "function": {
+              "index": 0,
+              "name": "search_filings",
+              "arguments": {
+                "section": "Item 1A",
+                "ticker": "MSFT",
+                "top_k": 3,
+                "latest": true,
+                "query": "economic risks"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.7598364999994374
+      },
+      {
+        "type": "tool",
+        "task_id": "annual_report_rag",
+        "agent": "filing_rag",
+        "step": 1,
+        "call_id": 1,
+        "name": "search_filings",
+        "arguments": {
+          "section": "Item 1A",
+          "ticker": "MSFT",
+          "top_k": 3,
+          "latest": true,
+          "query": "economic risks"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "query": "economic risks",
+          "fiscal_year": 2026,
+          "section": "Item 1A",
+          "matches": [
+            {
+              "chunk_id": "0001193125-26-323660:item_1a:74",
+              "text": "Our global business exposes us to operational and economic risks. Our customers, employees, and infrastructure are located throughout the world and a significant part of our revenue comes from international sales. The global nature of our business creates operational, economic, and geopolitical risks. Global, regional, and local economic developments, monetary policy, geopolitical tension, restrictions on international trade, such as tariffs and other controls on imports or exports, inflation, and recession, as well as political and military disputes, could adversely affect our results of operations. Non-compliance with sanctions as well as general ecosystem disruptions could result in reputational harm, operational delays, monetary fines, loss of revenue, increased costs, loss of export privileges, or criminal sanctions, which could adversely affect our business, financial condition, and results of operations.",
+              "metadata": {
+                "fiscal_year": 2026,
+                "cik": "0000789019",
+                "section": "Item 1A",
+                "ticker": "MSFT",
+                "form": "10-K",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "end": 126460,
+                "start": 125536,
+                "amendment_note": "Original annual filing section.",
+                "section_title": "Risk Factors",
+                "report_date": "2026-06-30",
+                "accession_number": "0001193125-26-323660",
+                "section_start": 48557,
+                "filed": "2026-07-29",
+                "section_end": 129753
+              },
+              "distance": 0.34354138374328613,
+              "score": 0.03278688524590164,
+              "ranks": {
+                "dense": 1,
+                "bm25": 1
+              },
+              "context": {
+                "text": "unclear. Environmental regulations or changes in the supply, demand, or available sources of energy or other resources may affect the availability or cost of goods and services, including natural resources, necessary to run our business. Changes in climate where we operate may increase the costs of powering and cooling computer hardware we use to develop software and provide cloud-based services.\nOur global business exposes us to operational and economic risks. Our customers, employees, and infrastructure are located throughout the world and a significant part of our revenue comes from international sales. The global nature of our business creates operational, economic, and geopolitical risks. Global, regional, and local economic developments, monetary policy, geopolitical tension, restrictions on international trade, such as tariffs and other controls on imports or exports, inflation, and recession, as well as political and military disputes, could adversely affect our results of operations. Non-compliance with sanctions as well as general ecosystem disruptions could result in reputational harm, operational delays, monetary fines, loss of revenue, increased costs, loss of export privileges, or criminal sanctions, which could adversely affect our business, financial condition, and results of operations.\nIn addition, our international growth strategy includes certain markets, the developing nature of which presents several risks, including deterioration of social, political, labor, or economic conditions in a country or region, and difficulties in staffing and managing foreign operations. Emerging nationalist and protectionist trends and concerns about human rights, the environment, and political",
+                "start": 125136,
+                "end": 126860
+              }
+            },
+            {
+              "chunk_id": "0001193125-26-323660:item_1a:72",
+              "text": "Abrupt political change, terrorist activity, and armed conflict, such as the conflicts in Ukraine and the Middle East, pose economic and other risks, which may negatively impact our ability to sell to and collect from customers, increase our operating costs, or otherwise disrupt our operations in markets both directly and indirectly impacted by such events. These conditions also may add uncertainty to the timing and budget for technology investment decisions by our customers and may cause supply chain disruptions. Geopolitical change may result in changing regulatory systems and requirements and market interventions that could impact our operating strategies, access to national, regional, and global markets, hiring, and profitability. Geopolitical instability may lead to sanctions and impact our ability to do business in some markets or with some public-sector customers. Any of these changes could adversely affect our results of operations. Changes in geopolitical conditions also increase the security risks described elsewhere in these risk factors.\n27\nPART I\nItem 1A",
+              "metadata": {
+                "fiscal_year": 2026,
+                "amendment_note": "Original annual filing section.",
+                "section": "Item 1A",
+                "start": 123385,
+                "form": "10-K",
+                "section_start": 48557,
+                "accession_number": "0001193125-26-323660",
+                "section_title": "Risk Factors",
+                "report_date": "2026-06-30",
+                "end": 124468,
+                "cik": "0000789019",
+                "filed": "2026-07-29",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "section_end": 129753,
+                "ticker": "MSFT"
+              },
+              "distance": 0.363803505897522,
+              "score": 0.031754032258064516,
+              "ranks": {
+                "dense": 2,
+                "bm25": 4
+              },
+              "context": {
+                "text": "s they rely on, such as power grids, could harm our ability to conduct normal business operations or adversely affect our results of operations. Providing our customers with more services and solutions in the cloud puts a premium on the resilience of our systems and strength of our business continuity management plans and magnifies the potential negative consequences of prolonged service outages.\nAbrupt political change, terrorist activity, and armed conflict, such as the conflicts in Ukraine and the Middle East, pose economic and other risks, which may negatively impact our ability to sell to and collect from customers, increase our operating costs, or otherwise disrupt our operations in markets both directly and indirectly impacted by such events. These conditions also may add uncertainty to the timing and budget for technology investment decisions by our customers and may cause supply chain disruptions. Geopolitical change may result in changing regulatory systems and requirements and market interventions that could impact our operating strategies, access to national, regional, and global markets, hiring, and profitability. Geopolitical instability may lead to sanctions and impact our ability to do business in some markets or with some public-sector customers. Any of these changes could adversely affect our results of operations. Changes in geopolitical conditions also increase the security risks described elsewhere in these risk factors.\n27\nPART I\nItem 1A\nThe occurrence of regional epidemics or a global pandemic could adversely affect our business, operations, financial condition, and results of operations. The extent to which global pandemics impact our business going forward will depend on factors such as the duration and scope of the pandemic; governmental, business, and individuals' actions in response to the pandemic; and the impact on econom",
+                "start": 122985,
+                "end": 124868
+              }
+            },
+            {
+              "chunk_id": "0001193125-26-323660:item_1a:75",
+              "text": "In addition, our international growth strategy includes certain markets, the developing nature of which presents several risks, including deterioration of social, political, labor, or economic conditions in a country or region, and difficulties in staffing and managing foreign operations. Emerging nationalist and protectionist trends and concerns about human rights, the environment, and political expression in specific countries may significantly alter the trade and commercial environments. Changes to trade policy or agreements as a result of populism, protectionism, or economic nationalism may result in higher tariffs, local sourcing initiatives, and non-local sourcing restrictions, disagreements among governments on export controls and sanctions toward third countries, investment restrictions, or other developments that make it more difficult to operate and sell our products in foreign countries. Disruptions of these kinds in developed or emerging markets could negatively impact demand for our products and services, impair our ability to operate in certain regions, or increase operating costs. Although we hedge a portion of our international currency exposure, significant fluctuations in foreign exchange rates between the U.S. dollar and foreign currencies could adversely affect our results of operations.",
+              "metadata": {
+                "fiscal_year": 2026,
+                "section_title": "Risk Factors",
+                "section_start": 48557,
+                "ticker": "MSFT",
+                "end": 127789,
+                "form": "10-K",
+                "cik": "0000789019",
+                "accession_number": "0001193125-26-323660",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "section_end": 129753,
+                "start": 126461,
+                "report_date": "2026-06-30",
+                "filed": "2026-07-29",
+                "section": "Item 1A",
+                "amendment_note": "Original annual filing section."
+              },
+              "distance": 0.3938875198364258,
+              "score": 0.03149801587301587,
+              "ranks": {
+                "dense": 4,
+                "bm25": 3
+              },
+              "context": {
+                "text": "political and military disputes, could adversely affect our results of operations. Non-compliance with sanctions as well as general ecosystem disruptions could result in reputational harm, operational delays, monetary fines, loss of revenue, increased costs, loss of export privileges, or criminal sanctions, which could adversely affect our business, financial condition, and results of operations.\nIn addition, our international growth strategy includes certain markets, the developing nature of which presents several risks, including deterioration of social, political, labor, or economic conditions in a country or region, and difficulties in staffing and managing foreign operations. Emerging nationalist and protectionist trends and concerns about human rights, the environment, and political expression in specific countries may significantly alter the trade and commercial environments. Changes to trade policy or agreements as a result of populism, protectionism, or economic nationalism may result in higher tariffs, local sourcing initiatives, and non-local sourcing restrictions, disagreements among governments on export controls and sanctions toward third countries, investment restrictions, or other developments that make it more difficult to operate and sell our products in foreign countries. Disruptions of these kinds in developed or emerging markets could negatively impact demand for our products and services, impair our ability to operate in certain regions, or increase operating costs. Although we hedge a portion of our international currency exposure, significant fluctuations in foreign exchange rates between the U.S. dollar and foreign currencies could adversely affect our results of operations.\nOur business depends on our ability to attract and retain talented employees. Our business is based on successfully attracting, training, and retaining talented employees representing diverse backgrounds, experiences, and skill sets. The market for highly skilled workers and leaders in our industry is extremely competitive. Maintaining our brand and reputation, as well as an inclusive work enviro",
+                "start": 126061,
+                "end": 128189
+              }
+            }
+          ],
+          "latest": true,
+          "selected_report": {
+            "fiscal_year": 2026,
+            "report_date": "2026-06-30",
+            "accession_number": "0001193125-26-323660"
+          }
+        },
+        "elapsed_seconds": 13.829087957999946
+      },
+      {
+        "type": "model",
+        "task_id": "annual_report_rag",
+        "agent": "filing_rag",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 3545,
+        "output_tokens": 43,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_hqmgb6n1",
+            "function": {
+              "index": 0,
+              "name": "search_filings",
+              "arguments": {
+                "query": "revenue earnings results",
+                "section": "Item 7",
+                "ticker": "MSFT",
+                "top_k": 3,
+                "latest": true
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 7.787047084000733
+      },
+      {
+        "type": "tool",
+        "task_id": "annual_report_rag",
+        "agent": "filing_rag",
+        "step": 2,
+        "call_id": 2,
+        "name": "search_filings",
+        "arguments": {
+          "query": "revenue earnings results",
+          "section": "Item 7",
+          "ticker": "MSFT",
+          "top_k": 3,
+          "latest": true
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "query": "revenue earnings results",
+          "fiscal_year": 2026,
+          "section": "Item 7",
+          "matches": [
+            {
+              "chunk_id": "0001193125-26-323660:item_7:23",
+              "text": "(4,963\n)\n3,620\n1,126\n(237)%\n221%\nAdjusted net income (non-GAAP)\n$\n128,786\n$\n105,452\n$\n89,262\n22%\n18%\nDiluted earnings per share\n$\n17.95\n$\n13.64\n$\n11.80\n32%\n16%\nNet (gains) losses from investments in OpenAI\n(0.67\n)\n0.49\n0.15\n(237)%\n227%\nAdjusted diluted earnings per share (non-GAAP)\n$\n17.28\n$\n14.13\n$\n11.95\n22%\n18%\nLIQUIDITY AND CAPITAL RESOURCES\nWe expect existing cash, cash equivalents, short-term investments, cash flows from operations, and access to capital markets to continue to be sufficient to fund our operating activities and cash commitments for investing and financing activities, such as dividends, share repurchases, debt maturities, and material capital expenditures, for at least the next 12 months and thereafter for the foreseeable future.\n42\nPART II\nItem 7\nCash, Cash Equivalents, and Investments",
+              "metadata": {
+                "start": 169324,
+                "amendment_note": "Original annual filing section.",
+                "form": "10-K",
+                "section": "Item 7",
+                "cik": "0000789019",
+                "filed": "2026-07-29",
+                "section_end": 192797,
+                "section_start": 141540,
+                "fiscal_year": 2026,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "report_date": "2026-06-30",
+                "accession_number": "0001193125-26-323660",
+                "section_title": "Management's Discussion and Analysis",
+                "ticker": "MSFT",
+                "end": 170141
+              },
+              "distance": 0.4269178509712219,
+              "score": 0.032266458495966696,
+              "ranks": {
+                "dense": 1,
+                "bm25": 3
+              },
+              "context": {
+                "text": "ge\nChange 2025 Versus 2024\nOther income (expense), net\n$\n10,697\n$\n(4,901\n)\n$\n(1,646\n)\n318%\n(198)%\nNet (gains) losses from investments in OpenAI\n(6,530\n)\n4,763\n1,482\n(237)%\n221%\nAdjusted other income (expense), net (non-GAAP)\n$\n4,167\n$\n(138\n)\n$\n(164\n)\n3,120%\n16%\nNet income\n$\n133,749\n$\n101,832\n$\n88,136\n31%\n16%\nNet (gains) losses from investments in OpenAI, net of tax of $1,567, $(1,143), and $(356)\n(4,963\n)\n3,620\n1,126\n(237)%\n221%\nAdjusted net income (non-GAAP)\n$\n128,786\n$\n105,452\n$\n89,262\n22%\n18%\nDiluted earnings per share\n$\n17.95\n$\n13.64\n$\n11.80\n32%\n16%\nNet (gains) losses from investments in OpenAI\n(0.67\n)\n0.49\n0.15\n(237)%\n227%\nAdjusted diluted earnings per share (non-GAAP)\n$\n17.28\n$\n14.13\n$\n11.95\n22%\n18%\nLIQUIDITY AND CAPITAL RESOURCES\nWe expect existing cash, cash equivalents, short-term investments, cash flows from operations, and access to capital markets to continue to be sufficient to fund our operating activities and cash commitments for investing and financing activities, such as dividends, share repurchases, debt maturities, and material capital expenditures, for at least the next 12 months and thereafter for the foreseeable future.\n42\nPART II\nItem 7\nCash, Cash Equivalents, and Investments\nCash, cash equivalents, and short-term investments totaled $76.8 billion and $94.6 billion as of June 30, 2026 and 2025, respectively. Equity and other investments were $36.3 billion and $15.4 billion as of June 30, 2026 and 2025, respectively. Our short-term investments are primarily intended to facilitate liquidity and capital preservation. They consist predominantly of highly liquid investment",
+                "start": 168924,
+                "end": 170541
+              }
+            },
+            {
+              "chunk_id": "0001193125-26-323660:item_7:10",
+              "text": "Search advertising revenue (ex TAC) growth\nRevenue from search advertising excluding traffic acquisition costs (“TAC”) paid to Bing Ads network publishers and content partners\nSUMMARY RESULTS OF OPERATIONS\n(In millions, except percentages and per share amounts)\n2026\n2025\nPercentage\nChange\nRevenue\n$\n331,839\n$\n281,724\n18%\nGross margin\n225,465\n193,893\n16%\nOperating income\n155,237\n128,528\n21%\nNet income\n133,749\n101,832\n31%\nDiluted earnings per share\n17.95\n13.64\n32%\nAdjusted net income (non-GAAP)\n128,786\n105,452\n22%\nAdjusted diluted earnings per share (non-GAAP)\n17.28\n14.13\n22%\nAdjusted net income and adjusted diluted earnings per share (“EPS”) are non-GAAP financial measures. These non-GAAP financial measures exclude net gains and losses from investments in OpenAI. Refer to the Non-GAAP Financial Measures section below for a reconciliation of our financial results reported in accordance with GAAP to non-GAAP financial results.\nFiscal Year 2026 Compared with Fiscal Year 2025\nRevenue increased $50.1 billion or 18% driven by growth in Microsoft Cloud. Intelligent Cloud revenue increased driven by Azure. Productivity and Business Processes revenue increased driven by Microsoft 365 Commercial cloud. More Personal Computing revenue decreased driven by XBOX (formerly Gaming), offset in part by growth in Search advertising.\nCost of revenue increased $18.5 billion or 21% driven by growth in Microsoft Cloud.",
+              "metadata": {
+                "section": "Item 7",
+                "end": 154561,
+                "cik": "0000789019",
+                "start": 153144,
+                "section_title": "Management's Discussion and Analysis",
+                "section_end": 192797,
+                "filed": "2026-07-29",
+                "accession_number": "0001193125-26-323660",
+                "ticker": "MSFT",
+                "amendment_note": "Original annual filing section.",
+                "report_date": "2026-06-30",
+                "fiscal_year": 2026,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "form": "10-K",
+                "section_start": 141540
+              },
+              "distance": 0.456892192363739,
+              "score": 0.032018442622950824,
+              "ranks": {
+                "dense": 4,
+                "bm25": 1
+              },
+              "context": {
+                "text": "ales of Windows Pro and non-Pro licenses sold through the OEM channel and sales of first-party Devices, including Surface and PC accessories\nXBOX content and services revenue growth\nRevenue from XBOX content and services, comprising first- and third-party content (including games and in-game content), XBOX Game Pass and other subscriptions, XBOX Cloud Gaming, advertising, and other cloud services\nSearch advertising revenue (ex TAC) growth\nRevenue from search advertising excluding traffic acquisition costs (“TAC”) paid to Bing Ads network publishers and content partners\nSUMMARY RESULTS OF OPERATIONS\n(In millions, except percentages and per share amounts)\n2026\n2025\nPercentage\nChange\nRevenue\n$\n331,839\n$\n281,724\n18%\nGross margin\n225,465\n193,893\n16%\nOperating income\n155,237\n128,528\n21%\nNet income\n133,749\n101,832\n31%\nDiluted earnings per share\n17.95\n13.64\n32%\nAdjusted net income (non-GAAP)\n128,786\n105,452\n22%\nAdjusted diluted earnings per share (non-GAAP)\n17.28\n14.13\n22%\nAdjusted net income and adjusted diluted earnings per share (“EPS”) are non-GAAP financial measures. These non-GAAP financial measures exclude net gains and losses from investments in OpenAI. Refer to the Non-GAAP Financial Measures section below for a reconciliation of our financial results reported in accordance with GAAP to non-GAAP financial results.\nFiscal Year 2026 Compared with Fiscal Year 2025\nRevenue increased $50.1 billion or 18% driven by growth in Microsoft Cloud. Intelligent Cloud revenue increased driven by Azure. Productivity and Business Processes revenue increased driven by Microsoft 365 Commercial cloud. More Personal Computing revenue decreased driven by XBOX (formerly Gaming), offset in part by growth in Search advertising.\nCost of revenue increased $18.5 billion or 21% driven by growth in Microsoft Cloud.\nGross margin increased $31.6 billion or 16% with growth across each of our segments.\n•\nGross margin percentage decreased slightly driven by continued investments in AI infrastructure and growing AI product usage, offset in part by efficiency gains across the Microsoft Cloud.\n•\nMicrosoft Cloud gross margin percentage decreased to 66% driven by continued investments in AI infrastructure and growing",
+                "start": 152744,
+                "end": 154961
+              }
+            },
+            {
+              "chunk_id": "0001193125-26-323660:item_7:12",
+              "text": "Revenue and operating income both included a favorable foreign currency impact of 2%.\n37\nPART II\nItem 7\nCurrent year net income and diluted EPS were positively impacted by net gains from investments in OpenAI, which resulted in an increase in net income and diluted EPS of $5.0 billion and $0.67, respectively. Prior year net income and diluted EPS were negatively impacted by net losses from investments in OpenAI, which resulted in a decrease in net income and diluted EPS of $3.6 billion and $0.49, respectively.\nSEGMENT RESULTS OF OPERATIONS\n(In millions, except percentages)\n2026\n2025\nPercentage\nChange\nProductivity and Business Processes\nRevenue\n$\n139,996\n$\n120,810\n16%\nCost of revenue\n25,017\n22,422\n12%\nOperating expenses\n31,100\n28,615\n9%\nOperating income\n$\n83,879\n$\n69,773\n20%\nIntelligent Cloud\nRevenue\n$\n137,791\n$\n106,265\n30%\nCost of revenue\n57,876\n40,171\n44%\nOperating expenses\n22,943\n21,505\n7%\nOperating income\n$\n56,972\n$\n44,589\n28%\nMore Personal Computing\nRevenue\n$\n54,052\n$\n54,649\n(1)%\nCost of revenue\n23,481\n25,238\n(7)%\nOperating expenses\n16,185\n15,245\n6%\nOperating income\n$\n14,386\n$\n14,166\n2%\nTotal\nRevenue\n$\n331,839\n$\n281,724\n18%\nCost of revenue\n106,374\n87,831\n21%\nOperating expenses\n70,228\n65,365\n7%\nOperating income\n$\n155,237\n$\n128,528\n21%\nReportable Segments\nFiscal Year 2026 Compared with Fiscal Year 2025\nProductivity and Business Processes\nRevenue increased $19.2 billion or 16%.\n•",
+              "metadata": {
+                "fiscal_year": 2026,
+                "cik": "0000789019",
+                "filed": "2026-07-29",
+                "section_title": "Management's Discussion and Analysis",
+                "report_date": "2026-06-30",
+                "end": 156937,
+                "amendment_note": "Original annual filing section.",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "start": 155534,
+                "section_end": 192797,
+                "section_start": 141540,
+                "form": "10-K",
+                "section": "Item 7",
+                "ticker": "MSFT",
+                "accession_number": "0001193125-26-323660"
+              },
+              "distance": 0.4369159936904907,
+              "score": 0.030798389007344232,
+              "ranks": {
+                "dense": 3,
+                "bm25": 7
+              },
+              "context": {
+                "text": "ments in research and development compute capacity, AI talent, and data to support product development that benefits the entire portfolio, impairment and other related expenses in our XBOX business, investments in commercial sales, and higher Copilot advertising expenses.\nOperating income increased $26.7 billion or 21% driven by growth in Productivity and Business Processes and Intelligent Cloud.\nRevenue and operating income both included a favorable foreign currency impact of 2%.\n37\nPART II\nItem 7\nCurrent year net income and diluted EPS were positively impacted by net gains from investments in OpenAI, which resulted in an increase in net income and diluted EPS of $5.0 billion and $0.67, respectively. Prior year net income and diluted EPS were negatively impacted by net losses from investments in OpenAI, which resulted in a decrease in net income and diluted EPS of $3.6 billion and $0.49, respectively.\nSEGMENT RESULTS OF OPERATIONS\n(In millions, except percentages)\n2026\n2025\nPercentage\nChange\nProductivity and Business Processes\nRevenue\n$\n139,996\n$\n120,810\n16%\nCost of revenue\n25,017\n22,422\n12%\nOperating expenses\n31,100\n28,615\n9%\nOperating income\n$\n83,879\n$\n69,773\n20%\nIntelligent Cloud\nRevenue\n$\n137,791\n$\n106,265\n30%\nCost of revenue\n57,876\n40,171\n44%\nOperating expenses\n22,943\n21,505\n7%\nOperating income\n$\n56,972\n$\n44,589\n28%\nMore Personal Computing\nRevenue\n$\n54,052\n$\n54,649\n(1)%\nCost of revenue\n23,481\n25,238\n(7)%\nOperating expenses\n16,185\n15,245\n6%\nOperating income\n$\n14,386\n$\n14,166\n2%\nTotal\nRevenue\n$\n331,839\n$\n281,724\n18%\nCost of revenue\n106,374\n87,831\n21%\nOperating expenses\n70,228\n65,365\n7%\nOperating income\n$\n155,237\n$\n128,528\n21%\nReportable Segments\nFiscal Year 2026 Compared with Fiscal Year 2025\nProductivity and Business Processes\nRevenue increased $19.2 billion or 16%.\n•\nMicrosoft 365 Commercial products and cloud services revenue increased $14.2 billion or 16%. Microsoft 365 Commercial cloud revenue grew 17% with growth in revenue per user driven by Microsoft 365 Copilot and Microsoft 365 E5. Microsoft 365 Commercial seats grew 6% driven by small and medium businesses and frontline worker offerings. Microsoft 365 Commercial products revenue grew 13% driven by gr",
+                "start": 155134,
+                "end": 157337
+              }
+            }
+          ],
+          "latest": true,
+          "selected_report": {
+            "fiscal_year": 2026,
+            "report_date": "2026-06-30",
+            "accession_number": "0001193125-26-323660"
+          }
+        },
+        "elapsed_seconds": 0.18826737500057789
+      },
+      {
+        "type": "model",
+        "task_id": "annual_report_rag",
+        "agent": "filing_rag",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 6756,
+        "output_tokens": 43,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_6dpwu38m",
+            "function": {
+              "index": 0,
+              "name": "search_filings",
+              "arguments": {
+                "section": "Item 7",
+                "ticker": "MSFT",
+                "top_k": 3,
+                "latest": true,
+                "query": "revenue outlook guidance"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 12.58261287500136
+      },
+      {
+        "type": "tool",
+        "task_id": "annual_report_rag",
+        "agent": "filing_rag",
+        "step": 3,
+        "call_id": 3,
+        "name": "search_filings",
+        "arguments": {
+          "section": "Item 7",
+          "ticker": "MSFT",
+          "top_k": 3,
+          "latest": true,
+          "query": "revenue outlook guidance"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "query": "revenue outlook guidance",
+          "fiscal_year": 2026,
+          "section": "Item 7",
+          "matches": [
+            {
+              "chunk_id": "0001193125-26-323660:item_7:32",
+              "text": "RECENT ACCOUNTING GUIDANCE\nRefer to Note 1 – Accounting Policies of the Notes to Financial Statements (Part II, Item 8 of this Form 10-K).\nCRITICAL ACCOUNTING ESTIMATES\nOur consolidated financial statements and accompanying notes are prepared in accordance with GAAP. Preparing consolidated financial statements requires management to make estimates and assumptions that affect the reported amounts of assets, liabilities, revenue, and expenses. Critical accounting estimates are those estimates that involve a significant level of estimation uncertainty and could have a material impact on our financial condition or results of operations. We have critical accounting estimates in the areas of revenue recognition, measurement and impairment of investment securities, goodwill, research and development costs, legal and other contingencies, and income taxes.\nRevenue Recognition",
+              "metadata": {
+                "end": 180050,
+                "report_date": "2026-06-30",
+                "section_title": "Management's Discussion and Analysis",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "filed": "2026-07-29",
+                "cik": "0000789019",
+                "form": "10-K",
+                "ticker": "MSFT",
+                "fiscal_year": 2026,
+                "section": "Item 7",
+                "start": 179171,
+                "section_end": 192797,
+                "amendment_note": "Original annual filing section.",
+                "accession_number": "0001193125-26-323660",
+                "section_start": 141540
+              },
+              "distance": 0.4715694785118103,
+              "score": 0.030886196246139225,
+              "ranks": {
+                "dense": 9,
+                "bm25": 1
+              },
+              "context": {
+                "text": "astructure. We have operating and finance leases for datacenters and related infrastructure, servers and network equipment, corporate offices, and research and development facilities. We have not engaged in any related party transactions or arrangements with unconsolidated entities or other persons that are reasonably likely to materially affect liquidity or the availability of capital resources.\nRECENT ACCOUNTING GUIDANCE\nRefer to Note 1 – Accounting Policies of the Notes to Financial Statements (Part II, Item 8 of this Form 10-K).\nCRITICAL ACCOUNTING ESTIMATES\nOur consolidated financial statements and accompanying notes are prepared in accordance with GAAP. Preparing consolidated financial statements requires management to make estimates and assumptions that affect the reported amounts of assets, liabilities, revenue, and expenses. Critical accounting estimates are those estimates that involve a significant level of estimation uncertainty and could have a material impact on our financial condition or results of operations. We have critical accounting estimates in the areas of revenue recognition, measurement and impairment of investment securities, goodwill, research and development costs, legal and other contingencies, and income taxes.\nRevenue Recognition\nOur contracts with customers often include promises to transfer multiple products and services to a customer. Determining whether products and services are considered distinct performance obligations that should be accounted for separately versus together may require significant judgment. When a cloud-based service includes both on-premises software licenses and cloud services, judgment is requir",
+                "start": 178771,
+                "end": 180450
+              }
+            },
+            {
+              "chunk_id": "0001193125-26-323660:item_7:12",
+              "text": "Revenue and operating income both included a favorable foreign currency impact of 2%.\n37\nPART II\nItem 7\nCurrent year net income and diluted EPS were positively impacted by net gains from investments in OpenAI, which resulted in an increase in net income and diluted EPS of $5.0 billion and $0.67, respectively. Prior year net income and diluted EPS were negatively impacted by net losses from investments in OpenAI, which resulted in a decrease in net income and diluted EPS of $3.6 billion and $0.49, respectively.\nSEGMENT RESULTS OF OPERATIONS\n(In millions, except percentages)\n2026\n2025\nPercentage\nChange\nProductivity and Business Processes\nRevenue\n$\n139,996\n$\n120,810\n16%\nCost of revenue\n25,017\n22,422\n12%\nOperating expenses\n31,100\n28,615\n9%\nOperating income\n$\n83,879\n$\n69,773\n20%\nIntelligent Cloud\nRevenue\n$\n137,791\n$\n106,265\n30%\nCost of revenue\n57,876\n40,171\n44%\nOperating expenses\n22,943\n21,505\n7%\nOperating income\n$\n56,972\n$\n44,589\n28%\nMore Personal Computing\nRevenue\n$\n54,052\n$\n54,649\n(1)%\nCost of revenue\n23,481\n25,238\n(7)%\nOperating expenses\n16,185\n15,245\n6%\nOperating income\n$\n14,386\n$\n14,166\n2%\nTotal\nRevenue\n$\n331,839\n$\n281,724\n18%\nCost of revenue\n106,374\n87,831\n21%\nOperating expenses\n70,228\n65,365\n7%\nOperating income\n$\n155,237\n$\n128,528\n21%\nReportable Segments\nFiscal Year 2026 Compared with Fiscal Year 2025\nProductivity and Business Processes\nRevenue increased $19.2 billion or 16%.\n•",
+              "metadata": {
+                "fiscal_year": 2026,
+                "form": "10-K",
+                "start": 155534,
+                "report_date": "2026-06-30",
+                "section_start": 141540,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "accession_number": "0001193125-26-323660",
+                "filed": "2026-07-29",
+                "section": "Item 7",
+                "cik": "0000789019",
+                "end": 156937,
+                "ticker": "MSFT",
+                "section_title": "Management's Discussion and Analysis",
+                "amendment_note": "Original annual filing section.",
+                "section_end": 192797
+              },
+              "distance": 0.443912148475647,
+              "score": 0.030621785881252923,
+              "ranks": {
+                "dense": 2,
+                "bm25": 9
+              },
+              "context": {
+                "text": "ments in research and development compute capacity, AI talent, and data to support product development that benefits the entire portfolio, impairment and other related expenses in our XBOX business, investments in commercial sales, and higher Copilot advertising expenses.\nOperating income increased $26.7 billion or 21% driven by growth in Productivity and Business Processes and Intelligent Cloud.\nRevenue and operating income both included a favorable foreign currency impact of 2%.\n37\nPART II\nItem 7\nCurrent year net income and diluted EPS were positively impacted by net gains from investments in OpenAI, which resulted in an increase in net income and diluted EPS of $5.0 billion and $0.67, respectively. Prior year net income and diluted EPS were negatively impacted by net losses from investments in OpenAI, which resulted in a decrease in net income and diluted EPS of $3.6 billion and $0.49, respectively.\nSEGMENT RESULTS OF OPERATIONS\n(In millions, except percentages)\n2026\n2025\nPercentage\nChange\nProductivity and Business Processes\nRevenue\n$\n139,996\n$\n120,810\n16%\nCost of revenue\n25,017\n22,422\n12%\nOperating expenses\n31,100\n28,615\n9%\nOperating income\n$\n83,879\n$\n69,773\n20%\nIntelligent Cloud\nRevenue\n$\n137,791\n$\n106,265\n30%\nCost of revenue\n57,876\n40,171\n44%\nOperating expenses\n22,943\n21,505\n7%\nOperating income\n$\n56,972\n$\n44,589\n28%\nMore Personal Computing\nRevenue\n$\n54,052\n$\n54,649\n(1)%\nCost of revenue\n23,481\n25,238\n(7)%\nOperating expenses\n16,185\n15,245\n6%\nOperating income\n$\n14,386\n$\n14,166\n2%\nTotal\nRevenue\n$\n331,839\n$\n281,724\n18%\nCost of revenue\n106,374\n87,831\n21%\nOperating expenses\n70,228\n65,365\n7%\nOperating income\n$\n155,237\n$\n128,528\n21%\nReportable Segments\nFiscal Year 2026 Compared with Fiscal Year 2025\nProductivity and Business Processes\nRevenue increased $19.2 billion or 16%.\n•\nMicrosoft 365 Commercial products and cloud services revenue increased $14.2 billion or 16%. Microsoft 365 Commercial cloud revenue grew 17% with growth in revenue per user driven by Microsoft 365 Copilot and Microsoft 365 E5. Microsoft 365 Commercial seats grew 6% driven by small and medium businesses and frontline worker offerings. Microsoft 365 Commercial products revenue grew 13% driven by gr",
+                "start": 155134,
+                "end": 157337
+              }
+            },
+            {
+              "chunk_id": "0001193125-26-323660:item_7:8",
+              "text": "Commercial remaining performance obligation\nCommercial portion of revenue allocated to remaining performance obligations, which includes unearned revenue and amounts that will be invoiced and recognized as revenue in future periods\nMicrosoft Cloud revenue and revenue growth\nRevenue from Microsoft 365 Commercial cloud, Azure and other cloud services, the commercial portion of LinkedIn, and Dynamics 365\nMicrosoft Cloud gross margin percentage\nGross margin percentage for our Microsoft Cloud business\nProductivity and Business Processes and Intelligent Cloud\nMetrics related to our Productivity and Business Processes and Intelligent Cloud segments assess the health of our core businesses within these segments. The metrics primarily reflect growth across our cloud services.\nMicrosoft 365 Commercial cloud revenue growth\nRevenue from Microsoft 365 Commercial subscriptions, comprising Microsoft 365 Commercial, Enterprise Mobility + Security, the cloud portion of Windows Commercial, the per-user portion of Power BI, Exchange, SharePoint, Microsoft Teams, Microsoft 365 Security and Compliance, and Microsoft 365 Copilot\nMicrosoft 365 Commercial seat growth\nThe number of Microsoft 365 Commercial seats at end of period where seats are paid users covered by a Microsoft 365 Commercial subscription\nMicrosoft 365 Consumer cloud revenue growth\nRevenue from Microsoft 365 Consumer subscriptions and other consumer services\nLinkedIn revenue growth",
+              "metadata": {
+                "start": 150514,
+                "section": "Item 7",
+                "section_start": 141540,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+                "fiscal_year": 2026,
+                "end": 151961,
+                "accession_number": "0001193125-26-323660",
+                "section_end": 192797,
+                "report_date": "2026-06-30",
+                "cik": "0000789019",
+                "ticker": "MSFT",
+                "form": "10-K",
+                "amendment_note": "Original annual filing section.",
+                "section_title": "Management's Discussion and Analysis",
+                "filed": "2026-07-29"
+              },
+              "distance": 0.4584028124809265,
+              "score": 0.03055037313432836,
+              "ranks": {
+                "dense": 4,
+                "bm25": 7
+              },
+              "context": {
+                "text": "ial business primarily consists of Server products and cloud services, Microsoft 365 Commercial products and cloud services, the commercial portion of LinkedIn, Dynamics products and cloud services, and Enterprise and partner services. Our commercial metrics allow management and investors to assess the overall health of our commercial business and include leading indicators of future performance.\nCommercial remaining performance obligation\nCommercial portion of revenue allocated to remaining performance obligations, which includes unearned revenue and amounts that will be invoiced and recognized as revenue in future periods\nMicrosoft Cloud revenue and revenue growth\nRevenue from Microsoft 365 Commercial cloud, Azure and other cloud services, the commercial portion of LinkedIn, and Dynamics 365\nMicrosoft Cloud gross margin percentage\nGross margin percentage for our Microsoft Cloud business\nProductivity and Business Processes and Intelligent Cloud\nMetrics related to our Productivity and Business Processes and Intelligent Cloud segments assess the health of our core businesses within these segments. The metrics primarily reflect growth across our cloud services.\nMicrosoft 365 Commercial cloud revenue growth\nRevenue from Microsoft 365 Commercial subscriptions, comprising Microsoft 365 Commercial, Enterprise Mobility + Security, the cloud portion of Windows Commercial, the per-user portion of Power BI, Exchange, SharePoint, Microsoft Teams, Microsoft 365 Security and Compliance, and Microsoft 365 Copilot\nMicrosoft 365 Commercial seat growth\nThe number of Microsoft 365 Commercial seats at end of period where seats are paid users covered by a Microsoft 365 Commercial subscription\nMicrosoft 365 Consumer cloud revenue growth\nRevenue from Microsoft 365 Consumer subscriptions and other consumer services\nLinkedIn revenue growth\nRevenue from LinkedIn, including Talent Solutions, Marketing Solutions, Premium Subscriptions, and Sales Solutions\nDynamics 365 revenue growth\nRevenue from Dynamics 365, including a set of intelligent, cloud-based applications across ERP, CRM, Power Apps, and Power Automate\nAzure and other cloud services revenue growth\nRevenue from Azure and other cloud services, including cloud and AI consumptio",
+                "start": 150114,
+                "end": 152361
+              }
+            }
+          ],
+          "latest": true,
+          "selected_report": {
+            "fiscal_year": 2026,
+            "report_date": "2026-06-30",
+            "accession_number": "0001193125-26-323660"
+          }
+        },
+        "elapsed_seconds": 0.15438545799952408
+      },
+      {
+        "type": "model",
+        "task_id": "annual_report_rag",
+        "agent": "filing_rag",
+        "step": 4,
+        "max_output_tokens": 1024,
+        "input_tokens": 9443,
+        "output_tokens": 43,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_k0y0asls",
+            "function": {
+              "index": 0,
+              "name": "search_filings",
+              "arguments": {
+                "latest": true,
+                "query": "revenue outlook guidance",
+                "section": "Item 7",
+                "ticker": "MSFT",
+                "top_k": 3
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 12.675996292000491
+      },
+      {
+        "type": "agent",
+        "task_id": "annual_report_rag",
+        "agent": "filing_rag",
+        "status": "completed",
+        "stop_reason": "repeated_requests",
+        "elapsed_seconds": 49.97791108399906
+      },
+      {
+        "type": "model",
+        "phase": "coverage",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 8094,
+        "output_tokens": 1408,
+        "total_tokens": 9502,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 1324,
+        "response_id": "resp_090096d0e2b9e339016b02a353e73887d2b01c2c56c87759e6",
+        "estimated_cost_usd": 0.0015134,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"complete\":false,\"gaps\":[\"Recent Federal Reserve policy information is missing, so the annual-report risks cannot be compared with the Fed’s current stance.\",\"Recent BLS inflation data is missing, including the measure, period, and inflation rate. The supplied evidence contains no CPI data; an index level alone would not provide an inflation rate.\"],\"tasks\":[]}",
+        "elapsed_seconds": 17.101660083000752
+      },
+      {
+        "type": "coverage",
+        "complete": false,
+        "gaps": [
+          "Recent Federal Reserve policy information is missing, so the annual-report risks cannot be compared with the Fed’s current stance.",
+          "Recent BLS inflation data is missing, including the measure, period, and inflation rate. The supplied evidence contains no CPI data; an index level alone would not provide an inflation rate."
+        ],
+        "status": "partial",
+        "repair_tasks_attempted": 0
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 8914,
+        "output_tokens": 529,
+        "total_tokens": 9443,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 163,
+        "response_id": "resp_00a8493414c65dd9016b02a365b9a887d29301ccd51ff0ca7b",
+        "estimated_cost_usd": 0.0011559,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"insufficient_data\",\"text\":\"Microsoft’s FY{{F2_fiscal_year}} fiscal year ended {{F2_end}}. Revenue was {{F2_value}} {{F2_unit}}, while cost of revenue was {{F3_value}} {{F3_unit}} and operating expenses were {{F4_value}} {{F4_unit}}. Compared with the prior fiscal year, revenue increased, but cost of revenue grew faster; operating expenses also increased, at a slower pace than revenue. The company attributed revenue growth mainly to Microsoft Cloud, including Azure and Microsoft 365 Commercial cloud, and said higher cost of revenue reflected Microsoft Cloud growth. It also reported that gross margin percentage declined slightly, citing continued AI-infrastructure investment and growing AI-product usage, partly offset by Microsoft Cloud efficiency gains. [Source 9] [Source 12]\\n\\nThe annual report identifies global and regional economic developments, monetary policy, geopolitical tensions, trade restrictions, inflation and recession as potential factors that could adversely affect results. It also says geopolitical events may affect customer sales and collections, raise costs, disrupt operations or make customers’ technology-investment timing and budgets less certain. These are disclosed risks, not evidence that those factors caused the reported FY2026 results. [Source 5] [Source 6]\\n\\nThe supplied evidence does not include recent Federal Reserve policy information or BLS inflation data, so those cannot be compared with Microsoft’s disclosed risks here. In particular, no CPI measure, period or inflation rate is supplied; an index level alone would not establish an inflation rate. The evidence therefore supports a discussion of Microsoft’s reported financial results and stated exposures, but not a current Fed-and-inflation assessment or a conclusion about their company-specific effects.\",\"facts\":[]}",
+        "elapsed_seconds": 6.081110250001075
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"365\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values."
+        },
+        "elapsed_seconds": 6.086164124999414
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "reserved_content_repair": false,
+        "issues": [
+          "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"365\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 9468,
+        "output_tokens": 357,
+        "total_tokens": 9825,
+        "cached_input_tokens": 8911,
+        "reasoning_tokens": 0,
+        "response_id": "resp_04ea4c711cc2172c016b02a36b0a5087d2a34556f7afbc5f5c",
+        "estimated_cost_usd": 0.00032331,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"insufficient_data\",\"text\":\"Microsoft’s FY{{F2_fiscal_year}} fiscal year ended {{F2_end}}. Revenue was {{F2_value}} {{F2_unit}}, cost of revenue was {{F3_value}} {{F3_unit}}, and operating expenses were {{F4_value}} {{F4_unit}}. Revenue increased compared with the prior fiscal year; cost of revenue grew faster than revenue, while operating expenses grew more slowly. The company attributed revenue growth mainly to Microsoft Cloud, including Azure and Microsoft 365 Commercial cloud, and said cost-of-revenue growth was driven by Microsoft Cloud. It reported a slight decrease in gross margin percentage, driven by continued AI-infrastructure investment and growing AI-product usage, partly offset by Microsoft Cloud efficiency gains. [Source 9] [Source 12]\\n\\nMicrosoft identifies global and regional economic developments, monetary policy, geopolitical tensions, trade restrictions, inflation and recession as potential risks to results. It also says geopolitical events may negatively affect its ability to sell to and collect from customers, increase operating costs or disrupt operations, and may introduce uncertainty into customers’ technology-investment timing and budgets. These are potential risks described by the company, not stated causes of the reported financial results. [Source 5] [Source 6]\\n\\nThe supplied evidence does not include recent Federal Reserve policy information or BLS inflation data, so it is not possible to compare those developments with Microsoft’s disclosed risks. No CPI measure, period or inflation rate is provided; an index level alone would not be an inflation rate. The evidence supports discussion of the reported results and disclosed risks, but not an assessment of recent Fed policy or inflation’s company-specific effects.\",\"facts\":[]}",
+        "elapsed_seconds": 3.062434375000521
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"365\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values."
+        },
+        "elapsed_seconds": 3.0662454169996636
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 2,
+        "max_revisions": 2,
+        "reserved_content_repair": false,
+        "issues": [
+          "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"365\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 9461,
+        "output_tokens": 465,
+        "total_tokens": 9926,
+        "cached_input_tokens": 8911,
+        "reasoning_tokens": 110,
+        "response_id": "resp_0deb1e7a0b6aa9dd016b02a36e18ec87d296db534b151d8af1",
+        "estimated_cost_usd": 0.00037661,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"insufficient_data\",\"text\":\"Microsoft’s FY{{F2_fiscal_year}}, ended {{F2_end}}, revenue was {{F2_value}} {{F2_unit}}, cost of revenue was {{F3_value}} {{F3_unit}}, and operating expenses were {{F4_value}} {{F4_unit}}. Revenue increased from the prior fiscal year, cost of revenue increased faster than revenue, and operating expenses increased more slowly than revenue. The company attributed revenue growth primarily to Microsoft Cloud, including Azure and commercial cloud services. It said cost-of-revenue growth was driven by Microsoft Cloud, and that gross margin percentage decreased slightly, primarily due to continued AI-infrastructure investment and growing AI-product usage, partly offset by efficiency gains across Microsoft Cloud. [Source 9] [Source 12]\\n\\nMicrosoft lists global and regional economic developments, monetary policy, geopolitical tension, trade restrictions, inflation and recession as potential risks to results. It also says geopolitical events could negatively affect sales and collections, increase operating costs or disrupt operations, and could add uncertainty to customers’ technology-investment timing and budgets. These are risks identified by the company; the supplied excerpts do not establish them as causes of the reported financial results. [Source 5] [Source 6]\\n\\nThe supplied evidence does not include recent Federal Reserve policy information or BLS inflation data, so those developments cannot be compared with Microsoft’s disclosed risks. It provides no CPI measure, period or inflation rate; an index level alone would not establish an inflation rate. Accordingly, the evidence supports analysis of Microsoft’s reported annual figures and stated potential risks, but not a company-specific assessment of recent Fed policy or inflation effects.\",\"facts\":[]}",
+        "elapsed_seconds": 3.9148147919986513
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 3.919104625001637
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 6083,
+        "output_tokens": 292,
+        "total_tokens": 6375,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 260,
+        "response_id": "resp_0e2f7270cc23d4a3016b02a37206a087d2a229d55010f6c414",
+        "estimated_cost_usd": 0.0007543000000000001,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"issues\":[],\"evidence_supported\":true,\"language_matches\":true,\"answer_complete\":true}",
+        "elapsed_seconds": 4.26953954199962
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 4.273136750000049
+      }
+    ],
+    "elapsed_seconds": 111.21313541699965,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "think": false,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      },
+      "roles": {
+        "writer": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "max_output_tokens": 8192
+        },
+        "critic": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "max_output_tokens": 8192
+        }
+      }
+    },
+    "dataset_sha256": "21b220572a461b438a4aa2d7aa3fe48fce7962852bcccef14a71ed99ca769030",
+    "recorded_at": "2026-11-22T08:10:30.146319+00:00",
+    "transport": "mcp"
+  }
+]

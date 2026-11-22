@@ -1,0 +1,101 @@
+[
+  {
+    "question": "Intel'in yıllık gelir büyümesinde gerileme var mı? Son üç mali yılın eğilimini, son çeyreklik raporunu ve son şirket açıklamalarını birlikte değerlendir. Yıllık sonuçları ara dönem verileri ve beklentilerden ayır.",
+    "plan": {
+      "request_type": "mixed",
+      "tasks": [
+        {
+          "id": "annual_growth",
+          "agent": "financial_data",
+          "instruction": "For Intel, retrieve three annual revenue records and compute revenue_growth with years=3.",
+          "filing_scope": "annual",
+          "years": 3,
+          "fiscal_year": null
+        },
+        {
+          "id": "recent_quarter",
+          "agent": "filing_rag",
+          "instruction": "For Intel, retrieve latest quarterly results using search_company_updates form=10-Q limit=1 and recent announcements using form=8-K; distinguish actuals from outlook.",
+          "filing_scope": "recent",
+          "years": 1,
+          "fiscal_year": null
+        }
+      ]
+    },
+    "error": null,
+    "elapsed_seconds": 4.649377083998843,
+    "telemetry": {
+      "input_tokens": 931,
+      "output_tokens": 144,
+      "model": "qwen3:8b",
+      "provider": "ollama",
+      "estimated_cost_usd": 0.0
+    }
+  },
+  {
+    "question": "AMD'nin son üç yıllık gelir büyümesini, en son çeyrek sonuçlarını ve son şirket açıklamalarını değerlendir.",
+    "plan": {
+      "request_type": "mixed",
+      "tasks": [
+        {
+          "id": "annual",
+          "agent": "financial_data",
+          "instruction": "For AMD, retrieve three annual revenue records and compute revenue_growth with years=3.",
+          "filing_scope": "annual",
+          "years": 3,
+          "fiscal_year": null
+        },
+        {
+          "id": "recent",
+          "agent": "filing_rag",
+          "instruction": "For AMD, retrieve latest quarterly results using search_company_updates form=10-Q limit=1 and recent announcements using form=8-K; distinguish actuals from outlook.",
+          "filing_scope": "recent",
+          "years": 1,
+          "fiscal_year": null
+        }
+      ]
+    },
+    "error": null,
+    "elapsed_seconds": 3.484262417001446,
+    "telemetry": {
+      "input_tokens": 895,
+      "output_tokens": 141,
+      "model": "qwen3:8b",
+      "provider": "ollama",
+      "estimated_cost_usd": 0.0
+    }
+  },
+  {
+    "question": "Compare Costco and Salesforce annual revenue growth over the last three fiscal years.",
+    "plan": {
+      "request_type": "comparison",
+      "tasks": [
+        {
+          "id": "costco",
+          "agent": "financial_data",
+          "instruction": "For Costco, retrieve three annual revenue records and compute revenue_growth with years=3.",
+          "filing_scope": "annual",
+          "years": 3,
+          "fiscal_year": null
+        },
+        {
+          "id": "salesforce",
+          "agent": "financial_data",
+          "instruction": "For Salesforce, retrieve three annual revenue records and compute revenue_growth with years=3.",
+          "filing_scope": "annual",
+          "years": 3,
+          "fiscal_year": null
+        }
+      ]
+    },
+    "error": null,
+    "elapsed_seconds": 2.981598500000473,
+    "telemetry": {
+      "input_tokens": 881,
+      "output_tokens": 124,
+      "model": "qwen3:8b",
+      "provider": "ollama",
+      "estimated_cost_usd": 0.0
+    }
+  }
+]

@@ -1,10 +1,11 @@
 import unittest
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
 from src.ingestion.edgar import EdgarClient
-from src.pipeline.prepare_company import prepare_company, prepare_company_index, preparation_lock
+from src.pipeline.prepare_company import prepare_company, prepare_company_index, preparation_lock, refresh_due, source_signature
 from src.tools.company import directory_match
 from src.tools.dispatcher import execute_tool
 from src.utils.utils import load_json, save_json, save_yaml
@@ -64,7 +65,11 @@ class PreparationTests(unittest.TestCase):
              patch('src.pipeline.prepare_company.prepare_company_index') as index:
             root = Path(directory)
             save_yaml({'metrics': {'revenue': {}}}, root / 'configs/metrics.yaml')
-            save_json({}, root / 'financial_data/raw/0000796343/manifest.json')
+            raw = root / 'financial_data/raw/0000796343'
+            save_json({'filings': [], 'manifest_generated_at': datetime.now(timezone.utc).isoformat()}, raw / 'manifest.json')
+            save_json({'facts': {}}, raw / 'companyfacts.json')
+            signature = source_signature(raw, metrics=True, config={'metrics': {'revenue': {}}})
+            save_json({'source_signature': signature}, root / 'financial_data/processed/0000796343/metrics_source.json')
             save_json([], root / 'financial_data/processed/0000796343/revenue.json')
             self.assertEqual(prepare_company('ADBE'), company)
             client.assert_not_called()
@@ -81,6 +86,56 @@ class PreparationTests(unittest.TestCase):
             prepare_company('ADBE')
             metrics.assert_called_once_with(company['cik'])
             client.assert_not_called()
+
+    def test_refresh_clock_handles_expired_missing_and_future_checks(self):
+        now = datetime.now(timezone.utc)
+        for offset, expected in [(timedelta(hours=23), False), (timedelta(hours=24), True),
+                                 (timedelta(days=2), True), (timedelta(hours=-1), True)]:
+            self.assertEqual(refresh_due({'manifest_generated_at': (now-offset).isoformat()}, now), expected)
+        for value in ({}, {'manifest_generated_at': 'invalid'}, {'manifest_generated_at': '2026-01-01'}):
+            self.assertTrue(refresh_due(value, now))
+
+    def test_refresh_rebuilds_changed_metrics_and_retries_failed_processing(self):
+        company = {'ticker': 'TEST', 'cik': '0000000042'}
+        with TemporaryDirectory() as directory, patch('src.pipeline.prepare_company.ROOT', Path(directory)), \
+             patch('src.ingestion.sec_access.ROOT', Path(directory)), \
+             patch('src.pipeline.prepare_company.resolve_company', return_value=company), \
+             patch('src.pipeline.prepare_company.sec_client') as client, \
+             patch('src.pipeline.prepare_company.process_company') as metrics:
+            root = Path(directory)
+            raw = root / 'financial_data/raw' / company['cik']
+            processed = root / 'financial_data/processed' / company['cik']
+            save_yaml({'metrics': {'revenue': {}}}, root / 'configs/metrics.yaml')
+            save_json({'filings': [], 'manifest_generated_at': datetime.now(timezone.utc).isoformat()}, raw / 'manifest.json')
+            save_json({'facts': 'old'}, raw / 'companyfacts.json')
+            save_json([], processed / 'revenue.json')
+            prepare_company('TEST')
+            metrics.assert_called_once()
+            client.assert_not_called()
+            old_state = load_json(processed / 'metrics_source.json')
+
+            def download(*args):
+                save_json({'filings': [], 'manifest_generated_at': datetime.now(timezone.utc).isoformat()}, raw / 'manifest.json')
+                save_json({'facts': 'new'}, raw / 'companyfacts.json')
+            client.return_value.download_company.side_effect = download
+            save_json({'filings': [], 'manifest_generated_at': (datetime.now(timezone.utc)-timedelta(days=2)).isoformat()}, raw / 'manifest.json')
+            metrics.side_effect = ValueError('processing failed')
+            with self.assertRaisesRegex(ValueError, 'processing failed'):
+                prepare_company('TEST')
+            client.assert_called_once_with(refresh=True)
+            self.assertEqual(load_json(processed / 'metrics_source.json'), old_state)
+            metrics.side_effect = None
+            metrics.reset_mock()
+            prepare_company('TEST')
+            metrics.assert_called_once()
+            self.assertNotEqual(load_json(processed / 'metrics_source.json'), old_state)
+            metrics.reset_mock()
+            prepare_company('TEST', refresh=True)
+            metrics.assert_not_called()  # Same source content, only check timestamp changed.
+            client.return_value.download_company.side_effect = TimeoutError('SEC unavailable')
+            with self.assertRaises(TimeoutError):
+                prepare_company('TEST', refresh=True)
+            metrics.assert_not_called()
 
     def test_invalid_tool_arguments_never_trigger_preparation(self):
         with patch('src.tools.dispatcher.prepare_for_tool') as prepare:
@@ -104,6 +159,7 @@ class CompanyIndexTests(unittest.TestCase):
         self.addCleanup(self.directory.cleanup)
         self.root = Path(self.directory.name)
         self.processed = self.root / 'financial_data/processed'
+        save_json({'filings': []}, self.root / 'financial_data/raw/0000796343/manifest.json')
         self.company = {'ticker': 'ADBE', 'cik': '0000796343'}
         self.report = {**self.company, 'status': 'prepared', 'chunks_path': 'adbe/chunks.json'}
         self.old = {'ticker': 'AAPL', 'cik': '0000320193', 'status': 'prepared'}
@@ -137,6 +193,20 @@ class CompanyIndexTests(unittest.TestCase):
         self.assertEqual(summary['reports'], [self.old, self.report])
         self.assertTrue(self.collection.modify.call_args.kwargs['metadata']['ready'])
 
+    def test_new_manifest_invalidates_matching_old_index(self):
+        chunk = {'chunk_id': 'old-adbe', 'text': 'old', 'metadata': {}}
+        save_json([chunk], self.processed / self.report['chunks_path'])
+        save_json({'reports': [self.old, self.report]}, self.processed / 'filing_preparation_summary.json')
+        raw = self.root / 'financial_data/raw' / self.company['cik']
+        state_path = self.processed / self.company['cik'] / 'index_source.json'
+        save_json({'source_signature': source_signature(raw)}, state_path)
+        prepare_company_index(self.company, self.processed)
+        self.mocks['filings'].assert_not_called()
+        save_json({'filings': [{'accessionNumber': 'new-report', 'form': '10-K/A'}]}, raw / 'manifest.json')
+        prepare_company_index(self.company, self.processed)
+        self.mocks['filings'].assert_called_once()
+        self.assertEqual(load_json(state_path)['source_signature'], source_signature(raw))
+
     def test_embedding_failure_does_not_publish_partial_company_index(self):
         self.mocks['embeddings'].side_effect = ValueError('Embedding unavailable')
         with self.assertRaisesRegex(ValueError, 'Embedding unavailable'):
@@ -144,3 +214,4 @@ class CompanyIndexTests(unittest.TestCase):
         self.mocks['save'].assert_not_called()
         self.collection.modify.assert_not_called()
         self.collection.delete.assert_not_called()
+        self.assertFalse((self.processed / self.company['cik'] / 'index_source.json').exists())

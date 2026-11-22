@@ -58,7 +58,7 @@ function messageHTML(job) {
   } else if (result?.supported && result.coverage?.status === 'unknown') {
     body = '<p class="table-note">Yanıtın araştırma kapsamı kontrol edilemedi.</p>' + body;
   }
-  const actions = result ? `<div class="message-actions">${result.sources.length ? `<button class="text-button" data-sources="${job.id}">Kaynaklar · ${result.sources.length}</button>` : ''}${result.markdown ? `<button class="text-button" data-export="${job.id}">Markdown indir</button>` : ''}<small>${job.elapsed_seconds ?? ''} sn${result.usage ? ` · $${Number(result.usage.estimated_cost_usd || 0).toFixed(6)}` : ''}</small></div>` : '';
+  const actions = result ? `<div class="message-actions">${result.sources.length ? `<button class="text-button" data-sources="${job.id}">Kaynaklar · ${result.sources.length}</button>` : ''}${result.markdown ? `<button class="text-button" data-export="${job.id}">Markdown indir</button>` : ''}</div>` : '';
   return `<section class="chat-turn" data-message="${job.id}"><div class="user-message"><span class="sr-only">Sen:</span>${escapeHTML(job.question).replace(/\n/g, '<br>')}</div><article class="assistant-message"><div class="assistant-label">FinSight</div>${body}${actions}</article></section>`;
 }
 function updateSubmit() {

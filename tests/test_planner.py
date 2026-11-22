@@ -9,6 +9,7 @@ from src.agents.planner import (
     PLANNER_RESPONSE_SCHEMA,
     generate_plan,
     validate_plan,
+    normalize_plan,
 )
 
 
@@ -148,6 +149,45 @@ class PlannerValidationTests(unittest.TestCase):
                     validate_plan(plan)
 
 
+class PlannerNormalizationTests(unittest.TestCase):
+    def test_recent_financial_task_is_routed_without_rewriting_period_or_instruction(self):
+        plan = make_plan('financial', ['financial_data'])
+        plan['tasks'][0].update(filing_scope='recent', instruction='Retrieve latest quarterly revenue for TEST.')
+        original = deepcopy(plan)
+        result = normalize_plan(plan)
+        self.assertEqual(result['request_type'], 'filing')
+        self.assertEqual(result['tasks'][0], {**plan['tasks'][0], 'agent': 'filing_rag'})
+        self.assertEqual(plan, original)
+        with self.assertRaisesRegex(ValueError, 'Recent-source'):
+            validate_plan(plan)
+
+    def test_annual_and_quarterly_work_becomes_mixed(self):
+        plan = make_plan('financial', ['financial_data', 'financial_data'])
+        plan['tasks'][1]['filing_scope'] = 'recent'
+        self.assertEqual(normalize_plan(plan)['request_type'], 'mixed')
+        plan['request_type'] = 'comparison'
+        self.assertEqual(normalize_plan(plan)['request_type'], 'comparison')
+
+    def test_research_label_follows_valid_task_agents(self):
+        for label in ('financial', 'filing', 'mixed'):
+            plan = make_plan(label, ['financial_data', 'filing_rag'])
+            self.assertEqual(normalize_plan(plan)['request_type'], 'mixed')
+        for label in ('clarification', 'out_of_scope'):
+            with self.assertRaises(ValueError):
+                normalize_plan(make_plan(label, ['financial_data']))
+
+    def test_only_exact_work_is_deduplicated(self):
+        plan = make_plan('financial', ['financial_data'] * 4)
+        plan['tasks'][1]['instruction'] += '  '
+        plan['tasks'][2]['years'] = 3
+        plan['tasks'][3]['instruction'] = "Retrieve Microsoft's latest annual evidence."
+        result = normalize_plan(plan)
+        self.assertEqual([task['id'] for task in result['tasks']], ['task_1', 'task_3', 'task_4'])
+        plan['tasks'][1]['id'] = 'task_1'
+        with self.assertRaisesRegex(ValueError, 'unique'):
+            normalize_plan(plan)
+
+
 class PlannerGenerationTests(unittest.TestCase):
     @patch("src.agents.planner.generate_response")
     def test_explicit_period_is_returned_in_the_validated_task(self, generate_response):
@@ -168,8 +208,8 @@ class PlannerGenerationTests(unittest.TestCase):
         generate_response.assert_called_once()
         args, kwargs = generate_response.call_args
         self.assertIs(args[1], config)
-        self.assertEqual([message["role"] for message in args[0]], ["system", "user"])
-        self.assertEqual(json.loads(args[0][1]["content"]), {"question": "Apple revenue?"})
+        self.assertEqual([message["role"] for message in args[0]], ["system", "user", "assistant", "user", "assistant", "user", "assistant", "user"])
+        self.assertEqual(json.loads(args[0][-1]["content"]), {"question": "Apple revenue?"})
         self.assertEqual(kwargs, {"response_format": PLANNER_RESPONSE_SCHEMA, "telemetry": None})
 
     @patch("src.agents.planner.generate_response")
@@ -188,7 +228,7 @@ class PlannerGenerationTests(unittest.TestCase):
 
     @patch("src.agents.planner.generate_response")
     def test_model_output_is_validated_before_return(self, generate_response):
-        for plan in (None, {}, make_plan("financial", []), make_plan("mixed", ["financial_data"])):
+        for plan in (None, {}, make_plan("financial", [])):
             with self.subTest(plan=plan):
                 generate_response.return_value = json.dumps(plan)
                 with self.assertRaises(ValueError):

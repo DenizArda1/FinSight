@@ -17,9 +17,11 @@ def validate_financial_request(cik, years):
         raise ValueError("Years must be an integer between 1 and 5")
 
 
-def get_company_facts(cik: str, concept: str, years: int = 5, unit: str = "USD") -> dict:
+def get_company_facts(cik: str, concept: str, years: int = 5, unit: str = "USD", fiscal_year: int | None = None) -> dict:
     # Read annual base metrics prepared using the configured XBRL selection rules.
     validate_financial_request(cik, years)
+    if fiscal_year is not None and (type(fiscal_year) is not int or fiscal_year < 1):
+        raise ValueError("Fiscal year must be a positive integer or null")
     config = load_yaml(PROJECT_ROOT / "configs" / "metrics.yaml")
     if not isinstance(concept, str) or concept not in config["metrics"]:
         raise ValueError(f"Unknown base metric: {concept}")
@@ -45,6 +47,16 @@ def get_company_facts(cik: str, concept: str, years: int = 5, unit: str = "USD")
     if not isinstance(records, list):
         raise ValueError("Prepared metric records must be a list")
 
+    if fiscal_year is not None:
+        # Use fiscal labels from prepared records, never the calendar year of end.
+        revenue_path = path.with_name('revenue.json')
+        reference = load_json(revenue_path) if revenue_path.is_file() else records
+        anchors = {row['end'] for row in reference if row.get('fiscal_year') == fiscal_year}
+        all_ends = {filing['reportDate'] for filing in manifest['filings'] if filing['form'] == '10-K'}
+        anchors &= all_ends
+        if len(anchors) > 1:
+            raise ValueError('Multiple annual periods have the requested fiscal-year label')
+        period_ends = sorted((end for end in all_ends if anchors and end <= max(anchors)), reverse=True)[:years]
     selected = [record for record in records if record["end"] in period_ends]
     filing_urls = {
         filing["accessionNumber"]: filing["url"]
@@ -75,6 +87,7 @@ def get_company_facts(cik: str, concept: str, years: int = 5, unit: str = "USD")
                        for key in ("description", "taxonomy", "unit", "tags")
                        if key in config["metrics"][concept]},
         "unit": unit,
+        "requested_fiscal_year": fiscal_year,
         "requested_years": years,
         "available_period_count": len(period_ends),
         "history_complete": len(period_ends) == years,
@@ -84,7 +97,7 @@ def get_company_facts(cik: str, concept: str, years: int = 5, unit: str = "USD")
     }
 
 
-def compute_metrics(cik: str, metrics: list[str], years: int = 5) -> dict:
+def compute_metrics(cik: str, metrics: list[str], years: int = 5, fiscal_year: int | None = None) -> dict:
     # Load authoritative inputs locally instead of accepting model-generated numbers.
     validate_financial_request(cik, years)
     if not isinstance(metrics, list) or not metrics or any(not isinstance(name, str) for name in metrics):
@@ -109,6 +122,7 @@ def compute_metrics(cik: str, metrics: list[str], years: int = 5) -> dict:
             if input_name not in facts:
                 facts[input_name] = get_company_facts(
                     cik, input_name, years, config["metrics"][input_name]["unit"],
+                    **({"fiscal_year": fiscal_year} if fiscal_year is not None else {}),
                 )
 
                 records[input_name] = facts[input_name]["records"]

@@ -1,0 +1,33 @@
+{
+  "result_file": "eval/results/period_context_retest_20261122T074026Z.json",
+  "unit_tests_passed": 539,
+  "scope": "Two fresh full multi-agent MCP runs; original five-case questions reused without changes. Manual comparison against returned source excerpts, not independent external audit.",
+  "cases": [
+    {
+      "id": "acceptance_microsoft",
+      "manual_status": "pass",
+      "notes": [
+        "Annual financial figures match source records.",
+        "FX realized effects are separated from potential trade/economic risks.",
+        "Fed and CPI claims match evidence; no CPI percentage substitution.",
+        "New response does not use the previously mislabelled quarterly excerpt; saved-source regression separately confirms its nine-month heading."
+      ]
+    },
+    {
+      "id": "acceptance_intel",
+      "manual_status": "pass_with_editorial_note",
+      "notes": [
+        "Latest 2026-09-26 10-Q evidence admitted and cited.",
+        "Three-month and nine-month increases match consolidated table; annual decline and forward guidance are distinguished.",
+        "Opening wording about growth declining is imprecise: revenue declined while its annual contraction slowed; subsequent figures and interpretation are correct."
+      ]
+    }
+  ],
+  "total_elapsed_seconds": 486.5901661250027,
+  "estimated_api_cost_usd": 0.01373769,
+  "limitations": [
+    "Two samples do not establish reliability across all companies.",
+    "Duration heading extraction preserves explicit English month headings; it is not a general semantic table parser.",
+    "Latency remains several minutes per complex question."
+  ]
+}

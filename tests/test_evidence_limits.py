@@ -29,6 +29,30 @@ def source_event(source):
 
 
 class EvidenceLimitTests(unittest.TestCase):
+    def test_repair_evidence_precedes_old_queries_without_excluding_other_families(self):
+        sources = [search_source(i, str(i) * 5) for i in range(1, 5)]
+        for source in sources:
+            source['arguments'] = {'ticker': 'TEST', 'query': str(source['source_id'])}
+        for source in (sources[0], sources[2], sources[3]):
+            source['tool'] = 'search_company_updates'
+            source['arguments']['form'] = '10-Q'
+        events = [source_event(source) for source in sources]
+        events[2]['task_id'] = events[3]['task_id'] = 'coverage_repair_1'
+        original = deepcopy(events)
+        evidence = build_agent_evidence(events)
+        result = limit_report_evidence(evidence, 5, 10)
+        self.assertEqual([s['source_id'] for s in result if not s.get('content_omitted')], [2, 3])
+        self.assertEqual(events, original)
+
+    def test_single_filing_repair_wins_over_broad_repair_search(self):
+        sources = [search_source(i, str(i) * 5) for i in range(1, 4)]
+        for source in sources:
+            source.update(tool='search_company_updates', collection_task='coverage_repair_1')
+            source['arguments'] = {'ticker': 'TEST', 'form': '10-Q', 'query': 'revenue'}
+        sources[-1]['arguments']['limit'] = 1
+        result = limit_report_evidence(sources, 5, 5)
+        self.assertEqual([s['source_id'] for s in result if not s.get('content_omitted')], [3])
+
     def test_annual_queries_cannot_exclude_quarterly_and_event_sources(self):
         sources = [search_source(i, 'x' * 5) for i in range(1, 6)]
         for i, source in enumerate(sources):

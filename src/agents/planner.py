@@ -1,4 +1,5 @@
 import json
+from copy import deepcopy
 
 from jsonschema import Draft202012Validator, ValidationError
 
@@ -88,6 +89,8 @@ def validate_plan(plan):
             raise ValueError("Task IDs must not contain leading or trailing whitespace")
         if not task["instruction"].strip():
             raise ValueError("Task instructions must not be blank")
+        if task["agent"] == "financial_data" and task["filing_scope"] == "recent":
+            raise ValueError("Recent-source tasks require filing_rag, not annual financial_data")
         fiscal_year = task.get("fiscal_year")
         years = task.get("years", 1)
         if type(years) is not int or not 1 <= years <= 5:
@@ -105,6 +108,33 @@ def validate_plan(plan):
         raise ValueError("Filing plans must use only filing_rag")
     if request_type == "mixed" and agents != {"financial_data", "filing_rag"}:
         raise ValueError("Mixed plans must use both financial_data and filing_rag")
+
+
+def normalize_plan(plan):
+    #Correct explicit routing contradictions and remove exact duplicate work
+    # Validate structure first; do not repair unknown fields or guess from prose.
+    try:
+        PLANNER_VALIDATOR.validate(plan)
+    except ValidationError as error:
+        raise ValueError(f"Invalid planner response: {error.message}") from error
+    result = deepcopy(plan)
+    for task in result['tasks']:
+        if task['agent'] == 'financial_data' and task['filing_scope'] == 'recent':
+            task['agent'] = 'filing_rag'
+    if result['tasks'] and result['request_type'] in {'financial', 'filing', 'mixed'}:
+        agents = {task['agent'] for task in result['tasks']}
+        result['request_type'] = ('mixed' if len(agents) == 2 else
+                                  'financial' if agents == {'financial_data'} else 'filing')
+    validate_plan(result)
+    unique, seen = [], set()
+    for task in result['tasks']:
+        key = (task['agent'], ' '.join(task['instruction'].split()),
+               task['filing_scope'], task['years'], task['fiscal_year'])
+        if key not in seen:
+            unique.append(task)
+            seen.add(key)
+    result['tasks'] = unique
+    return result
 
 
 def generate_plan(question, llm_config, telemetry=None):
@@ -126,5 +156,4 @@ def generate_plan(question, llm_config, telemetry=None):
     except json.JSONDecodeError as error:
         raise ValueError("Planner response must be valid JSON") from error
 
-    validate_plan(plan)
-    return plan
+    return normalize_plan(plan)

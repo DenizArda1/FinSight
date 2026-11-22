@@ -1,0 +1,133 @@
+[
+  {
+    "question": "Intel'in yıllık gelir büyümesinde gerileme var mı? Son üç mali yılın eğilimini, son çeyreklik raporunu ve son şirket açıklamalarını birlikte değerlendir. Yıllık sonuçları ara dönem verileri ve beklentilerden ayır.",
+    "plan": {
+      "request_type": "comparison",
+      "tasks": [
+        {
+          "id": "task_1",
+          "agent": "financial_data",
+          "instruction": "Intel'in son üç mali yılın yıllık gelir büyümesini ve gelir büyüme eğilimini hesapla",
+          "filing_scope": "annual",
+          "years": 3,
+          "fiscal_year": null
+        },
+        {
+          "id": "task_2",
+          "agent": "financial_data",
+          "instruction": "Intel'in son çeyreklik gelir raporunu ve gelir büyümesini (son mali yılın son çeyreği ile karşılaştır)",
+          "filing_scope": "annual",
+          "years": 1,
+          "fiscal_year": null
+        },
+        {
+          "id": "task_3",
+          "agent": "filing_rag",
+          "instruction": "Intel'in son mali yılın son çeyreği ile ilgili açıklamaları ve beklentileri araştır",
+          "filing_scope": "recent",
+          "years": 1,
+          "fiscal_year": null
+        },
+        {
+          "id": "task_4",
+          "agent": "filing_rag",
+          "instruction": "Intel'in son mali yılın son çeyreği ile ilgili açıklamaları ve beklentileri araştır",
+          "filing_scope": "annual",
+          "years": 1,
+          "fiscal_year": null
+        }
+      ]
+    },
+    "error": null,
+    "elapsed_seconds": 9.680833665999671,
+    "telemetry": {
+      "input_tokens": 591,
+      "output_tokens": 341,
+      "model": "qwen3:8b",
+      "provider": "ollama",
+      "estimated_cost_usd": 0.0
+    }
+  },
+  {
+    "question": "AMD'nin son üç yıllık gelir büyümesini, en son çeyrek sonuçlarını ve son şirket açıklamalarını değerlendir.",
+    "plan": {
+      "request_type": "comparison",
+      "tasks": [
+        {
+          "id": "financial_data_AMD_3_year",
+          "agent": "financial_data",
+          "instruction": "AMD için son üç yılın gelir büyümesini hesapla",
+          "filing_scope": "annual",
+          "years": 3,
+          "fiscal_year": null
+        },
+        {
+          "id": "filing_rag_AMD_recent",
+          "agent": "filing_rag",
+          "instruction": "AMD'nin son çeyrek sonuçlarını ve şirket açıklamalarını değerlendir",
+          "filing_scope": "recent",
+          "years": 1,
+          "fiscal_year": null
+        }
+      ]
+    },
+    "error": null,
+    "elapsed_seconds": 3.885706166998716,
+    "telemetry": {
+      "input_tokens": 555,
+      "output_tokens": 158,
+      "model": "qwen3:8b",
+      "provider": "ollama",
+      "estimated_cost_usd": 0.0
+    }
+  },
+  {
+    "question": "Compare Costco and Salesforce annual revenue growth over the last three fiscal years.",
+    "plan": {
+      "request_type": "comparison",
+      "tasks": [
+        {
+          "id": "financial_data_Costco",
+          "agent": "financial_data",
+          "instruction": "Retrieve Costco's annual revenue for the last three fiscal years.",
+          "filing_scope": "annual",
+          "years": 3,
+          "fiscal_year": null
+        },
+        {
+          "id": "financial_data_Salesforce",
+          "agent": "financial_data",
+          "instruction": "Retrieve Salesforce's annual revenue for the last three fiscal years.",
+          "filing_scope": "annual",
+          "years": 3,
+          "fiscal_year": null
+        },
+        {
+          "id": "compute_metrics_Costco",
+          "agent": "financial_data",
+          "instruction": "Compute Costco's annual revenue growth for the last three fiscal years.",
+          "filing_scope": "annual",
+          "years": 3,
+          "fiscal_year": null
+        },
+        {
+          "id": "compute_metrics_Salesforce",
+          "agent": "financial_data",
+          "instruction": "Compute Salesforce's annual revenue growth for the last three fiscal years.",
+          "filing_scope": "annual",
+          "years": 3,
+          "fiscal_year": null
+        }
+      ]
+    },
+    "error": null,
+    "elapsed_seconds": 6.589798999999402,
+    "telemetry": {
+      "input_tokens": 541,
+      "output_tokens": 277,
+      "model": "qwen3:8b",
+      "provider": "ollama",
+      "estimated_cost_usd": 0.0
+    }
+  }
+]

@@ -319,6 +319,7 @@ def build_agent_evidence(trace):
             for source_result in results:
                 evidence.append({
                     "source_id": len(evidence) + 1,
+                    "collection_task": event.get("task_id", ""),
                     "tool": event["name"],
                     "arguments": event["arguments"],
                     "result": source_result,

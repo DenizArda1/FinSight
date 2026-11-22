@@ -1,0 +1,1558 @@
+[
+  {
+    "task": {
+      "id": "task_3",
+      "agent": "filing_rag",
+      "instruction": "Identify recent Fed policy developments from the latest Federal Reserve filings.",
+      "filing_scope": "recent",
+      "years": 1,
+      "fiscal_year": null
+    },
+    "elapsed_seconds": 76.15987433400005,
+    "trace": [
+      {
+        "type": "agent",
+        "task_id": "task_3",
+        "agent": "filing_rag",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_3",
+        "agent": "filing_rag",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 1307,
+        "output_tokens": 32,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_qgffaul5",
+            "function": {
+              "index": 0,
+              "name": "search_fed_releases",
+              "arguments": {
+                "query": "Fed policy developments",
+                "top_k": 3
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.253447832999882
+      },
+      {
+        "type": "tool",
+        "task_id": "task_3",
+        "agent": "filing_rag",
+        "step": 1,
+        "call_id": 1,
+        "name": "search_fed_releases",
+        "arguments": {
+          "query": "Fed policy developments",
+          "top_k": 3
+        },
+        "status": "completed",
+        "result": {
+          "matches": [
+            {
+              "text": "September 16, 2026\nFederal Reserve issues FOMC statement\nFor release at 2:00 p.m. EDT\nShare\nThe Federal Open Market Committee approved the following statement for release by a 12 – 0 vote:\nThe Committee decided to raise the target range for the federal funds rate by 1/4 percentage point to 3-3/4 to 4 percent, in support of the Federal Reserve's dual mandate. The Committee is continuing its policy of maintaining ample reserves in the banking system.\nEconomic activity is expanding at a solid pace. While uncertainty remains elevated owing, in part, to geopolitical developments, domestic spending has been resilient. Productivity growth is strong, and capital investment is robust. Job gains have kept pace with the workforce, and the unemployment rate has changed little.\nInflation remains elevated. Today's policy action will support a timelier return to the Committee's 2 percent goal. The Committee will deliver price stability.\nFor media inquiries, please email [email protected] or call 202-452-2955.\nImplementation Note issued September 16, 2026",
+              "score": 1.8090606627207628,
+              "metadata": {
+                "name": "Federal Reserve issues FOMC statement",
+                "publisher": "Federal Reserve",
+                "report_date": "2026-09-16",
+                "source_url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+                "section": "Monetary policy release",
+                "retrieved_at": "2026-11-22T07:41:57.736465+00:00",
+                "sha256": "ce10650ff077f1c580067552b68fd73d9350e8bdaa4dbefef7d9928b64b506f8",
+                "start": 0,
+                "end": 1055
+              }
+            },
+            {
+              "text": "October 28, 2026\nFederal Reserve issues FOMC statement\nFor release at 2:00 p.m. EDT\nShare\nThe Federal Open Market Committee approved the following statement for release by a 10 – 2 vote:\nThe Committee decided to maintain the target range for the federal funds rate at 3-3/4 to 4 percent, in support of the Federal Reserve's dual mandate. The Committee is continuing its policy of maintaining ample reserves in the banking system.\nEconomic activity is expanding at a strong pace. While uncertainty remains elevated owing, in part, to geopolitical developments, domestic spending has been resilient. Productivity growth is strong, and capital investment is robust. Job gains have kept pace with the workforce, and the unemployment rate has changed little.\nInflation remains elevated. The accumulation of more information will help the Committee determine the policy stance appropriate to ensure a timely return of inflation to the Committee's 2 percent goal. The Committee will deliver price stability.\nVoting against the monetary policy action were Lisa D. Cook and Beth M. Hammack, who preferred to raise the target range for the federal funds rate by 1/4 percentage point at this meeting.\nFor media inquiries, please email [email protected] or call 202-452-2955.\nImplementation Note issued October 28, 2026",
+              "score": 1.7549501269192964,
+              "metadata": {
+                "name": "Federal Reserve issues FOMC statement",
+                "publisher": "Federal Reserve",
+                "report_date": "2026-10-28",
+                "source_url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
+                "section": "Monetary policy release",
+                "retrieved_at": "2026-11-22T07:41:56.674149+00:00",
+                "sha256": "a229817091d12a5630fa827015adb623363bec1d37c3e0214537972c9134456b",
+                "start": 0,
+                "end": 1307
+              }
+            },
+            {
+              "text": "November 12, 2026\nFederal Reserve announces revised tentative schedule of Federal Open Market Committee meetings in 2027\nFor release at 12:45 p.m. EST\nShare\nThe Federal Reserve on Thursday announced a revised tentative schedule of Federal Open Market Committee meetings in 2027.\nThe Committee plans to meet on the dates listed below to discuss monetary policy and will announce its policy decision as usual on the second day of each meeting, except the October 26-27 meeting. That meeting will be dedicated to the discussion of broad monetary policy strategy issues:\nJanuary 26-27 (Tuesday-Wednesday)\nMarch 16-17 (Tuesday-Wednesday)\nApril 27-28 (Tuesday-Wednesday)\nJune 8-9 (Tuesday-Wednesday)\nJuly 27-28 (Tuesday-Wednesday)\nSeptember 14-15 (Tuesday-Wednesday)\nOctober 26-27 (Tuesday-Wednesday)\nNovember 16-17 (Tuesday-Wednesday)\nJanuary 25-26, 2028 (Tuesday-Wednesday)\nFor media inquiries, please e-mail [email protected] or call (202) 452-2955",
+              "score": 0.8002969621552366,
+              "metadata": {
+                "name": "Federal Reserve announces revised tentative schedule of Federal Open Market Committee meetings in 2027",
+                "publisher": "Federal Reserve",
+                "report_date": "2026-11-12",
+                "source_url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261112a.htm",
+                "section": "Monetary policy release",
+                "retrieved_at": "2026-11-22T07:41:56.302616+00:00",
+                "sha256": "ad2c02c3731b4d63b56114a86f0906f532379f58184ab757c10a327726fec5ba",
+                "start": 0,
+                "end": 945
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": "Up to eight releases from the current monetary-policy RSS feed; not a historical archive.",
+          "causality_warning": "Macro policy statements alone do not establish a realized effect on any particular company."
+        },
+        "elapsed_seconds": 0.1540695420007978
+      },
+      {
+        "type": "model",
+        "task_id": "task_3",
+        "agent": "filing_rag",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 2946,
+        "output_tokens": 30,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_npqwz0rm",
+            "function": {
+              "index": 0,
+              "name": "get_bls_series",
+              "arguments": {
+                "indicator": "cpi",
+                "months": 12
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 5.795908833000794
+      },
+      {
+        "type": "tool",
+        "task_id": "task_3",
+        "agent": "filing_rag",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_bls_series",
+        "arguments": {
+          "indicator": "cpi",
+          "months": 12
+        },
+        "status": "completed",
+        "result": {
+          "records": [
+            {
+              "metric": "cpi",
+              "name": "CPI-U, all items",
+              "value": 337.511,
+              "unit": "index (1982-84=100)",
+              "end": "2026-10",
+              "seasonal_adjustment": "not seasonally adjusted",
+              "footnotes": [
+                {}
+              ],
+              "source_url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
+              "publisher": "BLS",
+              "tag": "CUUR0000SA0",
+              "retrieved_at": "2026-11-21T13:52:20.330107+00:00"
+            },
+            {
+              "metric": "cpi",
+              "name": "CPI-U, all items",
+              "value": 336.94,
+              "unit": "index (1982-84=100)",
+              "end": "2026-09",
+              "seasonal_adjustment": "not seasonally adjusted",
+              "footnotes": [
+                {}
+              ],
+              "source_url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
+              "publisher": "BLS",
+              "tag": "CUUR0000SA0",
+              "retrieved_at": "2026-11-21T13:52:20.330107+00:00"
+            },
+            {
+              "metric": "cpi",
+              "name": "CPI-U, all items",
+              "value": 334.98,
+              "unit": "index (1982-84=100)",
+              "end": "2026-08",
+              "seasonal_adjustment": "not seasonally adjusted",
+              "footnotes": [
+                {}
+              ],
+              "source_url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
+              "publisher": "BLS",
+              "tag": "CUUR0000SA0",
+              "retrieved_at": "2026-11-21T13:52:20.330107+00:00"
+            },
+            {
+              "metric": "cpi",
+              "name": "CPI-U, all items",
+              "value": 333.918,
+              "unit": "index (1982-84=100)",
+              "end": "2026-07",
+              "seasonal_adjustment": "not seasonally adjusted",
+              "footnotes": [
+                {}
+              ],
+              "source_url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
+              "publisher": "BLS",
+              "tag": "CUUR0000SA0",
+              "retrieved_at": "2026-11-21T13:52:20.330107+00:00"
+            },
+            {
+              "metric": "cpi",
+              "name": "CPI-U, all items",
+              "value": 333.952,
+              "unit": "index (1982-84=100)",
+              "end": "2026-06",
+              "seasonal_adjustment": "not seasonally adjusted",
+              "footnotes": [
+                {}
+              ],
+              "source_url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
+              "publisher": "BLS",
+              "tag": "CUUR0000SA0",
+              "retrieved_at": "2026-11-21T13:52:20.330107+00:00"
+            },
+            {
+              "metric": "cpi",
+              "name": "CPI-U, all items",
+              "value": 335.123,
+              "unit": "index (1982-84=100)",
+              "end": "2026-05",
+              "seasonal_adjustment": "not seasonally adjusted",
+              "footnotes": [
+                {}
+              ],
+              "source_url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
+              "publisher": "BLS",
+              "tag": "CUUR0000SA0",
+              "retrieved_at": "2026-11-21T13:52:20.330107+00:00"
+            },
+            {
+              "metric": "cpi",
+              "name": "CPI-U, all items",
+              "value": 333.02,
+              "unit": "index (1982-84=100)",
+              "end": "2026-04",
+              "seasonal_adjustment": "not seasonally adjusted",
+              "footnotes": [
+                {}
+              ],
+              "source_url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
+              "publisher": "BLS",
+              "tag": "CUUR0000SA0",
+              "retrieved_at": "2026-11-21T13:52:20.330107+00:00"
+            },
+            {
+              "metric": "cpi",
+              "name": "CPI-U, all items",
+              "value": 330.213,
+              "unit": "index (1982-84=100)",
+              "end": "2026-03",
+              "seasonal_adjustment": "not seasonally adjusted",
+              "footnotes": [
+                {}
+              ],
+              "source_url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
+              "publisher": "BLS",
+              "tag": "CUUR0000SA0",
+              "retrieved_at": "2026-11-21T13:52:20.330107+00:00"
+            },
+            {
+              "metric": "cpi",
+              "name": "CPI-U, all items",
+              "value": 326.785,
+              "unit": "index (1982-84=100)",
+              "end": "2026-02",
+              "seasonal_adjustment": "not seasonally adjusted",
+              "footnotes": [
+                {}
+              ],
+              "source_url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
+              "publisher": "BLS",
+              "tag": "CUUR0000SA0",
+              "retrieved_at": "2026-11-21T13:52:20.330107+00:00"
+            },
+            {
+              "metric": "cpi",
+              "name": "CPI-U, all items",
+              "value": 325.252,
+              "unit": "index (1982-84=100)",
+              "end": "2026-01",
+              "seasonal_adjustment": "not seasonally adjusted",
+              "footnotes": [
+                {}
+              ],
+              "source_url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
+              "publisher": "BLS",
+              "tag": "CUUR0000SA0",
+              "retrieved_at": "2026-11-21T13:52:20.330107+00:00"
+            },
+            {
+              "metric": "cpi",
+              "name": "CPI-U, all items",
+              "value": 324.054,
+              "unit": "index (1982-84=100)",
+              "end": "2025-12",
+              "seasonal_adjustment": "not seasonally adjusted",
+              "footnotes": [
+                {}
+              ],
+              "source_url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
+              "publisher": "BLS",
+              "tag": "CUUR0000SA0",
+              "retrieved_at": "2026-11-21T13:52:20.330107+00:00"
+            },
+            {
+              "metric": "cpi",
+              "name": "CPI-U, all items",
+              "value": 324.122,
+              "unit": "index (1982-84=100)",
+              "end": "2025-11",
+              "seasonal_adjustment": "not seasonally adjusted",
+              "footnotes": [
+                {}
+              ],
+              "source_url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
+              "publisher": "BLS",
+              "tag": "CUUR0000SA0",
+              "retrieved_at": "2026-11-21T13:52:20.330107+00:00"
+            }
+          ],
+          "source_url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
+          "publisher": "BLS",
+          "missing_observations": [
+            {
+              "year": "2025",
+              "period": "M10",
+              "footnotes": [
+                {
+                  "code": "X",
+                  "text": "Data unavailable due to the 2025 lapse in appropriations"
+                }
+              ]
+            }
+          ],
+          "coverage": "Latest available monthly observations from the keyless v1 API, not real-time data.",
+          "warning": "CPI is an index level, not an inflation percentage. Payrolls are employment levels, not monthly changes. Do not infer company-specific causation."
+        },
+        "elapsed_seconds": 0.00812637499984703
+      },
+      {
+        "type": "model",
+        "task_id": "task_3",
+        "agent": "filing_rag",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 5146,
+        "output_tokens": 42,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_nfbhpmxm",
+            "function": {
+              "index": 0,
+              "name": "search_company_updates",
+              "arguments": {
+                "query": "net revenue three months",
+                "ticker": "Microsoft",
+                "top_k": 3,
+                "form": "10-Q",
+                "limit": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 8.45528770800047
+      },
+      {
+        "type": "tool",
+        "task_id": "task_3",
+        "agent": "filing_rag",
+        "step": 3,
+        "call_id": 3,
+        "name": "search_company_updates",
+        "arguments": {
+          "query": "net revenue three months",
+          "ticker": "Microsoft",
+          "top_k": 3,
+          "form": "10-Q",
+          "limit": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "matches": [
+            {
+              "text": "Indicate by check mark whether the registrant is a shell company (as defined in Rule 12b-2 of the Exchange Act). Yes ☐ No ☒\nIndicate the number of shares outstanding of each of the issuer’s classes of common stock, as of the latest practicable date.\nClass\nOutstanding as of October 22, 2026\nCommon Stock, $0.00000625 par value per share\n7,426,194,552 shares\nMICROSOFT CORPORATION\nFORM 10-Q\nFor the Quarter Ended September 30, 2026\nINDEX\nPage\nPART I.\nFINANCIAL INFORMATION\nItem 1.\nFinancial Statements\na)\nIncome Statements for the Three Months Ended September 30, 2026 and 2025\n3\nb)\nComprehensive Income Statements for the Three Months Ended September 30, 2026 and 2025\n4\nc)\nBalance Sheets as of September 30, 2026 and June 30, 2026\n5\nd)\nCash Flows Statements for the Three Months Ended September 30, 2026 and 2025\n6\ne)\nStockholders’ Equity Statements for the Three Months Ended September 30, 2026 and 2025\n7\nf)\nNotes to Financial Statements\n8\ng)\nReport of Independent Registered Public Accounting Firm\n27\nItem 2.\nManagement’s Discussion and Analysis of Financial Condition and Results of Operations\n28\nItem 3.\nQuantitative and Qualitative Disclosures About Market Risk\n42\nItem 4.\nControls and Procedures\n42\nPART II.\nOTHER INFORMATION\nItem 1.\nLegal Proceedings\n43\nItem 1A.\nRisk Factors\n43\nItem 2.\nUnregistered Sales of Equity Securities and Use of Proceeds\n58\nItem 5.\nOther Information\n59\nItem 6.\nExhibits\n60\nSIGNATURE\n61\n2\nPART I\nItem 1\nPART I. FINANCIAL INFORMATION\nITEM 1. FINANCIAL STATEMENTS\nINCOME STATEMENTS\n(In millions, except per share amounts) (Unaudited)\nThree Months Ended September 30,\n2026\n2025\nRevenue:\nProduct\n$\n14,631\n$\n15,922\nService and other\n77,648\n61,751\nTotal revenue\n92,279\n77,673\nCost of revenue:\nProduct\n2,471\n2,922\nService and other\n27,249\n21,121\nTotal cost of revenue\n29,720\n24,043\nGross margin\n62,559\n53,630\nResearch and development\n9,047\n8,146\nSales and marketing\n5,716\n5,717\nGeneral and administrative\n1,881\n1,806\nOperating income\n45,915\n37,961\nOther income (expense), net\n38\n(3,660\n)\nIncome before income taxes\n45,953\n34,301\nProvision for income taxes\n9,324\n6,554\nNet income\n$\n36,629\n$\n27,747\nEarnings per share:\nBasic\n$\n4.93\n$\n3.73\nDiluted\n$\n4.92\n$\n3.72\nWeighted average shares outstanding:\nBasic\n7,426\n7,433\nDiluted\n7,446\n7,466\nRefer to accompanying notes.\n3\nPART I\nItem 1\nCOMPREHENSIVE INCOME STATEMENTS\n(In millions) (Unaudited)\nThree Months Ended September 30,\n2026\n2025\nNet income\n$\n36,629\n$\n27,747\nOther comprehensive income (loss), net of tax:",
+              "score": 8.292183601982856,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "10-Q",
+                "accession_number": "0001193125-26-436133",
+                "report_date": "2026-09-30",
+                "filed": "2026-10-28",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:41:32.865455+00:00",
+                "sha256": "563668cfd640e4b7535f2af41729cf532bd2d8657dfe96555711ceb65f927cda",
+                "start": 2215,
+                "end": 4697
+              }
+            },
+            {
+              "text": "Operating expenses increased $975 million or 6% driven by continued investments in research and development compute capacity and talent. Total company headcount decreased 2%.\nOperating income increased $8.0 billion or 21% driven by growth in Agents and Infra. Operating income percentage increased slightly driven by strong revenue growth, platform efficiency gains, and focused investments across our portfolio, offset in part by sales mix shift to Azure.\nCurrent year net income and diluted EPS were positively impacted by net gains from investments in OpenAI, which resulted in an increase in net income and diluted EPS of $207 million and $0.03, respectively. Prior year net income and diluted EPS were negatively impacted by net losses from investments in OpenAI, which resulted in a decrease in net income and diluted EPS of $3.1 billion and $0.41, respectively.\n32\nPART I\nItem 2\nSEGMENT RESULTS OF OPERATIONS\n(In millions, except percentages)\nThree Months Ended\nSeptember 30,\nPercentage\nChange\n2026\n2025\nAgents and Infra\nRevenue\n$\n76,795\n$\n61,672\n25%\nCost of revenue\n23,887\n17,701\n35%\nOperating expenses\n12,350\n11,253\n10%\nOperating income\n$\n40,558\n$\n32,718\n24%\nDevices and Consumer\nRevenue\n$\n15,484\n$\n16,001\n(3%\n)\nCost of revenue\n5,833\n6,342\n(8%\n)\nOperating expenses\n4,294\n4,416\n(3%\n)\nOperating income\n$\n5,357\n$\n5,243\n2%\nTotal\nRevenue\n$\n92,279\n$\n77,673\n19%\nCost of revenue\n29,720\n24,043\n24%\nOperating expenses\n16,644\n15,669\n6%\nOperating income\n$\n45,915\n$\n37,961\n21%\nReportable Segments\nThree Months Ended September 30, 2026 Compared with Three Months Ended September 30, 2025\nAgents and Infra\nRevenue increased $15.1 billion or 25%.\n•\nAzure revenue increased $10.8 billion or 48% driven by demand for services across the platform with continued growth across all workloads.\n•\nMicrosoft 365 cloud revenue increased $4.1 billion or 17% driven by Microsoft 365 commercial cloud. Microsoft 365 commercial cloud revenue increased 17% driven by higher revenue per user, reflecting continued upsell to premium seat offerings, including Microsoft 365 Copilot, E5, and E7, as well as increased consumption of usage-based services, primarily in GitHub Copilot. Microsoft 365 commercial seats grew 5% driven by installed base expansion across all customer segments, primarily small and medium business and frontline worker offerings. Microsoft 365 consumer cloud revenue increased 17% driven by growth in revenue per user and Microsoft 365 consumer subscriber growth of 7%.\n•",
+              "score": 8.27893477226755,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "10-Q",
+                "accession_number": "0001193125-26-436133",
+                "report_date": "2026-09-30",
+                "filed": "2026-10-28",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:41:32.865455+00:00",
+                "sha256": "563668cfd640e4b7535f2af41729cf532bd2d8657dfe96555711ceb65f927cda",
+                "start": 78612,
+                "end": 81083,
+                "preceding_period_heading": {
+                  "text": "Three Months Ended September 30, 2026 Compared with Three Months Ended September 30, 2025",
+                  "start": 77971,
+                  "end": 78060
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            },
+            {
+              "text": "Revenue from search advertising excluding traffic acquisition costs (“TAC”) paid to Bing Ads network publishers and content partners, as well as revenue from LinkedIn Marketing Solutions (ex TAC) and Premium Subscriptions\nXBOX content and services revenue growth\nRevenue from XBOX content and services, comprising first- and third-party content (including games and in-game content), XBOX Game Pass and other subscriptions, XBOX Cloud Gaming, advertising, and other cloud services\nWindows OEM and devices revenue growth\nRevenue from sales of Windows Pro and non-Pro licenses sold through the OEM channel, first-party devices (including Surface and PC accessories), and related Windows offerings beyond OEM licensing\n31\nPART I\nItem 2\nSUMMARY RESULTS OF OPERATIONS\n(In millions, except percentages and per share amounts)\nThree Months Ended\nSeptember 30,\nPercentage\nChange\n2026\n2025\nRevenue\n$\n92,279\n$\n77,673\n19%\nGross margin\n62,559\n53,630\n17%\nOperating income\n45,915\n37,961\n21%\nNet income\n36,629\n27,747\n32%\nDiluted earnings per share\n4.92\n3.72\n32%\nAdjusted net income (non-GAAP)\n36,422\n30,833\n18%\nAdjusted diluted earnings per share (non-GAAP)\n4.89\n4.13\n18%\nAdjusted net income and adjusted diluted earnings per share (“EPS”) are non-GAAP financial measures. These non-GAAP financial measures exclude net gains and losses from investments in OpenAI. Refer to the Non-GAAP Financial Measures section below for a reconciliation of our financial results reported in accordance with GAAP to non-GAAP financial results.\nThree Months Ended September 30, 2026 Compared with Three Months Ended September 30, 2025\nRevenue increased $14.6 billion or 19% driven by growth in Agents and Infra. Agents and Infra revenue increased driven by Azure. Devices and Consumer revenue decreased driven by Windows OEM and devices, offset in part by growth in Search and advertising.\nCost of revenue increased $5.7 billion or 24% driven by growth in Agents and Infra.\nGross margin increased $8.9 billion or 17%.\n•\nMicrosoft Cloud gross margin percentage decreased to 66% driven by sales mix shift to Azure, offset in part by product-level margin improvements, primarily in Azure.\nOperating expenses increased $975 million or 6% driven by continued investments in research and development compute capacity and talent. Total company headcount decreased 2%.",
+              "score": 8.09179889149392,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "10-Q",
+                "accession_number": "0001193125-26-436133",
+                "report_date": "2026-09-30",
+                "filed": "2026-10-28",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:41:32.865455+00:00",
+                "sha256": "563668cfd640e4b7535f2af41729cf532bd2d8657dfe96555711ceb65f927cda",
+                "start": 76458,
+                "end": 78786,
+                "preceding_period_heading": {
+                  "text": "Three Months Ended September 30,",
+                  "start": 60272,
+                  "end": 60304
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "10-Q",
+            "filings_considered": 1,
+            "documents_loaded": 1,
+            "latest_considered_report_date": "2026-09-30",
+            "latest_considered_filing_date": "2026-10-28",
+            "selected_filings": [
+              {
+                "accession_number": "0001193125-26-436133",
+                "report_date": "2026-09-30",
+                "filed": "2026-10-28"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        },
+        "elapsed_seconds": 0.946092124999268
+      },
+      {
+        "type": "model",
+        "task_id": "task_3",
+        "agent": "filing_rag",
+        "step": 4,
+        "max_output_tokens": 1024,
+        "input_tokens": 8858,
+        "output_tokens": 37,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_q6129vhj",
+            "function": {
+              "index": 0,
+              "name": "search_company_updates",
+              "arguments": {
+                "top_k": 3,
+                "form": "8-K",
+                "query": "revenue earnings results",
+                "ticker": "Microsoft"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 15.795304584000405
+      },
+      {
+        "type": "tool",
+        "task_id": "task_3",
+        "agent": "filing_rag",
+        "step": 4,
+        "call_id": 4,
+        "name": "search_company_updates",
+        "arguments": {
+          "top_k": 3,
+          "form": "8-K",
+          "query": "revenue earnings results",
+          "ticker": "Microsoft"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "matches": [
+            {
+              "text": "EX-99.1\n2\nmsft-ex99_1.htm\nEX-99.1\nExhibit 99.1\nMicrosoft Announces First Quarter Results\nREDMOND, Wash. — October 28, 2026 — Microsoft Corp. today announced the following results for the quarter ended September 30, 2026, as compared to the corresponding period of last fiscal year:\n•\nRevenue was $92.3 billion and increased 19%\n•\nOperating income was $45.9 billion and increased 21% (up 22% in constant currency)\n•\nNet income was $36.6 billion and increased 32% on a GAAP basis, and was $36.4 billion and increased 18% (up 19% in constant currency) on a non-GAAP basis\n•\nDiluted earnings per share was $4.92 and increased 32% on a GAAP basis, and was $4.89 and increased 18% (up 19% in constant currency) on a non-GAAP basis\n•\nNon-GAAP results exclude the impact from investments in OpenAI, explained in the Non-GAAP Definition section below\n“We are delivering greater capability, choice, control, and cost efficiency for customers across our entire stack,” said Satya Nadella, chairman and chief executive officer of Microsoft. “By helping organizations build and own their own intelligence, and earning trust through agent safety and security, we are translating our innovation into growing adoption and real-world impact across every industry.”\n“We delivered a strong start to the fiscal year with Microsoft Cloud revenue of $63.9 billion, with growth accelerating to 30% (up 31% in constant currency) year-over-year,” said Amy Hood, executive vice president and chief financial officer of Microsoft. “Results exceeded expectations across revenue, operating income, and earnings per share.”\nThe following table adjusts for the impact from investments in OpenAI and reconciles our financial results reported in accordance with generally accepted accounting principles (GAAP) to non-GAAP financial results. Additional information regarding our non-GAAP definition is provided below. All growth comparisons relate to the corresponding period in the last fiscal year.\nThree Months Ended September 30,\n2026\n2025\nPercentage Change Y/Y\nPercentage Change Y/Y\n($ in millions, except per share amounts)\nAs Reported (GAAP)\nImpact from OpenAI*\nAs Adjusted (non-GAAP)\nAs Reported (GAAP)\nImpact from OpenAI*\nAs Adjusted (non-GAAP)\nGAAP\nConstant Currency\nNet Impact from OpenAI*\nNon-GAAP\nNon-GAAP Constant Currency\nNet income\n$36,629\n$(207)\n$36,422\n$27,747\n$3,086\n$30,833\n32%\n33%\n$(3,293)\n18%\n19%\nDiluted earnings per share\n$4.92\n$(0.03)\n$4.89\n$3.72\n$0.41\n$4.13\n32%\n33%\n$(0.44)\n18%\n19%",
+              "score": 5.080532034188639,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "8-K",
+                "accession_number": "0001193125-26-436122",
+                "report_date": "2026-10-28",
+                "filed": "2026-10-28",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:56:57.902857+00:00",
+                "sha256": "6a0547a908a312435155b1c02c094deb649bfde0d2c9dcd7cbac9a489fb14916",
+                "start": 0,
+                "end": 2473
+              }
+            },
+            {
+              "text": "Impact from OpenAI*\nAs Adjusted (non-GAAP)\nGAAP\nConstant Currency\nNet Impact from OpenAI*\nNon-GAAP\nNon-GAAP Constant Currency\nNet income\n$36,629\n$(207)\n$36,422\n$27,747\n$3,086\n$30,833\n32%\n33%\n$(3,293)\n18%\n19%\nDiluted earnings per share\n$4.92\n$(0.03)\n$4.89\n$3.72\n$0.41\n$4.13\n32%\n33%\n$(0.44)\n18%\n19%\n*Impact from OpenAI adjusts for the impact from investments in OpenAI\nBusiness Highlights\nRevenue in Agents and Infra was $76.8 billion and increased 25%, with the following business highlights:\n•\nCommercial remaining performance obligation increased 73% to $677 billion\n•\nMicrosoft Cloud revenue was $63.9 billion and increased 30% (up 31% in constant currency)\n•\nAzure revenue increased 48%\n•\nMicrosoft 365 commercial cloud revenue increased 18% (up 19% in constant currency) on an adjusted basis, normalized for a 1-point benefit from in-period revenue recognition in the prior year, and increased 17% (up 18% in constant currency) on a reported basis\n•\nMicrosoft 365 consumer cloud revenue increased 17% (up 16% in constant currency)\n•\nIndustry solutions cloud revenue increased 10%\nRevenue in Devices and Consumer was $15.5 billion and decreased 3%, with the following business highlights:\n•\nSearch and advertising revenue excluding traffic acquisition costs increased 12%\n•\nXBOX content and services revenue decreased 2% (down 1% in constant currency)\n•\nWindows OEM and Devices revenue decreased 22%\nMicrosoft returned $10.2 billion to shareholders in the form of dividends and share repurchases in the first quarter of fiscal year 2027.\nBusiness Outlook\nMicrosoft will provide forward-looking guidance in connection with this quarterly earnings announcement on its earnings conference call and webcast.\nQuarterly Highlights, Product Releases, and Customer Stories\nEvery quarter Microsoft delivers hundreds of products, services, and enhancements. These releases are driven by years of significant research and development investments, to empower customers with greater productivity, security, and differentiated value.\nThis momentum is reflected in stories that showcase how our technology is shaping industries and driving customer success. We share innovation updates on our product blogs across Azure, Microsoft 365, and more on our Official Microsoft blog.\nWebcast Details",
+              "score": 4.226097737497993,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "8-K",
+                "accession_number": "0001193125-26-436122",
+                "report_date": "2026-10-28",
+                "filed": "2026-10-28",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:56:57.902857+00:00",
+                "sha256": "6a0547a908a312435155b1c02c094deb649bfde0d2c9dcd7cbac9a489fb14916",
+                "start": 2177,
+                "end": 4457,
+                "preceding_period_heading": {
+                  "text": "Three Months Ended September 30,",
+                  "start": 1967,
+                  "end": 1999
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            },
+            {
+              "text": "Constant Currency\nMicrosoft presents constant currency information to provide a framework for assessing how our underlying businesses performed excluding the effect of foreign currency rate fluctuations. To present this information, current and comparative prior period results for entities reporting in currencies other than United States dollars are converted into United States dollars using the average exchange rates from the comparative period rather than the actual exchange rates in effect during the respective periods. All growth comparisons relate to the corresponding period in the last fiscal year. Microsoft has provided this non-GAAP financial information to aid investors in better understanding our performance. The non-GAAP financial measures presented in this release should not be considered as a substitute for, or superior to, the measures of financial performance prepared in accordance with GAAP.\nFinancial Performance Constant Currency Reconciliation\nThree Months Ended September 30,\n2026\n2025\nPercentage Change Y/Y\nPercentage Change Y/Y\n($ in millions, except per share amounts)\nAs Reported (GAAP)\nAs Adjusted (non-GAAP)\nAs Reported (GAAP)\nAs Adjusted (non-GAAP)\nGAAP\nNon-GAAP\nConstant Currency Impact\nConstant Currency\nNon-GAAP Constant Currency\nRevenue\n$92,279\n-\n$77,673\n-\n19%\n-\n$(309)\n19%\n-\nOperating income\n$45,915\n-\n$37,961\n-\n21%\n-\n$(297)\n22%\n-\nNet income\n$36,629\n$36,422\n$27,747\n$30,833\n32%\n18%\n$(242)\n33%\n19%\nDiluted earnings per share\n$4.92\n$4.89\n$3.72\n$4.13\n32%\n18%\n$(0.03)\n33%\n19%\nSegment Revenue Constant Currency Reconciliation\nThree Months Ended September 30,\n2026\n2025\nPercentage Change Y/Y\nPercentage Change Y/Y\n($ in millions)\nAs Reported (GAAP)\nAs Reported (GAAP)\nGAAP\nConstant Currency Impact\nConstant Currency\nAgents and Infra\n$76,795\n$61,672\n25%\n$(290)\n25%\nDevices and Consumer\n$15,484\n$16,001\n(3)%\n$(19)\n(3)%\nWe have recast certain prior period amounts to conform to the way we internally manage and monitor our business, which reflects the fiscal year 2027 changes to our segments announced in September 2026.\nSelected Product and Service Information Constant Currency Reconciliation\nThree Months Ended September 30, 2026\nPercentage Change Y/Y (GAAP)\nConstant Currency Impact\nPercentage Change Y/Y Constant Currency\nCommercial remaining performance obligation\n73%\n0%\n73%\nMicrosoft Cloud revenue\n30%\n1%\n31%\nAzure revenue\n48%\n0%\n48%\nMicrosoft 365 commercial cloud revenue\n17%\n1%\n18%\nMicrosoft 365 consumer cloud revenue\n17%\n(1)%\n16%",
+              "score": 3.924264089582853,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "8-K",
+                "accession_number": "0001193125-26-436122",
+                "report_date": "2026-10-28",
+                "filed": "2026-10-28",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:56:57.902857+00:00",
+                "sha256": "6a0547a908a312435155b1c02c094deb649bfde0d2c9dcd7cbac9a489fb14916",
+                "start": 6471,
+                "end": 8949,
+                "preceding_period_heading": {
+                  "text": "Three Months Ended September 30,",
+                  "start": 1967,
+                  "end": 1999
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "8-K",
+            "filings_considered": 4,
+            "documents_loaded": 5,
+            "latest_considered_report_date": "2026-11-04",
+            "latest_considered_filing_date": "2026-11-05",
+            "selected_filings": [
+              {
+                "accession_number": "0001193125-26-448357",
+                "report_date": "2026-11-04",
+                "filed": "2026-11-05"
+              },
+              {
+                "accession_number": "0001193125-26-447173",
+                "report_date": "2026-10-29",
+                "filed": "2026-11-04"
+              },
+              {
+                "accession_number": "0001193125-26-436149",
+                "report_date": "2026-10-28",
+                "filed": "2026-10-28"
+              },
+              {
+                "accession_number": "0001193125-26-436122",
+                "report_date": "2026-10-28",
+                "filed": "2026-10-28"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        },
+        "elapsed_seconds": 0.19793016599942348
+      },
+      {
+        "type": "model",
+        "task_id": "task_3",
+        "agent": "filing_rag",
+        "step": 5,
+        "max_output_tokens": 1024,
+        "input_tokens": 12467,
+        "output_tokens": 37,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_zbn2nza0",
+            "function": {
+              "index": 0,
+              "name": "search_company_updates",
+              "arguments": {
+                "form": "8-K",
+                "query": "revenue outlook guidance",
+                "ticker": "Microsoft",
+                "top_k": 3
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 17.958414875000017
+      },
+      {
+        "type": "tool",
+        "task_id": "task_3",
+        "agent": "filing_rag",
+        "step": 5,
+        "call_id": 5,
+        "name": "search_company_updates",
+        "arguments": {
+          "form": "8-K",
+          "query": "revenue outlook guidance",
+          "ticker": "Microsoft",
+          "top_k": 3
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "matches": [
+            {
+              "text": "Impact from OpenAI*\nAs Adjusted (non-GAAP)\nGAAP\nConstant Currency\nNet Impact from OpenAI*\nNon-GAAP\nNon-GAAP Constant Currency\nNet income\n$36,629\n$(207)\n$36,422\n$27,747\n$3,086\n$30,833\n32%\n33%\n$(3,293)\n18%\n19%\nDiluted earnings per share\n$4.92\n$(0.03)\n$4.89\n$3.72\n$0.41\n$4.13\n32%\n33%\n$(0.44)\n18%\n19%\n*Impact from OpenAI adjusts for the impact from investments in OpenAI\nBusiness Highlights\nRevenue in Agents and Infra was $76.8 billion and increased 25%, with the following business highlights:\n•\nCommercial remaining performance obligation increased 73% to $677 billion\n•\nMicrosoft Cloud revenue was $63.9 billion and increased 30% (up 31% in constant currency)\n•\nAzure revenue increased 48%\n•\nMicrosoft 365 commercial cloud revenue increased 18% (up 19% in constant currency) on an adjusted basis, normalized for a 1-point benefit from in-period revenue recognition in the prior year, and increased 17% (up 18% in constant currency) on a reported basis\n•\nMicrosoft 365 consumer cloud revenue increased 17% (up 16% in constant currency)\n•\nIndustry solutions cloud revenue increased 10%\nRevenue in Devices and Consumer was $15.5 billion and decreased 3%, with the following business highlights:\n•\nSearch and advertising revenue excluding traffic acquisition costs increased 12%\n•\nXBOX content and services revenue decreased 2% (down 1% in constant currency)\n•\nWindows OEM and Devices revenue decreased 22%\nMicrosoft returned $10.2 billion to shareholders in the form of dividends and share repurchases in the first quarter of fiscal year 2027.\nBusiness Outlook\nMicrosoft will provide forward-looking guidance in connection with this quarterly earnings announcement on its earnings conference call and webcast.\nQuarterly Highlights, Product Releases, and Customer Stories\nEvery quarter Microsoft delivers hundreds of products, services, and enhancements. These releases are driven by years of significant research and development investments, to empower customers with greater productivity, security, and differentiated value.\nThis momentum is reflected in stories that showcase how our technology is shaping industries and driving customer success. We share innovation updates on our product blogs across Azure, Microsoft 365, and more on our Official Microsoft blog.\nWebcast Details",
+              "score": 7.567165344128075,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "8-K",
+                "accession_number": "0001193125-26-436122",
+                "report_date": "2026-10-28",
+                "filed": "2026-10-28",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:56:57.902857+00:00",
+                "sha256": "6a0547a908a312435155b1c02c094deb649bfde0d2c9dcd7cbac9a489fb14916",
+                "start": 2177,
+                "end": 4457,
+                "preceding_period_heading": {
+                  "text": "Three Months Ended September 30,",
+                  "start": 1967,
+                  "end": 1999
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            },
+            {
+              "text": "Constant Currency Impact\nPercentage Change Y/Y Constant Currency\nCommercial remaining performance obligation\n73%\n0%\n73%\nMicrosoft Cloud revenue\n30%\n1%\n31%\nAzure revenue\n48%\n0%\n48%\nMicrosoft 365 commercial cloud revenue\n17%\n1%\n18%\nMicrosoft 365 consumer cloud revenue\n17%\n(1)%\n16%\nIndustry solutions cloud revenue\n10%\n0%\n10%\nSearch and advertising revenue excluding traffic acquisition costs\n12%\n0%\n12%\nXBOX content and services revenue\n(2)%\n1%\n(1)%\nWindows OEM and devices revenue\n(22)%\n0%\n(22)%\nAbout Microsoft\nMicrosoft (Nasdaq “MSFT” @microsoft) creates platforms and tools powered by AI to deliver innovative solutions that meet the evolving needs of our customers. The technology company is committed to making AI available broadly and doing so responsibly, with a mission to empower every person and every organization on the planet to achieve more.\nForward-Looking Statements\nStatements in this release that are “forward-looking statements” are based on current expectations and assumptions that are subject to risks and uncertainties. Actual results could differ materially because of factors such as:\n•\nintense competition in all of our markets that could adversely affect our results of operations;\n•\nsubstantial investments in cloud and AI strategy that depend on customer demand, technological developments, competitive dynamics, and regulatory condition;\n•\ndevelopment, delivery, and maintenance of competitive cloud-based and AI products and services that achieve broad customer adoption and sustainable revenue growth;\n•\nsignificant investments in products and services that may not achieve expected returns;\n•\nacquisitions, joint ventures, and strategic alliances that could have an adverse effect on our business;\n•\ncyberattacks and security vulnerabilities that could lead to reduced revenue, increased costs, liability claims, or harm to our reputation or competitive position;\n•\ndisclosure and misuse of personal data that could cause liability and harm to our reputation;\n•\nthe possibility that we may not be able to protect information in our products and services from use by others;\n•\nabuse of our platforms that may harm our reputation or user engagement;\n•\nproducts and services, how they are used by customers, and how third-party products and services interact with them, presenting security, privacy, and execution risks;\n•\nissues about the development, deployment, and use of AI that may result in reputational or competitive harm, or liability;\n•",
+              "score": 2.2310228430511905,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "8-K",
+                "accession_number": "0001193125-26-436122",
+                "report_date": "2026-10-28",
+                "filed": "2026-10-28",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:56:57.902857+00:00",
+                "sha256": "6a0547a908a312435155b1c02c094deb649bfde0d2c9dcd7cbac9a489fb14916",
+                "start": 8670,
+                "end": 11147,
+                "preceding_period_heading": {
+                  "text": "Three Months Ended September 30, 2026",
+                  "start": 8603,
+                  "end": 8640
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            },
+            {
+              "text": "45,057\nFinancing\nRepayments of debt\n(4,850)\n0\nCommon stock issued\n598\n689\nCommon stock repurchased\n(4,379)\n(5,650)\nCommon stock cash dividends paid\n(6,757)\n(6,169)\nOther, net\n(1,252)\n(669)\nNet cash used in financing\n(16,640)\n(11,799)\nInvesting\nAdditions to property and equipment\n(39,367)\n(19,394)\nAcquisition of companies, net of cash acquired and divestitures, and purchases of intangible and other assets\n(397)\n(578)\nPurchases of investments\n(5,394)\n(17,671)\nMaturities of investments\n5,672\n6,031\nSales of investments\n10,470\n3,262\nOther, net\n(12,949)\n(6,209)\nNet cash used in investing\n(41,965)\n(34,559)\nEffect of foreign exchange rates on cash and cash equivalents\n(49)\n(92)\nNet change in cash and cash equivalents\n(654)\n(1,393)\nCash and cash equivalents, beginning of period\n20,935\n30,242\nCash and cash equivalents, end of period\n$20,281\n$28,849\nWe have recast certain prior period amounts to conform to the current period presentation.\nSEGMENT RESULTS\n(In millions) (Unaudited)\nThree Months Ended\nSeptember 30,\n2026\n2025\nAgents and Infra\nRevenue\n$76,795\n$61,672\nCost of revenue\n23,887\n17,701\nOperating expenses\n12,350\n11,253\nOperating income\n$40,558\n$32,718\nDevices and Consumer\nRevenue\n$15,484\n$16,001\nCost of revenue\n5,833\n6,342\nOperating expenses\n4,294\n4,416\nOperating income\n$5,357\n$5,243\nTotal\nRevenue\n$92,279\n$77,673\nCost of revenue\n29,720\n24,043\nOperating expenses\n16,644\n15,669\nOperating income\n$45,915\n$37,961\nWe have recast certain prior period amounts to conform to the way we internally manage and monitor our business, which reflects the fiscal year 2027 changes to our segments announced in September 2026.\nPRODUCT AND SERVICE OFFERINGS REVENUE\n(In millions) (Unaudited)\nThree Months Ended\nSeptember 30,\n2026\n2025\nAzure\n$33,165\n$22,384\nMicrosoft 365 cloud\n27,778\n23,694\nProductivity and server licensing\n8,407\n8,678\nSearch and advertising\n6,554\n5,942\nXBOX\n5,379\n5,508\nIndustry solutions\n5,337\n4,894\nWindows OEM and devices\n3,551\n4,551\nFrontier and support services\n2,108\n2,022\nTotal revenue\n$92,279\n$77,673\nWe have recast certain prior period amounts to conform to the way we internally manage and monitor our business, which reflects the fiscal year 2027 changes to our segments announced in September 2026.",
+              "score": 2.1347858606038783,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "8-K",
+                "accession_number": "0001193125-26-436122",
+                "report_date": "2026-10-28",
+                "filed": "2026-10-28",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:56:57.902857+00:00",
+                "sha256": "6a0547a908a312435155b1c02c094deb649bfde0d2c9dcd7cbac9a489fb14916",
+                "start": 17461,
+                "end": 19689,
+                "preceding_period_heading": {
+                  "text": "Three Months Ended",
+                  "start": 16734,
+                  "end": 16752
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "8-K",
+            "filings_considered": 4,
+            "documents_loaded": 5,
+            "latest_considered_report_date": "2026-11-04",
+            "latest_considered_filing_date": "2026-11-05",
+            "selected_filings": [
+              {
+                "accession_number": "0001193125-26-448357",
+                "report_date": "2026-11-04",
+                "filed": "2026-11-05"
+              },
+              {
+                "accession_number": "0001193125-26-447173",
+                "report_date": "2026-10-29",
+                "filed": "2026-11-04"
+              },
+              {
+                "accession_number": "0001193125-26-436149",
+                "report_date": "2026-10-28",
+                "filed": "2026-10-28"
+              },
+              {
+                "accession_number": "0001193125-26-436122",
+                "report_date": "2026-10-28",
+                "filed": "2026-10-28"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        },
+        "elapsed_seconds": 0.22024745799899392
+      },
+      {
+        "type": "model",
+        "task_id": "task_3",
+        "agent": "filing_rag",
+        "step": 6,
+        "max_output_tokens": 1024,
+        "input_tokens": 16187,
+        "output_tokens": 37,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_7dpo4ato",
+            "function": {
+              "index": 0,
+              "name": "search_company_updates",
+              "arguments": {
+                "form": "10-Q",
+                "query": "cost of revenue",
+                "ticker": "Microsoft",
+                "top_k": 3
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 20.90594666600009
+      },
+      {
+        "type": "tool",
+        "task_id": "task_3",
+        "agent": "filing_rag",
+        "step": 6,
+        "call_id": 6,
+        "name": "search_company_updates",
+        "arguments": {
+          "form": "10-Q",
+          "query": "cost of revenue",
+          "ticker": "Microsoft",
+          "top_k": 3
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "matches": [
+            {
+              "text": "•\nSearch advertising (formerly Search and news advertising), comprising Bing, Copilot, Microsoft News, Microsoft Edge, and third-party affiliates.\nRevenue and costs are generally directly attributed to our segments. However, due to the integrated structure of our business, certain revenue recognized and costs incurred by one segment may benefit other segments. Revenue from certain contracts is allocated among the segments based on the relative value of the underlying products and services, which can include allocation based on actual prices charged, prices when sold separately, or estimated costs plus a profit margin. Cost of revenue is allocated in certain cases based on a relative revenue methodology. Operating expenses that are allocated primarily include those relating to our investments in AI infrastructure and training, as well as marketing of products and services, from which multiple segments benefit and are generally allocated based on relative gross margin.\n27\nPART I\nItem 1\nIn addition, certain costs are incurred at a corporate level and allocated to our segments. These allocated costs generally include legal, including settlements and fines, information technology, human resources, finance, excise taxes, field selling, shared facilities services, customer service and support, and severance incurred as part of a corporate program. Each allocation is measured differently based on the specific facts and circumstances of the costs being allocated and is generally based on relative gross margin or relative headcount.\nSegment revenue, cost of revenue, operating expenses, and operating income were as follows during the periods presented:\n(In millions)\nThree Months Ended\nMarch 31,\nNine Months Ended\nMarch 31,\n2026\n2025\n2026\n2025\nProductivity and Business Processes\nRevenue\n$\n35,013\n$\n29,944\n$\n102,149\n$\n87,698\nCost of revenue\n6,197\n5,517\n18,028\n16,380\nOperating expenses\n7,843\n7,048\n22,142\n20,538\nOperating income\n$\n20,973\n$\n17,379\n$\n61,979\n$\n50,780\nIntelligent Cloud\nRevenue\n$\n34,681\n$\n26,751\n$\n98,485\n$\n76,387\nCost of revenue\n15,120\n10,307\n41,000\n28,326\nOperating expenses\n5,808\n5,349\n16,468\n15,612\nOperating income\n$\n13,753\n$\n11,095\n$\n41,017\n$\n32,449\nMore Personal Computing\nRevenue\n$\n13,192\n$\n13,371\n$\n41,198\n$\n41,198\nCost of revenue\n5,511\n6,095\n17,821\n19,111\nOperating expenses\n4,009\n3,750\n11,739\n11,111\nOperating income\n$\n3,672\n$\n3,526\n$\n11,638\n$\n10,976\nTotal\nRevenue\n$\n82,886\n$\n70,066\n$\n241,832\n$\n205,283\nCost of revenue\n26,828\n21,919\n76,849\n63,817",
+              "score": 4.236680759666873,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "10-Q",
+                "accession_number": "0001193125-26-191507",
+                "report_date": "2026-03-31",
+                "filed": "2026-04-29",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526191507/msft-20260331.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:41:34.550326+00:00",
+                "sha256": "843cec2cc1f09b449de4a157a087c770505bc686b00f9a7b00746ec8f758767c",
+                "start": 60576,
+                "end": 63063,
+                "preceding_period_heading": {
+                  "text": "Nine Months Ended",
+                  "start": 55525,
+                  "end": 55542
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            },
+            {
+              "text": "•\nWindows OEM and devices, comprising Windows Pro and non-Pro licenses sold through the OEM channel, first-party devices (including Surface and PC accessories), and related Windows offerings beyond OEM licensing.\nRevenue and costs are generally directly attributed to our segments. However, due to the integrated structure of our business, certain revenue recognized and costs incurred by one segment may benefit other segments. Revenue from certain contracts is allocated among the segments based on the relative value of the underlying products and services, which can include allocation based on actual prices charged, prices when sold separately, or estimated costs plus a profit margin. Cost of revenue is allocated in certain cases based on a relative revenue methodology. Operating expenses that are allocated primarily include those relating to our investments in AI infrastructure and training, as well as marketing of products and services, from which multiple segments benefit and are generally allocated based on relative gross margin.\nIn addition, certain costs are incurred at a corporate level and allocated to our segments. These allocated costs generally include legal, including settlements and fines, information technology, human resources, finance, excise taxes, field selling, shared facilities services, customer service and support, and severance incurred as part of a corporate program. Each allocation is measured differently based on the specific facts and circumstances of the costs being allocated and is generally based on relative gross margin or relative headcount.\n25\nPART I\nItem 1\nSegment revenue, cost of revenue, operating expenses, and operating income were as follows during the periods presented:\n(In millions)\nThree Months Ended September 30,\n2026\n2025\nAgents and Infra\nRevenue\n$\n76,795\n$\n61,672\nCost of revenue\n23,887\n17,701\nOperating expenses\n12,350\n11,253\nOperating income\n$\n40,558\n$\n32,718\nDevices and Consumer\nRevenue\n$\n15,484\n$\n16,001\nCost of revenue\n5,833\n6,342\nOperating expenses\n4,294\n4,416\nOperating income\n$\n5,357\n$\n5,243\nTotal\nRevenue\n$\n92,279\n$\n77,673\nCost of revenue\n29,720\n24,043\nOperating expenses\n16,644\n15,669\nOperating income\n$\n45,915\n$\n37,961\nNo sales to an individual country other than the United States accounted for more than 10% of revenue for the three months ended September 30, 2026 or 2025. Revenue, classified by the major geographic areas in which our customers were located, was as follows:\n(In millions)",
+              "score": 4.165095419320429,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "10-Q",
+                "accession_number": "0001193125-26-436133",
+                "report_date": "2026-09-30",
+                "filed": "2026-10-28",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:41:32.865455+00:00",
+                "sha256": "563668cfd640e4b7535f2af41729cf532bd2d8657dfe96555711ceb65f927cda",
+                "start": 57376,
+                "end": 59852,
+                "preceding_period_heading": {
+                  "text": "Three Months Ended September 30,",
+                  "start": 52829,
+                  "end": 52861
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            },
+            {
+              "text": "•\nWindows and Devices, including Windows OEM licensing (Windows Pro and non-Pro licenses sold through the OEM channel) and Devices, comprising Surface and PC accessories.\n•\nGaming, including Xbox hardware and Xbox content and services, comprising first- and third-party content (including games and in-game content), Xbox Game Pass and other subscriptions, Xbox Cloud Gaming, advertising, and other cloud services.\n•\nSearch and news advertising, comprising Bing and Copilot, Microsoft News, Microsoft Edge, and third-party affiliates.\nRevenue and costs are generally directly attributed to our segments. However, due to the integrated structure of our business, certain revenue recognized and costs incurred by one segment may benefit other segments. Revenue from certain contracts is allocated among the segments based on the relative value of the underlying products and services, which can include allocation based on actual prices charged, prices when sold separately, or estimated costs plus a profit margin. Cost of revenue is allocated in certain cases based on a relative revenue methodology. Operating expenses that are allocated primarily include those relating to marketing of products and services from which multiple segments benefit and are generally allocated based on relative gross margin.\nIn addition, certain costs are incurred at a corporate level and allocated to our segments. These allocated costs generally include legal, including settlements and fines, information technology, human resources, finance, excise taxes, field selling, shared facilities services, customer service and support, and severance incurred as part of a corporate program. Each allocation is measured differently based on the specific facts and circumstances of the costs being allocated and is generally based on relative gross margin or relative headcount.\n25\nPART I\nItem 1\nSegment revenue, cost of revenue, operating expenses, and operating income were as follows during the periods presented:\n(In millions)\nThree Months Ended September 30,\n2025\n2024\nProductivity and Business Processes\nRevenue\n$\n33,020\n$\n28,317\nCost of revenue\n5,721\n5,294\nOperating expenses\n6,892\n6,507\nOperating income\n$\n20,407\n$\n16,516\nIntelligent Cloud\nRevenue\n$\n30,897\n$\n24,092\nCost of revenue\n12,314\n8,614\nOperating expenses\n5,192\n4,975\nOperating income\n$\n13,391\n$\n10,503\nMore Personal Computing\nRevenue\n$\n13,756\n$\n13,176\nCost of revenue\n6,008\n6,191\nOperating expenses\n3,585\n3,452\nOperating income\n$\n4,163\n$\n3,533\nTotal",
+              "score": 4.147722614088882,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "10-Q",
+                "accession_number": "0001193125-25-256321",
+                "report_date": "2025-09-30",
+                "filed": "2025-10-29",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312525256321/msft-20250930.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:41:39.933040+00:00",
+                "sha256": "79bd7ff2b5aa8ee2a56bb4ef87d6be430e4bb8b804423f27473e71241cb40d18",
+                "start": 54466,
+                "end": 56960,
+                "preceding_period_heading": {
+                  "text": "Three Months Ended September 30,",
+                  "start": 50146,
+                  "end": 50178
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "10-Q",
+            "filings_considered": 4,
+            "documents_loaded": 4,
+            "latest_considered_report_date": "2026-09-30",
+            "latest_considered_filing_date": "2026-10-28",
+            "selected_filings": [
+              {
+                "accession_number": "0001193125-26-436133",
+                "report_date": "2026-09-30",
+                "filed": "2026-10-28"
+              },
+              {
+                "accession_number": "0001193125-26-191507",
+                "report_date": "2026-03-31",
+                "filed": "2026-04-29"
+              },
+              {
+                "accession_number": "0001193125-26-027207",
+                "report_date": "2025-12-31",
+                "filed": "2026-01-28"
+              },
+              {
+                "accession_number": "0001193125-25-256321",
+                "report_date": "2025-09-30",
+                "filed": "2025-10-29"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        },
+        "elapsed_seconds": 4.409513375001552
+      },
+      {
+        "type": "agent",
+        "task_id": "task_3",
+        "agent": "filing_rag",
+        "status": "error",
+        "error": {
+          "type": "SpecialistLimitError",
+          "message": "Specialist reached the maximum number of steps"
+        },
+        "elapsed_seconds": 76.1010253330005
+      }
+    ],
+    "error": "SpecialistLimitError: Specialist reached the maximum number of steps",
+    "previous_tool_calls": [
+      "resolve_ticker_to_cik",
+      "search_company_updates",
+      "search_company_updates",
+      "search_fed_releases",
+      "get_bls_series",
+      "search_company_updates"
+    ],
+    "previous_elapsed_seconds": 48.67729470900122
+  },
+  {
+    "task": {
+      "id": "task_4",
+      "agent": "filing_rag",
+      "instruction": "Retrieve BLS inflation data for the most recent period.",
+      "filing_scope": "recent",
+      "years": 1,
+      "fiscal_year": null
+    },
+    "elapsed_seconds": 27.3482389159999,
+    "trace": [
+      {
+        "type": "agent",
+        "task_id": "task_4",
+        "agent": "filing_rag",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "task_4",
+        "agent": "filing_rag",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 1305,
+        "output_tokens": 29,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_tdinbag0",
+            "function": {
+              "index": 0,
+              "name": "get_bls_series",
+              "arguments": {
+                "indicator": "cpi",
+                "months": 1
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.0831748340006015
+      },
+      {
+        "type": "tool",
+        "task_id": "task_4",
+        "agent": "filing_rag",
+        "step": 1,
+        "call_id": 1,
+        "name": "get_bls_series",
+        "arguments": {
+          "indicator": "cpi",
+          "months": 1
+        },
+        "status": "completed",
+        "result": {
+          "records": [
+            {
+              "metric": "cpi",
+              "name": "CPI-U, all items",
+              "value": 337.511,
+              "unit": "index (1982-84=100)",
+              "end": "2026-10",
+              "seasonal_adjustment": "not seasonally adjusted",
+              "footnotes": [
+                {}
+              ],
+              "source_url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
+              "publisher": "BLS",
+              "tag": "CUUR0000SA0",
+              "retrieved_at": "2026-11-21T13:52:20.330107+00:00"
+            }
+          ],
+          "source_url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
+          "publisher": "BLS",
+          "missing_observations": [
+            {
+              "year": "2025",
+              "period": "M10",
+              "footnotes": [
+                {
+                  "code": "X",
+                  "text": "Data unavailable due to the 2025 lapse in appropriations"
+                }
+              ]
+            }
+          ],
+          "coverage": "Latest available monthly observations from the keyless v1 API, not real-time data.",
+          "warning": "CPI is an index level, not an inflation percentage. Payrolls are employment levels, not monthly changes. Do not infer company-specific causation."
+        },
+        "elapsed_seconds": 0.004669916001148522
+      },
+      {
+        "type": "model",
+        "task_id": "task_4",
+        "agent": "filing_rag",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 1659,
+        "output_tokens": 32,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_4fqmz324",
+            "function": {
+              "index": 0,
+              "name": "search_fed_releases",
+              "arguments": {
+                "query": "monetary policy",
+                "top_k": 3
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.8736632500003907
+      },
+      {
+        "type": "tool",
+        "task_id": "task_4",
+        "agent": "filing_rag",
+        "step": 2,
+        "call_id": 2,
+        "name": "search_fed_releases",
+        "arguments": {
+          "query": "monetary policy",
+          "top_k": 3
+        },
+        "status": "completed",
+        "result": {
+          "matches": [
+            {
+              "text": "November 12, 2026\nFederal Reserve announces revised tentative schedule of Federal Open Market Committee meetings in 2027\nFor release at 12:45 p.m. EST\nShare\nThe Federal Reserve on Thursday announced a revised tentative schedule of Federal Open Market Committee meetings in 2027.\nThe Committee plans to meet on the dates listed below to discuss monetary policy and will announce its policy decision as usual on the second day of each meeting, except the October 26-27 meeting. That meeting will be dedicated to the discussion of broad monetary policy strategy issues:\nJanuary 26-27 (Tuesday-Wednesday)\nMarch 16-17 (Tuesday-Wednesday)\nApril 27-28 (Tuesday-Wednesday)\nJune 8-9 (Tuesday-Wednesday)\nJuly 27-28 (Tuesday-Wednesday)\nSeptember 14-15 (Tuesday-Wednesday)\nOctober 26-27 (Tuesday-Wednesday)\nNovember 16-17 (Tuesday-Wednesday)\nJanuary 25-26, 2028 (Tuesday-Wednesday)\nFor media inquiries, please e-mail [email protected] or call (202) 452-2955",
+              "score": 2.571865291103742,
+              "metadata": {
+                "name": "Federal Reserve announces revised tentative schedule of Federal Open Market Committee meetings in 2027",
+                "publisher": "Federal Reserve",
+                "report_date": "2026-11-12",
+                "source_url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261112a.htm",
+                "section": "Monetary policy release",
+                "retrieved_at": "2026-11-22T07:41:56.302616+00:00",
+                "sha256": "ad2c02c3731b4d63b56114a86f0906f532379f58184ab757c10a327726fec5ba",
+                "start": 0,
+                "end": 945
+              }
+            },
+            {
+              "text": "October 28, 2026\nFederal Reserve issues FOMC statement\nFor release at 2:00 p.m. EDT\nShare\nThe Federal Open Market Committee approved the following statement for release by a 10 – 2 vote:\nThe Committee decided to maintain the target range for the federal funds rate at 3-3/4 to 4 percent, in support of the Federal Reserve's dual mandate. The Committee is continuing its policy of maintaining ample reserves in the banking system.\nEconomic activity is expanding at a strong pace. While uncertainty remains elevated owing, in part, to geopolitical developments, domestic spending has been resilient. Productivity growth is strong, and capital investment is robust. Job gains have kept pace with the workforce, and the unemployment rate has changed little.\nInflation remains elevated. The accumulation of more information will help the Committee determine the policy stance appropriate to ensure a timely return of inflation to the Committee's 2 percent goal. The Committee will deliver price stability.\nVoting against the monetary policy action were Lisa D. Cook and Beth M. Hammack, who preferred to raise the target range for the federal funds rate by 1/4 percentage point at this meeting.\nFor media inquiries, please email [email protected] or call 202-452-2955.\nImplementation Note issued October 28, 2026",
+              "score": 1.7549501269192964,
+              "metadata": {
+                "name": "Federal Reserve issues FOMC statement",
+                "publisher": "Federal Reserve",
+                "report_date": "2026-10-28",
+                "source_url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
+                "section": "Monetary policy release",
+                "retrieved_at": "2026-11-22T07:41:56.674149+00:00",
+                "sha256": "a229817091d12a5630fa827015adb623363bec1d37c3e0214537972c9134456b",
+                "start": 0,
+                "end": 1307
+              }
+            },
+            {
+              "text": "September 16, 2026\nFederal Reserve issues FOMC statement\nFor release at 2:00 p.m. EDT\nShare\nThe Federal Open Market Committee approved the following statement for release by a 12 – 0 vote:\nThe Committee decided to raise the target range for the federal funds rate by 1/4 percentage point to 3-3/4 to 4 percent, in support of the Federal Reserve's dual mandate. The Committee is continuing its policy of maintaining ample reserves in the banking system.\nEconomic activity is expanding at a solid pace. While uncertainty remains elevated owing, in part, to geopolitical developments, domestic spending has been resilient. Productivity growth is strong, and capital investment is robust. Job gains have kept pace with the workforce, and the unemployment rate has changed little.\nInflation remains elevated. Today's policy action will support a timelier return to the Committee's 2 percent goal. The Committee will deliver price stability.\nFor media inquiries, please email [email protected] or call 202-452-2955.\nImplementation Note issued September 16, 2026",
+              "score": 0.6531023632364866,
+              "metadata": {
+                "name": "Federal Reserve issues FOMC statement",
+                "publisher": "Federal Reserve",
+                "report_date": "2026-09-16",
+                "source_url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+                "section": "Monetary policy release",
+                "retrieved_at": "2026-11-22T07:41:57.736465+00:00",
+                "sha256": "ce10650ff077f1c580067552b68fd73d9350e8bdaa4dbefef7d9928b64b506f8",
+                "start": 0,
+                "end": 1055
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": "Up to eight releases from the current monetary-policy RSS feed; not a historical archive.",
+          "causality_warning": "Macro policy statements alone do not establish a realized effect on any particular company."
+        },
+        "elapsed_seconds": 0.1781826660007937
+      },
+      {
+        "type": "model",
+        "task_id": "task_4",
+        "agent": "filing_rag",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 3297,
+        "output_tokens": 25,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_4y8ax290",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "MSFT"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 5.82033495900032
+      },
+      {
+        "type": "tool",
+        "task_id": "task_4",
+        "agent": "filing_rag",
+        "step": 3,
+        "call_id": 3,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "MSFT"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "MSFT",
+          "name": "MICROSOFT CORP",
+          "cik": "0000789019"
+        },
+        "elapsed_seconds": 0.014640874998804065
+      },
+      {
+        "type": "model",
+        "task_id": "task_4",
+        "agent": "filing_rag",
+        "step": 4,
+        "max_output_tokens": 1024,
+        "input_tokens": 3367,
+        "output_tokens": 39,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_4y647i3s",
+            "function": {
+              "index": 0,
+              "name": "search_company_updates",
+              "arguments": {
+                "ticker": "MSFT",
+                "top_k": 3,
+                "limit": 1,
+                "form": "10-Q"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.2847539159993175
+      },
+      {
+        "type": "tool",
+        "task_id": "task_4",
+        "agent": "filing_rag",
+        "step": 4,
+        "call_id": 4,
+        "name": "search_company_updates",
+        "arguments": {
+          "ticker": "MSFT",
+          "top_k": 3,
+          "limit": 1,
+          "form": "10-Q"
+        },
+        "status": "error",
+        "result": {
+          "error": {
+            "type": "MCPToolError",
+            "message": "MCP tool 'search_company_updates' failed: Invalid arguments for search_company_updates: 'query' is a required property"
+          }
+        },
+        "elapsed_seconds": 0.003052124999157968
+      },
+      {
+        "type": "model",
+        "task_id": "task_4",
+        "agent": "filing_rag",
+        "step": 5,
+        "max_output_tokens": 1024,
+        "input_tokens": 3456,
+        "output_tokens": 43,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_54d9xy5h",
+            "function": {
+              "index": 0,
+              "name": "search_company_updates",
+              "arguments": {
+                "form": "10-Q",
+                "limit": 1,
+                "query": "net revenue three months",
+                "ticker": "MSFT",
+                "top_k": 3
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 1.3928521249999903
+      },
+      {
+        "type": "tool",
+        "task_id": "task_4",
+        "agent": "filing_rag",
+        "step": 5,
+        "call_id": 5,
+        "name": "search_company_updates",
+        "arguments": {
+          "form": "10-Q",
+          "limit": 1,
+          "query": "net revenue three months",
+          "ticker": "MSFT",
+          "top_k": 3
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "matches": [
+            {
+              "text": "Indicate by check mark whether the registrant is a shell company (as defined in Rule 12b-2 of the Exchange Act). Yes ☐ No ☒\nIndicate the number of shares outstanding of each of the issuer’s classes of common stock, as of the latest practicable date.\nClass\nOutstanding as of October 22, 2026\nCommon Stock, $0.00000625 par value per share\n7,426,194,552 shares\nMICROSOFT CORPORATION\nFORM 10-Q\nFor the Quarter Ended September 30, 2026\nINDEX\nPage\nPART I.\nFINANCIAL INFORMATION\nItem 1.\nFinancial Statements\na)\nIncome Statements for the Three Months Ended September 30, 2026 and 2025\n3\nb)\nComprehensive Income Statements for the Three Months Ended September 30, 2026 and 2025\n4\nc)\nBalance Sheets as of September 30, 2026 and June 30, 2026\n5\nd)\nCash Flows Statements for the Three Months Ended September 30, 2026 and 2025\n6\ne)\nStockholders’ Equity Statements for the Three Months Ended September 30, 2026 and 2025\n7\nf)\nNotes to Financial Statements\n8\ng)\nReport of Independent Registered Public Accounting Firm\n27\nItem 2.\nManagement’s Discussion and Analysis of Financial Condition and Results of Operations\n28\nItem 3.\nQuantitative and Qualitative Disclosures About Market Risk\n42\nItem 4.\nControls and Procedures\n42\nPART II.\nOTHER INFORMATION\nItem 1.\nLegal Proceedings\n43\nItem 1A.\nRisk Factors\n43\nItem 2.\nUnregistered Sales of Equity Securities and Use of Proceeds\n58\nItem 5.\nOther Information\n59\nItem 6.\nExhibits\n60\nSIGNATURE\n61\n2\nPART I\nItem 1\nPART I. FINANCIAL INFORMATION\nITEM 1. FINANCIAL STATEMENTS\nINCOME STATEMENTS\n(In millions, except per share amounts) (Unaudited)\nThree Months Ended September 30,\n2026\n2025\nRevenue:\nProduct\n$\n14,631\n$\n15,922\nService and other\n77,648\n61,751\nTotal revenue\n92,279\n77,673\nCost of revenue:\nProduct\n2,471\n2,922\nService and other\n27,249\n21,121\nTotal cost of revenue\n29,720\n24,043\nGross margin\n62,559\n53,630\nResearch and development\n9,047\n8,146\nSales and marketing\n5,716\n5,717\nGeneral and administrative\n1,881\n1,806\nOperating income\n45,915\n37,961\nOther income (expense), net\n38\n(3,660\n)\nIncome before income taxes\n45,953\n34,301\nProvision for income taxes\n9,324\n6,554\nNet income\n$\n36,629\n$\n27,747\nEarnings per share:\nBasic\n$\n4.93\n$\n3.73\nDiluted\n$\n4.92\n$\n3.72\nWeighted average shares outstanding:\nBasic\n7,426\n7,433\nDiluted\n7,446\n7,466\nRefer to accompanying notes.\n3\nPART I\nItem 1\nCOMPREHENSIVE INCOME STATEMENTS\n(In millions) (Unaudited)\nThree Months Ended September 30,\n2026\n2025\nNet income\n$\n36,629\n$\n27,747\nOther comprehensive income (loss), net of tax:",
+              "score": 8.292183601982856,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "10-Q",
+                "accession_number": "0001193125-26-436133",
+                "report_date": "2026-09-30",
+                "filed": "2026-10-28",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:41:32.865455+00:00",
+                "sha256": "563668cfd640e4b7535f2af41729cf532bd2d8657dfe96555711ceb65f927cda",
+                "start": 2215,
+                "end": 4697
+              }
+            },
+            {
+              "text": "Operating expenses increased $975 million or 6% driven by continued investments in research and development compute capacity and talent. Total company headcount decreased 2%.\nOperating income increased $8.0 billion or 21% driven by growth in Agents and Infra. Operating income percentage increased slightly driven by strong revenue growth, platform efficiency gains, and focused investments across our portfolio, offset in part by sales mix shift to Azure.\nCurrent year net income and diluted EPS were positively impacted by net gains from investments in OpenAI, which resulted in an increase in net income and diluted EPS of $207 million and $0.03, respectively. Prior year net income and diluted EPS were negatively impacted by net losses from investments in OpenAI, which resulted in a decrease in net income and diluted EPS of $3.1 billion and $0.41, respectively.\n32\nPART I\nItem 2\nSEGMENT RESULTS OF OPERATIONS\n(In millions, except percentages)\nThree Months Ended\nSeptember 30,\nPercentage\nChange\n2026\n2025\nAgents and Infra\nRevenue\n$\n76,795\n$\n61,672\n25%\nCost of revenue\n23,887\n17,701\n35%\nOperating expenses\n12,350\n11,253\n10%\nOperating income\n$\n40,558\n$\n32,718\n24%\nDevices and Consumer\nRevenue\n$\n15,484\n$\n16,001\n(3%\n)\nCost of revenue\n5,833\n6,342\n(8%\n)\nOperating expenses\n4,294\n4,416\n(3%\n)\nOperating income\n$\n5,357\n$\n5,243\n2%\nTotal\nRevenue\n$\n92,279\n$\n77,673\n19%\nCost of revenue\n29,720\n24,043\n24%\nOperating expenses\n16,644\n15,669\n6%\nOperating income\n$\n45,915\n$\n37,961\n21%\nReportable Segments\nThree Months Ended September 30, 2026 Compared with Three Months Ended September 30, 2025\nAgents and Infra\nRevenue increased $15.1 billion or 25%.\n•\nAzure revenue increased $10.8 billion or 48% driven by demand for services across the platform with continued growth across all workloads.\n•\nMicrosoft 365 cloud revenue increased $4.1 billion or 17% driven by Microsoft 365 commercial cloud. Microsoft 365 commercial cloud revenue increased 17% driven by higher revenue per user, reflecting continued upsell to premium seat offerings, including Microsoft 365 Copilot, E5, and E7, as well as increased consumption of usage-based services, primarily in GitHub Copilot. Microsoft 365 commercial seats grew 5% driven by installed base expansion across all customer segments, primarily small and medium business and frontline worker offerings. Microsoft 365 consumer cloud revenue increased 17% driven by growth in revenue per user and Microsoft 365 consumer subscriber growth of 7%.\n•",
+              "score": 8.27893477226755,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "10-Q",
+                "accession_number": "0001193125-26-436133",
+                "report_date": "2026-09-30",
+                "filed": "2026-10-28",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:41:32.865455+00:00",
+                "sha256": "563668cfd640e4b7535f2af41729cf532bd2d8657dfe96555711ceb65f927cda",
+                "start": 78612,
+                "end": 81083,
+                "preceding_period_heading": {
+                  "text": "Three Months Ended September 30, 2026 Compared with Three Months Ended September 30, 2025",
+                  "start": 77971,
+                  "end": 78060
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            },
+            {
+              "text": "Revenue from search advertising excluding traffic acquisition costs (“TAC”) paid to Bing Ads network publishers and content partners, as well as revenue from LinkedIn Marketing Solutions (ex TAC) and Premium Subscriptions\nXBOX content and services revenue growth\nRevenue from XBOX content and services, comprising first- and third-party content (including games and in-game content), XBOX Game Pass and other subscriptions, XBOX Cloud Gaming, advertising, and other cloud services\nWindows OEM and devices revenue growth\nRevenue from sales of Windows Pro and non-Pro licenses sold through the OEM channel, first-party devices (including Surface and PC accessories), and related Windows offerings beyond OEM licensing\n31\nPART I\nItem 2\nSUMMARY RESULTS OF OPERATIONS\n(In millions, except percentages and per share amounts)\nThree Months Ended\nSeptember 30,\nPercentage\nChange\n2026\n2025\nRevenue\n$\n92,279\n$\n77,673\n19%\nGross margin\n62,559\n53,630\n17%\nOperating income\n45,915\n37,961\n21%\nNet income\n36,629\n27,747\n32%\nDiluted earnings per share\n4.92\n3.72\n32%\nAdjusted net income (non-GAAP)\n36,422\n30,833\n18%\nAdjusted diluted earnings per share (non-GAAP)\n4.89\n4.13\n18%\nAdjusted net income and adjusted diluted earnings per share (“EPS”) are non-GAAP financial measures. These non-GAAP financial measures exclude net gains and losses from investments in OpenAI. Refer to the Non-GAAP Financial Measures section below for a reconciliation of our financial results reported in accordance with GAAP to non-GAAP financial results.\nThree Months Ended September 30, 2026 Compared with Three Months Ended September 30, 2025\nRevenue increased $14.6 billion or 19% driven by growth in Agents and Infra. Agents and Infra revenue increased driven by Azure. Devices and Consumer revenue decreased driven by Windows OEM and devices, offset in part by growth in Search and advertising.\nCost of revenue increased $5.7 billion or 24% driven by growth in Agents and Infra.\nGross margin increased $8.9 billion or 17%.\n•\nMicrosoft Cloud gross margin percentage decreased to 66% driven by sales mix shift to Azure, offset in part by product-level margin improvements, primarily in Azure.\nOperating expenses increased $975 million or 6% driven by continued investments in research and development compute capacity and talent. Total company headcount decreased 2%.",
+              "score": 8.09179889149392,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "10-Q",
+                "accession_number": "0001193125-26-436133",
+                "report_date": "2026-09-30",
+                "filed": "2026-10-28",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:41:32.865455+00:00",
+                "sha256": "563668cfd640e4b7535f2af41729cf532bd2d8657dfe96555711ceb65f927cda",
+                "start": 76458,
+                "end": 78786,
+                "preceding_period_heading": {
+                  "text": "Three Months Ended September 30,",
+                  "start": 60272,
+                  "end": 60304
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "10-Q",
+            "filings_considered": 1,
+            "documents_loaded": 1,
+            "latest_considered_report_date": "2026-09-30",
+            "latest_considered_filing_date": "2026-10-28",
+            "selected_filings": [
+              {
+                "accession_number": "0001193125-26-436133",
+                "report_date": "2026-09-30",
+                "filed": "2026-10-28"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        },
+        "elapsed_seconds": 0.8904018329994869
+      },
+      {
+        "type": "model",
+        "task_id": "task_4",
+        "agent": "filing_rag",
+        "step": 6,
+        "max_output_tokens": 1024,
+        "input_tokens": 7169,
+        "output_tokens": 38,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_o2vaassb",
+            "function": {
+              "index": 0,
+              "name": "search_company_updates",
+              "arguments": {
+                "ticker": "MSFT",
+                "top_k": 3,
+                "form": "8-K",
+                "query": "revenue earnings results"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 14.606940666999435
+      },
+      {
+        "type": "tool",
+        "task_id": "task_4",
+        "agent": "filing_rag",
+        "step": 6,
+        "call_id": 6,
+        "name": "search_company_updates",
+        "arguments": {
+          "ticker": "MSFT",
+          "top_k": 3,
+          "form": "8-K",
+          "query": "revenue earnings results"
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "MSFT",
+            "name": "MICROSOFT CORP",
+            "cik": "0000789019"
+          },
+          "matches": [
+            {
+              "text": "EX-99.1\n2\nmsft-ex99_1.htm\nEX-99.1\nExhibit 99.1\nMicrosoft Announces First Quarter Results\nREDMOND, Wash. — October 28, 2026 — Microsoft Corp. today announced the following results for the quarter ended September 30, 2026, as compared to the corresponding period of last fiscal year:\n•\nRevenue was $92.3 billion and increased 19%\n•\nOperating income was $45.9 billion and increased 21% (up 22% in constant currency)\n•\nNet income was $36.6 billion and increased 32% on a GAAP basis, and was $36.4 billion and increased 18% (up 19% in constant currency) on a non-GAAP basis\n•\nDiluted earnings per share was $4.92 and increased 32% on a GAAP basis, and was $4.89 and increased 18% (up 19% in constant currency) on a non-GAAP basis\n•\nNon-GAAP results exclude the impact from investments in OpenAI, explained in the Non-GAAP Definition section below\n“We are delivering greater capability, choice, control, and cost efficiency for customers across our entire stack,” said Satya Nadella, chairman and chief executive officer of Microsoft. “By helping organizations build and own their own intelligence, and earning trust through agent safety and security, we are translating our innovation into growing adoption and real-world impact across every industry.”\n“We delivered a strong start to the fiscal year with Microsoft Cloud revenue of $63.9 billion, with growth accelerating to 30% (up 31% in constant currency) year-over-year,” said Amy Hood, executive vice president and chief financial officer of Microsoft. “Results exceeded expectations across revenue, operating income, and earnings per share.”\nThe following table adjusts for the impact from investments in OpenAI and reconciles our financial results reported in accordance with generally accepted accounting principles (GAAP) to non-GAAP financial results. Additional information regarding our non-GAAP definition is provided below. All growth comparisons relate to the corresponding period in the last fiscal year.\nThree Months Ended September 30,\n2026\n2025\nPercentage Change Y/Y\nPercentage Change Y/Y\n($ in millions, except per share amounts)\nAs Reported (GAAP)\nImpact from OpenAI*\nAs Adjusted (non-GAAP)\nAs Reported (GAAP)\nImpact from OpenAI*\nAs Adjusted (non-GAAP)\nGAAP\nConstant Currency\nNet Impact from OpenAI*\nNon-GAAP\nNon-GAAP Constant Currency\nNet income\n$36,629\n$(207)\n$36,422\n$27,747\n$3,086\n$30,833\n32%\n33%\n$(3,293)\n18%\n19%\nDiluted earnings per share\n$4.92\n$(0.03)\n$4.89\n$3.72\n$0.41\n$4.13\n32%\n33%\n$(0.44)\n18%\n19%",
+              "score": 5.080532034188639,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "8-K",
+                "accession_number": "0001193125-26-436122",
+                "report_date": "2026-10-28",
+                "filed": "2026-10-28",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:56:57.902857+00:00",
+                "sha256": "6a0547a908a312435155b1c02c094deb649bfde0d2c9dcd7cbac9a489fb14916",
+                "start": 0,
+                "end": 2473
+              }
+            },
+            {
+              "text": "Impact from OpenAI*\nAs Adjusted (non-GAAP)\nGAAP\nConstant Currency\nNet Impact from OpenAI*\nNon-GAAP\nNon-GAAP Constant Currency\nNet income\n$36,629\n$(207)\n$36,422\n$27,747\n$3,086\n$30,833\n32%\n33%\n$(3,293)\n18%\n19%\nDiluted earnings per share\n$4.92\n$(0.03)\n$4.89\n$3.72\n$0.41\n$4.13\n32%\n33%\n$(0.44)\n18%\n19%\n*Impact from OpenAI adjusts for the impact from investments in OpenAI\nBusiness Highlights\nRevenue in Agents and Infra was $76.8 billion and increased 25%, with the following business highlights:\n•\nCommercial remaining performance obligation increased 73% to $677 billion\n•\nMicrosoft Cloud revenue was $63.9 billion and increased 30% (up 31% in constant currency)\n•\nAzure revenue increased 48%\n•\nMicrosoft 365 commercial cloud revenue increased 18% (up 19% in constant currency) on an adjusted basis, normalized for a 1-point benefit from in-period revenue recognition in the prior year, and increased 17% (up 18% in constant currency) on a reported basis\n•\nMicrosoft 365 consumer cloud revenue increased 17% (up 16% in constant currency)\n•\nIndustry solutions cloud revenue increased 10%\nRevenue in Devices and Consumer was $15.5 billion and decreased 3%, with the following business highlights:\n•\nSearch and advertising revenue excluding traffic acquisition costs increased 12%\n•\nXBOX content and services revenue decreased 2% (down 1% in constant currency)\n•\nWindows OEM and Devices revenue decreased 22%\nMicrosoft returned $10.2 billion to shareholders in the form of dividends and share repurchases in the first quarter of fiscal year 2027.\nBusiness Outlook\nMicrosoft will provide forward-looking guidance in connection with this quarterly earnings announcement on its earnings conference call and webcast.\nQuarterly Highlights, Product Releases, and Customer Stories\nEvery quarter Microsoft delivers hundreds of products, services, and enhancements. These releases are driven by years of significant research and development investments, to empower customers with greater productivity, security, and differentiated value.\nThis momentum is reflected in stories that showcase how our technology is shaping industries and driving customer success. We share innovation updates on our product blogs across Azure, Microsoft 365, and more on our Official Microsoft blog.\nWebcast Details",
+              "score": 4.226097737497993,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "8-K",
+                "accession_number": "0001193125-26-436122",
+                "report_date": "2026-10-28",
+                "filed": "2026-10-28",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:56:57.902857+00:00",
+                "sha256": "6a0547a908a312435155b1c02c094deb649bfde0d2c9dcd7cbac9a489fb14916",
+                "start": 2177,
+                "end": 4457,
+                "preceding_period_heading": {
+                  "text": "Three Months Ended September 30,",
+                  "start": 1967,
+                  "end": 1999
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            },
+            {
+              "text": "Constant Currency\nMicrosoft presents constant currency information to provide a framework for assessing how our underlying businesses performed excluding the effect of foreign currency rate fluctuations. To present this information, current and comparative prior period results for entities reporting in currencies other than United States dollars are converted into United States dollars using the average exchange rates from the comparative period rather than the actual exchange rates in effect during the respective periods. All growth comparisons relate to the corresponding period in the last fiscal year. Microsoft has provided this non-GAAP financial information to aid investors in better understanding our performance. The non-GAAP financial measures presented in this release should not be considered as a substitute for, or superior to, the measures of financial performance prepared in accordance with GAAP.\nFinancial Performance Constant Currency Reconciliation\nThree Months Ended September 30,\n2026\n2025\nPercentage Change Y/Y\nPercentage Change Y/Y\n($ in millions, except per share amounts)\nAs Reported (GAAP)\nAs Adjusted (non-GAAP)\nAs Reported (GAAP)\nAs Adjusted (non-GAAP)\nGAAP\nNon-GAAP\nConstant Currency Impact\nConstant Currency\nNon-GAAP Constant Currency\nRevenue\n$92,279\n-\n$77,673\n-\n19%\n-\n$(309)\n19%\n-\nOperating income\n$45,915\n-\n$37,961\n-\n21%\n-\n$(297)\n22%\n-\nNet income\n$36,629\n$36,422\n$27,747\n$30,833\n32%\n18%\n$(242)\n33%\n19%\nDiluted earnings per share\n$4.92\n$4.89\n$3.72\n$4.13\n32%\n18%\n$(0.03)\n33%\n19%\nSegment Revenue Constant Currency Reconciliation\nThree Months Ended September 30,\n2026\n2025\nPercentage Change Y/Y\nPercentage Change Y/Y\n($ in millions)\nAs Reported (GAAP)\nAs Reported (GAAP)\nGAAP\nConstant Currency Impact\nConstant Currency\nAgents and Infra\n$76,795\n$61,672\n25%\n$(290)\n25%\nDevices and Consumer\n$15,484\n$16,001\n(3)%\n$(19)\n(3)%\nWe have recast certain prior period amounts to conform to the way we internally manage and monitor our business, which reflects the fiscal year 2027 changes to our segments announced in September 2026.\nSelected Product and Service Information Constant Currency Reconciliation\nThree Months Ended September 30, 2026\nPercentage Change Y/Y (GAAP)\nConstant Currency Impact\nPercentage Change Y/Y Constant Currency\nCommercial remaining performance obligation\n73%\n0%\n73%\nMicrosoft Cloud revenue\n30%\n1%\n31%\nAzure revenue\n48%\n0%\n48%\nMicrosoft 365 commercial cloud revenue\n17%\n1%\n18%\nMicrosoft 365 consumer cloud revenue\n17%\n(1)%\n16%",
+              "score": 3.924264089582853,
+              "metadata": {
+                "ticker": "MSFT",
+                "form": "8-K",
+                "accession_number": "0001193125-26-436122",
+                "report_date": "2026-10-28",
+                "filed": "2026-10-28",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:56:57.902857+00:00",
+                "sha256": "6a0547a908a312435155b1c02c094deb649bfde0d2c9dcd7cbac9a489fb14916",
+                "start": 6471,
+                "end": 8949,
+                "preceding_period_heading": {
+                  "text": "Three Months Ended September 30,",
+                  "start": 1967,
+                  "end": 1999
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "8-K",
+            "filings_considered": 4,
+            "documents_loaded": 5,
+            "latest_considered_report_date": "2026-11-04",
+            "latest_considered_filing_date": "2026-11-05",
+            "selected_filings": [
+              {
+                "accession_number": "0001193125-26-448357",
+                "report_date": "2026-11-04",
+                "filed": "2026-11-05"
+              },
+              {
+                "accession_number": "0001193125-26-447173",
+                "report_date": "2026-10-29",
+                "filed": "2026-11-04"
+              },
+              {
+                "accession_number": "0001193125-26-436149",
+                "report_date": "2026-10-28",
+                "filed": "2026-10-28"
+              },
+              {
+                "accession_number": "0001193125-26-436122",
+                "report_date": "2026-10-28",
+                "filed": "2026-10-28"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        },
+        "elapsed_seconds": 0.1939665000008972
+      },
+      {
+        "type": "agent",
+        "task_id": "task_4",
+        "agent": "filing_rag",
+        "status": "error",
+        "error": {
+          "type": "SpecialistLimitError",
+          "message": "Specialist reached the maximum number of steps"
+        },
+        "elapsed_seconds": 27.347235750001346
+      }
+    ],
+    "error": "SpecialistLimitError: Specialist reached the maximum number of steps",
+    "previous_tool_calls": [
+      "get_bls_series",
+      "search_company_updates",
+      "search_company_updates",
+      "search_company_updates"
+    ],
+    "previous_elapsed_seconds": 28.376564043001054
+  }
+]

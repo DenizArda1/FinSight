@@ -1,0 +1,68 @@
+{
+  "plan": {
+    "request_type": "mixed",
+    "tasks": [
+      {
+        "id": "financial",
+        "agent": "financial_data",
+        "instruction": "For Microsoft, retrieve latest annual revenue, cost_of_revenue and operating_expenses.",
+        "filing_scope": "annual",
+        "years": 1,
+        "fiscal_year": null
+      },
+      {
+        "id": "annual_risks",
+        "agent": "filing_rag",
+        "instruction": "For Microsoft, search latest annual Item 7 for reported economic effects and Item 1A for potential economic risks.",
+        "filing_scope": "annual",
+        "years": 1,
+        "fiscal_year": null
+      },
+      {
+        "id": "macro",
+        "agent": "filing_rag",
+        "instruction": "Retrieve recent Fed policy using search_fed_releases and latest CPI using get_bls_series indicator=cpi months=1. Preserve period and units; an index level is not an inflation rate.",
+        "filing_scope": "recent",
+        "years": 1,
+        "fiscal_year": null
+      }
+    ]
+  },
+  "coverage_replay": {
+    "complete": false,
+    "gaps": [
+      "Recent Fed policy evidence is missing.",
+      "Recent BLS inflation data is missing; CPI must be presented as an index level, not an inflation rate."
+    ],
+    "tasks": [
+      {
+        "id": "macro_context",
+        "agent": "filing_rag",
+        "instruction": "Retrieve recent Fed policy using search_fed_releases and recent BLS CPI data using get_bls_series(indicator='cpi', months=12). Include dates, units, and identify CPI as an index level, not an inflation rate.",
+        "filing_scope": "recent",
+        "years": 1,
+        "fiscal_year": null
+      }
+    ],
+    "status": "partial"
+  },
+  "coverage_trace": [
+    {
+      "type": "model",
+      "phase": "coverage",
+      "provider": "openai",
+      "model": "gpt-6-luna",
+      "input_tokens": 8219,
+      "output_tokens": 416,
+      "total_tokens": 8635,
+      "cached_input_tokens": 0,
+      "reasoning_tokens": 283,
+      "response_id": "resp_04913daea42b5130016b02a406186887d2b608b5412d12a0b9",
+      "estimated_cost_usd": 0.0010299,
+      "pricing_date": "2026-11-06",
+      "status": "completed",
+      "content": "{\"complete\":false,\"gaps\":[\"Recent Fed policy evidence is missing.\",\"Recent BLS inflation data is missing; CPI must be presented as an index level, not an inflation rate.\"],\"tasks\":[{\"id\":\"macro_context\",\"agent\":\"filing_rag\",\"instruction\":\"Retrieve recent Fed policy using search_fed_releases and recent BLS CPI data using get_bls_series(indicator='cpi', months=12). Include dates, units, and identify CPI as an index level, not an inflation rate.\",\"filing_scope\":\"recent\",\"years\":1,\"fiscal_year\":null}]}",
+      "elapsed_seconds": 6.4472167920012
+    }
+  ]
+}

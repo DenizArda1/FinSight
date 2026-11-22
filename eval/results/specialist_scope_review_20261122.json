@@ -1,0 +1,13 @@
+{
+  "scope": "Two live Qwen specialist tasks over MCP with the original assigned tasks. Not a full orchestrator retest; baseline is previous saved run, not a controlled benchmark.",
+  "before_seconds": 77.05385875200227,
+  "after_seconds": 20.21515058299883,
+  "before_tool_calls": 10,
+  "after_tool_calls": 2,
+  "unit_tests_passed": 543,
+  "remaining": [
+    "Planner may still misroute quarterly questions to annual financial_data tasks.",
+    "End-to-end quality and latency require a full retest after planner work."
+  ],
+  "prompt_only_experiment": "Did not prevent scope drift; retained separately in specialist_scope_prompt_only_20261122.json."
+}

@@ -1,0 +1,40 @@
+{
+  "result_file": "eval/results/macro_terminology_retest_20261122T081325Z.json",
+  "unit_tests_passed": 547,
+  "scope": "Two fresh full multi-agent MCP runs plus saved-evidence coverage replay; manual review against returned source excerpts.",
+  "cases": [
+    {
+      "id": "acceptance_microsoft",
+      "elapsed_seconds": 96.5663456250004,
+      "tool_calls": 8,
+      "coverage": "complete",
+      "verification": "passed",
+      "repair_tasks_attempted": 0,
+      "manual_status": "pass",
+      "notes": [
+        "Annual data, annual risk evidence, dated Fed policy and CPI present.",
+        "Realized FX effect distinguished from potential risks and macro context."
+      ]
+    },
+    {
+      "id": "acceptance_intel",
+      "elapsed_seconds": 135.67256170899964,
+      "tool_calls": 7,
+      "coverage": "complete",
+      "verification": "passed",
+      "repair_tasks_attempted": 0,
+      "manual_status": "pass",
+      "notes": [
+        "Net revenue translated as net satışlar; revenue contraction versus improving growth rate correctly distinguished.",
+        "Annual, quarterly and nine-month results separated from outlook.",
+        "Two additional annual-report searches increased runtime relative to previous 110-second run; remaining efficiency issue."
+      ]
+    }
+  ],
+  "estimated_api_cost_usd": 0.007530500000000001,
+  "limitations": [
+    "Single runs do not establish reliability across all companies.",
+    "Timing varies with model generations and task choices; no universal speed guarantee.",
+    "Some date suffixes and raw USD number formatting remain editorial issues."
+  ]
+}

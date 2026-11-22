@@ -1,0 +1,33 @@
+{
+  "scope": "Live local Qwen planner-only checks; no retrieval, Writer or Critic was run.",
+  "unit_tests_passed": 546,
+  "cases": [
+    {
+      "question": "Intel'in yıllık gelir büyümesinde gerileme var mı? Son üç mali yılın eğilimini, son çeyreklik raporunu ve son şirket açıklamalarını birlikte değerlendir. Yıllık sonuçları ara dönem verileri ve beklentilerden ayır.",
+      "before_task_count": 4,
+      "after_task_count": 2,
+      "manual_status": "pass",
+      "elapsed_seconds": 4.649377083998843
+    },
+    {
+      "question": "AMD'nin son üç yıllık gelir büyümesini, en son çeyrek sonuçlarını ve son şirket açıklamalarını değerlendir.",
+      "before_task_count": 2,
+      "after_task_count": 2,
+      "manual_status": "pass",
+      "elapsed_seconds": 3.484262417001446
+    },
+    {
+      "question": "Compare Costco and Salesforce annual revenue growth over the last three fiscal years.",
+      "before_task_count": 4,
+      "after_task_count": 2,
+      "manual_status": "pass",
+      "elapsed_seconds": 2.981598500000473
+    }
+  ],
+  "limitations": [
+    "Three prompts do not prove semantic routing correctness for every question.",
+    "Normalizer fixes explicit recent/financial_data contradictions only; it does not infer periods from arbitrary prose.",
+    "Only exact duplicate instructions with identical agent and period scope are deduplicated.",
+    "Full end-to-end latency and answer quality need a subsequent test."
+  ]
+}

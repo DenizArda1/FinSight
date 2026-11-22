@@ -1,0 +1,1600 @@
+[
+  {
+    "id": "acceptance_microsoft",
+    "question": "Analyze Microsoft's latest annual revenue, cost of revenue and operating expenses. Discuss the economic risks described in its latest annual report alongside recent Fed policy and BLS inflation data. Distinguish reported company effects from potential risks, and do not treat the CPI index level as an inflation rate.",
+    "expected": {
+      "companies": "MSFT",
+      "review_criteria": "Annual figures; latest annual report risk evidence plus Fed and BLS evidence; English; CPI level not inflation rate; no unsupported macro causation."
+    },
+    "answer_language": "en",
+    "category": null,
+    "usage": {
+      "model_calls_with_usage": 1,
+      "model_calls_without_usage": 0,
+      "tool_calls": 0,
+      "input_tokens": 924,
+      "output_tokens": 151,
+      "estimated_cost_usd": 0.0,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    },
+    "answer": null,
+    "review": null,
+    "status": "error",
+    "error": {
+      "type": "ExceptionGroup",
+      "message": "unhandled errors in a TaskGroup (1 sub-exception)"
+    },
+    "mode": "multi_agent",
+    "data_snapshot": null,
+    "verification": {
+      "status": "not_run",
+      "supported": null,
+      "issues": []
+    },
+    "coverage": null,
+    "draft": null,
+    "candidate": null,
+    "template": null,
+    "composition": null,
+    "evidence": [],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "error",
+        "error": {
+          "type": "ValueError",
+          "message": "Financial plans must use only financial_data"
+        },
+        "elapsed_seconds": 3.844312875000469,
+        "input_tokens": 924,
+        "output_tokens": 151,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0
+      }
+    ],
+    "elapsed_seconds": 4.521144333999473,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "think": false,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      },
+      "roles": {
+        "writer": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "max_output_tokens": 8192
+        },
+        "critic": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "max_output_tokens": 8192
+        }
+      }
+    },
+    "dataset_sha256": "184c3d035891bdf748102051c7850b93a40d24a7fcf53e187b58048f135068d8",
+    "recorded_at": "2026-11-22T08:06:28.115852+00:00",
+    "transport": "mcp"
+  },
+  {
+    "id": "acceptance_intel",
+    "question": "Intel'in yıllık gelir büyümesinde gerileme var mı? Son üç mali yılın eğilimini, son çeyreklik raporunu ve son şirket açıklamalarını birlikte değerlendir. Yıllık sonuçları ara dönem verileri ve beklentilerden ayır.",
+    "expected": {
+      "companies": "INTC",
+      "review_criteria": "Annual revenues and two growth rates, latest 10-Q revenue evidence and 8-K actuals/outlook; distinguish periods and conditional risks."
+    },
+    "answer_language": "tr",
+    "category": null,
+    "usage": {
+      "model_calls_with_usage": 11,
+      "model_calls_without_usage": 0,
+      "tool_calls": 5,
+      "input_tokens": 61128,
+      "output_tokens": 3801,
+      "estimated_cost_usd": 0.00459146,
+      "calls_without_cost_estimate": 0,
+      "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+    },
+    "answer": "Evet. Intel’in yıllık gelir büyümesi FY2024 (dönem sonu 2024-12-28) için -2.08% iken FY2025’te (dönem sonu 2025-12-27) de negatif kaldı; gelir FY2023’te (dönem sonu 2023-12-30) 54228000000 USD, FY2024’te (dönem sonu 2024-12-28) 53101000000 USD ve FY2025’te (dönem sonu 2025-12-27) 52853000000 USD oldu. Yıllık gelir düşüşü sürdü, ancak büyüme oranındaki düşüş son mali yılda önceki yıla kıyasla daha sınırlıydı. [Source 2] [Source 3]\n\n2026-09-26’da sona eren üçüncü çeyrekte net gelir önceki yılın aynı çeyreğine göre arttı; dokuz aylık net gelir de önceki yılın aynı döneminin üzerindeydi. Bunlar ara dönem sonuçlarıdır, tamamlanmış mali yıl gelirleri değildir. Intel, aynı çeyreğe ilişkin açıklamasında gelir, brüt marj ve hisse başına kârın şirket rehberliğini aştığını bildirdi. [Source 5] [Source 7]\n\nŞirket, yakın vadede PC pazarındaki yavaşlamanın sürmesini beklediğini; buna karşın CPU talebinin güçlü olduğunu ve ek arz sağlamaya odaklandığını belirtti. Ayrıca dördüncü çeyrek için gelir beklentisi açıkladı; bu beklenti gerçekleşmiş bir sonuç değildir ve yıllık büyüme verisi olarak değerlendirilmemelidir. Bu nedenle mevcut kanıtlar, yıllık gelir düşüşü sürerken daha yeni ara dönem sonuçlarının iyileştiğini gösteriyor; ara dönem artışı tek başına yıllık eğilimin tersine döndüğünü kanıtlamaz. [Source 7]\n\nINTC | revenue: 52853000000 USD | FY2025 | 2024-12-29 → 2025-12-27 | 10-K | 0000050863-26-000011 | RevenueFromContractWithCustomerExcludingAssessedTax [Source 2]\n\nINTC | revenue: 53101000000 USD | FY2024 | 2023-12-31 → 2024-12-28 | 10-K | 0000050863-26-000011 | RevenueFromContractWithCustomerExcludingAssessedTax [Source 2]\n\nINTC | revenue: 54228000000 USD | FY2023 | 2023-01-01 → 2023-12-30 | 10-K | 0000050863-26-000011 | RevenueFromContractWithCustomerExcludingAssessedTax [Source 2]\n\nINTC | revenue_growth: -0.47% | FY2025 | 2024-12-29 → 2025-12-27 [Source 3]\n\nINTC | revenue_growth: -2.08% | FY2024 | 2023-12-31 → 2024-12-28 [Source 3]\n\nINTC | 2026-09-26 | 10-Q | 0000050863-26-000191 | Primary document [Source 5]\n\nINTC | 2026-10-29 | 8-K | 0000050863-26-000188 | EX-99 exhibit [Source 7]",
+    "review": null,
+    "status": "completed",
+    "error": null,
+    "mode": "multi_agent",
+    "data_snapshot": null,
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "coverage": {
+      "complete": true,
+      "gaps": [],
+      "status": "complete",
+      "repair_tasks_attempted": 0
+    },
+    "draft": "Evet. Intel’in yıllık gelir büyümesi FY2024 (dönem sonu 2024-12-28) için -2.08% iken FY2025’te (dönem sonu 2025-12-27) de negatif kaldı; gelir FY2023’te (dönem sonu 2023-12-30) 54228000000 USD, FY2024’te (dönem sonu 2024-12-28) 53101000000 USD ve FY2025’te (dönem sonu 2025-12-27) 52853000000 USD oldu. Yıllık gelir düşüşü sürdü, ancak büyüme oranındaki düşüş son mali yılda önceki yıla kıyasla daha sınırlıydı. [Source 2] [Source 3]\n\n2026-09-26’da sona eren üçüncü çeyrekte net gelir önceki yılın aynı çeyreğine göre arttı; dokuz aylık net gelir de önceki yılın aynı döneminin üzerindeydi. Bunlar ara dönem sonuçlarıdır, tamamlanmış mali yıl gelirleri değildir. Intel, aynı çeyreğe ilişkin açıklamasında gelir, brüt marj ve hisse başına kârın şirket rehberliğini aştığını bildirdi. [Source 5] [Source 7]\n\nŞirket, yakın vadede PC pazarındaki yavaşlamanın sürmesini beklediğini; buna karşın CPU talebinin güçlü olduğunu ve ek arz sağlamaya odaklandığını belirtti. Ayrıca dördüncü çeyrek için gelir beklentisi açıkladı; bu beklenti gerçekleşmiş bir sonuç değildir ve yıllık büyüme verisi olarak değerlendirilmemelidir. Bu nedenle mevcut kanıtlar, yıllık gelir düşüşü sürerken daha yeni ara dönem sonuçlarının iyileştiğini gösteriyor; ara dönem artışı tek başına yıllık eğilimin tersine döndüğünü kanıtlamaz. [Source 7]\n\nINTC | revenue: 52853000000 USD | FY2025 | 2024-12-29 → 2025-12-27 | 10-K | 0000050863-26-000011 | RevenueFromContractWithCustomerExcludingAssessedTax [Source 2]\n\nINTC | revenue: 53101000000 USD | FY2024 | 2023-12-31 → 2024-12-28 | 10-K | 0000050863-26-000011 | RevenueFromContractWithCustomerExcludingAssessedTax [Source 2]\n\nINTC | revenue: 54228000000 USD | FY2023 | 2023-01-01 → 2023-12-30 | 10-K | 0000050863-26-000011 | RevenueFromContractWithCustomerExcludingAssessedTax [Source 2]\n\nINTC | revenue_growth: -0.47% | FY2025 | 2024-12-29 → 2025-12-27 [Source 3]\n\nINTC | revenue_growth: -2.08% | FY2024 | 2023-12-31 → 2024-12-28 [Source 3]\n\nINTC | 2026-09-26 | 10-Q | 0000050863-26-000191 | Primary document [Source 5]\n\nINTC | 2026-10-29 | 8-K | 0000050863-26-000188 | EX-99 exhibit [Source 7]",
+    "candidate": null,
+    "template": null,
+    "composition": {
+      "kind": "answer",
+      "text": "Evet. Intel’in yıllık gelir büyümesi FY{{F6_fiscal_year}} (dönem sonu {{F6_end}}) için {{F6_value}} iken FY{{F5_fiscal_year}}’te (dönem sonu {{F5_end}}) de negatif kaldı; gelir FY{{F4_fiscal_year}}’te (dönem sonu {{F4_end}}) {{F4_value}} {{F4_unit}}, FY{{F3_fiscal_year}}’te (dönem sonu {{F3_end}}) {{F3_value}} {{F3_unit}} ve FY{{F2_fiscal_year}}’te (dönem sonu {{F2_end}}) {{F2_value}} {{F2_unit}} oldu. Yıllık gelir düşüşü sürdü, ancak büyüme oranındaki düşüş son mali yılda önceki yıla kıyasla daha sınırlıydı. [Source 2]\n\n26 Eylül 2026’da sona eren üçüncü çeyrekte net gelir önceki yılın aynı çeyreğine göre arttı; dokuz aylık net gelir de önceki yılın aynı döneminin üzerindeydi. Bunlar ara dönem sonuçlarıdır, tamamlanmış mali yıl gelirleri değildir. Intel, aynı çeyreğe ilişkin açıklamasında gelir, brüt marj ve hisse başına kârın şirket rehberliğini aştığını bildirdi. [Source 5] [Source 7]\n\nŞirket, yakın vadede PC pazarındaki yavaşlamanın sürmesini beklediğini; buna karşın CPU talebinin güçlü olduğunu ve ek arz sağlamaya odaklandığını belirtti. Ayrıca dördüncü çeyrek için gelir beklentisi açıkladı; bu beklenti gerçekleşmiş bir sonuç değildir ve yıllık büyüme verisi olarak değerlendirilmemelidir. Bu nedenle mevcut kanıtlar, yıllık gelir düşüşü sürerken daha yeni ara dönem sonuçlarının iyileştiğini gösteriyor; ara dönem artışı tek başına yıllık eğilimin tersine döndüğünü kanıtlamaz. [Source 7]",
+      "facts": [
+        "2:records/0",
+        "2:records/1",
+        "2:records/2",
+        "3:results/revenue_growth/0",
+        "3:results/revenue_growth/1",
+        "5:matches/0/metadata",
+        "7:matches/0/metadata"
+      ]
+    },
+    "evidence": [
+      {
+        "source_id": 1,
+        "collection_task": "annual_growth",
+        "tool": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "Intel"
+        },
+        "result": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        }
+      },
+      {
+        "source_id": 2,
+        "collection_task": "annual_growth",
+        "tool": "get_company_facts",
+        "arguments": {
+          "cik": "0000050863",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 3
+        },
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "cik": "0000050863",
+            "name": "INTEL CORP"
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 3,
+          "available_period_count": 3,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2025-12-27",
+            "2024-12-28",
+            "2023-12-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 50863,
+              "metric": "revenue",
+              "start": "2024-12-29",
+              "end": "2025-12-27",
+              "value": 52853000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-01-23",
+              "accn": "0000050863-26-000011",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2025 (period end: 2025-12-27)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+            },
+            {
+              "cik": 50863,
+              "metric": "revenue",
+              "start": "2023-12-31",
+              "end": "2024-12-28",
+              "value": 53101000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-01-23",
+              "accn": "0000050863-26-000011",
+              "is_amendment": false,
+              "fiscal_year": 2024,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2024 (period end: 2024-12-28)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+            },
+            {
+              "cik": 50863,
+              "metric": "revenue",
+              "start": "2023-01-01",
+              "end": "2023-12-30",
+              "value": 54228000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-01-23",
+              "accn": "0000050863-26-000011",
+              "is_amendment": false,
+              "fiscal_year": 2023,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2023 (period end: 2023-12-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+            }
+          ]
+        }
+      },
+      {
+        "source_id": 3,
+        "collection_task": "annual_growth",
+        "tool": "compute_metrics",
+        "arguments": {
+          "cik": "0000050863",
+          "metrics": [
+            "revenue_growth"
+          ],
+          "years": 3
+        },
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "cik": "0000050863",
+            "name": "INTEL CORP"
+          },
+          "requested_years": 3,
+          "results": {
+            "revenue_growth": [
+              {
+                "cik": 50863,
+                "fiscal_year": 2025,
+                "metric": "revenue_growth",
+                "start": "2024-12-29",
+                "end": "2025-12-27",
+                "value": -0.004670345191239322,
+                "unit": "ratio",
+                "formula": "current_revenue / previous_revenue - 1",
+                "inputs": {
+                  "previous_revenue": {
+                    "cik": 50863,
+                    "metric": "revenue",
+                    "start": "2023-12-31",
+                    "end": "2024-12-28",
+                    "value": 53101000000,
+                    "unit": "USD",
+                    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                    "form": "10-K",
+                    "filed": "2026-01-23",
+                    "accn": "0000050863-26-000011",
+                    "is_amendment": false,
+                    "fiscal_year": 2024,
+                    "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                    "period_label": "FY2024 (period end: 2024-12-28)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                  },
+                  "current_revenue": {
+                    "cik": 50863,
+                    "metric": "revenue",
+                    "start": "2024-12-29",
+                    "end": "2025-12-27",
+                    "value": 52853000000,
+                    "unit": "USD",
+                    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                    "form": "10-K",
+                    "filed": "2026-01-23",
+                    "accn": "0000050863-26-000011",
+                    "is_amendment": false,
+                    "fiscal_year": 2025,
+                    "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                    "period_label": "FY2025 (period end: 2025-12-27)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                  }
+                },
+                "period_label": "FY2025 (period end: 2025-12-27)"
+              },
+              {
+                "cik": 50863,
+                "fiscal_year": 2024,
+                "metric": "revenue_growth",
+                "start": "2023-12-31",
+                "end": "2024-12-28",
+                "value": -0.02078262152393595,
+                "unit": "ratio",
+                "formula": "current_revenue / previous_revenue - 1",
+                "inputs": {
+                  "previous_revenue": {
+                    "cik": 50863,
+                    "metric": "revenue",
+                    "start": "2023-01-01",
+                    "end": "2023-12-30",
+                    "value": 54228000000,
+                    "unit": "USD",
+                    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                    "form": "10-K",
+                    "filed": "2026-01-23",
+                    "accn": "0000050863-26-000011",
+                    "is_amendment": false,
+                    "fiscal_year": 2023,
+                    "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                    "period_label": "FY2023 (period end: 2023-12-30)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                  },
+                  "current_revenue": {
+                    "cik": 50863,
+                    "metric": "revenue",
+                    "start": "2023-12-31",
+                    "end": "2024-12-28",
+                    "value": 53101000000,
+                    "unit": "USD",
+                    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                    "form": "10-K",
+                    "filed": "2026-01-23",
+                    "accn": "0000050863-26-000011",
+                    "is_amendment": false,
+                    "fiscal_year": 2024,
+                    "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                    "period_label": "FY2024 (period end: 2024-12-28)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                  }
+                },
+                "period_label": "FY2024 (period end: 2024-12-28)"
+              }
+            ]
+          },
+          "calculation_definitions": {
+            "revenue_growth": {
+              "description": "Annual revenue growth",
+              "function": "calculate_growth",
+              "inputs": [
+                "revenue"
+              ],
+              "unit": "ratio",
+              "period_mode": "consecutive_periods"
+            }
+          },
+          "warnings": [],
+          "availability": {
+            "revenue": {
+              "concept": "revenue",
+              "missing_period_ends": [],
+              "available_period_ends": [
+                "2025-12-27",
+                "2024-12-28",
+                "2023-12-30"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "source_id": 4,
+        "collection_task": "recent_quarter",
+        "tool": "search_company_updates",
+        "arguments": {
+          "query": "net revenue three months",
+          "ticker": "INTC",
+          "top_k": 3,
+          "form": "10-Q",
+          "limit": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "All Other Financial Performance1\n\t\t\tThree Months Ended\t\tNine Months Ended\n\t($ In Millions)\t\tSep 26, 2026\t\tSep 27, 2025\t\tSep 26, 2026\t\tSep 27, 2025\n\tRevenue\t\t$\t692 \t\t\t$\t993 \t\t\t$\t2,021 \t\t\t$\t2,989 \t\n\tCost of sales and operating expenses\t\t513 \t\t\t893 \t\t\t1,510 \t\t\t2,717 \t\n\tOperating income\t\t$\t179 \t\t\t$\t100 \t\t\t$\t511 \t\t\t$\t272 \t\n\tOperating margin %\t\t26%\t\t10%\t\t25%\t\t9%\n1 Operating segment results include intersegment financial activity; refer to \"Note 2: Operating Segments\" within Notes to Consolidated Condensed Financial Statements for a reconciliation between our operating segment and consolidated financial results for the periods presented.\nOperating Segment Revenue Summary\nQ3 2026 vs. Q3 2025\nAll Other revenue was $692 million, down $301 million from Q3 2025, primarily as a result of the Q3 2025 deconsolidation of Altera. Mobileye revenue was $493 million in Q3 2026, roughly flat with Q3 2025.\nYTD 2026 vs. YTD 2025\nAll Other revenue was $2.0 billion, down $968 million from YTD 2025, primarily as a result of the Q3 2025 deconsolidation of Altera. This decrease was partially offset by higher Mobileye revenue in YTD 2026, which totaled $1.6 billion, up $109 million from YTD 2025, driven by higher demand for Mobileye EyeQ* products.\nSegment Operating Income Summary\nQ3 2026 vs. Q3 2025 and YTD 2026 vs. YTD 2025\nAll Other operating income was $179 million in Q3 2026, up $79 million from Q3 2025, and $511 million in YTD 2026, up $239 million from YTD 2025, driven by higher operating income from our other businesses in Q3 2026 and YTD 2026, partially offset by the absence of Altera operating margin in Q3 2026 and YTD 2026.\n\tMD&A\t\n36\nTable of Contents\n\tConsolidated Condensed Results of Operations\t\n\t\t\tThree Months Ended\t\tNine Months Ended\n\t\t\tSep 26, 2026\t\tSep 27, 2025\t\tSep 26, 2026\t\tSep 27, 2025\n\t(In Millions, Except Per Share Amounts)\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\tNet revenue\t\t$\t16,513 \t\t\t100.0 \t%\t\t$\t13,653 \t\t\t100.0 \t%\t\t$\t46,218 \t\t\t100.0 \t%\t\t$\t39,179 \t\t\t100.0 \t%\n\tCost of sales\t\t9,417 \t\t\t57.0 \t%\t\t8,435 \t\t\t61.8 \t%\t\t27,266 \t\t\t59.0 \t%\t\t25,747 \t\t\t65.7 \t%\n\tGross profit\t\t7,096 \t\t\t43.0 \t%\t\t5,218 \t\t\t38.2 \t%\t\t18,952 \t\t\t41.0 \t%\t\t13,432 \t\t\t34.3 \t%\n\tResearch and development\t\t3,490 \t\t\t21.1 \t%\t\t3,231 \t\t\t23.7 \t%\t\t10,233 \t\t\t22.1 \t%\t\t10,555 \t\t\t26.9 \t%\n\tMarketing, general, and administrative\t\t1,030 \t\t\t6.2 \t%\t\t1,129 \t\t\t8.3 \t%\t\t3,243 \t\t\t7.0 \t%\t\t3,450 \t\t\t8.8 \t%",
+              "score": 6.22085544526487,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 138892,
+                "end": 141341,
+                "preceding_period_heading": {
+                  "text": "\t\t\tThree Months Ended\t\tNine Months Ended",
+                  "start": 134268,
+                  "end": 134308
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "10-Q",
+            "filings_considered": 1,
+            "documents_loaded": 1,
+            "latest_considered_report_date": "2026-09-26",
+            "latest_considered_filing_date": "2026-10-30",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        }
+      },
+      {
+        "source_id": 5,
+        "collection_task": "recent_quarter",
+        "tool": "search_company_updates",
+        "arguments": {
+          "query": "net revenue three months",
+          "ticker": "INTC",
+          "top_k": 3,
+          "form": "10-Q",
+          "limit": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "Financial Statements\t Notes to Financial Statements\t\n10\nTable of Contents\nNet revenue, cost of sales and operating expenses and operating income (loss) for each period were as follows:\n\t\t\tThree Months Ended\n\t(In Millions)\t\tSep 26, 2026\n\t\t\tIntel Products\t\t\t\t\t\t\t\t\t\t\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\tIntel Foundry\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t8,097 \t\t\t$\t7,318 \t\t\t$\t15,415 \t\t\t$\t6,697 \t\t\t$\t692 \t\t\t$\t— \t\t\t$\t(6,291)\t\t\t$\t16,513 \t\nCost of sales and operating expenses\n\t\t5,812 \t\t\t4,279 \t\t\t10,091 \t\t\t8,550 \t\t\t513 \t\t\t1,058 \t\t\t(6,221)\t\t\t13,991 \t\nOperating income (loss)\n\t\t$\t2,285 \t\t\t$\t3,039 \t\t\t$\t5,324 \t\t\t$\t(1,853)\t\t\t$\t179 \t\t\t$\t(1,058)\t\t\t$\t(70)\t\t\t$\t2,522 \t\n\t\t\tThree Months Ended\n\t(In Millions)\t\tSep 27, 2025\nIntel Products\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\t\nIntel Foundry\n\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t8,535 \t\t\t$\t4,117 \t\t\t$\t12,652 \t\t\t$\t4,235 \t\t\t$\t993 \t\t\t$\t— \t\t\t$\t(4,227)\t\t\t$\t13,653 \t\nCost of sales and operating expenses\n\t\t5,841 \t\t\t3,153 \t\t\t8,994 \t\t\t6,556 \t\t\t893 \t\t\t782 \t\t\t(4,255)\t\t\t12,970 \t\n\tOperating income (loss)\t\t$\t2,694 \t\t\t$\t964 \t\t\t$\t3,658 \t\t\t$\t(2,321)\t\t\t$\t100 \t\t\t$\t(782)\t\t\t$\t28 \t\t\t$\t683 \t\n\t\t\tNine Months Ended\n\t(In Millions)\t\tSep 26, 2026\n\t\t\tIntel Products\t\t\t\t\t\t\t\t\t\t\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\tIntel Foundry\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t24,701 \t\t\t$\t18,632 \t\t\t$\t43,333 \t\t\t$\t17,883 \t\t\t$\t2,021 \t\t\t$\t— \t\t\t$\t(17,019)\t\t\t$\t46,218 \t\nCost of sales and operating expenses\n\t\t17,557 \t\t\t11,577 \t\t\t29,134 \t\t\t24,262 \t\t\t1,510 \t\t\t7,554 \t\t\t(17,424)\t\t\t45,036 \t\nOperating income (loss)\n\t\t$\t7,144 \t\t\t$\t7,055 \t\t\t$\t14,199 \t\t\t$\t(6,379)\t\t\t$\t511 \t\t\t$\t(7,554)\t\t\t$\t405 \t\t\t$\t1,182 \t\n\t\t\tNine Months Ended\n\t(In Millions)\t\tSep 27, 2025\nIntel Products\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\t\nIntel Foundry\n\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t24,035 \t\t\t$\t12,182 \t\t\t$\t36,217 \t\t\t$\t13,319 \t\t\t$\t2,989 \t\t\t$\t— \t\t\t$\t(13,346)\t\t\t$\t39,179 \t\nCost of sales and operating expenses\n\t\t16,927 \t\t\t10,010 \t\t\t26,937 \t\t\t21,128 \t\t\t2,717 \t\t\t4,797 \t\t\t(13,606)\t\t\t41,973 \t\n\tOperating income (loss)\t\t$\t7,108 \t\t\t$\t2,172 \t\t\t$\t9,280 \t\t\t$\t(7,809)\t\t\t$\t272 \t\t\t$\t(4,797)\t\t\t$\t260 \t\t\t$\t(2,794)\t\nCorporate Unallocated Expenses",
+              "score": 5.678593659220147,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 34097,
+                "end": 36412,
+                "preceding_period_heading": {
+                  "text": "\tNine Months Ended\t\t\t\t\t\t\t\t\t\t\t\t",
+                  "start": 23846,
+                  "end": 23876
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "10-Q",
+            "filings_considered": 1,
+            "documents_loaded": 1,
+            "latest_considered_report_date": "2026-09-26",
+            "latest_considered_filing_date": "2026-10-30",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        }
+      },
+      {
+        "source_id": 6,
+        "collection_task": "recent_quarter",
+        "tool": "search_company_updates",
+        "arguments": {
+          "query": "net revenue three months",
+          "ticker": "INTC",
+          "top_k": 3,
+          "form": "10-Q",
+          "limit": 1
+        },
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "Gross profit\t\t7,096 \t\t\t43.0 \t%\t\t5,218 \t\t\t38.2 \t%\t\t18,952 \t\t\t41.0 \t%\t\t13,432 \t\t\t34.3 \t%\n\tResearch and development\t\t3,490 \t\t\t21.1 \t%\t\t3,231 \t\t\t23.7 \t%\t\t10,233 \t\t\t22.1 \t%\t\t10,555 \t\t\t26.9 \t%\n\tMarketing, general, and administrative\t\t1,030 \t\t\t6.2 \t%\t\t1,129 \t\t\t8.3 \t%\t\t3,243 \t\t\t7.0 \t%\t\t3,450 \t\t\t8.8 \t%\n\tRestructuring and other charges\t\t54 \t\t\t0.3 \t%\t\t175 \t\t\t1.3 \t%\t\t4,294 \t\t\t9.3 \t%\t\t2,221 \t\t\t5.7 \t%\n\tOperating income (loss)\t\t2,522 \t\t\t15.3 \t%\t\t683 \t\t\t5.0 \t%\t\t1,182 \t\t\t2.6 \t%\t\t(2,794)\t\t\t(7.1)\t%\n\tGains (losses) on equity investments, net\t\t330 \t\t\t2.0 \t%\t\t221 \t\t\t1.6 \t%\t\t219 \t\t\t0.5 \t%\t\t611 \t\t\t1.6 \t%\n\tInterest and other, net\t\t1,130 \t\t\t6.8 \t%\t\t3,670 \t\t\t26.9 \t%\t\t(12,184)\t\t\t(26.4)\t%\t\t3,402 \t\t\t8.7 \t%\n\tIncome (loss) before taxes\t\t3,982 \t\t\t24.1 \t%\t\t4,574 \t\t\t33.5 \t%\t\t(10,783)\t\t\t(23.3)\t%\t\t1,219 \t\t\t3.1 \t%\n\tProvision for (benefit from) taxes\t\t462 \t\t\t2.8 \t%\t\t304 \t\t\t2.2 \t%\t\t826 \t\t\t1.8 \t%\t\t860 \t\t\t2.2 \t%\n\tNet income (loss)\t\t3,520 \t\t\t21.3 \t%\t\t4,270 \t\t\t31.3 \t%\t\t(11,609)\t\t\t(25.1)\t%\t\t359 \t\t\t0.9 \t%\n\tLess: net income (loss) attributable to non-controlling interests\t\t200 \t\t\t1.2 \t%\t\t207 \t\t\t1.5 \t%\t\t(168)\t\t\t(0.4)\t%\t\t35 \t\t\t0.1 \t%\n\tNet income (loss) attributable to Intel\t\t$\t3,320 \t\t\t20.1 \t%\t\t$\t4,063 \t\t\t29.8 \t%\t\t$\t(11,441)\t\t\t(24.8)\t%\t\t$\t324 \t\t\t0.8 \t%\nEarnings (loss) per share attributable to Intel—diluted2\n\t\t$\t0.60 \t\t\t\t\t$\t0.90 \t\t\t\t\t$\t(2.22)\t\t\t\t\t$\t0.07 \t\t\t\n1 Totals may not sum due to rounding.\n2 For the three months ended September 26, 2026 and three and nine months ended September 27, 2025, earnings per share attributable to Intel-diluted has been calculated by adjusting net income attributable to Intel for the gain of $120 million and loss of $2 million, respectively, related to the mark-to-market of that portion of the derivative liability that is attributable to 5 million and 342 thousand, respectively, contingent Escrowed Shares that were included in the weighted average shares of common stock outstanding-diluted during the period.\n\tMD&A\t\n37\nTable of Contents\nConsolidated Revenue\nConsolidated Revenue Walk $B1\n1 Excludes intersegment revenue; totals may not sum due to rounding.\nQ3 2026 vs. Q3 2025",
+              "score": 5.612485522378239,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 141047,
+                "end": 143137,
+                "preceding_period_heading": {
+                  "text": "\t\t\tThree Months Ended\t\tNine Months Ended",
+                  "start": 140601,
+                  "end": 140641
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "10-Q",
+            "filings_considered": 1,
+            "documents_loaded": 1,
+            "latest_considered_report_date": "2026-09-26",
+            "latest_considered_filing_date": "2026-10-30",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        }
+      },
+      {
+        "source_id": 7,
+        "collection_task": "recent_quarter",
+        "tool": "search_company_updates",
+        "arguments": {
+          "form": "8-K",
+          "limit": 1,
+          "query": "revenue earnings results",
+          "ticker": "INTC",
+          "top_k": 3
+        },
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "EX-99.1\n2\nq326earningsrelease.htm\nEX-99.1\nExhibit 99.1\nIntel Corporation\n2200 Mission College Blvd.\nSanta Clara, CA 95054-1549\nNews Release\nIntel Reports Third-Quarter 2026 Financial Results\nNews Summary\n▪Third-quarter revenue was $16.5 billion, up 21% year-over-year (YoY).\n▪Third-quarter earnings per share (EPS) attributable to Intel was $0.60; non-GAAP EPS attributable to Intel was $0.52.\n▪Forecasting fourth-quarter 2026 revenue of $15.0 billion to $16.0 billion; forecasting fourth-quarter EPS attributable to Intel of $0.10 and non-GAAP EPS attributable to Intel of $0.25.\nSANTA CLARA, Calif., October 29, 2026 – Intel Corporation today reported third-quarter 2026 financial results.\n“Our Q3 results demonstrate improving execution, meaningful progress expanding supply and continued advancement of our process technology,” said Lip-Bu Tan, Intel CEO. “Despite near-term headwinds across the PC industry, demand for our CPUs remains robust, reinforcing our confidence in the long-term growth opportunities for our business. Our immediate priority is to unlock additional supply to meet extraordinary demand for our Xeon family, while strengthening our product portfolio and roadmap. We are moving with urgency and focus to capitalize on these opportunities to deliver sustainable growth and long-term shareholder value.”\n“We delivered another solid quarter. Revenue, gross margin and earnings per share exceeded guidance, including our strongest data center revenue growth in 15 years,” said David Zinsner, Intel CFO. “Looking ahead, we see the PC slowdown continuing at least through the first half of next year, but we remain optimistic about the opportunities across our broader portfolio, and we will continue making disciplined investments in capacity and working capital to increase supply and support future growth.”\nQ3 2026 Financial Results\n\t\tGAAP\t\tNon-GAAP\n\t\tQ3 2026\tQ3 2025\tvs. Q3 2025\t\tQ3 2026\tQ3 2025\tvs. Q3 2025\n\tRevenue ($B)\t$16.5\t$13.7\tup 21%\t\t\t\t\n\tGross margin\t43.0%\t38.2%\tup 4.8 ppts\t\t44.1%\t40.0%\tup 4.1 ppts\n\tR&D and MG&A ($B)\t$4.5\t$4.4\tup 4%\t\t$4.1\t$3.9\tup 3%\n\tOperating margin\t15.3%\t5.0%\tup 10.3 ppts\t\t19.6%\t11.2%\tup 8.4 ppts\n\tTax rate\t11.6%\t6.6%\tup 5 ppts\t\t11.0%\t12.0%\tdown 1 ppt\n\tNet income attributable to Intel ($B)\t$3.3\t$4.1\tdown 18%\t\t$2.8\t$1.0\tup 169%\n\tEarnings per share attributable to Intel—diluted\t$0.60\t$0.90\tdown 33%\t\t$0.52\t$0.23\tup 126%\nFull reconciliations between GAAP and non-GAAP measures are provided below.",
+              "score": 3.046919868217624,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "8-K",
+                "accession_number": "0000050863-26-000188",
+                "report_date": "2026-10-29",
+                "filed": "2026-10-29",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:46:35.314389+00:00",
+                "sha256": "ca5f2e73c5b64d6c72692e5e974b18c456200247d7f9b76a3790c0688f0feb97",
+                "start": 0,
+                "end": 2452
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "8-K",
+            "filings_considered": 1,
+            "documents_loaded": 2,
+            "latest_considered_report_date": "2026-10-29",
+            "latest_considered_filing_date": "2026-10-29",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000188",
+                "report_date": "2026-10-29",
+                "filed": "2026-10-29"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        }
+      },
+      {
+        "source_id": 8,
+        "collection_task": "recent_quarter",
+        "tool": "search_company_updates",
+        "arguments": {
+          "form": "8-K",
+          "limit": 1,
+          "query": "revenue earnings results",
+          "ticker": "INTC",
+          "top_k": 3
+        },
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "•Showcased three architectures for Agentic AI and Enterprise-scale workloads at Hot Chips 2026: next-generation Intel Xeon code-named Diamond Rapids for high-performance orchestration, Intel GPU D-series for efficient inference, and Intel® Core™ Series 3 for intelligent client and edge computing. \n•Announced the first Googlebook devices powered by Intel Core Ultra Series 3 processors with premium devices from Acer, ASUS and Lenovo, bringing together Google's next-generation computing and Intel's flagship client platform. \n•Collaborated with AMD to bring x86 CPU optimizations for PyTorch together in oneDNN, simplifying AI development and deployment across Intel and AMD CPUs.\n•Announced a collaboration with SAP to bridge business IT systems and the operational technology that controls physical equipment and processes through Physical AI.\nFoundry Momentum \n•Released Intel 14A 0.9 process design kit (PDK) in October.\n•Announced a collaboration with Lens Technology, combining Intel's advanced packaging expertise with Lens Technology's precision glass processing capabilities to enable advanced semiconductor packaging for the AI era. \n•Completed the RAMP-C program, enabling validated prototypes, ecosystem readiness and early customer engagement to accelerate momentum for Secure Enclave.\n•Announced a collaboration with ASML to accelerate industry readiness for High-NA EUV manufacturing. \nIntel/Page 3\n•Collaborated with Lam Research and Applied Materials on new facilities to expand capacity and enable joint R&D in process technology and manufacturing equipment.\nCulture & Leadership \n•Appointed Dean Jarnac as executive vice president and chief sales officer, leading Intel's global sales organization and strengthening customer relationships and go-to-market execution across the company's product portfolio. \nBusiness Outlook\nIntel's guidance for the fourth quarter of 2026 includes both GAAP and non-GAAP estimates as follows:\n\tQ4 2026\t\tGAAP\t\tNon-GAAP\n\tRevenue ($B)\t\t\n$15.0 - $16.0\n\tGross margin\t\t37.1%\t\t38.0%\n\tTax Rate\t\t31%\t\t11%\n\tEarnings (Loss) Per Share Attributable to Intel—Diluted\t\t$0.10\t\t$0.25\nReconciliations between GAAP and non-GAAP financial measures are included below. Actual results may differ materially from Intel’s business outlook as a result of, among other things, the factors described under “Forward-Looking Statements” below. The gross margin and EPS outlooks are based on the midpoint of the revenue range.\nEarnings Webcast",
+              "score": 2.2282867168905476,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "8-K",
+                "accession_number": "0000050863-26-000188",
+                "report_date": "2026-10-29",
+                "filed": "2026-10-29",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:46:35.314389+00:00",
+                "sha256": "ca5f2e73c5b64d6c72692e5e974b18c456200247d7f9b76a3790c0688f0feb97",
+                "start": 4555,
+                "end": 7022
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "8-K",
+            "filings_considered": 1,
+            "documents_loaded": 2,
+            "latest_considered_report_date": "2026-10-29",
+            "latest_considered_filing_date": "2026-10-29",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000188",
+                "report_date": "2026-10-29",
+                "filed": "2026-10-29"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        }
+      },
+      {
+        "source_id": 9,
+        "collection_task": "recent_quarter",
+        "tool": "search_company_updates",
+        "arguments": {
+          "form": "8-K",
+          "limit": 1,
+          "query": "revenue earnings results",
+          "ticker": "INTC",
+          "top_k": 3
+        },
+        "result": {
+          "content_limit": {
+            "reason": "total_report_text_limit",
+            "original_text_characters": 2399,
+            "max_source_characters": 6000,
+            "max_total_characters": 12000,
+            "original_result_sha256": "5aae5a1a269487cba58b1809ae70f35b2655c781e41068b8b45d265e91f60d16"
+          }
+        },
+        "content_omitted": true
+      }
+    ],
+    "trace": [
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "started"
+      },
+      {
+        "type": "agent",
+        "agent": "planner",
+        "status": "completed",
+        "request_type": "mixed",
+        "plan": [
+          {
+            "id": "annual_growth",
+            "agent": "financial_data",
+            "instruction": "For Intel, retrieve three annual revenue records and compute revenue_growth with years=3.",
+            "filing_scope": "annual",
+            "years": 3,
+            "fiscal_year": null
+          },
+          {
+            "id": "recent_quarter",
+            "agent": "filing_rag",
+            "instruction": "For Intel, retrieve latest quarterly results using search_company_updates form=10-Q limit=1 and recent announcements using form=8-K; distinguish actuals from outlook.",
+            "filing_scope": "recent",
+            "years": 1,
+            "fiscal_year": null
+          }
+        ],
+        "elapsed_seconds": 3.6792655830013246,
+        "input_tokens": 931,
+        "output_tokens": 144,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0
+      },
+      {
+        "type": "agent",
+        "task_id": "annual_growth",
+        "agent": "financial_data",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "annual_growth",
+        "agent": "financial_data",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 764,
+        "output_tokens": 24,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_m58eu65l",
+            "function": {
+              "index": 0,
+              "name": "resolve_ticker_to_cik",
+              "arguments": {
+                "ticker": "Intel"
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.6505385840009694
+      },
+      {
+        "type": "tool",
+        "task_id": "annual_growth",
+        "agent": "financial_data",
+        "step": 1,
+        "call_id": 1,
+        "name": "resolve_ticker_to_cik",
+        "arguments": {
+          "ticker": "Intel"
+        },
+        "status": "completed",
+        "result": {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "cik": "0000050863"
+        },
+        "elapsed_seconds": 0.032341583999368595
+      },
+      {
+        "type": "model",
+        "task_id": "annual_growth",
+        "agent": "financial_data",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 1196,
+        "output_tokens": 51,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_e147thxr",
+            "function": {
+              "index": 0,
+              "name": "get_company_facts",
+              "arguments": {
+                "cik": "0000050863",
+                "concept": "revenue",
+                "unit": "USD",
+                "years": 3
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 3.1711518339998293
+      },
+      {
+        "type": "tool",
+        "task_id": "annual_growth",
+        "agent": "financial_data",
+        "step": 2,
+        "call_id": 2,
+        "name": "get_company_facts",
+        "arguments": {
+          "cik": "0000050863",
+          "concept": "revenue",
+          "unit": "USD",
+          "years": 3
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "cik": "0000050863",
+            "name": "INTEL CORP"
+          },
+          "concept": "revenue",
+          "definition": {
+            "description": "Annual total revenue",
+            "taxonomy": "us-gaap",
+            "unit": "USD",
+            "tags": [
+              "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Revenues",
+              "SalesRevenueNet"
+            ]
+          },
+          "unit": "USD",
+          "requested_years": 3,
+          "available_period_count": 3,
+          "history_complete": true,
+          "requested_period_ends": [
+            "2025-12-27",
+            "2024-12-28",
+            "2023-12-30"
+          ],
+          "missing_period_ends": [],
+          "records": [
+            {
+              "cik": 50863,
+              "metric": "revenue",
+              "start": "2024-12-29",
+              "end": "2025-12-27",
+              "value": 52853000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-01-23",
+              "accn": "0000050863-26-000011",
+              "is_amendment": false,
+              "fiscal_year": 2025,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2025 (period end: 2025-12-27)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+            },
+            {
+              "cik": 50863,
+              "metric": "revenue",
+              "start": "2023-12-31",
+              "end": "2024-12-28",
+              "value": 53101000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-01-23",
+              "accn": "0000050863-26-000011",
+              "is_amendment": false,
+              "fiscal_year": 2024,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2024 (period end: 2024-12-28)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+            },
+            {
+              "cik": 50863,
+              "metric": "revenue",
+              "start": "2023-01-01",
+              "end": "2023-12-30",
+              "value": 54228000000,
+              "unit": "USD",
+              "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "form": "10-K",
+              "filed": "2026-01-23",
+              "accn": "0000050863-26-000011",
+              "is_amendment": false,
+              "fiscal_year": 2023,
+              "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+              "period_label": "FY2023 (period end: 2023-12-30)",
+              "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+            }
+          ]
+        },
+        "elapsed_seconds": 6.59018045799894
+      },
+      {
+        "type": "model",
+        "task_id": "annual_growth",
+        "agent": "financial_data",
+        "step": 3,
+        "max_output_tokens": 1024,
+        "input_tokens": 2245,
+        "output_tokens": 39,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_892agas9",
+            "function": {
+              "index": 0,
+              "name": "compute_metrics",
+              "arguments": {
+                "cik": "0000050863",
+                "metrics": [
+                  "revenue_growth"
+                ],
+                "years": 3
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 4.068470333000732
+      },
+      {
+        "type": "tool",
+        "task_id": "annual_growth",
+        "agent": "financial_data",
+        "step": 3,
+        "call_id": 3,
+        "name": "compute_metrics",
+        "arguments": {
+          "cik": "0000050863",
+          "metrics": [
+            "revenue_growth"
+          ],
+          "years": 3
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "cik": "0000050863",
+            "name": "INTEL CORP"
+          },
+          "requested_years": 3,
+          "results": {
+            "revenue_growth": [
+              {
+                "cik": 50863,
+                "fiscal_year": 2025,
+                "metric": "revenue_growth",
+                "start": "2024-12-29",
+                "end": "2025-12-27",
+                "value": -0.004670345191239322,
+                "unit": "ratio",
+                "formula": "current_revenue / previous_revenue - 1",
+                "inputs": {
+                  "previous_revenue": {
+                    "cik": 50863,
+                    "metric": "revenue",
+                    "start": "2023-12-31",
+                    "end": "2024-12-28",
+                    "value": 53101000000,
+                    "unit": "USD",
+                    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                    "form": "10-K",
+                    "filed": "2026-01-23",
+                    "accn": "0000050863-26-000011",
+                    "is_amendment": false,
+                    "fiscal_year": 2024,
+                    "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                    "period_label": "FY2024 (period end: 2024-12-28)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                  },
+                  "current_revenue": {
+                    "cik": 50863,
+                    "metric": "revenue",
+                    "start": "2024-12-29",
+                    "end": "2025-12-27",
+                    "value": 52853000000,
+                    "unit": "USD",
+                    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                    "form": "10-K",
+                    "filed": "2026-01-23",
+                    "accn": "0000050863-26-000011",
+                    "is_amendment": false,
+                    "fiscal_year": 2025,
+                    "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                    "period_label": "FY2025 (period end: 2025-12-27)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                  }
+                },
+                "period_label": "FY2025 (period end: 2025-12-27)"
+              },
+              {
+                "cik": 50863,
+                "fiscal_year": 2024,
+                "metric": "revenue_growth",
+                "start": "2023-12-31",
+                "end": "2024-12-28",
+                "value": -0.02078262152393595,
+                "unit": "ratio",
+                "formula": "current_revenue / previous_revenue - 1",
+                "inputs": {
+                  "previous_revenue": {
+                    "cik": 50863,
+                    "metric": "revenue",
+                    "start": "2023-01-01",
+                    "end": "2023-12-30",
+                    "value": 54228000000,
+                    "unit": "USD",
+                    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                    "form": "10-K",
+                    "filed": "2026-01-23",
+                    "accn": "0000050863-26-000011",
+                    "is_amendment": false,
+                    "fiscal_year": 2023,
+                    "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                    "period_label": "FY2023 (period end: 2023-12-30)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                  },
+                  "current_revenue": {
+                    "cik": 50863,
+                    "metric": "revenue",
+                    "start": "2023-12-31",
+                    "end": "2024-12-28",
+                    "value": 53101000000,
+                    "unit": "USD",
+                    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+                    "form": "10-K",
+                    "filed": "2026-01-23",
+                    "accn": "0000050863-26-000011",
+                    "is_amendment": false,
+                    "fiscal_year": 2024,
+                    "fiscal_year_source": "dei:DocumentFiscalYearFocus",
+                    "period_label": "FY2024 (period end: 2024-12-28)",
+                    "amendment_note": "Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority.",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+                  }
+                },
+                "period_label": "FY2024 (period end: 2024-12-28)"
+              }
+            ]
+          },
+          "calculation_definitions": {
+            "revenue_growth": {
+              "description": "Annual revenue growth",
+              "function": "calculate_growth",
+              "inputs": [
+                "revenue"
+              ],
+              "unit": "ratio",
+              "period_mode": "consecutive_periods"
+            }
+          },
+          "warnings": [],
+          "availability": {
+            "revenue": {
+              "concept": "revenue",
+              "missing_period_ends": [],
+              "available_period_ends": [
+                "2025-12-27",
+                "2024-12-28",
+                "2023-12-30"
+              ]
+            }
+          }
+        },
+        "elapsed_seconds": 0.02977774999999383
+      },
+      {
+        "type": "model",
+        "task_id": "annual_growth",
+        "agent": "financial_data",
+        "step": 4,
+        "max_output_tokens": 1024,
+        "input_tokens": 3851,
+        "output_tokens": 287,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [],
+        "elapsed_seconds": 12.373045374999492
+      },
+      {
+        "type": "agent",
+        "task_id": "annual_growth",
+        "agent": "financial_data",
+        "status": "completed",
+        "elapsed_seconds": 28.91570991700064
+      },
+      {
+        "type": "agent",
+        "task_id": "recent_quarter",
+        "agent": "filing_rag",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "task_id": "recent_quarter",
+        "agent": "filing_rag",
+        "step": 1,
+        "max_output_tokens": 1024,
+        "input_tokens": 1250,
+        "output_tokens": 103,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_zso3mocw",
+            "function": {
+              "index": 0,
+              "name": "search_company_updates",
+              "arguments": {
+                "query": "net revenue three months",
+                "ticker": "INTC",
+                "top_k": 3,
+                "form": "10-Q",
+                "limit": 1
+              }
+            }
+          },
+          {
+            "id": "call_homw5c9a",
+            "function": {
+              "index": 1,
+              "name": "search_company_updates",
+              "arguments": {
+                "form": "8-K",
+                "limit": 1,
+                "query": "revenue earnings results",
+                "ticker": "INTC",
+                "top_k": 3
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 2.7623843330002273
+      },
+      {
+        "type": "tool",
+        "task_id": "recent_quarter",
+        "agent": "filing_rag",
+        "step": 1,
+        "call_id": 1,
+        "name": "search_company_updates",
+        "arguments": {
+          "query": "net revenue three months",
+          "ticker": "INTC",
+          "top_k": 3,
+          "form": "10-Q",
+          "limit": 1
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "All Other Financial Performance1\n\t\t\tThree Months Ended\t\tNine Months Ended\n\t($ In Millions)\t\tSep 26, 2026\t\tSep 27, 2025\t\tSep 26, 2026\t\tSep 27, 2025\n\tRevenue\t\t$\t692 \t\t\t$\t993 \t\t\t$\t2,021 \t\t\t$\t2,989 \t\n\tCost of sales and operating expenses\t\t513 \t\t\t893 \t\t\t1,510 \t\t\t2,717 \t\n\tOperating income\t\t$\t179 \t\t\t$\t100 \t\t\t$\t511 \t\t\t$\t272 \t\n\tOperating margin %\t\t26%\t\t10%\t\t25%\t\t9%\n1 Operating segment results include intersegment financial activity; refer to \"Note 2: Operating Segments\" within Notes to Consolidated Condensed Financial Statements for a reconciliation between our operating segment and consolidated financial results for the periods presented.\nOperating Segment Revenue Summary\nQ3 2026 vs. Q3 2025\nAll Other revenue was $692 million, down $301 million from Q3 2025, primarily as a result of the Q3 2025 deconsolidation of Altera. Mobileye revenue was $493 million in Q3 2026, roughly flat with Q3 2025.\nYTD 2026 vs. YTD 2025\nAll Other revenue was $2.0 billion, down $968 million from YTD 2025, primarily as a result of the Q3 2025 deconsolidation of Altera. This decrease was partially offset by higher Mobileye revenue in YTD 2026, which totaled $1.6 billion, up $109 million from YTD 2025, driven by higher demand for Mobileye EyeQ* products.\nSegment Operating Income Summary\nQ3 2026 vs. Q3 2025 and YTD 2026 vs. YTD 2025\nAll Other operating income was $179 million in Q3 2026, up $79 million from Q3 2025, and $511 million in YTD 2026, up $239 million from YTD 2025, driven by higher operating income from our other businesses in Q3 2026 and YTD 2026, partially offset by the absence of Altera operating margin in Q3 2026 and YTD 2026.\n\tMD&A\t\n36\nTable of Contents\n\tConsolidated Condensed Results of Operations\t\n\t\t\tThree Months Ended\t\tNine Months Ended\n\t\t\tSep 26, 2026\t\tSep 27, 2025\t\tSep 26, 2026\t\tSep 27, 2025\n\t(In Millions, Except Per Share Amounts)\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\t\tAmount\t\t\n% of Net Revenue1\n\tNet revenue\t\t$\t16,513 \t\t\t100.0 \t%\t\t$\t13,653 \t\t\t100.0 \t%\t\t$\t46,218 \t\t\t100.0 \t%\t\t$\t39,179 \t\t\t100.0 \t%\n\tCost of sales\t\t9,417 \t\t\t57.0 \t%\t\t8,435 \t\t\t61.8 \t%\t\t27,266 \t\t\t59.0 \t%\t\t25,747 \t\t\t65.7 \t%\n\tGross profit\t\t7,096 \t\t\t43.0 \t%\t\t5,218 \t\t\t38.2 \t%\t\t18,952 \t\t\t41.0 \t%\t\t13,432 \t\t\t34.3 \t%\n\tResearch and development\t\t3,490 \t\t\t21.1 \t%\t\t3,231 \t\t\t23.7 \t%\t\t10,233 \t\t\t22.1 \t%\t\t10,555 \t\t\t26.9 \t%\n\tMarketing, general, and administrative\t\t1,030 \t\t\t6.2 \t%\t\t1,129 \t\t\t8.3 \t%\t\t3,243 \t\t\t7.0 \t%\t\t3,450 \t\t\t8.8 \t%",
+              "score": 6.22085544526487,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 138892,
+                "end": 141341,
+                "preceding_period_heading": {
+                  "text": "\t\t\tThree Months Ended\t\tNine Months Ended",
+                  "start": 134268,
+                  "end": 134308
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            },
+            {
+              "text": "Financial Statements\t Notes to Financial Statements\t\n10\nTable of Contents\nNet revenue, cost of sales and operating expenses and operating income (loss) for each period were as follows:\n\t\t\tThree Months Ended\n\t(In Millions)\t\tSep 26, 2026\n\t\t\tIntel Products\t\t\t\t\t\t\t\t\t\t\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\tIntel Foundry\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t8,097 \t\t\t$\t7,318 \t\t\t$\t15,415 \t\t\t$\t6,697 \t\t\t$\t692 \t\t\t$\t— \t\t\t$\t(6,291)\t\t\t$\t16,513 \t\nCost of sales and operating expenses\n\t\t5,812 \t\t\t4,279 \t\t\t10,091 \t\t\t8,550 \t\t\t513 \t\t\t1,058 \t\t\t(6,221)\t\t\t13,991 \t\nOperating income (loss)\n\t\t$\t2,285 \t\t\t$\t3,039 \t\t\t$\t5,324 \t\t\t$\t(1,853)\t\t\t$\t179 \t\t\t$\t(1,058)\t\t\t$\t(70)\t\t\t$\t2,522 \t\n\t\t\tThree Months Ended\n\t(In Millions)\t\tSep 27, 2025\nIntel Products\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\t\nIntel Foundry\n\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t8,535 \t\t\t$\t4,117 \t\t\t$\t12,652 \t\t\t$\t4,235 \t\t\t$\t993 \t\t\t$\t— \t\t\t$\t(4,227)\t\t\t$\t13,653 \t\nCost of sales and operating expenses\n\t\t5,841 \t\t\t3,153 \t\t\t8,994 \t\t\t6,556 \t\t\t893 \t\t\t782 \t\t\t(4,255)\t\t\t12,970 \t\n\tOperating income (loss)\t\t$\t2,694 \t\t\t$\t964 \t\t\t$\t3,658 \t\t\t$\t(2,321)\t\t\t$\t100 \t\t\t$\t(782)\t\t\t$\t28 \t\t\t$\t683 \t\n\t\t\tNine Months Ended\n\t(In Millions)\t\tSep 26, 2026\n\t\t\tIntel Products\t\t\t\t\t\t\t\t\t\t\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\tIntel Foundry\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t24,701 \t\t\t$\t18,632 \t\t\t$\t43,333 \t\t\t$\t17,883 \t\t\t$\t2,021 \t\t\t$\t— \t\t\t$\t(17,019)\t\t\t$\t46,218 \t\nCost of sales and operating expenses\n\t\t17,557 \t\t\t11,577 \t\t\t29,134 \t\t\t24,262 \t\t\t1,510 \t\t\t7,554 \t\t\t(17,424)\t\t\t45,036 \t\nOperating income (loss)\n\t\t$\t7,144 \t\t\t$\t7,055 \t\t\t$\t14,199 \t\t\t$\t(6,379)\t\t\t$\t511 \t\t\t$\t(7,554)\t\t\t$\t405 \t\t\t$\t1,182 \t\n\t\t\tNine Months Ended\n\t(In Millions)\t\tSep 27, 2025\nIntel Products\n\t\t\tCCPG\t\tDCAI\t\tTotal Intel Products\t\t\nIntel Foundry\n\t\tAll Other\t\tCorporate Unallocated\t\tIntersegment Eliminations\t\tTotal Consolidated\n\tRevenue\t\t$\t24,035 \t\t\t$\t12,182 \t\t\t$\t36,217 \t\t\t$\t13,319 \t\t\t$\t2,989 \t\t\t$\t— \t\t\t$\t(13,346)\t\t\t$\t39,179 \t\nCost of sales and operating expenses\n\t\t16,927 \t\t\t10,010 \t\t\t26,937 \t\t\t21,128 \t\t\t2,717 \t\t\t4,797 \t\t\t(13,606)\t\t\t41,973 \t\n\tOperating income (loss)\t\t$\t7,108 \t\t\t$\t2,172 \t\t\t$\t9,280 \t\t\t$\t(7,809)\t\t\t$\t272 \t\t\t$\t(4,797)\t\t\t$\t260 \t\t\t$\t(2,794)\t\nCorporate Unallocated Expenses",
+              "score": 5.678593659220147,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 34097,
+                "end": 36412,
+                "preceding_period_heading": {
+                  "text": "\tNine Months Ended\t\t\t\t\t\t\t\t\t\t\t\t",
+                  "start": 23846,
+                  "end": 23876
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            },
+            {
+              "text": "Gross profit\t\t7,096 \t\t\t43.0 \t%\t\t5,218 \t\t\t38.2 \t%\t\t18,952 \t\t\t41.0 \t%\t\t13,432 \t\t\t34.3 \t%\n\tResearch and development\t\t3,490 \t\t\t21.1 \t%\t\t3,231 \t\t\t23.7 \t%\t\t10,233 \t\t\t22.1 \t%\t\t10,555 \t\t\t26.9 \t%\n\tMarketing, general, and administrative\t\t1,030 \t\t\t6.2 \t%\t\t1,129 \t\t\t8.3 \t%\t\t3,243 \t\t\t7.0 \t%\t\t3,450 \t\t\t8.8 \t%\n\tRestructuring and other charges\t\t54 \t\t\t0.3 \t%\t\t175 \t\t\t1.3 \t%\t\t4,294 \t\t\t9.3 \t%\t\t2,221 \t\t\t5.7 \t%\n\tOperating income (loss)\t\t2,522 \t\t\t15.3 \t%\t\t683 \t\t\t5.0 \t%\t\t1,182 \t\t\t2.6 \t%\t\t(2,794)\t\t\t(7.1)\t%\n\tGains (losses) on equity investments, net\t\t330 \t\t\t2.0 \t%\t\t221 \t\t\t1.6 \t%\t\t219 \t\t\t0.5 \t%\t\t611 \t\t\t1.6 \t%\n\tInterest and other, net\t\t1,130 \t\t\t6.8 \t%\t\t3,670 \t\t\t26.9 \t%\t\t(12,184)\t\t\t(26.4)\t%\t\t3,402 \t\t\t8.7 \t%\n\tIncome (loss) before taxes\t\t3,982 \t\t\t24.1 \t%\t\t4,574 \t\t\t33.5 \t%\t\t(10,783)\t\t\t(23.3)\t%\t\t1,219 \t\t\t3.1 \t%\n\tProvision for (benefit from) taxes\t\t462 \t\t\t2.8 \t%\t\t304 \t\t\t2.2 \t%\t\t826 \t\t\t1.8 \t%\t\t860 \t\t\t2.2 \t%\n\tNet income (loss)\t\t3,520 \t\t\t21.3 \t%\t\t4,270 \t\t\t31.3 \t%\t\t(11,609)\t\t\t(25.1)\t%\t\t359 \t\t\t0.9 \t%\n\tLess: net income (loss) attributable to non-controlling interests\t\t200 \t\t\t1.2 \t%\t\t207 \t\t\t1.5 \t%\t\t(168)\t\t\t(0.4)\t%\t\t35 \t\t\t0.1 \t%\n\tNet income (loss) attributable to Intel\t\t$\t3,320 \t\t\t20.1 \t%\t\t$\t4,063 \t\t\t29.8 \t%\t\t$\t(11,441)\t\t\t(24.8)\t%\t\t$\t324 \t\t\t0.8 \t%\nEarnings (loss) per share attributable to Intel—diluted2\n\t\t$\t0.60 \t\t\t\t\t$\t0.90 \t\t\t\t\t$\t(2.22)\t\t\t\t\t$\t0.07 \t\t\t\n1 Totals may not sum due to rounding.\n2 For the three months ended September 26, 2026 and three and nine months ended September 27, 2025, earnings per share attributable to Intel-diluted has been calculated by adjusting net income attributable to Intel for the gain of $120 million and loss of $2 million, respectively, related to the mark-to-market of that portion of the derivative liability that is attributable to 5 million and 342 thousand, respectively, contingent Escrowed Shares that were included in the weighted average shares of common stock outstanding-diluted during the period.\n\tMD&A\t\n37\nTable of Contents\nConsolidated Revenue\nConsolidated Revenue Walk $B1\n1 Excludes intersegment revenue; totals may not sum due to rounding.\nQ3 2026 vs. Q3 2025",
+              "score": 5.612485522378239,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "10-Q",
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/intc-20260926.htm",
+                "section": "Primary document",
+                "retrieved_at": "2026-11-22T07:46:14.543315+00:00",
+                "sha256": "46b55782d018c0cecaa5498ddaaed3ca01b935291ab8c767a546e83cff4f3936",
+                "start": 141047,
+                "end": 143137,
+                "preceding_period_heading": {
+                  "text": "\t\t\tThree Months Ended\t\tNine Months Ended",
+                  "start": 140601,
+                  "end": 140641
+                },
+                "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "10-Q",
+            "filings_considered": 1,
+            "documents_loaded": 1,
+            "latest_considered_report_date": "2026-09-26",
+            "latest_considered_filing_date": "2026-10-30",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000191",
+                "report_date": "2026-09-26",
+                "filed": "2026-10-30"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        },
+        "elapsed_seconds": 0.44270029199833516
+      },
+      {
+        "type": "tool",
+        "task_id": "recent_quarter",
+        "agent": "filing_rag",
+        "step": 1,
+        "call_id": 2,
+        "name": "search_company_updates",
+        "arguments": {
+          "form": "8-K",
+          "limit": 1,
+          "query": "revenue earnings results",
+          "ticker": "INTC",
+          "top_k": 3
+        },
+        "status": "completed",
+        "result": {
+          "company": {
+            "ticker": "INTC",
+            "name": "INTEL CORP",
+            "cik": "0000050863"
+          },
+          "matches": [
+            {
+              "text": "EX-99.1\n2\nq326earningsrelease.htm\nEX-99.1\nExhibit 99.1\nIntel Corporation\n2200 Mission College Blvd.\nSanta Clara, CA 95054-1549\nNews Release\nIntel Reports Third-Quarter 2026 Financial Results\nNews Summary\n▪Third-quarter revenue was $16.5 billion, up 21% year-over-year (YoY).\n▪Third-quarter earnings per share (EPS) attributable to Intel was $0.60; non-GAAP EPS attributable to Intel was $0.52.\n▪Forecasting fourth-quarter 2026 revenue of $15.0 billion to $16.0 billion; forecasting fourth-quarter EPS attributable to Intel of $0.10 and non-GAAP EPS attributable to Intel of $0.25.\nSANTA CLARA, Calif., October 29, 2026 – Intel Corporation today reported third-quarter 2026 financial results.\n“Our Q3 results demonstrate improving execution, meaningful progress expanding supply and continued advancement of our process technology,” said Lip-Bu Tan, Intel CEO. “Despite near-term headwinds across the PC industry, demand for our CPUs remains robust, reinforcing our confidence in the long-term growth opportunities for our business. Our immediate priority is to unlock additional supply to meet extraordinary demand for our Xeon family, while strengthening our product portfolio and roadmap. We are moving with urgency and focus to capitalize on these opportunities to deliver sustainable growth and long-term shareholder value.”\n“We delivered another solid quarter. Revenue, gross margin and earnings per share exceeded guidance, including our strongest data center revenue growth in 15 years,” said David Zinsner, Intel CFO. “Looking ahead, we see the PC slowdown continuing at least through the first half of next year, but we remain optimistic about the opportunities across our broader portfolio, and we will continue making disciplined investments in capacity and working capital to increase supply and support future growth.”\nQ3 2026 Financial Results\n\t\tGAAP\t\tNon-GAAP\n\t\tQ3 2026\tQ3 2025\tvs. Q3 2025\t\tQ3 2026\tQ3 2025\tvs. Q3 2025\n\tRevenue ($B)\t$16.5\t$13.7\tup 21%\t\t\t\t\n\tGross margin\t43.0%\t38.2%\tup 4.8 ppts\t\t44.1%\t40.0%\tup 4.1 ppts\n\tR&D and MG&A ($B)\t$4.5\t$4.4\tup 4%\t\t$4.1\t$3.9\tup 3%\n\tOperating margin\t15.3%\t5.0%\tup 10.3 ppts\t\t19.6%\t11.2%\tup 8.4 ppts\n\tTax rate\t11.6%\t6.6%\tup 5 ppts\t\t11.0%\t12.0%\tdown 1 ppt\n\tNet income attributable to Intel ($B)\t$3.3\t$4.1\tdown 18%\t\t$2.8\t$1.0\tup 169%\n\tEarnings per share attributable to Intel—diluted\t$0.60\t$0.90\tdown 33%\t\t$0.52\t$0.23\tup 126%\nFull reconciliations between GAAP and non-GAAP measures are provided below.",
+              "score": 3.046919868217624,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "8-K",
+                "accession_number": "0000050863-26-000188",
+                "report_date": "2026-10-29",
+                "filed": "2026-10-29",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:46:35.314389+00:00",
+                "sha256": "ca5f2e73c5b64d6c72692e5e974b18c456200247d7f9b76a3790c0688f0feb97",
+                "start": 0,
+                "end": 2452
+              }
+            },
+            {
+              "text": "•Showcased three architectures for Agentic AI and Enterprise-scale workloads at Hot Chips 2026: next-generation Intel Xeon code-named Diamond Rapids for high-performance orchestration, Intel GPU D-series for efficient inference, and Intel® Core™ Series 3 for intelligent client and edge computing. \n•Announced the first Googlebook devices powered by Intel Core Ultra Series 3 processors with premium devices from Acer, ASUS and Lenovo, bringing together Google's next-generation computing and Intel's flagship client platform. \n•Collaborated with AMD to bring x86 CPU optimizations for PyTorch together in oneDNN, simplifying AI development and deployment across Intel and AMD CPUs.\n•Announced a collaboration with SAP to bridge business IT systems and the operational technology that controls physical equipment and processes through Physical AI.\nFoundry Momentum \n•Released Intel 14A 0.9 process design kit (PDK) in October.\n•Announced a collaboration with Lens Technology, combining Intel's advanced packaging expertise with Lens Technology's precision glass processing capabilities to enable advanced semiconductor packaging for the AI era. \n•Completed the RAMP-C program, enabling validated prototypes, ecosystem readiness and early customer engagement to accelerate momentum for Secure Enclave.\n•Announced a collaboration with ASML to accelerate industry readiness for High-NA EUV manufacturing. \nIntel/Page 3\n•Collaborated with Lam Research and Applied Materials on new facilities to expand capacity and enable joint R&D in process technology and manufacturing equipment.\nCulture & Leadership \n•Appointed Dean Jarnac as executive vice president and chief sales officer, leading Intel's global sales organization and strengthening customer relationships and go-to-market execution across the company's product portfolio. \nBusiness Outlook\nIntel's guidance for the fourth quarter of 2026 includes both GAAP and non-GAAP estimates as follows:\n\tQ4 2026\t\tGAAP\t\tNon-GAAP\n\tRevenue ($B)\t\t\n$15.0 - $16.0\n\tGross margin\t\t37.1%\t\t38.0%\n\tTax Rate\t\t31%\t\t11%\n\tEarnings (Loss) Per Share Attributable to Intel—Diluted\t\t$0.10\t\t$0.25\nReconciliations between GAAP and non-GAAP financial measures are included below. Actual results may differ materially from Intel’s business outlook as a result of, among other things, the factors described under “Forward-Looking Statements” below. The gross margin and EPS outlooks are based on the midpoint of the revenue range.\nEarnings Webcast",
+              "score": 2.2282867168905476,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "8-K",
+                "accession_number": "0000050863-26-000188",
+                "report_date": "2026-10-29",
+                "filed": "2026-10-29",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:46:35.314389+00:00",
+                "sha256": "ca5f2e73c5b64d6c72692e5e974b18c456200247d7f9b76a3790c0688f0feb97",
+                "start": 4555,
+                "end": 7022
+              }
+            },
+            {
+              "text": "Tax rate\t11.6%\t6.6%\tup 5 ppts\t\t11.0%\t12.0%\tdown 1 ppt\n\tNet income attributable to Intel ($B)\t$3.3\t$4.1\tdown 18%\t\t$2.8\t$1.0\tup 169%\n\tEarnings per share attributable to Intel—diluted\t$0.60\t$0.90\tdown 33%\t\t$0.52\t$0.23\tup 126%\nFull reconciliations between GAAP and non-GAAP measures are provided below.\nIn the third quarter, the company generated $5.1 billion in cash from operations.\nIntel/Page 2\nBusiness Unit Summary\n\tBusiness Unit Revenue and Trends (In Billions)\t\t\nQ3 20261\n\t\tvs. Q3 2025\n\tIntel Products:\t\t\t\t\nClient Computing and Physical AI Group (CCPG)2\n\t\t$8.1\t\tdown 5%\n\tData Center and AI (DCAI)\t\t7.3\t\tup 78%\n\tTotal Intel Products revenue\t\t15.4\t\tup 22%\n\tIntel Foundry\t\t6.7\t\tup 58%\nAll Other3\n\t\t0.7\t\tdown 30%\n\tIntersegment eliminations\t\t(6.3)\t\t\n\tTotal net revenue\t\t$16.5\t\tup 21%\n1 Operating segment revenues include intersegment transactions and are presented as actual and rounded; as a result, totals may not sum.\n2 CCPG was referred to as the Client Computing Group (CCG) in Q1 2026 and earlier periods.\n3 Altera, previously a wholly owned subsidiary, was deconsolidated following the sale of 51% of its common stock on September 12, 2025. Altera's results of operations were included in Intel's Consolidated Condensed Financial Statements through September 11, 2025.\nBusiness Highlights\nCompany Momentum \n•Completed a $23 billion public equity offering to support future growth opportunities while maintaining a strong balance sheet and investment-grade rating.\n•Announced plans to acquire Classiq, combining its quantum software synthesis platform with Intel’s spin-qubit manufacturing and software expertise to create a full-stack quantum computing platform.\nProduct Momentum \n•Announced plans for a multiyear collaboration with Oracle intended to expand Intel® Xeon®-based computing on Oracle Cloud Infrastructure (OCI), which is expected to span current and future Intel Xeon platforms, including planned OCI X14 offerings powered by Intel’s next-generation server processor code-named Diamond Rapids.\n•Shared new technical details on the Intel® GPU D-series, formerly code-named Crescent Island, introduced new Intel Xeon-based rack designs and highlighted open software and ecosystem innovations at OCP Global Summit 2026. Intel also demonstrated day-0 support for Meta's Muse Spark Open, which has been tested and is running on the upcoming Intel GPU D-series and Intel Xeon platforms.",
+              "score": 2.1708230575367375,
+              "metadata": {
+                "ticker": "INTC",
+                "form": "8-K",
+                "accession_number": "0000050863-26-000188",
+                "report_date": "2026-10-29",
+                "filed": "2026-10-29",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+                "section": "EX-99 exhibit",
+                "retrieved_at": "2026-11-22T07:46:35.314389+00:00",
+                "sha256": "ca5f2e73c5b64d6c72692e5e974b18c456200247d7f9b76a3790c0688f0feb97",
+                "start": 2154,
+                "end": 4553
+              }
+            }
+          ],
+          "warnings": [],
+          "coverage": {
+            "form": "8-K",
+            "filings_considered": 1,
+            "documents_loaded": 2,
+            "latest_considered_report_date": "2026-10-29",
+            "latest_considered_filing_date": "2026-10-29",
+            "selected_filings": [
+              {
+                "accession_number": "0000050863-26-000188",
+                "report_date": "2026-10-29",
+                "filed": "2026-10-29"
+              }
+            ],
+            "scope": "Recent submissions only; HTML primary documents and up to three EX-99 HTML exhibits per 8-K. PDF exhibits are not parsed."
+          },
+          "period_warning": "10-Q may contain both quarterly and year-to-date figures. Do not treat either as annual data or infer a fourth quarter."
+        },
+        "elapsed_seconds": 0.11324937499921361
+      },
+      {
+        "type": "model",
+        "task_id": "recent_quarter",
+        "agent": "filing_rag",
+        "step": 2,
+        "max_output_tokens": 1024,
+        "input_tokens": 9765,
+        "output_tokens": 81,
+        "model": "qwen3:8b",
+        "provider": "ollama",
+        "estimated_cost_usd": 0.0,
+        "status": "completed",
+        "tool_calls": [
+          {
+            "id": "call_11yxodv6",
+            "function": {
+              "index": 0,
+              "name": "search_company_updates",
+              "arguments": {
+                "ticker": "INTC",
+                "top_k": 3,
+                "form": "10-Q",
+                "limit": 1,
+                "query": "net revenue three months"
+              }
+            }
+          },
+          {
+            "id": "call_7rs5v8xn",
+            "function": {
+              "index": 1,
+              "name": "search_company_updates",
+              "arguments": {
+                "form": "8-K",
+                "limit": 1,
+                "query": "revenue earnings results",
+                "ticker": "INTC",
+                "top_k": 3
+              }
+            }
+          }
+        ],
+        "elapsed_seconds": 33.19301266600087
+      },
+      {
+        "type": "agent",
+        "task_id": "recent_quarter",
+        "agent": "filing_rag",
+        "status": "completed",
+        "stop_reason": "repeated_requests",
+        "elapsed_seconds": 36.51176666699939
+      },
+      {
+        "type": "model",
+        "phase": "coverage",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 9681,
+        "output_tokens": 870,
+        "total_tokens": 10551,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 846,
+        "response_id": "resp_0093f5a427223d7c016b02a2cacf5487d2827fa17b632e6522",
+        "estimated_cost_usd": 0.0014031,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"complete\":true,\"gaps\":[],\"tasks\":[]}",
+        "elapsed_seconds": 11.816185833999043
+      },
+      {
+        "type": "coverage",
+        "complete": true,
+        "gaps": [],
+        "status": "complete",
+        "repair_tasks_attempted": 0
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 11749,
+        "output_tokens": 586,
+        "total_tokens": 12335,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 0,
+        "response_id": "resp_018e739f95a337d0016b02a2d5df3087d2b0e4610635180154",
+        "estimated_cost_usd": 0.0014679,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"Evet. Intel’in yıllık gelir büyümesi FY2024’te (dönem sonu 2024-12-28) {{F6_value}}’ye gerilerken, FY2025’te (dönem sonu 2025-12-27) de {{F5_value}} olarak negatif kaldı; gelir FY2023’te (dönem sonu 2023-12-30)  {{F4_value}} {{F4_unit}}, FY2024’te {{F3_value}} {{F3_unit}} ve FY2025’te {{F2_value}} {{F2_unit}} oldu. Böylece yıllık gelir düşüşü sürmüş, ancak büyüme oranındaki gerileme FY2025’te FY2024’e göre hafiflemiştir. [Source 2]\\n\\nAra dönem verileri ayrı bir tablo sunuyor: 26 Eylül 2026’da sona eren üçüncü çeyrekte net gelir yıllık bazda %21 artarak 16,5 milyar dolara çıktı; dokuz aylık toplam da önceki yılın aynı dönemindeki 39,2 milyar dolardan 46,2 milyar dolara yükseldi. Çeyreklik gelir artışı ve dokuz aylık gelir, tamamlanmış mali yıl sonuçları değildir. Şirket ayrıca Q3’te gelirin, brüt marjın ve hisse başına kârın rehberliği aştığını belirtti. [Source 5] [Source 7]\\n\\nŞirketin son açıklamaları, yakın vadede PC pazarındaki zayıflığın sürebileceğini ve 2027’nin ilk yarısına kadar uzayabileceğini, buna karşılık CPU talebinin güçlü olduğunu ve arzı artırmaya odaklandığını söylüyor. 2026’nın dördüncü çeyreği için 15,0–16,0 milyar dolar gelir beklentisi açıklanmış; bu bir şirket tahmini olup gerçekleşmiş sonuç değildir ve yıllık büyüme serisine eklenmemelidir. Dolayısıyla mevcut kanıt, yıllık gelirlerin 2024 ve 2025’te gerilediğini; daha yeni çeyreklik verilerin ise toparlanan gelir ivmesine işaret ettiğini gösteriyor, fakat bu ara dönem artışı yıllık eğilimin tersine döndüğünü tek başına kanıtlamıyor. [Source 7]\",\"facts\":[\"2:records/0\",\"2:records/1\",\"2:records/2\",\"3:results/revenue_growth/0\",\"3:results/revenue_growth/1\",\"5:matches/0/metadata\",\"7:matches/0/metadata\"]}",
+        "elapsed_seconds": 8.079452624999249
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "error",
+        "stage": "deterministic",
+        "error": {
+          "type": "ValueError",
+          "message": "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"%21\", \"16,5\", \"39,2\", \"46,2\", \"Q3’te\", \"2027’nin\", \"15,0–16,0\", \"2024\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values."
+        },
+        "elapsed_seconds": 8.09014954200029
+      },
+      {
+        "type": "revision",
+        "status": "scheduled",
+        "revision_count": 1,
+        "max_revisions": 2,
+        "reserved_content_repair": false,
+        "issues": [
+          "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"%21\", \"16,5\", \"39,2\", \"46,2\", \"Q3’te\", \"2027’nin\", \"15,0–16,0\", \"2024\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values."
+        ]
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "writer",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 12568,
+        "output_tokens": 699,
+        "total_tokens": 13267,
+        "cached_input_tokens": 11746,
+        "reasoning_tokens": 161,
+        "response_id": "resp_0fa8d690d0f05f05016b02a2de072887d298294c20bb815f2a",
+        "estimated_cost_usd": 0.00054916,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"kind\":\"answer\",\"text\":\"Evet. Intel’in yıllık gelir büyümesi FY{{F6_fiscal_year}} (dönem sonu {{F6_end}}) için {{F6_value}} iken FY{{F5_fiscal_year}}’te (dönem sonu {{F5_end}}) de negatif kaldı; gelir FY{{F4_fiscal_year}}’te (dönem sonu {{F4_end}}) {{F4_value}} {{F4_unit}}, FY{{F3_fiscal_year}}’te (dönem sonu {{F3_end}}) {{F3_value}} {{F3_unit}} ve FY{{F2_fiscal_year}}’te (dönem sonu {{F2_end}}) {{F2_value}} {{F2_unit}} oldu. Yıllık gelir düşüşü sürdü, ancak büyüme oranındaki düşüş son mali yılda önceki yıla kıyasla daha sınırlıydı. [Source 2]\\n\\n26 Eylül 2026’da sona eren üçüncü çeyrekte net gelir önceki yılın aynı çeyreğine göre arttı; dokuz aylık net gelir de önceki yılın aynı döneminin üzerindeydi. Bunlar ara dönem sonuçlarıdır, tamamlanmış mali yıl gelirleri değildir. Intel, aynı çeyreğe ilişkin açıklamasında gelir, brüt marj ve hisse başına kârın şirket rehberliğini aştığını bildirdi. [Source 5] [Source 7]\\n\\nŞirket, yakın vadede PC pazarındaki yavaşlamanın sürmesini beklediğini; buna karşın CPU talebinin güçlü olduğunu ve ek arz sağlamaya odaklandığını belirtti. Ayrıca dördüncü çeyrek için gelir beklentisi açıkladı; bu beklenti gerçekleşmiş bir sonuç değildir ve yıllık büyüme verisi olarak değerlendirilmemelidir. Bu nedenle mevcut kanıtlar, yıllık gelir düşüşü sürerken daha yeni ara dönem sonuçlarının iyileştiğini gösteriyor; ara dönem artışı tek başına yıllık eğilimin tersine döndüğünü kanıtlamaz. [Source 7]\",\"facts\":[\"2:records/0\",\"2:records/1\",\"2:records/2\",\"3:results/revenue_growth/0\",\"3:results/revenue_growth/1\",\"5:matches/0/metadata\",\"7:matches/0/metadata\"]}",
+        "elapsed_seconds": 9.284770707999996
+      },
+      {
+        "type": "agent",
+        "agent": "writer",
+        "status": "completed",
+        "elapsed_seconds": 9.289709916998618
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "started"
+      },
+      {
+        "type": "model",
+        "phase": "critic",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "input_tokens": 7128,
+        "output_tokens": 917,
+        "total_tokens": 8045,
+        "cached_input_tokens": 0,
+        "reasoning_tokens": 885,
+        "response_id": "resp_09be5e383a7d4897016b02a2e7522087d2ba04eb33704359cd",
+        "estimated_cost_usd": 0.0011713000000000001,
+        "pricing_date": "2026-11-06",
+        "status": "completed",
+        "content": "{\"issues\":[],\"evidence_supported\":true,\"language_matches\":true,\"answer_complete\":true}",
+        "elapsed_seconds": 10.710118791999776
+      },
+      {
+        "type": "agent",
+        "agent": "critic",
+        "status": "completed",
+        "verification_status": "passed",
+        "issues": [],
+        "elapsed_seconds": 10.71409095799936
+      }
+    ],
+    "elapsed_seconds": 109.69811291599945,
+    "model": "qwen3:8b",
+    "llm_config": {
+      "model": "qwen3:8b",
+      "think": false,
+      "options": {
+        "temperature": 0,
+        "num_ctx": 16384,
+        "num_predict": 4096
+      },
+      "roles": {
+        "writer": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "low",
+          "max_output_tokens": 8192
+        },
+        "critic": {
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "reasoning_effort": "medium",
+          "max_output_tokens": 8192
+        }
+      }
+    },
+    "dataset_sha256": "184c3d035891bdf748102051c7850b93a40d24a7fcf53e187b58048f135068d8",
+    "recorded_at": "2026-11-22T08:08:17.814023+00:00",
+    "transport": "mcp"
+  }
+]

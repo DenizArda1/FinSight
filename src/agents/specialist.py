@@ -20,6 +20,8 @@ def scoped_tool_arguments(tool_name, arguments, filing_scope, requested_years, r
         return arguments
     arguments = deepcopy(arguments)
     if tool_name in {"get_company_facts", "compute_metrics"}:
+        if requested_fiscal_year is not None:
+            arguments["fiscal_year"] = requested_fiscal_year
         years = arguments.get("years", 1)
         if type(years) is int and 1 <= years < requested_years:
             arguments["years"] = max(years, requested_years)

@@ -30,13 +30,32 @@ def validate_search(query, top_k):
         raise ValueError('top_k must be an integer from 1 to 8')
 
 
+def period_headings(text):
+    """Keep explicit duration headings as source text, without inferring a quarter."""
+    pattern = re.compile(
+        r"^[ \t]*(?:Three|Six|Nine|Twelve|3|6|9|12) Months Ended[^\n]{0,200}$",
+        re.IGNORECASE | re.MULTILINE,
+    )
+    return [{'text': match.group(), 'start': match.start(), 'end': match.end()}
+            for match in pattern.finditer(text)]
+
+
 def rank_documents(documents, query, top_k):
     """Lexical excerpt retrieval over a bounded recent corpus, with exact offsets."""
     records = []
     for document in documents:
+        headings = period_headings(document['text'])
         for chunk in split_text(document['text'], max_chars=2500, overlap=300):
+            preceding = [heading for heading in headings if heading['end'] <= chunk['start']]
+            metadata = {**document['metadata'], 'start': chunk['start'], 'end': chunk['end']}
+            if preceding:
+                metadata['preceding_period_heading'] = preceding[-1]
+                metadata['period_scope_note'] = (
+                    'This is the preceding source heading, not an inferred duration. '
+                    'Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data.'
+                )
             records.append({'chunk_id': f'{len(records):08d}', 'text': chunk['text'],
-                            'metadata': {**document['metadata'], 'start': chunk['start'], 'end': chunk['end']}})
+                            'metadata': metadata})
     return [{'text': record['text'], 'score': record['bm25_score'], 'metadata': record['metadata']}
             for record in bm25_rank(query, records, top_k)]
 

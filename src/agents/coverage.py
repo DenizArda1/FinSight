@@ -5,7 +5,7 @@ from copy import deepcopy
 
 from jsonschema import Draft202012Validator
 
-from src.agents.planner import PLANNER_RESPONSE_SCHEMA, validate_plan
+from src.agents.planner import PLANNER_RESPONSE_SCHEMA, normalize_plan
 from src.verification.agent_answer import build_agent_evidence, build_fact_catalog, request_answer_check
 from src.verification.evidence import REPORT_SEARCH_TOOLS, evidence_for_prompt
 
@@ -21,7 +21,7 @@ COVERAGE_SCHEMA = {
 
 
 async def check_coverage(state, llm_config):
-    """An honest limitation is not the same as fulfilling the original request."""
+    #An honest limitation is not the same as fulfilling the original request
     evidence = build_agent_evidence(state['trace'])
     facts = [{'source_id': row['source_id'], 'fields': row['fields']}
              for row in build_fact_catalog(evidence).values()]
@@ -45,6 +45,13 @@ async def check_coverage(state, llm_config):
             "Quarterly figures and recent announcements MUST go to filing_rag using search_company_updates "
             "with form='10-Q' or form='8-K' respectively and filing_scope='recent'. "
             "search_filings and get_filing_section cover annual reports, not quarterly reports. "
+            "filing_rag also has search_fed_releases(query, top_k) for current Fed policy and "
+            "get_bls_series(indicator, months) for cpi, unemployment or payrolls. Assign these to a separate "
+            "filing_scope=recent task with fiscal_year=null; no company resolution is needed. "
+            "If requested macro evidence is absent and those tools have not failed, propose a repair task. "
+            "Absence from the collected evidence does not mean the tools are unavailable. "
+            "CPI provides an index level with period and units, not an inflation percentage. When the question "
+            "asks for inflation context without a percentage calculation, correctly labelled CPI evidence suffices. "
             "Each repair task has at most six tool calls including company resolution; keep instructions short and focused. "
             "Keep requested periods. Do not guess CIKs or years for 'latest'. Do not request investment advice. "
             "Avoid repeating successful calls with identical arguments; refine the query or period coverage instead. "
@@ -60,7 +67,7 @@ async def check_coverage(state, llm_config):
         result = json.loads(response)
         Draft202012Validator(COVERAGE_SCHEMA).validate(result)
         if result['tasks']:
-            validate_plan({'request_type': 'comparison', 'tasks': result['tasks']})
+            result['tasks'] = normalize_plan({'request_type': 'comparison', 'tasks': result['tasks']})['tasks']
         if result['complete'] and (result['gaps'] or result['tasks']):
             raise ValueError('Complete coverage cannot contain gaps or repair tasks')
         if not result['complete'] and not result['gaps']:

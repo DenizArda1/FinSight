@@ -5,6 +5,7 @@ from unittest.mock import AsyncMock, call, patch
 
 from src.agents.specialist import execute_specialist_tool, run_specialist
 from src.llm.client import IncompleteResponseError
+from src.llm.prompts import build_specialist_messages
 from src.mcp.client import MCPToolError
 from src.tools.agentic_tools import AGENT_TOOL_NAMES, TOOL_SCHEMAS
 from src.verification.agent_answer import build_agent_evidence
@@ -464,3 +465,15 @@ class SpecialistLoopTests(unittest.IsolatedAsyncioTestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SpecialistTaskContextTests(unittest.TestCase):
+    def test_specialist_receives_assigned_task_without_other_research_topics(self):
+        task = {'id': 'fed', 'agent': 'filing_rag', 'instruction': 'Retrieve recent Fed policy.',
+                'filing_scope': 'recent', 'years': 1, 'fiscal_year': None,
+                'question': 'Analyze company revenues, filings, Fed policy and inflation.'}
+        original = deepcopy(task)
+        payload = json.loads(build_specialist_messages(task)[1]['content'])
+        self.assertNotIn('question', payload)
+        self.assertEqual(payload, {k: v for k, v in task.items() if k != 'question'})
+        self.assertEqual(task, original)

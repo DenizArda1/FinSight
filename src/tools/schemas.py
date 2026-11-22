@@ -128,6 +128,8 @@ GET_COMPANY_FACTS_TOOL = {
             "type": "object",
             "properties": {
                 "cik": {"type": "string", "pattern": "^[0-9]{10}$", "description": "10-digit SEC CIK."},
+                "fiscal_year": {"type": ["integer", "null"], "minimum": 1,
+                                "description": "Ending fiscal year of the requested annual window; omit for latest. Uses company fiscal labels, not calendar years."},
                 "concept": {
                     "type": "string",
                     "enum": ["revenue", "net_income", "operating_income", "gross_profit",
@@ -158,6 +160,8 @@ COMPUTE_METRICS_TOOL = {
             "type": "object",
             "properties": {
                 "cik": {"type": "string", "pattern": "^[0-9]{10}$", "description": "10-digit SEC CIK."},
+                "fiscal_year": {"type": ["integer", "null"], "minimum": 1,
+                                "description": "Ending fiscal year of the requested annual window; omit for latest. Uses company fiscal labels, not calendar years."},
                 "metrics": {
                     "type": "array", "minItems": 1, "uniqueItems": True,
                     "items": {"type": "string", "enum": [

@@ -10,6 +10,20 @@ from src.verification.evidence import evidence_for_prompt, limit_report_evidence
 
 
 class ResearchSourceTests(unittest.TestCase):
+    def test_excerpt_retains_preceding_duration_heading_with_exact_offsets(self):
+        heading = 'Nine Months Ended March 31, 2026 Compared with Nine Months Ended March 31, 2025'
+        text = 'Three Months Ended March 31, 2026\nQuarter discussion.\n' + heading + '\n' + 'Background. ' * 240 + '\nCloud gross margin decreased. '
+        matches = rank_documents([{'text': text, 'metadata': {'form': '10-Q'}}], 'cloud gross margin', 1)
+        match = matches[0]
+        context = match['metadata']['preceding_period_heading']
+        self.assertEqual(context['text'], heading)
+        self.assertEqual(text[context['start']:context['end']], heading)
+        self.assertEqual(text[match['metadata']['start']:match['metadata']['end']], match['text'])
+
+    def test_report_date_does_not_invent_duration_heading(self):
+        match = rank_documents([{'text': 'Revenue increased.', 'metadata': {'report_date': '2026-03-31'}}], 'revenue', 1)[0]
+        self.assertNotIn('preceding_period_heading', match['metadata'])
+
     def test_latest_quarter_is_not_an_older_period_amendment(self):
         rows = [
             {'accessionNumber': 'old', 'form': '10-Q/A', 'filingDate': '2026-11-01', 'reportDate': '2026-03-31'},

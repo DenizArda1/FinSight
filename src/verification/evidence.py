@@ -44,9 +44,14 @@ def limit_report_evidence(evidence, max_source_chars=MAX_REPORT_SOURCE_CHARS,
         query = (source["tool"], json.dumps(source.get("arguments", {}), sort_keys=True))
         rank = ranks.get(query, 0)
         ranks[query] = rank + 1
-        priorities.append((source["tool"] == "get_filing_section", rank, index, source))
+        repair = source.get("collection_task", "").startswith("coverage_repair_")
+        # An explicit single-filing retrieval narrows the requested period;
+        # broad earlier searches can otherwise retain an older lexical hit.
+        focused = source["tool"] == "search_company_updates" and source.get("arguments", {}).get("limit") == 1
+        priorities.append((source["tool"] == "get_filing_section", not repair,
+                           not focused, rank, index, source))
     # Admit the top result from each query before the next result from one query.
-    candidates = [item[-1] for item in sorted(priorities, key=lambda item: item[:3])]
+    candidates = [item[-1] for item in sorted(priorities, key=lambda item: item[:5])]
     # Round-robin source families too: repeated annual queries must not crowd
     # out a different company or quarterly/event evidence collected later.
     family_ranks, family_order = {}, []
