@@ -36,13 +36,13 @@ def split_research_note(result):
 
 
 def source_financial_rows(result):
-    """Expose retrieved figures independently of a rejected model narrative."""
+    #Expose retrieved figures independently of a rejected model narrative
     evidence = build_agent_evidence(result["trace"]) if "trace" in result else result.get("evidence", [])
     sources = {source["source_id"]: source for source in evidence}
     rows = []
     for entry in build_fact_catalog(evidence).values():
         fields = entry["fields"]
-        if "value" not in fields:
+        if "value" not in fields or entry.get('reported_number'):
             continue
         source = sources[entry["source_id"]]
         rows.append({

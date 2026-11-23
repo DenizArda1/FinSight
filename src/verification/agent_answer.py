@@ -12,7 +12,7 @@ from src.verification.grounding import parse_verification_response
 from src.verification.evidence import REPORT_SEARCH_TOOLS, limit_report_evidence
 
 
-from src.verification.field_references import FIELD_REFERENCE, normalize_catalog_references
+from src.verification.field_references import FIELD_REFERENCE, REPORT_NUMBER, normalize_catalog_references
 TURKISH_SOURCE_REFERENCE = re.compile(r"\[Kaynak ([1-9][0-9]*)\]")
 GROUPED_SOURCE_REFERENCE = re.compile(
     r"\[(?:Source|Kaynak)\s+[1-9][0-9]*"
@@ -100,6 +100,17 @@ def build_fact_catalog(evidence):
 
         for concept, availability in result.get("availability", {}).items():
             add_availability_facts(catalog, source_id, f"availability/{concept}/", availability)
+    # Add only literal numbers from the same visible passages sent to Writer.
+    # These establish provenance, not a metric/period interpretation or a calculation.
+    for source in evidence:
+        source_id = source['source_id']
+        for index, value in enumerate(report_number_literals(source)):
+            identifier = f'{source_id}:report_numbers/{index}'
+            catalog[identifier] = {
+                'source_id': source_id, 'reported_number': True,
+                'fields': {'value': value},
+                'template': f'{{{{{source_id}:report_numbers/{index}/value}}}} [Source {source_id}]',
+            }
     return catalog
 
 
@@ -198,7 +209,9 @@ def bind_cited_metadata(prose, catalog):
             # a free amount such as "2025 USD" must not become a year token.
             for label, reference in replacements.items():
                 if label.startswith('FY'):
-                    paragraph = re.sub(r'(?<!\w)' + label[2:] + r"(?=['’])", reference[2:], paragraph)
+                    paragraph = re.sub(
+                        r'(?<!\w)' + label[2:] + r"(?=['’]|\s+(?:takvim yılı(?:yla|na|nda|nın)?|calendar year)\b)",
+                        reference[2:], paragraph)
         paragraphs.append(paragraph)
     return "\n\n".join(paragraphs)
 
@@ -234,6 +247,14 @@ def compose_template(payload, catalog, request_type=None):
             paragraph += " " + " ".join(f"[Source {source_id}]" for source_id in missing)
         paragraphs.append(paragraph)
     prose = bind_cited_metadata("\n\n".join(paragraphs), catalog)
+    # Remove duplicate units only for tokens that already render a percent sign.
+    for entry in catalog.values():
+        for match in FIELD_REFERENCE.finditer(entry['template']):
+            token = match.group()
+            if '|percent}}' in token or (entry.get('reported_number')
+                    and str(entry['fields']['value']).endswith('%')):
+                prose = re.sub(r'\b(?:yüzde|percent)\s+' + re.escape(token), token, prose, flags=re.I)
+                prose = re.sub(re.escape(token) + r'\s+(?:percent|yüzde)\b', token, prose, flags=re.I)
 
     if request_type == "comparison" and not any(
         character.isalpha() for character in SOURCE_REFERENCE.sub("", prose)
@@ -340,6 +361,14 @@ def resolve_source_field(evidence, source_id, path, percent=False):
     if not 1 <= source_id <= len(evidence):
         raise ValueError(f"Unknown source: {source_id}")
 
+    literal = re.fullmatch(r'report_numbers/([0-9]+)/value', path)
+    if literal:
+        values = report_number_literals(evidence[source_id - 1])
+        index = int(literal[1])
+        if percent or index >= len(values):
+            raise ValueError('Unknown report number or unsupported numeric transformation')
+        return values[index]
+
     value = evidence[source_id - 1]["result"]
     parts = path.split("/")
     parent = None
@@ -379,6 +408,12 @@ def cited_report_texts(evidence):
         elif source["tool"] == "get_filing_section":
             reports[source["source_id"]] = [result.get("text", "")]
     return reports
+
+
+def report_number_literals(source):
+    """Unique exact numeric strings; never infer units, round, or parse table columns."""
+    passages = cited_report_texts([source]).get(source['source_id'], [])
+    return list(dict.fromkeys(match.group() for text in passages for match in REPORT_NUMBER.finditer(text)))
 
 
 def mask_cited_identifiers(prose, evidence):

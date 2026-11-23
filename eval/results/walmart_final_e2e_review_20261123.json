@@ -1,0 +1,44 @@
+{
+  "artifact": "eval/results/walmart_final_e2e_20261123T174950Z.json",
+  "autonomous_retrieval": true,
+  "elapsed_seconds": 194.16603466700326,
+  "verification": {
+    "supported": true,
+    "issues": [],
+    "evidence_supported": true,
+    "language_matches": true,
+    "answer_complete": true,
+    "status": "passed",
+    "stage": "grounding_and_language",
+    "deterministic_fields": "passed",
+    "method": "source_fields_and_llm_judge"
+  },
+  "coverage": {
+    "complete": false,
+    "gaps": [
+      "Gelirler için FY2025–FY2024 karşılaştırmalı büyüme/değişim hesabı eksik; iki dönemin gelir kayıtları mevcut, ancak soru dönemleri karşılaştırmayı istiyor.",
+      "FY2025 raporu talep edilen başlıklar için tüketici talebindeki gerçekleşmiş olumlu etkileri ve maliyet artışlarına karşı kullanılan stratejilerin brüt kâr marjı üzerindeki etkisini destekliyor. Ancak enflasyonun FY2025 sonuçlarına gerçekleşmiş etkisi ile tedarik maliyetlerinin gerçekleşmiş etkisi ve bunların parasal büyüklüklerinin ayrı raporlanıp raporlanmadığı mevcut metinde net değil. Bu nedenle raporun bu etkileri ayırıp ölçemediği veya etkilerin ayrı parasal tutarının bildirilmediği açıkça söylenemiyor."
+    ],
+    "status": "partial",
+    "repair_tasks_attempted": 1
+  },
+  "revision_count": 1,
+  "manual_checks": [
+    "FY2025 and FY2024 revenue, margins and exact period dates match tool records",
+    "Separate inflation/pricing, demand/sales volumes, costs/profit margins and risk queries executed",
+    "No current Fed/BLS calls used for historical question",
+    "Narrative includes actual demand and currency disclosures; no fabricated numeric inflation attribution"
+  ],
+  "remaining_issues": [
+    "Coverage incorrectly requires a revenue growth calculation when the user only requests comparison",
+    "Inflation and supply-cost realized monetary effects remain partially unsupported by retrieved text"
+  ],
+  "docker": {
+    "build": "passed",
+    "health": "healthy",
+    "prompt_hash_matches_host": true,
+    "http_home_and_research_api": 200,
+    "visual_check": "not performed: browser access host unavailable"
+  },
+  "git": "No commit or push performed"
+}

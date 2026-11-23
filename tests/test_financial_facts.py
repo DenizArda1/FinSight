@@ -1,6 +1,7 @@
 import unittest
 
 from src.data.explore_facts import (
+    derive_parent_net_income,
     filter_annual_records,
     group_records_by_period,
     merge_metric_tags,
@@ -27,6 +28,21 @@ class FinancialFactTests(unittest.TestCase):
             "val": 100,
             "accn": "original",
         }
+
+    def test_parent_income_requires_explicit_same_filing_inputs(self):
+        profit = dict(self.annual_record, val=8882)
+        minority = dict(self.annual_record, val=-2)
+        facts = {'ProfitLoss': {'units': {'USD': [profit]}},
+                 'NetIncomeLossAttributableToNoncontrollingInterest': {'units': {'USD': [minority]}}}
+        derived = derive_parent_net_income(facts, self.selection, 'USD')
+        rows = build_metric_rows(1, 'net_income', derived, 'USD')
+        self.assertEqual(rows[0]['value'], 8884)
+        self.assertIsNone(rows[0]['tag'])
+        self.assertEqual(len(rows[0]['derivation']['inputs']), 2)
+        for change in ({'accn': 'other'}, {'start': '2023-01-02'}, {'form': '10-Q'}):
+            facts['NetIncomeLossAttributableToNoncontrollingInterest']['units']['USD'] = [dict(minority, **change)]
+            self.assertEqual(derive_parent_net_income(facts, self.selection, 'USD'), {})
+        self.assertEqual(derive_parent_net_income({'ProfitLoss': facts['ProfitLoss']}, self.selection, 'USD'), {})
 
     def test_annual_filter_rejects_quarterly_and_instant_records(self):
         amendment = {**self.annual_record, "form": "10-K/A"}

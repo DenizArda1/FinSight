@@ -5,10 +5,84 @@ from src.llm.prompts import prompt_fact_catalog
 from src.verification.agent_answer import (
     build_fact_catalog, compose_template, render_agent_template, request_answer_check,
     finalize_agent_answer,
+    report_number_literals,
 )
 
 
 class FieldReferenceTests(unittest.TestCase):
+    def test_percentage_units_are_not_duplicated(self):
+        evidence = [{'source_id': 1, 'tool': 'get_filing_section',
+                     'result': {'text': 'Growth 12%. Sales 50.'}}]
+        catalog = build_fact_catalog(evidence)
+        text = 'Büyüme yüzde {{1:report_numbers/0/value}}; pay yüzde {{1:report_numbers/1/value}}.'
+        answer = render_agent_template(compose_template({'kind': 'answer', 'text': text, 'facts': []}, catalog), evidence)
+        self.assertIn('Büyüme 12%', answer)
+        self.assertIn('pay yüzde 50', answer)
+
+    def test_start_date_exposed_and_calendar_year_bound_only_as_year(self):
+        evidence = [{'source_id': 1, 'tool': 'get_company_facts', 'result': {'records': [{
+            'metric': 'revenue', 'value': 100, 'unit': 'USD', 'fiscal_year': 2025,
+            'start': '2024-02-01', 'end': '2025-01-31'}]}}]
+        catalog = build_fact_catalog(evidence)
+        self.assertTrue(any('start' in row['inline_fields'] for row in prompt_fact_catalog(catalog).values()))
+        text = '2025 takvim yılıyla aynı değildir. [Source 1]'
+        rendered = render_agent_template(compose_template({'kind': 'answer', 'text': text, 'facts': []}, catalog), evidence)
+        self.assertIn('2025 takvim yılı', rendered)
+        with self.assertRaises(ValueError):
+            render_agent_template(compose_template({'kind': 'answer', 'text': '2025 USD. [Source 1]', 'facts': []}, catalog), evidence)
+
+    def test_report_amounts_and_guidance_use_exact_source_tokens(self):
+        evidence = [{'source_id': 1, 'tool': 'search_company_updates', 'result': {'matches': [{
+            'text': 'Three months: net sales (millions) 180,169 and 201,944. '
+                    'Guidance: $240.0 to $247.0 billion, growth 12% to 16%.',
+            'metadata': {'form': '8-K'},
+        }]}}]
+        catalog = build_fact_catalog(evidence)
+        prompt = prompt_fact_catalog(catalog)
+        tokens = {entry['reported_number']: entry['inline_fields']['value']
+                  for entry in prompt.values() if 'reported_number' in entry}
+        text = (f"Sales were {tokens['201,944']} million dollars. "
+                f"Outlook is {tokens['240.0']} to {tokens['247.0']} billion dollars; "
+                f"expected growth {tokens['12%']} to {tokens['16%']}.")
+        answer = render_agent_template(compose_template(
+            {'kind': 'answer', 'text': text, 'facts': []}, catalog), evidence)
+        self.assertEqual(answer, 'Sales were 201,944 million dollars. Outlook is 240.0 to 247.0 '
+                                'billion dollars; expected growth 12% to 16%. [Source 1]')
+        self.assertEqual(evidence[0]['result']['matches'][0]['metadata'], {'form': '8-K'})
+
+    def test_report_numbers_do_not_allow_free_values_rounding_or_percent_conversion(self):
+        evidence = [{'source_id': 1, 'tool': 'get_filing_section',
+                     'result': {'text': 'Sales were 201,944 million. Growth 12%.'}}]
+        catalog = build_fact_catalog(evidence)
+        for text in ('Sales 201,944 million. [Source 1]', 'Sales 201.9 billion. [Source 1]',
+                     '{{1:report_numbers/99/value}} [Source 1]',
+                     '{{1:report_numbers/0/value|percent}} [Source 1]'):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                render_agent_template(compose_template(
+                    {'kind': 'answer', 'text': text, 'facts': []}, catalog), evidence)
+
+    def test_report_number_uses_visible_context_not_hidden_or_omitted_text(self):
+        source = {'source_id': 1, 'tool': 'search_filings', 'result': {'matches': [{
+            'text': '999', 'context': {'text': 'Loss (703), change -2.5%, product H20. 703.'},
+            'metadata': {},
+        }]}}
+        self.assertEqual(report_number_literals(source), ['(703)', '-2.5%', '703'])
+        source['content_omitted'] = True
+        self.assertEqual(report_number_literals(source), [])
+        with self.assertRaises(ValueError):
+            render_agent_template({'kind': 'answer', 'template': '{{1:report_numbers/0/value}} [Source 1]'}, [source])
+        source.pop('content_omitted')
+        source['tool'] = 'get_company_facts'
+        self.assertEqual(report_number_literals(source), [])
+
+    def test_report_number_cannot_be_taken_from_another_source(self):
+        evidence = [
+            {'source_id': 1, 'tool': 'get_filing_section', 'result': {'text': 'Revenue 100.'}},
+            {'source_id': 2, 'tool': 'get_filing_section', 'result': {'text': 'No figures.'}},
+        ]
+        with self.assertRaises(ValueError):
+            render_agent_template({'kind': 'answer', 'template': '{{2:report_numbers/0/value}} [Source 2]'}, evidence)
+
     def setUp(self):
         self.evidence = [{'source_id': 1, 'tool': 'compute_metrics', 'result': {
             'results': {'revenue_growth': [{'metric': 'revenue_growth', 'value': -0.02,
@@ -27,6 +101,14 @@ class FieldReferenceTests(unittest.TestCase):
         for text in ('Growth {{F99_value}}.', 'Growth {{F1_unknown}}.', 'Revenue 500 USD.'):
             with self.subTest(text=text), self.assertRaises(ValueError):
                 render_agent_template(compose_template({'kind': 'answer', 'text': text, 'facts': []}, self.catalog), self.evidence)
+
+    def test_ratio_percentage_unit_is_not_duplicated(self):
+        for text in ('Büyüme yüzde {{F1_value}}.', 'Growth {{F1_value}} percent.'):
+            rendered = render_agent_template(compose_template(
+                {'kind': 'answer', 'text': text, 'facts': []}, self.catalog), self.evidence)
+            self.assertIn('-2.00%', rendered)
+            self.assertNotIn('yüzde', rendered)
+            self.assertNotIn('percent', rendered)
 
     @patch('src.verification.agent_answer.generate_response')
     def test_single_agent_uses_the_same_short_field_renderer(self, generate):

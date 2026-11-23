@@ -5,6 +5,20 @@ from src.verification.agent_answer import build_fact_catalog, compose_template, 
 
 
 class ReportingTests(unittest.TestCase):
+    def test_report_literals_are_not_financial_table_rows(self):
+        evidence = [
+            {'source_id': 1, 'tool': 'get_company_facts', 'result': {
+                'company': {'ticker': 'TEST'}, 'concept': 'revenue',
+                'records': [{'metric': 'revenue', 'value': 100, 'unit': 'USD'}]}},
+            {'source_id': 2, 'tool': 'get_filing_section', 'result': {
+                'text': 'Fiscal 2025. Sales 100 million, growth 12%. Page 42.'}},
+        ]
+        rows, returned_evidence = source_financial_rows({'evidence': evidence})
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]['Metrik'], 'revenue')
+        self.assertEqual(returned_evidence, evidence)
+        self.assertTrue(any(e.get('reported_number') for e in build_fact_catalog(evidence).values()))
+
     def setUp(self):
         self.result = {
             "answer": "AAPL revenue: 416161000000 USD [Source 1]",

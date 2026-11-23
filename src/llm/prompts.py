@@ -1,7 +1,7 @@
 import json
 import re
 from src.verification.evidence import evidence_for_prompt
-from src.verification.field_references import catalog_aliases
+from src.verification.field_references import REPORT_NUMBER, catalog_aliases
 
 
 FINANCIAL_MEANING_RULES = (
@@ -13,15 +13,18 @@ FINANCIAL_MEANING_RULES = (
 
 
 def prompt_fact_catalog(catalog):
-    """Describe each fact once; expose only fields useful in natural prose."""
     visible = {}
     aliases = {reference: alias for alias, reference in catalog_aliases(catalog).items()}
     for key, entry in catalog.items():
         fields = entry["fields"]
+        if entry.get('reported_number'):
+            token = re.search(r'\{\{[^{}]+\}\}', entry['template']).group()
+            visible[key] = {'reported_number': fields['value'], 'inline_fields': {'value': aliases[token]}}
+            continue
         references = {}
         for token in re.findall(r"\{\{[^{}]+\}\}", entry["template"]):
             field = token.split(":", 1)[1].removesuffix("}}").rsplit("/", 1)[-1].split("|", 1)[0]
-            if field in {"value", "unit", "fiscal_year", "end", "report_date", "section"} or key.endswith(":company") or entry.get("availability"):
+            if field in {"value", "unit", "fiscal_year", "start", "end", "report_date", "section"} or key.endswith(":company") or entry.get("availability"):
                 references[field] = aliases[token]
         visible[key] = {
             "fields": {name: value for name, value in fields.items()
@@ -29,6 +32,28 @@ def prompt_fact_catalog(catalog):
             "inline_fields": references,
         }
     return visible
+
+
+def writer_evidence(evidence, catalog):
+    sources = evidence_for_prompt(evidence)
+    aliases = {reference: alias for alias, reference in catalog_aliases(catalog).items()}
+    tokens = {}
+    for entry in catalog.values():
+        if entry.get('reported_number'):
+            reference = re.search(r'\{\{[^{}]+\}\}', entry['template']).group()
+            tokens.setdefault(entry['source_id'], {})[entry['fields']['value']] = aliases[reference]
+    for source in sources:
+        fields = tokens.get(source['source_id'], {})
+        if not fields:
+            continue
+        result = source['result']
+        passages = result.get('matches', []) if 'matches' in result else [result]
+        for passage in passages:
+            if isinstance(passage.get('text'), str):
+                passage['text'] = REPORT_NUMBER.sub(
+                    lambda match: match.group() + (' [' + fields[match.group()] + ']'
+                                                   if match.group() in fields else ''), passage['text'])
+    return sources
 
 
 def build_agent_answer_messages(question, evidence, catalog, feedback=None, request_type=None, retrieval_limitations=None):
@@ -55,11 +80,22 @@ def build_agent_answer_messages(question, evidence, catalog, feedback=None, requ
         "Write natural prose in text. Insert financial values using the short tokens in fact_catalog "
         "inline_fields, for example {{F1_value}} {{F1_unit}}. Copy tokens exactly; never invent IDs. "
         "Tokens already include the correct numeric format, including percentages where appropriate. "
+        "Catalog entries marked reported_number are exact numeric strings from that source excerpt. "
+        "Use their tokens for quoted report amounts, percentages and outlook ranges; preserve the source's "
+        "units and scale (millions vs billions), table column, period, and actual-versus-forecast meaning. "
+        "They are not computed metrics. Do not round, rescale, calculate differences or translate numeric separators. "
+        "Report excerpts show each number followed by its field token in brackets. Copy the token "
+        "beside the correct table cell, not a similar number from another row. For consolidated totals, "
+        "select the total row, never a geographic or business segment row. Preserve column headers. "
+        "Some table cells contain a bare number while the header supplies the unit. For a percentage token "
+        "without a percent sign, write the unit in words, e.g. 'yüzde {{F1_value}}' or '{{F1_value}} percent'. "
+        "Never write a bare growth rate such as 'growth was 12'. Do not add a second unit if the token already contains it. "
         "The application replaces them with source values and attaches citations. You do not need "
         "to write JSON paths, perform calculations, or choose number formats. "
         "Use the catalog's year and date tokens for reporting periods. Comparative FY labels "
         "explicitly present in a cited report may remain in prose. If an excerpt has a figure "
         "without a catalog token, describe it qualitatively instead of inventing a token or value. "
+        "Never expose catalog, token or validation implementation details in the user-facing answer. "
         "Identify each distinct fiscal period with its fiscal year and period end once. "
         "A full date belongs only to its own period. Never describe one period-end date as the company's "
         "recurring fiscal calendar or the end date of all compared years. "
@@ -103,7 +139,7 @@ def build_agent_answer_messages(question, evidence, catalog, feedback=None, requ
     messages = [
         {"role": "system", "content": system},
         {"role": "user", "content": json.dumps({
-            "tool_evidence": evidence_for_prompt(evidence),
+            "tool_evidence": writer_evidence(evidence, catalog),
             "retrieval_limitations": retrieval_limitations or [],
             "fact_catalog": prompt_fact_catalog(catalog),
             "question": question,
@@ -124,7 +160,9 @@ def build_agent_answer_messages(question, evidence, catalog, feedback=None, requ
             "Keep the original question's language. For a source-support error, remove the unsupported "
             "claim or replace it with a narrower statement directly supported by the cited excerpt. "
             "Merely rephrasing the same unsupported claim does not fix it. Do not add new details "
-            "to compensate for removed claims. Review feedback: "
+            "to compensate for removed claims. Feedback may quote rendered numbers: do not copy those "
+            "numbers into prose. Find their exact tokens in the annotated source table instead. "
+            "Keep unaffected text and tokens unchanged. Review feedback: "
             + json.dumps(feedback["issues"], ensure_ascii=False, allow_nan=False)
             + "\nOriginal question (keep its language): " + question
         )})
@@ -148,6 +186,10 @@ def build_agent_verification_messages(question, answer, evidence, kind, prose, p
         " within the tool's declared recent-submissions scope; an older retrieved excerpt does not. Do not "
         "require the filing prose itself to say 'latest'. check that the prose interprets those fields "
         'correctly. For narrative claims check actor, scope, cause, consequence, negation and uncertainty. '
+        'Report-number fields copy literal strings, not verified metric interpretations: check their table '
+        'column, units, scale, period and actual-versus-forecast meaning against the cited passage. '
+        'Reject a reported percentage presented as a bare number without a percent sign or the word '
+        'percent/yüzde, even when the number itself is correctly copied. '
         'Financial records alone cannot establish business-risk or macroeconomic effects. Do not infer a '
         'currency direction from exchange-rate fluctuations, an actual loss from a possible risk, or '
         'profitability from individual cost rankings. Accept faithful paraphrases; do not require the '
@@ -267,6 +309,9 @@ def build_planner_messages(question):
         "Use get_company_facts for revenue, cost_of_revenue, operating_expenses or operating_income; "
         "use compute_metrics for operating_margin, gross_margin, net_margin, revenue_growth or revenue_cagr. "
         "Margin calculations require compute_metrics, not just income records. "
+        "Net income is not net_margin. For a historical revenue and net margin comparison, use one "
+        "financial task: get_company_facts revenue and compute_metrics net_margin, both with years=2 "
+        "and the requested fiscal_year. Preserve start/end dates for both periods. "
         "Compare companies in a common period with compare_companies when requested. "
         "Set years=2 for current/prior revenue or margin comparisons, years=3 for comparing growth rates. "
         "A requested three-year growth trend uses years=3; CAGR uses the requested source-year count. "
@@ -295,6 +340,11 @@ def build_planner_messages(question):
         "financial_data must never have filing_scope=recent; quarterly numbers come from filing_rag."
     )
     examples = [
+        ("Company A'nın 2025 mali yılı gelirini ve net kâr marjını önceki yılla karşılaştır. Dönem başlangıç/bitişlerini ve takvim yılı farkını belirt. O yılın raporundan makro etkileri açıkla; bugünün verilerini kullanma.",
+         {"request_type": "mixed", "tasks": [
+             {"id": "historical_financials", "agent": "financial_data", "instruction": "For Company A, retrieve revenue using get_company_facts and calculate net_margin using compute_metrics, both with fiscal_year=2025 years=2. Preserve start/end dates and fiscal labels from these records; no separate date search is needed.", "filing_scope": "annual", "years": 2, "fiscal_year": 2025},
+             {"id": "historical_effects", "agent": "filing_rag", "instruction": "For Company A FY2025, use separate Item 7 searches for inflation/pricing, demand/sales volumes, and costs/profit margins; use business-specific terms from the report. Search Item 1A for relevant risks. Preserve measurement limitations. No current Fed/BLS data.", "filing_scope": "annual", "years": 1, "fiscal_year": 2025},
+         ]}),
         ("Company A'nın son çeyrek satışları geçen yılın aynı çeyreğine göre nasıl değişti? Gelecek çeyrek beklentisiyle değerlendir.",
          {"request_type": "filing", "tasks": [
              {"id": "quarter_and_outlook", "agent": "filing_rag", "instruction": "For Company A, search latest quarterly sales using search_company_updates form=10-Q limit=1. Separately search next-quarter sales outlook in earnings-release exhibits using form=8-K limit=4. Keep quarterly and year-to-date columns separate and distinguish actual results from outlook. Do not use annual compute_metrics for quarterly calculations.", "filing_scope": "recent", "years": 1, "fiscal_year": None},
@@ -391,7 +441,17 @@ def build_specialist_messages(task):
             "Section guide: Item 1 describes the business/products/segments; Item 1A covers risks; "
             "Item 7 discusses financial performance and macroeconomic effects. For macro effects "
             "start with Item 7, adding Item 1A for potential risks. Do not use Item 1 alone. "
+            "For multiple requested economic effects, do not stop at a combined macro query: general "
+            "risk language is not evidence of actual results. Search each missing topic separately in Item 7. "
+            "For demand, use sales/revenue volume, transactions, orders or pricing terms appropriate to "
+            "the business; for costs, use gross profit, input costs, freight or supply chain terms. "
+            "Use the retrieved report's own vocabulary. Preserve whether a result concerns a segment or "
+            "the consolidated company, and never infer inflation caused volume growth. "
             "Use search_filings for targeted evidence. "
+            "For causes of annual changes, search Item 7 for consolidated sales/revenue and operating "
+            "profit increases/decreases; use separate focused queries for requested risk topics in Item 1A. "
+            "A single segment excerpt does not explain consolidated results. Refine overly broad queries "
+            "with terminology from the retrieved report before declaring evidence missing. "
             "A request to summarize important risks is a targeted evidence task, not a request "
             "for the entire section. Use relevant search excerpts and report the limited scope. "
 

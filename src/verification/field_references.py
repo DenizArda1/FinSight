@@ -1,6 +1,11 @@
 """One catalog-backed field contract for all answer-generation paths."""
 import re
 
+REPORT_NUMBER = re.compile(
+    r"(?<![\w.,])(?:\([-−+]?\d+(?:,\d{3})*(?:\.\d+)?(?:[ \t]*%)?\)"
+    r"|[-−+]?\d+(?:,\d{3})*(?:\.\d+)?(?:[ \t]*%)?)(?!\w|[.,]\d)"
+)
+
 FIELD_REFERENCE = re.compile(r"\{\{([1-9][0-9]*):([A-Za-z0-9_/-]+)(\|percent)?\}\}")
 
 

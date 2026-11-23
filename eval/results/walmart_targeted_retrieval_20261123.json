@@ -1,0 +1,326 @@
+[
+  {
+    "company": {
+      "ticker": "WMT",
+      "name": "Walmart Inc.",
+      "cik": "0000104169"
+    },
+    "query": "inflation consumer demand supply costs effects",
+    "fiscal_year": 2025,
+    "section": "Item 7",
+    "matches": [
+      {
+        "chunk_id": "0000104169-25-000021:item_7:5",
+        "text": "•In August 2024, we sold our equity investment in JD.com for net proceeds of $3.6 billion. Refer to Note 8.\nWe operate in a highly competitive omni-channel retail industry in all of the markets we serve. We face strong sales competition from other discount, department, drug, dollar, variety and specialty stores, warehouse clubs and supermarkets, as well as eCommerce, health and wellness, financial services, advertising and data service businesses. Many of these competitors are national, regional or international chains or have a national or international omni-channel or eCommerce presence. We compete with a number of companies for attracting and retaining quality associates. We, along with other retail companies, are influenced by a number of factors including, but not limited to: catastrophic events, weather and other risks related to climate change, global health epidemics and pandemics, competitive pressures, consumer disposable income, consumer debt levels and buying patterns, consumer credit availability, disruptions in supply chain, inventory management, cost and availability of goods, currency exchange rate fluctuations, customer preferences, inflation, deflation, fuel and energy prices, general economic\n34",
+        "metadata": {
+          "filed": "2025-03-14",
+          "section": "Item 7",
+          "ticker": "WMT",
+          "end": 177081,
+          "section_title": "Management's Discussion and Analysis",
+          "amendment_note": "Original annual filing section.",
+          "form": "10-K",
+          "section_start": 171050,
+          "start": 175848,
+          "report_date": "2025-01-31",
+          "section_end": 231074,
+          "cik": "0000104169",
+          "accession_number": "0000104169-25-000021",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/104169/000010416925000021/wmt-20250131.htm",
+          "fiscal_year": 2025
+        },
+        "distance": 0.49413734674453735,
+        "score": 0.032266458495966696,
+        "ranks": {
+          "dense": 3,
+          "bm25": 1
+        },
+        "context": {
+          "text": "following highlights over the last three years:\n•In November 2022, we completed the buyout of the noncontrolling interest shareholders of our Massmart subsidiary (Refer to Note 3) and in December 2022, we exited operations in certain countries in Africa.\n•In December 2022, we increased our ownership in PhonePe as part of the separation from our majority-owned Flipkart subsidiary. Refer to Note 3.\n•In August 2024, we sold our equity investment in JD.com for net proceeds of $3.6 billion. Refer to Note 8.\nWe operate in a highly competitive omni-channel retail industry in all of the markets we serve. We face strong sales competition from other discount, department, drug, dollar, variety and specialty stores, warehouse clubs and supermarkets, as well as eCommerce, health and wellness, financial services, advertising and data service businesses. Many of these competitors are national, regional or international chains or have a national or international omni-channel or eCommerce presence. We compete with a number of companies for attracting and retaining quality associates. We, along with other retail companies, are influenced by a number of factors including, but not limited to: catastrophic events, weather and other risks related to climate change, global health epidemics and pandemics, competitive pressures, consumer disposable income, consumer debt levels and buying patterns, consumer credit availability, disruptions in supply chain, inventory management, cost and availability of goods, currency exchange rate fluctuations, customer preferences, inflation, deflation, fuel and energy prices, general economic\n34\nconditions, insurance costs, interest rates, labor availability and costs, tax rates, the imposition of tariffs, cybersecurity attacks and unemployment. Further information on the factors that can affect our operating results and on certain risks to our Company and an investment in its securities can be found herein under \"Item 1A. Risk Factors.\"\nWe are committed to helping customers save money a",
+          "start": 175448,
+          "end": 177481
+        }
+      },
+      {
+        "chunk_id": "0000104169-25-000021:item_7:6",
+        "text": "34\nconditions, insurance costs, interest rates, labor availability and costs, tax rates, the imposition of tariffs, cybersecurity attacks and unemployment. Further information on the factors that can affect our operating results and on certain risks to our Company and an investment in its securities can be found herein under \"Item 1A. Risk Factors.\"\nWe are committed to helping customers save money and live better through everyday low prices, supported by everyday low\ncosts. Our net sales and gross profit margin are influenced in part by our pricing and merchandising strategies in response to cost increases. Those pricing strategies include but are not limited to: absorbing cost increases instead of passing those cost increases on to our customers and members; reducing prices in certain merchandise categories; focusing on opening price points for certain food categories; and when necessary, passing cost increases on to our customers and members. Merchandising strategies include, but are not limited to: working with our suppliers to reduce product costs and share in absorbing cost increases; focusing on private label brands and smaller pack sizes; earlier-than-usual purchasing and in greater volumes or moderating purchasing in certain categories; and securing ocean carrier and container capacity. These strategies have and may continue to impact gross profit as a percentage of net sales.",
+        "metadata": {
+          "section": "Item 7",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/104169/000010416925000021/wmt-20250131.htm",
+          "report_date": "2025-01-31",
+          "fiscal_year": 2025,
+          "filed": "2025-03-14",
+          "end": 178486,
+          "accession_number": "0000104169-25-000021",
+          "form": "10-K",
+          "section_start": 171050,
+          "cik": "0000104169",
+          "start": 177079,
+          "ticker": "WMT",
+          "section_end": 231074,
+          "section_title": "Management's Discussion and Analysis",
+          "amendment_note": "Original annual filing section."
+        },
+        "distance": 0.44697457551956177,
+        "score": 0.032266458495966696,
+        "ranks": {
+          "dense": 1,
+          "bm25": 3
+        },
+        "context": {
+          "text": "risks related to climate change, global health epidemics and pandemics, competitive pressures, consumer disposable income, consumer debt levels and buying patterns, consumer credit availability, disruptions in supply chain, inventory management, cost and availability of goods, currency exchange rate fluctuations, customer preferences, inflation, deflation, fuel and energy prices, general economic\n34\nconditions, insurance costs, interest rates, labor availability and costs, tax rates, the imposition of tariffs, cybersecurity attacks and unemployment. Further information on the factors that can affect our operating results and on certain risks to our Company and an investment in its securities can be found herein under \"Item 1A. Risk Factors.\"\nWe are committed to helping customers save money and live better through everyday low prices, supported by everyday low\ncosts. Our net sales and gross profit margin are influenced in part by our pricing and merchandising strategies in response to cost increases. Those pricing strategies include but are not limited to: absorbing cost increases instead of passing those cost increases on to our customers and members; reducing prices in certain merchandise categories; focusing on opening price points for certain food categories; and when necessary, passing cost increases on to our customers and members. Merchandising strategies include, but are not limited to: working with our suppliers to reduce product costs and share in absorbing cost increases; focusing on private label brands and smaller pack sizes; earlier-than-usual purchasing and in greater volumes or moderating purchasing in certain categories; and securing ocean carrier and container capacity. These strategies have and may continue to impact gross profit as a percentage of net sales.\nWe expect continued uncertainty in our business and the global economy due to inflationary trends; tariffs and trade restrictions; fluctuations in global currencies; swings in macroeconomic conditions and their effect on consumer confidence; volatility in employment trends; and supply chain pressures, any of which may impact our results. For a detailed discussion on results of operations by repor",
+          "start": 176679,
+          "end": 178886
+        }
+      },
+      {
+        "chunk_id": "0000104169-25-000021:item_7:7",
+        "text": "We expect continued uncertainty in our business and the global economy due to inflationary trends; tariffs and trade restrictions; fluctuations in global currencies; swings in macroeconomic conditions and their effect on consumer confidence; volatility in employment trends; and supply chain pressures, any of which may impact our results. For a detailed discussion on results of operations by reportable segment, refer to \"Results of Operations\" below.\nCompany Performance Metrics\nWe are committed to helping customers save money and live better through everyday low prices, supported by everyday low costs. At times, we adjust our business strategies to maintain and strengthen our competitive positions in the countries in which we operate. We define our financial priorities as follows:\n•Growth - serve customers through a seamless omni-channel experience;\n•Margin - improve our operating income margin through productivity initiatives as well as category and business mix; and\n•Returns - improve our Return on Investment through margin improvement and disciplined capital spend.\nGrowth\nOur objective of prioritizing growth means we will focus on serving customers and members however they want to shop through our omni-channel business model. This includes increasing comparable store and club sales through increasing membership at Sam's Club U.S. and through Walmart+, accelerating eCommerce sales growth and expansion of omni-channel initiatives that complement our strategy.",
+        "metadata": {
+          "accession_number": "0000104169-25-000021",
+          "section_end": 231074,
+          "start": 178487,
+          "section_start": 171050,
+          "section_title": "Management's Discussion and Analysis",
+          "report_date": "2025-01-31",
+          "section": "Item 7",
+          "ticker": "WMT",
+          "filed": "2025-03-14",
+          "amendment_note": "Original annual filing section.",
+          "end": 179970,
+          "form": "10-K",
+          "fiscal_year": 2025,
+          "source_url": "https://www.sec.gov/Archives/edgar/data/104169/000010416925000021/wmt-20250131.htm",
+          "cik": "0000104169"
+        },
+        "distance": 0.5185073614120483,
+        "score": 0.030621785881252923,
+        "ranks": {
+          "dense": 9,
+          "bm25": 2
+        },
+        "context": {
+          "text": "ited to: working with our suppliers to reduce product costs and share in absorbing cost increases; focusing on private label brands and smaller pack sizes; earlier-than-usual purchasing and in greater volumes or moderating purchasing in certain categories; and securing ocean carrier and container capacity. These strategies have and may continue to impact gross profit as a percentage of net sales.\nWe expect continued uncertainty in our business and the global economy due to inflationary trends; tariffs and trade restrictions; fluctuations in global currencies; swings in macroeconomic conditions and their effect on consumer confidence; volatility in employment trends; and supply chain pressures, any of which may impact our results. For a detailed discussion on results of operations by reportable segment, refer to \"Results of Operations\" below.\nCompany Performance Metrics\nWe are committed to helping customers save money and live better through everyday low prices, supported by everyday low costs. At times, we adjust our business strategies to maintain and strengthen our competitive positions in the countries in which we operate. We define our financial priorities as follows:\n•Growth - serve customers through a seamless omni-channel experience;\n•Margin - improve our operating income margin through productivity initiatives as well as category and business mix; and\n•Returns - improve our Return on Investment through margin improvement and disciplined capital spend.\nGrowth\nOur objective of prioritizing growth means we will focus on serving customers and members however they want to shop through our omni-channel business model. This includes increasing comparable store and club sales through increasing membership at Sam's Club U.S. and through Walmart+, accelerating eCommerce sales growth and expansion of omni-channel initiatives that complement our strategy.\nComparable sales is a metric that indicates the performance of our existing stores and clubs by measuring the change in sales for such stores and clubs, including eCommerce sales, for a particular period over the corresponding period in the previous year. The retail industry generally reports comparable sales using the retail calendar (also known as the 4-5-4 calendar). To be consistent with the ",
+          "start": 178087,
+          "end": 180370
+        }
+      }
+    ]
+  },
+  {
+    "company": {
+      "ticker": "WMT",
+      "name": "Walmart Inc.",
+      "cik": "0000104169"
+    },
+    "query": "net sales growth transactions unit volumes consumer demand",
+    "fiscal_year": 2025,
+    "section": "Item 7",
+    "matches": [
+      {
+        "chunk_id": "0000104169-25-000021:item_7:28",
+        "text": "Operating expenses\n\t\t22.6 \t%\t\t22.2 \t%\t\t22.1 \t%\n\tOperating income\t\t5.2 \t%\t\t5.0 \t%\t\t4.9 \t%\n\tUnit counts at period end\t\t4,605\t\t4,615\t\t4,717\n\tRetail square feet at period end\t\t698\t\t699\t\t702\nNet sales for the Walmart U.S. segment increased $20.6 billion or 4.7% and $21.3 billion or 5.1% for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. The increases in net sales were primarily due to increases in comparable sales of 4.8% and 5.5% for fiscal 2025 and 2024, respectively. Comparable sales in fiscal 2025 were driven by growth in transactions and unit volumes, with strong sales in grocery and health and wellness. Comparable sales in fiscal 2024 were driven by growth in transactions combined with growth in average ticket, including strong sales in grocery and health and wellness. Walmart U.S. eCommerce sales positively contributed approximately 2.9% and 2.6% to comparable sales for fiscal 2025 and 2024, respectively, which was primarily driven by store-fulfilled pickup and delivery.\nMembership and other income increased $0.6 billion and $0.1 billion for fiscal 2025 and fiscal 2024, primarily driven by growth in membership fee income from Walmart+ and recycling income.",
+        "metadata": {
+          "section_start": 171050,
+          "section": "Item 7",
+          "section_title": "Management's Discussion and Analysis",
+          "end": 201700,
+          "source_url": "https://www.sec.gov/Archives/edgar/data/104169/000010416925000021/wmt-20250131.htm",
+          "cik": "0000104169",
+          "ticker": "WMT",
+          "start": 200492,
+          "fiscal_year": 2025,
+          "amendment_note": "Original annual filing section.",
+          "report_date": "2025-01-31",
+          "accession_number": "0000104169-25-000021",
+          "form": "10-K",
+          "filed": "2025-03-14",
+          "section_end": 231074
+        },
+        "distance": 0.40528404712677,
+        "score": 0.03252247488101534,
+        "ranks": {
+          "dense": 1,
+          "bm25": 2
+        },
+        "context": {
+          "text": "ntage change from comparable period\t\t4.7 \t%\t\t5.1 \t%\t\t6.9 \t%\n\tCalendar comparable sales increase\t\t4.8 \t%\t\t5.5 \t%\t\t7.0 \t%\nMembership and other income\n\t\t$\t2,594 \t\t\t$\t1,985 \t\t\t$\t1,845 \t\n\tGross profit\t\t125,964 \t\t\t118,254 \t\t\t111,748 \t\nOperating expenses\n\t\t104,676 \t\t\t98,085 \t\t\t92,973 \t\n\tOperating income\t\t23,882 \t\t\t22,154 \t\t\t20,620 \t\n\tPercentage of net sales\t\t\t\t\t\t\n\tGross profit\t\t27.2 \t%\t\t26.8 \t%\t\t26.6 \t%\nOperating expenses\n\t\t22.6 \t%\t\t22.2 \t%\t\t22.1 \t%\n\tOperating income\t\t5.2 \t%\t\t5.0 \t%\t\t4.9 \t%\n\tUnit counts at period end\t\t4,605\t\t4,615\t\t4,717\n\tRetail square feet at period end\t\t698\t\t699\t\t702\nNet sales for the Walmart U.S. segment increased $20.6 billion or 4.7% and $21.3 billion or 5.1% for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. The increases in net sales were primarily due to increases in comparable sales of 4.8% and 5.5% for fiscal 2025 and 2024, respectively. Comparable sales in fiscal 2025 were driven by growth in transactions and unit volumes, with strong sales in grocery and health and wellness. Comparable sales in fiscal 2024 were driven by growth in transactions combined with growth in average ticket, including strong sales in grocery and health and wellness. Walmart U.S. eCommerce sales positively contributed approximately 2.9% and 2.6% to comparable sales for fiscal 2025 and 2024, respectively, which was primarily driven by store-fulfilled pickup and delivery.\nMembership and other income increased $0.6 billion and $0.1 billion for fiscal 2025 and fiscal 2024, primarily driven by growth in membership fee income from Walmart+ and recycling income.\nGross profit rate increased 47 and 20 basis points for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. The increase in fiscal 2025 gross profit rate was primarily driven by managing prices aligned to our competitive historic price gaps and growth in higher margin businesses, partially offset by mix shifts into lower margin merchandise categories. The increase in fis",
+          "start": 200092,
+          "end": 202100
+        }
+      },
+      {
+        "chunk_id": "0000104169-25-000021:item_7:23",
+        "text": "(2) Gross profit is defined as net sales less cost of sales. Operating expenses refers to operating, selling, general and administrative expenses.\nOur total revenues increased $32.9 billion or 5.1% and $36.8 billion or 6.0% for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. These increases in revenues were primarily due to increases in net sales, which increased $31.9 billion or 5.0% and $36.8 billion or 6.1% for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. The increases were primarily due to strong positive comparable sales across our U.S. segments and international markets, driven primarily by growth in transactions and unit volumes, which included strength in eCommerce as well as strong sales in grocery, and health and wellness. Net sales were negatively impacted by $3.2 billion and positively impacted by $3.0 billion of fluctuations in currency exchange rates during fiscal 2025 and 2024, respectively. Membership and other income increased $1.0 billion and $0.1 billion for fiscal 2025 and fiscal 2024, primarily driven by growth in membership fee income globally.",
+        "metadata": {
+          "form": "10-K",
+          "accession_number": "0000104169-25-000021",
+          "section_start": 171050,
+          "start": 195555,
+          "section_end": 231074,
+          "section": "Item 7",
+          "ticker": "WMT",
+          "filed": "2025-03-14",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/104169/000010416925000021/wmt-20250131.htm",
+          "section_title": "Management's Discussion and Analysis",
+          "end": 196702,
+          "cik": "0000104169",
+          "amendment_note": "Original annual filing section.",
+          "report_date": "2025-01-31",
+          "fiscal_year": 2025
+        },
+        "distance": 0.40840721130371094,
+        "score": 0.031754032258064516,
+        "ranks": {
+          "dense": 2,
+          "bm25": 4
+        },
+        "context": {
+          "text": "s\n\t\t20.7 \t%\t\t20.4 \t%\t\t21.0 \t%\n\tOperating income\t\t4.4 \t%\t\t4.2 \t%\t\t3.4 \t%\nUnit counts at period end\n\t\t10,771 \t\t\t10,616 \t\t\t10,623 \t\nRetail square feet at period end\n\t\t1,053 \t\t\t1,053 \t\t\t1,056 \t\n(1) Membership and other income includes membership fees and other items such as rental and tenant income, recycling income, gift card breakage income, as well as other income from corporate campus facilities.\n(2) Gross profit is defined as net sales less cost of sales. Operating expenses refers to operating, selling, general and administrative expenses.\nOur total revenues increased $32.9 billion or 5.1% and $36.8 billion or 6.0% for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. These increases in revenues were primarily due to increases in net sales, which increased $31.9 billion or 5.0% and $36.8 billion or 6.1% for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. The increases were primarily due to strong positive comparable sales across our U.S. segments and international markets, driven primarily by growth in transactions and unit volumes, which included strength in eCommerce as well as strong sales in grocery, and health and wellness. Net sales were negatively impacted by $3.2 billion and positively impacted by $3.0 billion of fluctuations in currency exchange rates during fiscal 2025 and 2024, respectively. Membership and other income increased $1.0 billion and $0.1 billion for fiscal 2025 and fiscal 2024, primarily driven by growth in membership fee income globally.\nOur gross profit rate increased 40 and 27 basis points for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. The increases were primarily driven by the Walmart U.S. segment, due to managing prices aligned to our competitive historic price gaps, as well as growth in higher margin businesses globally, partially offset by mix shifts into lower margin merchandise categori",
+          "start": 195155,
+          "end": 197102
+        }
+      },
+      {
+        "chunk_id": "0000104169-25-000021:item_7:34",
+        "text": "Net sales for the Sam's Club U.S. segment increased $4.1 billion or 4.7% and $1.8 billion or 2.2% for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. The increases in net sales were primarily due to increases in comparable sales, including fuel, of 4.7% and 2.3% for fiscal 2025 and 2024, respectively. Comparable sales in fiscal 2025 were driven by growth in transactions and unit volumes, with strong sales in grocery and health and wellness. Comparable sales in fiscal 2024 were driven by growth in transactions and average ticket, including strong sales in grocery and health and wellness. Additionally, fiscal 2025 and 2024 growth was partially offset by lower fuel sales primarily due to lower market prices. Sam's Club U.S. eCommerce sales positively contributed approximately 2.3% and 1.7% to comparable sales for fiscal 2025 and 2024, respectively, which was primarily driven by club-fulfilled curbside pickup and delivery.\nMembership and other income increased 13.3% and 7.5% for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. For fiscal 2025 and 2024, the increases were primarily due to growth in membership base and Plus penetration. Fiscal 2025 and 2024 were also positively impacted by the expiration of a promotional offering offsetting membership fee increases during the fourth quarter of fiscal 2024.",
+        "metadata": {
+          "filed": "2025-03-14",
+          "amendment_note": "Original annual filing section.",
+          "form": "10-K",
+          "ticker": "WMT",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/104169/000010416925000021/wmt-20250131.htm",
+          "end": 208475,
+          "section_end": 231074,
+          "fiscal_year": 2025,
+          "cik": "0000104169",
+          "section_start": 171050,
+          "start": 207093,
+          "section_title": "Management's Discussion and Analysis",
+          "section": "Item 7",
+          "report_date": "2025-01-31",
+          "accession_number": "0000104169-25-000021"
+        },
+        "distance": 0.44545555114746094,
+        "score": 0.030798389007344232,
+        "ranks": {
+          "dense": 7,
+          "bm25": 3
+        },
+        "context": {
+          "text": " sales\t\t2.2 \t%\t\t2.2 \t%\t\t1.9 \t%\n(1) We believe the \"Excluding Fuel\" information is useful to investors because it permits investors to understand the effect of the Sam's Club U.S. segment's fuel sales on its results of operations, which are impacted by the volatility of fuel prices. Volatility in fuel prices may continue to impact the operating results of the Sam's Club U.S. segment in the future.\nNet sales for the Sam's Club U.S. segment increased $4.1 billion or 4.7% and $1.8 billion or 2.2% for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. The increases in net sales were primarily due to increases in comparable sales, including fuel, of 4.7% and 2.3% for fiscal 2025 and 2024, respectively. Comparable sales in fiscal 2025 were driven by growth in transactions and unit volumes, with strong sales in grocery and health and wellness. Comparable sales in fiscal 2024 were driven by growth in transactions and average ticket, including strong sales in grocery and health and wellness. Additionally, fiscal 2025 and 2024 growth was partially offset by lower fuel sales primarily due to lower market prices. Sam's Club U.S. eCommerce sales positively contributed approximately 2.3% and 1.7% to comparable sales for fiscal 2025 and 2024, respectively, which was primarily driven by club-fulfilled curbside pickup and delivery.\nMembership and other income increased 13.3% and 7.5% for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. For fiscal 2025 and 2024, the increases were primarily due to growth in membership base and Plus penetration. Fiscal 2025 and 2024 were also positively impacted by the expiration of a promotional offering offsetting membership fee increases during the fourth quarter of fiscal 2024.\nGross profit rate increased 37 and 55 basis points for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. For fiscal 2025, the increase in gross profit rate was primarily due to improved operational efficiencies related to merchandise flow and increased margins in fuel, partially offset by higher eCommerce fulfillment costs. For fiscal 2024, the increase in gross profi",
+          "start": 206693,
+          "end": 208875
+        }
+      }
+    ]
+  },
+  {
+    "company": {
+      "ticker": "WMT",
+      "name": "Walmart Inc.",
+      "cik": "0000104169"
+    },
+    "query": "gross profit margin merchandise costs transportation supply chain",
+    "fiscal_year": 2025,
+    "section": "Item 7",
+    "matches": [
+      {
+        "chunk_id": "0000104169-25-000021:item_7:6",
+        "text": "34\nconditions, insurance costs, interest rates, labor availability and costs, tax rates, the imposition of tariffs, cybersecurity attacks and unemployment. Further information on the factors that can affect our operating results and on certain risks to our Company and an investment in its securities can be found herein under \"Item 1A. Risk Factors.\"\nWe are committed to helping customers save money and live better through everyday low prices, supported by everyday low\ncosts. Our net sales and gross profit margin are influenced in part by our pricing and merchandising strategies in response to cost increases. Those pricing strategies include but are not limited to: absorbing cost increases instead of passing those cost increases on to our customers and members; reducing prices in certain merchandise categories; focusing on opening price points for certain food categories; and when necessary, passing cost increases on to our customers and members. Merchandising strategies include, but are not limited to: working with our suppliers to reduce product costs and share in absorbing cost increases; focusing on private label brands and smaller pack sizes; earlier-than-usual purchasing and in greater volumes or moderating purchasing in certain categories; and securing ocean carrier and container capacity. These strategies have and may continue to impact gross profit as a percentage of net sales.",
+        "metadata": {
+          "section_end": 231074,
+          "ticker": "WMT",
+          "section_start": 171050,
+          "section": "Item 7",
+          "accession_number": "0000104169-25-000021",
+          "fiscal_year": 2025,
+          "filed": "2025-03-14",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/104169/000010416925000021/wmt-20250131.htm",
+          "section_title": "Management's Discussion and Analysis",
+          "end": 178486,
+          "amendment_note": "Original annual filing section.",
+          "form": "10-K",
+          "report_date": "2025-01-31",
+          "start": 177079,
+          "cik": "0000104169"
+        },
+        "distance": 0.38427186012268066,
+        "score": 0.03252247488101534,
+        "ranks": {
+          "dense": 2,
+          "bm25": 1
+        },
+        "context": {
+          "text": "risks related to climate change, global health epidemics and pandemics, competitive pressures, consumer disposable income, consumer debt levels and buying patterns, consumer credit availability, disruptions in supply chain, inventory management, cost and availability of goods, currency exchange rate fluctuations, customer preferences, inflation, deflation, fuel and energy prices, general economic\n34\nconditions, insurance costs, interest rates, labor availability and costs, tax rates, the imposition of tariffs, cybersecurity attacks and unemployment. Further information on the factors that can affect our operating results and on certain risks to our Company and an investment in its securities can be found herein under \"Item 1A. Risk Factors.\"\nWe are committed to helping customers save money and live better through everyday low prices, supported by everyday low\ncosts. Our net sales and gross profit margin are influenced in part by our pricing and merchandising strategies in response to cost increases. Those pricing strategies include but are not limited to: absorbing cost increases instead of passing those cost increases on to our customers and members; reducing prices in certain merchandise categories; focusing on opening price points for certain food categories; and when necessary, passing cost increases on to our customers and members. Merchandising strategies include, but are not limited to: working with our suppliers to reduce product costs and share in absorbing cost increases; focusing on private label brands and smaller pack sizes; earlier-than-usual purchasing and in greater volumes or moderating purchasing in certain categories; and securing ocean carrier and container capacity. These strategies have and may continue to impact gross profit as a percentage of net sales.\nWe expect continued uncertainty in our business and the global economy due to inflationary trends; tariffs and trade restrictions; fluctuations in global currencies; swings in macroeconomic conditions and their effect on consumer confidence; volatility in employment trends; and supply chain pressures, any of which may impact our results. For a detailed discussion on results of operations by repor",
+          "start": 176679,
+          "end": 178886
+        }
+      },
+      {
+        "chunk_id": "0000104169-25-000021:item_7:35",
+        "text": "Gross profit rate increased 37 and 55 basis points for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. For fiscal 2025, the increase in gross profit rate was primarily due to improved operational efficiencies related to merchandise flow and increased margins in fuel, partially offset by higher eCommerce fulfillment costs. For fiscal 2024, the increase in gross profit rate was primarily due to the lapping of elevated markdowns in the prior year. Additionally, fiscal 2025 and 2024 gross profit rates were partially offset by product mix shifts into lower margin categories.\nOperating expenses as a percentage of segment net sales increased 44 and 46 basis points for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. Fiscal 2025 operating expenses as a percentage of net sales increased primarily due to increased compensation related expenses, including associate wage investments and higher variable pay as a result of exceeding our planned performance, as well as elevated technology spend. Fiscal 2024 operating expenses as a percentage of net sales increased primarily due to lower fuel sales and elevated technology spend.\nAs a result of the factors discussed above, segment operating income increased $0.2 billion for both fiscal 2025 and 2024, respectively, when compared to the previous fiscal year.\n42\nLiquidity and Capital Resources\nLiquidity",
+        "metadata": {
+          "start": 208476,
+          "source_url": "https://www.sec.gov/Archives/edgar/data/104169/000010416925000021/wmt-20250131.htm",
+          "form": "10-K",
+          "section": "Item 7",
+          "ticker": "WMT",
+          "section_start": 171050,
+          "end": 209892,
+          "section_title": "Management's Discussion and Analysis",
+          "cik": "0000104169",
+          "amendment_note": "Original annual filing section.",
+          "report_date": "2025-01-31",
+          "fiscal_year": 2025,
+          "accession_number": "0000104169-25-000021",
+          "filed": "2025-03-14",
+          "section_end": 231074
+        },
+        "distance": 0.39875882863998413,
+        "score": 0.03200204813108039,
+        "ranks": {
+          "dense": 3,
+          "bm25": 2
+        },
+        "context": {
+          "text": "r income increased 13.3% and 7.5% for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. For fiscal 2025 and 2024, the increases were primarily due to growth in membership base and Plus penetration. Fiscal 2025 and 2024 were also positively impacted by the expiration of a promotional offering offsetting membership fee increases during the fourth quarter of fiscal 2024.\nGross profit rate increased 37 and 55 basis points for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. For fiscal 2025, the increase in gross profit rate was primarily due to improved operational efficiencies related to merchandise flow and increased margins in fuel, partially offset by higher eCommerce fulfillment costs. For fiscal 2024, the increase in gross profit rate was primarily due to the lapping of elevated markdowns in the prior year. Additionally, fiscal 2025 and 2024 gross profit rates were partially offset by product mix shifts into lower margin categories.\nOperating expenses as a percentage of segment net sales increased 44 and 46 basis points for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. Fiscal 2025 operating expenses as a percentage of net sales increased primarily due to increased compensation related expenses, including associate wage investments and higher variable pay as a result of exceeding our planned performance, as well as elevated technology spend. Fiscal 2024 operating expenses as a percentage of net sales increased primarily due to lower fuel sales and elevated technology spend.\nAs a result of the factors discussed above, segment operating income increased $0.2 billion for both fiscal 2025 and 2024, respectively, when compared to the previous fiscal year.\n42\nLiquidity and Capital Resources\nLiquidity\nThe strength and stability of our operations have historically supplied us with a significant source of liquidity. Our cash flows provided by operating activities, supplemented with our long-term debt and short-term borrowings, have been sufficient to fund our operations while allowing us to invest in activities that support the long-term growth of our operations. Generally, some or all of the re",
+          "start": 208076,
+          "end": 210292
+        }
+      },
+      {
+        "chunk_id": "0000104169-25-000021:item_7:11",
+        "text": "Fiscal Years Ended January 31,\n\t(Amounts in millions, except unit counts)\t\t2025\t\t2024\n\tNet sales\t\t$\t674,538 \t\t\t$\t642,637 \t\n\tPercentage change from comparable period\t\t5.0 \t%\t\t6.1 \t%\nGross profit(1) as a percentage of net sales\n\t\t24.1 \t%\t\t23.7 \t%\nOperating expenses as a percentage of net sales\n\t\t20.7 \t%\t\t20.4 \t%\n\tOperating income\t\t$\t29,348 \t\t\t$\t27,012 \t\n\tOperating income as a percentage of net sales\t\t4.4 \t%\t\t4.2 \t%\n(1) Gross profit defined as net sales less cost of sales.\nGross profit as a percentage of net sales (\"gross profit rate\") increased 40 and 27 basis points for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. The increases were primarily driven by the Walmart U.S. segment, due to managing prices aligned to our competitive historic price gaps, as well as growth in higher margin businesses globally, partially offset by mix shifts into lower margin merchandise categories. Additionally, the increase in fiscal 2024 benefited from lapping higher markdowns incurred in the prior year.",
+        "metadata": {
+          "filed": "2025-03-14",
+          "report_date": "2025-01-31",
+          "section": "Item 7",
+          "section_title": "Management's Discussion and Analysis",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/104169/000010416925000021/wmt-20250131.htm",
+          "end": 184736,
+          "section_end": 231074,
+          "form": "10-K",
+          "fiscal_year": 2025,
+          "section_start": 171050,
+          "ticker": "WMT",
+          "start": 183707,
+          "cik": "0000104169",
+          "amendment_note": "Original annual filing section.",
+          "accession_number": "0000104169-25-000021"
+        },
+        "distance": 0.41891610622406006,
+        "score": 0.03149801587301587,
+        "ranks": {
+          "dense": 4,
+          "bm25": 3
+        },
+        "context": {
+          "text": "s net sales growing at a faster rate than operating, selling, general and administrative (\"operating\") expenses. Additionally, we focus on our mix of businesses, including expanding our ecosystem in higher margin areas, such as digital advertising and marketplace. Our objective is to achieve operating income leverage, which we define as growing operating income at a faster rate than net sales.\n\t\t\tFiscal Years Ended January 31,\n\t(Amounts in millions, except unit counts)\t\t2025\t\t2024\n\tNet sales\t\t$\t674,538 \t\t\t$\t642,637 \t\n\tPercentage change from comparable period\t\t5.0 \t%\t\t6.1 \t%\nGross profit(1) as a percentage of net sales\n\t\t24.1 \t%\t\t23.7 \t%\nOperating expenses as a percentage of net sales\n\t\t20.7 \t%\t\t20.4 \t%\n\tOperating income\t\t$\t29,348 \t\t\t$\t27,012 \t\n\tOperating income as a percentage of net sales\t\t4.4 \t%\t\t4.2 \t%\n(1) Gross profit defined as net sales less cost of sales.\nGross profit as a percentage of net sales (\"gross profit rate\") increased 40 and 27 basis points for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. The increases were primarily driven by the Walmart U.S. segment, due to managing prices aligned to our competitive historic price gaps, as well as growth in higher margin businesses globally, partially offset by mix shifts into lower margin merchandise categories. Additionally, the increase in fiscal 2024 benefited from lapping higher markdowns incurred in the prior year.\nOperating expenses as a percentage of net sales increased 36 and decreased 60 basis points for fiscal 2025 and 2024, respectively, when compared to the previous fiscal year. The increase for fiscal 2025 was primarily due to higher variable pay as a result of exceeding planned performance, increased marketing and higher depreciation expenses. The decrease for fiscal 2024 was primarily due to lappi",
+          "start": 183307,
+          "end": 185136
+        }
+      }
+    ]
+  }
+]

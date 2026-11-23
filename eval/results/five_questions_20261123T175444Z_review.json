@@ -1,0 +1,185 @@
+{
+  "cases": [
+    {
+      "case": "apple_latest_financials",
+      "question": "Apple'ın en son tamamlanan mali yıldaki satış geliri ve net kârı nedir? Mali yılı, dönemin başlangıç ve bitiş tarihlerini belirt. Verilerin hangi yıllık rapora dayandığını göster.",
+      "trace": "logs/runs/20261123T175626246523Z_c4c90a90.json",
+      "seconds": 102.1,
+      "supported": true,
+      "coverage": {
+        "complete": true,
+        "gaps": [],
+        "status": "complete",
+        "repair_tasks_attempted": 1
+      },
+      "issues": [],
+      "unnamed_table_rows": 146,
+      "total_table_rows": 148,
+      "arithmetic_checks": [],
+      "revision_count": 0,
+      "cost_usd": 0.0037735000000000004,
+      "answer": "Apple’ın en son tamamlanan mali yılı FY2026’dır; dönem 2025-09-28’te başlayıp 2026-09-26’te sona ermiştir. Bu dönemde satış geliri 478834000000 USD, net kârı ise 132175000000 USD olmuştur. [Source 2] [Source 3]\n\nVeriler, dönemi 2026-09-26’te sona eren ve 2026 yılında sunulan Apple Form 10-K yıllık raporuna dayanmaktadır. [Source 6]"
+    },
+    {
+      "case": "caterpillar_growth_margins",
+      "question": "Caterpillar'ın son üç mali yıldaki gelirini, net kârını ve faaliyet kâr marjını karşılaştır. Yıllık gelir büyüme oranlarını hesapla; büyüme hızlanıyor mu yoksa yavaşlıyor mu açıkla. Gelirin azalması ile büyüme hızının azalmasını karıştırma. Eksik veri varsa belirt.",
+      "trace": "logs/runs/20261123T175850932026Z_fea11f16.json",
+      "seconds": 141.6,
+      "supported": true,
+      "coverage": {
+        "complete": true,
+        "gaps": [],
+        "status": "complete",
+        "repair_tasks_attempted": 0
+      },
+      "issues": [],
+      "unnamed_table_rows": 0,
+      "total_table_rows": 26,
+      "arithmetic_checks": [
+        {
+          "metric": "operating_margin",
+          "end": "2025-12-31",
+          "passed": true
+        },
+        {
+          "metric": "operating_margin",
+          "end": "2024-12-31",
+          "passed": true
+        },
+        {
+          "metric": "operating_margin",
+          "end": "2023-12-31",
+          "passed": true
+        },
+        {
+          "metric": "revenue_growth",
+          "end": "2025-12-31",
+          "passed": true
+        },
+        {
+          "metric": "revenue_growth",
+          "end": "2024-12-31",
+          "passed": true
+        }
+      ],
+      "revision_count": 3,
+      "cost_usd": 0.00559148,
+      "answer": "Caterpillar’ın FY2023 (2023-12-31’te sona eren mali yıl) satış geliri 67060000000 USD, net kârı 10335000000 USD ve faaliyet kâr marjı 19.33% oldu. FY2024’te (2024-12-31’te sona eren mali yıl) satış geliri 64809000000 USD’e gerilerken net kâr 10792000000 USD’e yükseldi; faaliyet kâr marjı 20.17% idi. FY2025’te (2025-12-31’te sona eren mali yıl) satış geliri 67589000000 USD’e yükseldi, net kâr 8884000000 USD’e geriledi ve faaliyet kâr marjı 16.50% oldu. [Source 2] [Source 3] [Source 5]\n\nYıllık satış geliri büyümesi FY2024’te -3.36%, FY2025’te 4.29% olarak gerçekleşti. FY2024’te satış geliri düzeyi düştü ve büyüme oranı negatifti; FY2025’te satış geliri arttı ve büyüme oranı pozitife döndü. Dolayısıyla son karşılaştırmada büyüme hızı yavaşlamadı, iyileşti. [Source 8]\n\nİstenen üç mali yıl için satış geliri, net kâr ve faaliyet kâr marjı verileri mevcut; yıllık gelir büyümesini hesaplamak için gereken ardışık dönem satış geliri verilerinde de eksik dönem yok. [Source 2] [Source 3] [Source 5] [Source 8]"
+    },
+    {
+      "case": "nvidia_historical_macro",
+      "question": "NVIDIA'nın 2025 mali yılındaki geliri ve net kârı nedir? O mali yılın raporuna göre talep, tedarik zinciri ve ihracat kısıtlamalarından nasıl etkilenmiş? Gerçekleşmiş gelişmeleri gelecekte oluşabilecek risklerden ayır; şirket etkiyi ayrıca ölçmemişse bir tutar tahmin etme. 2025 mali yılının dönem bitişini de belirt.",
+      "trace": "logs/runs/20261123T180158561535Z_b5df4149.json",
+      "seconds": 184.0,
+      "supported": true,
+      "coverage": {
+        "complete": false,
+        "gaps": [
+          "NVIDIA'nın 2025 mali yılında gerçekleşen talep koşulları ve bunların bildirilen iş veya gelir etkileri eksik. Mevcut metin, talep için genel etkiler ve olası sipariş iptali/ertelenmesi risklerinden söz ediyor; gerçekleşen talep gelişmelerini açıklamıyor."
+        ],
+        "status": "partial",
+        "repair_tasks_attempted": 1
+      },
+      "issues": [],
+      "unnamed_table_rows": 21,
+      "total_table_rows": 23,
+      "arithmetic_checks": [],
+      "revision_count": 1,
+      "cost_usd": 0.005583670000000001,
+      "answer": "NVIDIA'nın mali yılı 2025, 2025-01-26 tarihinde sona erdi. Bu dönemde satış geliri 130497000000 USD, net kârı ise 72880000000 USD oldu. [Source 2] [Source 3]\n\nTalep bakımından, şirket fazla veya eski stok oluşumunun olası nedenleri arasında talebin keskin düşmesini, müşteri siparişlerinin iptal ya da ertelenmesini ve talebin doğru tahmin edilememesini saydı; ancak alıntılanan açıklama bu koşulların gerçekleştiğini veya gelir üzerindeki etkisini göstermiyor. Tedarik zinciri açısından NVIDIA, ağ ürünleri için küresel tedarik zincirinin İsrail ve bölgesel çatışmalardan önemli ölçüde etkilenmediğini bildirdi. Şirket ayrıca makroekonomik etkenlerin tedarik zinciri ve üretim maliyetlerini etkilediğini, ancak bunların etkisini ayrıştırıp ölçmenin zor olduğunu belirtti. [Source 10] [Source 13]\n\nGerçekleşmiş ihracat kısıtlaması etkisi olarak NVIDIA, mevcut kontrollerin rekabetçi konumuna zarar verdiğini bildirdi. Daha fazla ihracat kontrolü değişikliğinin gelecekte rekabetçi konum ve sonuçlara zarar verebileceği, şirketin stoklarını satamamasına veya bazı pazarlardan fiilen dışlanmasına yol açabileceği ise olası risk olarak ifade edildi. Tedarik zincirinin Asya-Pasifik bölgesinde yoğunlaşması ve kontrollerin alternatif üretim yerlerini sınırlayabilmesi de geleceğe dönük riskler arasında belirtildi; bu etkiler için alıntılanan açıklamalarda ayrıca parasal tutar verilmedi. [Source 16] [Source 17]"
+    },
+    {
+      "case": "amazon_quarterly_outlook",
+      "question": "Amazon'un en son çeyrek net satışlarını önceki yılın aynı çeyreğiyle karşılaştır. Raporun açıkladığı büyüme oranını belirt; çeyreklik rakamlarla yılbaşından bugüne rakamları karıştırma. Son kazanç açıklamasındaki gelecek çeyrek satış beklentisini ve temel belirsizlikleri özetle. Gerçekleşmiş sonuçları beklentilerden ayır ve kaynak tarihlerini yaz.",
+      "trace": "logs/runs/20261123T180337886648Z_6448ec92.json",
+      "seconds": 98.0,
+      "supported": false,
+      "coverage": {
+        "complete": true,
+        "gaps": [],
+        "status": "complete",
+        "repair_tasks_attempted": 0
+      },
+      "issues": [
+        "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"2026\", \"180.169\", \"201.944\", \"12’ydi.\", \"240,0–247,0\", \"12–16\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values.",
+        "The last revision could not be rendered; the earlier unverified draft is retained."
+      ],
+      "unnamed_table_rows": 253,
+      "total_table_rows": 253,
+      "arithmetic_checks": [],
+      "revision_count": 2,
+      "cost_usd": 0.00459556,
+      "answer": ""
+    },
+    {
+      "case": "walmart_historical_demand_costs",
+      "question": "Walmart'ın 2025 mali yılındaki gelirini ve net kâr marjını önceki mali yılla karşılaştır. Her iki dönemin başlangıç ve bitiş tarihlerini ver ve mali yılın takvim yılından farkını açıkla. Aynı yıllık raporda tüketici talebi, enflasyon ve tedarik maliyetleri için hangi gerçekleşmiş gelişmeler ve olası riskler belirtiliyor? Segment sonuçlarını tüm şirkete mal etme. Etkilerin ayrı parasal büyüklüğü kaynaklarda yoksa bunu belirt; güncel Fed veya BLS verilerini geçmiş yılın kanıtı olarak kullanma.",
+      "trace": "logs/runs/20261123T180730877743Z_18924856.json",
+      "seconds": 230.8,
+      "supported": true,
+      "coverage": {
+        "complete": false,
+        "gaps": [
+          "Walmart FY2025 Item 7 evidence does not establish what inflation-related developments actually occurred or their effects on the company overall; references to inflationary uncertainty and possible influences are not enough to identify realized developments.",
+          "The annual-report evidence does not sufficiently describe realized company-wide supply-cost effects and the corresponding potential risks. Avoid treating U.S. segment comparable-sales results as results for Walmart as a whole."
+        ],
+        "status": "partial",
+        "repair_tasks_attempted": 1
+      },
+      "issues": [],
+      "unnamed_table_rows": 25,
+      "total_table_rows": 29,
+      "arithmetic_checks": [
+        {
+          "metric": "net_margin",
+          "end": "2025-01-31",
+          "passed": true
+        },
+        {
+          "metric": "net_margin",
+          "end": "2024-01-31",
+          "passed": true
+        }
+      ],
+      "revision_count": 1,
+      "cost_usd": 0.00678722,
+      "answer": "Walmart’ın 2025 mali yılında (2024-02-01–2025-01-31) satış geliri 674538000000 USD; 2024 mali yılında (2023-02-01–2024-01-31) 642637000000 USD oldu. Net kâr marjı aynı dönemlerde sırasıyla 2.88% ve 2.41% olarak gerçekleşti. Mali yıllar takvim yılıyla örtüşmez: her iki mali dönem de bir takvim yılında başlayıp sonraki takvim yılında sona eriyor. [Source 2] [Source 3]\n\nYıllık rapor, Walmart U.S. için karşılaştırılabilir satış artışının işlem sayısı ve birim hacim artışıyla desteklendiğini, bakkaliye ile sağlık ve wellness satışlarının güçlü olduğunu belirtiyor. Bu, ABD segmentine ilişkin bir gerçekleşmiş bulgudur; şirket geneline mal edilemez. Raporda tüketici harcanabilir geliri, borç düzeyleri ve satın alma kalıpları perakendecileri etkileyen unsurlar arasında sayılıyor. Enflasyonist eğilimler, ticaret kısıtlamaları, makroekonomik koşulların tüketici güvenine etkisi ve tedarik zinciri baskıları ise belirsizlik ve olası riskler olarak belirtiliyor. [Source 23] [Source 24] [Source 22]\n\nRaporda tedarik maliyetlerini yönetmek için tedarikçilerle ürün maliyetlerini azaltma ve maliyet artışlarını paylaşma, özel markalara ve küçük ambalajlara odaklanma, alımları erkene çekme veya bazı kategorilerde sınırlama ve deniz taşımacılığı kapasitesi sağlama gibi uygulamalar sıralanıyor; bu stratejilerin brüt kârın net satışlara oranını etkileyebileceği de belirtiliyor. Sağlanan alıntılar, enflasyonun veya tedarik maliyetlerinin şirket genelindeki gerçekleşmiş etkisini ayrı bir parasal tutarla göstermiyor. Ayrıca yıllık rapor kanıtlarının kapsamı eksik olduğundan, bu etkilerin şirket genelindeki gerçekleşmiş boyutu hakkında daha kesin bir sonuç çıkarılamaz. [Source 22]"
+    }
+  ],
+  "summary": {
+    "complete_answers": 2,
+    "partial_answers": 2,
+    "failed_answers": 1,
+    "automatic_supported": 4,
+    "elapsed_seconds_sum": 756.5,
+    "estimated_api_cost_usd": 0.02633143,
+    "transport": "Running Docker web HTTP API; no manual evidence injection",
+    "code_changes_during_batch": false,
+    "visual_browser_test": false
+  },
+  "findings": [
+    {
+      "priority": "high",
+      "component": "Writer revision and report table interpretation",
+      "case": "amazon_quarterly_outlook",
+      "detail": "First draft used unbound values; next draft bound North America segment sales as consolidated totals. Critic correctly rejected it. Final revision returned to unbound numbers and no answer was delivered. Sources and scope were available."
+    },
+    {
+      "priority": "high",
+      "component": "src/reporting.py:source_financial_rows",
+      "detail": "Reported-number catalog entries are exposed as financial rows without metric/unit. Unnamed counts: Apple146, NVIDIA21, Amazon253, Walmart25."
+    },
+    {
+      "priority": "medium",
+      "component": "Annual narrative retrieval",
+      "detail": "NVIDIA lacks realized demand evidence. Walmart lacks sufficient realized inflation and company-wide supply-cost evidence. Both responses remain explicitly partial."
+    }
+  ],
+  "manual_checks": [
+    "Seven margin/growth calculations independently recomputed from tool inputs and matched",
+    "Caterpillar includes derived parent net income for all three years",
+    "NVIDIA export-control harm wording checked against cited source excerpt",
+    "Walmart segment scope remains explicit",
+    "No repairs or retries beyond the normal app workflow were added to the five-case batch"
+  ]
+}

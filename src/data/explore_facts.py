@@ -75,6 +75,31 @@ def merge_metric_tags(us_gaap, tags, selection, unit):
     return metric_by_period
 
 
+def derive_parent_net_income(us_gaap, selection, unit):
+    profit_tag = 'ProfitLoss'
+    minority_tag = 'NetIncomeLossAttributableToNoncontrollingInterest'
+    profits = filter_annual_records(us_gaap.get(profit_tag, {}).get('units', {}).get(unit, []), selection)
+    minorities = filter_annual_records(us_gaap.get(minority_tag, {}).get('units', {}).get(unit, []), selection)
+    by_filing = {(r['start'], r['end'], r['accn']): r for r in minorities}
+    derived = {}
+    for profit in profits:
+        period = (profit['start'], profit['end'])
+        minority = by_filing.get((*period, profit['accn']))
+        if minority is None or minority['form'] != profit['form']:
+            continue
+        if period in derived and derived[period]['record']['filed'] >= profit['filed']:
+            continue
+        derived[period] = {
+            'tag': None,
+            'record': {**profit, 'val': profit['val'] - minority['val']},
+            'derivation': {
+                'formula': 'ProfitLoss - NetIncomeLossAttributableToNoncontrollingInterest',
+                'inputs': [dict(profit, tag=profit_tag, unit=unit), dict(minority, tag=minority_tag, unit=unit)],
+            },
+        }
+    return derived
+
+
 def build_metric_rows(cik, metric_name, metric_by_period, unit, years=5, period_ends=None):
     #Build source-preserving rows for the latest N periods
     if years < 1:
@@ -105,6 +130,8 @@ def build_metric_rows(cik, metric_name, metric_by_period, unit, years=5, period_
             "accn": record["accn"],
             "is_amendment": record["form"] == "10-K/A",
         }
+        if 'derivation' in metric:
+            row['derivation'] = metric['derivation']
         metric_rows.append(row)
     return metric_rows
 
@@ -143,6 +170,10 @@ def process_company(cik, years=5):
             config["selection"],
             unit,
         )
+        if metric_config.get('fallback') == 'profit_loss_less_noncontrolling_interest':
+            for period, derived in derive_parent_net_income(
+                    data['facts'].get(taxonomy, {}), config['selection'], unit).items():
+                metric_by_period.setdefault(period, derived)
         metric_rows = build_metric_rows(
             data["cik"], metric_name, metric_by_period, unit, years=years,
             period_ends=period_ends,

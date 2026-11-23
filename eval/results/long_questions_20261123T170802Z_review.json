@@ -1,0 +1,132 @@
+{
+  "batch": "eval/results/long_questions_20261123T170802Z.json",
+  "transport": "Docker web HTTP API; image source hashes matched current host fixes. No browser visual test.",
+  "novelty_check": "Before testing, CAT and WMT CIK directories were absent from raw/processed storage and Caterpillar/Walmart names had no mentions in existing run/eval JSON files. Existing ticker directory entries alone are not downloaded company data.",
+  "results": [
+    {
+      "case_id": "new_caterpillar_annual_trend",
+      "assessment": "partial",
+      "new_company": true,
+      "cik": "0000018230",
+      "checked": {
+        "revenue_2023": 67060000000,
+        "revenue_2024": 64809000000,
+        "revenue_2025": 67589000000,
+        "operating_margins_percent": [
+          19.33,
+          20.17,
+          16.5
+        ],
+        "revenue_growth_percent_2024_2025": [
+          -3.36,
+          4.29
+        ]
+      },
+      "findings": [
+        "Revenue, operating margins and growth match independent calculations.",
+        "Net income output is empty; explanations of consolidated drivers and future risks remain incomplete.",
+        "Raw SEC facts contain FY2025 ProfitLoss 8882000000 and NetIncomeLossAvailableToCommonStockholdersBasic 8884000000 in the 10-K, while NetIncomeLoss 8884000000 appears under DEF 14A. Tag and form coverage need review; these concepts cannot be blindly treated as equivalent.",
+        "Prose duplicates percentage units, e.g. yüzde 19.33%."
+      ],
+      "elapsed_seconds": 379.0,
+      "supported": true,
+      "coverage": {
+        "complete": false,
+        "gaps": [
+          "Caterpillar’ın 2023, 2024 ve 2025 mali yılları için net kâr değerleri mevcut kanıtta bulunmuyor; bu nedenle istenen üç yıllık tablo eksik.",
+          "2025 yıllık raporundan 2024’e kıyasla konsolide gelir ve kârlılık değişimlerinin başlıca nedenlerini açıklayan yeterli MD&A metni yok. Mevcut parçalar gelir ve marj özetlerini, bazı segment bilgilerini ve sınırlı kurumsal gider açıklamasını içeriyor; şirket genelindeki nedenleri tamamlamıyor.",
+          "2025 yıllık raporundaki gelecek dönem risklerini gerçekleşmiş gelişmelerden ayırmak için gerekli risk açıklaması mevcut kanıtta yer almıyor."
+        ],
+        "status": "partial",
+        "repair_tasks_attempted": 1
+      },
+      "estimated_cost_usd": 0.0093957
+    },
+    {
+      "case_id": "new_walmart_historical_macro",
+      "assessment": "fail",
+      "new_company": true,
+      "cik": "0000104169",
+      "checked": {
+        "FY2024": {
+          "start": "2023-02-01",
+          "end": "2024-01-31",
+          "revenue": 642637000000,
+          "net_income": 15511000000,
+          "independent_net_margin_percent": 2.41
+        },
+        "FY2025": {
+          "start": "2024-02-01",
+          "end": "2025-01-31",
+          "revenue": 674538000000,
+          "net_income": 19436000000,
+          "independent_net_margin_percent": 2.88
+        }
+      },
+      "findings": [
+        "Planner replaced net margin request with revenue and net income retrieval; compute_metrics was never called. Coverage did not flag that omission.",
+        "Writer revision left bare calendar year 2025; deterministic numeric validation withheld the entire answer.",
+        "Start fields exist in source catalog but are not exposed by prompt_fact_catalog inline field filter.",
+        "Retrieved historical macro narrative remains partial."
+      ],
+      "elapsed_seconds": 214.1,
+      "supported": false,
+      "coverage": {
+        "complete": false,
+        "gaps": [
+          "Walmart’ın FY2025 yıllık raporundaki gerçekleşmiş enflasyon, tüketici talebi ve tedarik maliyeti etkileri; bunların yalnızca olası risklerden ayrımı ve etkilerin parasal olarak ayrı ölçülüp ölçülmediği mevcut rapor içeriğiyle tam desteklenmiyor. Mevcut alıntı genel fiyatlandırma/tedarik stratejilerini ve geleceğe dönük belirsizlikleri anlatıyor, ancak bu etkilerin FY2025’te gerçekleşen sonuçlarını ve ölçüm sınırlamasını açıkça ortaya koymuyor."
+        ],
+        "status": "partial",
+        "repair_tasks_attempted": 1
+      },
+      "estimated_cost_usd": 0.00651034
+    },
+    {
+      "case_id": "amazon_quarterly_outlook_numbers",
+      "assessment": "pass",
+      "new_company": false,
+      "checked": {
+        "quarter_end": "2026-09-30",
+        "quarter_sales_million_usd_prior_current": [
+          180169,
+          201944
+        ],
+        "reported_growth_percent": 12,
+        "guidance_date": "2026-10-29",
+        "next_quarter_sales_billion_usd": [
+          240,
+          247
+        ],
+        "guidance_growth_percent": [
+          12,
+          16
+        ],
+        "adverse_fx_basis_points": 60
+      },
+      "findings": [
+        "Quarterly and nine-month values kept distinct. Actuals from 10-Q and outlook from 8-K EX-99 exhibit.",
+        "All quoted amounts and ranges checked against cited text; forecast status and uncertainty preserved.",
+        "Minor Turkish suffix issue (12’tür) and mixed source numeric formatting remain."
+      ],
+      "elapsed_seconds": 133.2,
+      "supported": true,
+      "coverage": {
+        "complete": true,
+        "gaps": [],
+        "status": "complete",
+        "repair_tasks_attempted": 0
+      },
+      "estimated_cost_usd": 0.0042325
+    }
+  ],
+  "total_elapsed_seconds": 726.3,
+  "total_estimated_cost_usd": 0.02013854,
+  "code_changed_during_batch": false,
+  "priorities": [
+    "Preserve requested metrics in planning and coverage; missing calculation calls must be detected.",
+    "Expose start-date fields and resolve Writer year-token failures without weakening numerical verification.",
+    "Review net income taxonomy/form coverage with metric scope preserved.",
+    "Improve annual MD&A/risk retrieval completeness and percentage display."
+  ],
+  "limit": "Exactly three questions, one full run each. New-company durations include ingestion and indexing. Automatic supported=True does not imply complete user-request coverage."
+}

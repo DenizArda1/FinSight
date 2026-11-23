@@ -1,0 +1,59 @@
+{
+  "changes": [
+    "Exclude reported-number literals from financial table; retain structured facts and calculations",
+    "Expose existing number tokens alongside report cells, preserving original source evidence",
+    "Revision instructions preserve unaffected tokens and prohibit copying rendered feedback numbers",
+    "Coverage distinguishes comparing revenue levels from explicitly requested growth calculations"
+  ],
+  "offline_tests": 565,
+  "saved_batch_table_recheck": {
+    "unnamed_rows_after_fix": 0,
+    "apple_rows": 2,
+    "caterpillar_rows": 26,
+    "nvidia_rows": 2,
+    "amazon_rows": 0,
+    "walmart_rows": 4
+  },
+  "replays": {
+    "fresh": "passed on first attempt",
+    "previous_segment_error": "first revision failed numeric format; second passed",
+    "artifacts": [
+      "amazon_simple_fix_replay_20261123.json",
+      "amazon_simple_fix_retry_20261123.json"
+    ]
+  },
+  "autonomous_live": {
+    "artifact": "amazon_simple_fix_e2e_20261123.json",
+    "seconds": 95.75158412499877,
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "coverage": {
+      "complete": true,
+      "gaps": [],
+      "status": "complete",
+      "repair_tasks_attempted": 0
+    },
+    "revisions": 2
+  },
+  "remaining_limits": [
+    "Two format revisions were still required in the autonomous run; stochastic generation is not error-free",
+    "The final synthesis loosely says growth rate increased although only one growth rate was compared; automated Critic accepted this, so semantic review remains imperfect",
+    "Prior NVIDIA/Walmart narrative coverage gaps were not retested in this focused fix run"
+  ],
+  "docker": {
+    "rebuilt": true,
+    "source_hashes_match": true,
+    "health": "healthy",
+    "home_http_status": 200,
+    "visual_check": false
+  }
+}

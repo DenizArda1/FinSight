@@ -1,0 +1,70 @@
+{
+  "changes": [
+    "Generic separate economic-topic searches in planner and filing specialist prompts",
+    "Coverage repair targets missing topics instead of repeating broad queries",
+    "Cited calendar-year binding supports Turkish suffix in takvim yılıyla"
+  ],
+  "offline_tests_passed": 563,
+  "retrieval_probe": "walmart_targeted_retrieval_20261123.json",
+  "full_live_before_final_corrections": {
+    "artifact": "walmart_macro_live_20261123.json",
+    "elapsed_seconds": 143.04198741700384,
+    "verification": {
+      "status": "failed",
+      "supported": false,
+      "issues": [
+        "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"2025\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values."
+      ],
+      "stage": "writer_validation",
+      "deterministic_fields": "failed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "coverage": {
+      "complete": false,
+      "gaps": [
+        "FY2025 ve FY2024 gelir/net kâr marjı karşılaştırması için hesaplanmış değerler mevcut; ancak istenen yıllık rapor anlatısı tam karşılanmıyor. Mevcut MD&A alıntısı maliyet artışlarına yanıt olarak kullanılan fiyatlandırma ve tedarik stratejilerini ve bunların brüt kâr marjını etkilediğini söylüyor; fakat FY2025’te enflasyonun ve tüketici talebinin gerçekleşmiş etkilerini olası etkilerden ve risklerden ayırmaya yetecek kanıt sunmuyor.",
+        "FY2025 yıllık raporunda enflasyon, tüketici talebi ve tedarik maliyetlerinin etkilerinin parasal büyüklüğünün ayrı açıklanıp açıklanmadığı veya şirketin bu etkileri izole edemediğini/ölçemediğini açıkça belirtip belirtmediği mevcut içerikten anlaşılamıyor."
+      ],
+      "status": "partial",
+      "repair_tasks_attempted": 1
+    }
+  },
+  "targeted_replay_after_corrections": {
+    "artifact": "walmart_macro_targeted_replay_20261123.json",
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "coverage": {
+      "complete": false,
+      "gaps": [
+        "Walmart’ın FY2025 yıllık raporunda enflasyonun gerçekleşmiş etkileri yeterince desteklenmiyor: mevcut alıntılar maliyet artışlarına karşı uygulanan stratejileri ve enflasyon kaynaklı belirsizliği belirtiyor, ancak gerçekleşmiş etkileri enflasyona açıkça bağlamıyor veya şirketin bu etkileri ölçüp ölçemediğini açıklamıyor. Bu nedenle gerçekleşen etkiler ile olası riskler arasındaki ayrım enflasyon için tamamlanamıyor."
+      ],
+      "tasks": [
+        {
+          "id": "inflation_effects",
+          "agent": "filing_rag",
+          "instruction": "Walmart (WMT), FY2025 10-K Item 7: enflasyonun FY2025 sonuçlarına gerçekleşmiş etkilerini; bunları ileriye dönük risklerden ayırarak ve şirket etkileri ayrı ölçemediğini/açıklamadığını belirtiyorsa bunu açıkça göstererek getir. Mevcut genel enflasyon aramalarını yineleme; rapordan ilgili içerik ve bağlamı getir.",
+          "filing_scope": "annual",
+          "years": 1,
+          "fiscal_year": 2025
+        }
+      ],
+      "status": "partial"
+    },
+    "method": "Actual targeted search results appended to saved tool evidence; coverage, Writer and Critic rerun. Not a full autonomous research run."
+  },
+  "final_plan": "walmart_macro_plan_20261123.json",
+  "limitations": [
+    "Inflation-specific realized effect remains unsupported by retrieved excerpts; partial coverage is retained",
+    "Final prompts have plan-only and targeted evidence replay validation, not another full end-to-end run",
+    "Docker was not rebuilt"
+  ]
+}

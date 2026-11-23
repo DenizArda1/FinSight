@@ -23,6 +23,7 @@ metrics:
       - Revenues
       - SalesRevenueNet
   net_income:
+    fallback: profit_loss_less_noncontrolling_interest
     description: Net Income
     taxonomy: us-gaap
     unit: USD

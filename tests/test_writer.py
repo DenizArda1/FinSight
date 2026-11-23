@@ -5,11 +5,32 @@ from unittest.mock import patch
 
 from src.agents.agent_states import create_initial_state
 from src.agents.writer import run_writer
+from src.llm.prompts import writer_evidence, prompt_fact_catalog
 from src.verification.field_references import normalize_catalog_references
-from src.verification.agent_answer import build_agent_evidence
+from src.verification.agent_answer import build_agent_evidence, build_fact_catalog
 
 
 class WriterTests(unittest.IsolatedAsyncioTestCase):
+    def test_report_tokens_stay_with_their_table_cells_and_source(self):
+        evidence = [
+            {'source_id': 1, 'tool': 'search_company_updates', 'result': {'matches': [{
+                'text': 'hidden 999', 'context': {'text': 'USD millions: 2025 2026\nNorth America 106,267 112,852\nTotal 180,169 201,944'},
+                'metadata': {}}]}},
+            {'source_id': 2, 'tool': 'get_filing_section', 'result': {'text': 'Outlook 240.0 billion.'}},
+        ]
+        original = deepcopy(evidence)
+        catalog = build_fact_catalog(evidence)
+        prompt = prompt_fact_catalog(catalog)
+        by_value = {e['reported_number']: e['inline_fields']['value']
+                    for e in prompt.values() if 'reported_number' in e}
+        annotated = writer_evidence(evidence, catalog)
+        text = annotated[0]['result']['matches'][0]['text']
+        self.assertIn('Total 180,169 [' + by_value['180,169'] + '] 201,944 [' + by_value['201,944'] + ']', text)
+        self.assertNotIn('999', text)
+        self.assertNotIn(by_value['240.0'], text)
+        self.assertIn(by_value['240.0'], annotated[1]['result']['text'])
+        self.assertEqual(evidence, original)
+
     def test_separator_repair_requires_an_exact_existing_catalog_token(self):
         catalog = {'x': {'template': '{{2:records/0/value}}'}}
         self.assertEqual(normalize_catalog_references('{{2:records/0:value}}', catalog), '{{2:records/0/value}}')

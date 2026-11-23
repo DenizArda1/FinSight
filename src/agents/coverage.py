@@ -24,7 +24,7 @@ async def check_coverage(state, llm_config):
     #An honest limitation is not the same as fulfilling the original request
     evidence = build_agent_evidence(state['trace'])
     facts = [{'source_id': row['source_id'], 'fields': row['fields']}
-             for row in build_fact_catalog(evidence).values()]
+             for row in build_fact_catalog(evidence).values() if not row.get('reported_number')]
     reports = [source for source in evidence if source['tool'] in REPORT_SEARCH_TOOLS | {'get_filing_section'}]
     calls = [{'tool': event['name'], 'arguments': event.get('arguments'), 'status': event.get('status')}
              for event in state['trace'] if event.get('type') == 'tool']
@@ -40,7 +40,14 @@ async def check_coverage(state, llm_config):
             "Check each company, requested metric, annual/quarterly period, calculation and narrative topic. "
             "Check only requested topics. A trend comparison does not require a causal annual MD&A analysis "
             "unless the question asks for causes. Do not invent extra requirements. "
+            "A request to compare revenue amounts does not itself request revenue_growth or a numeric "
+            "difference. Both period amounts support a qualitative comparison; require a computed growth "
+            "rate only when the question explicitly asks for growth rates or a calculation. "
             "Revenue records do not replace a requested revenue_growth computation. Comparing margins needs both years. "
+            "Likewise net_income and revenue do not replace net_margin: require computed margin results for "
+            "each requested period. Available ingredients without a requested calculation require a financial_data "
+            "repair using compute_metrics, not a missing-data disclaimer. Prioritize missing calculations before "
+            "narrative retrieval gaps in the two repair tasks. "
             "Three annual observations provide two growth rates; do not demand an extra growth rate unless requested. "
             "An annual filing cannot answer a latest-quarter request. Relevant report content is required, not just its metadata. "
             "If incomplete, list concrete gaps in the question's language and at most TWO small retrieval tasks "
@@ -61,6 +68,8 @@ async def check_coverage(state, llm_config):
             "Each repair task has at most six tool calls including company resolution; keep instructions short and focused. "
             "Keep requested periods. Do not guess CIKs or years for 'latest'. Do not request investment advice. "
             "Avoid repeating successful calls with identical arguments; refine the query or period coverage instead. "
+            "Repair the specific missing topic, not the same broad macro query: missing demand evidence "
+            "calls for sales/volume/orders queries; missing cost evidence calls for cost/profit-margin queries. "
             "A source failure or already reported missing data may have no useful repair: return tasks=[] then. "
             "For complete coverage return gaps=[] and tasks=[].")},
         {'role': 'user', 'content': json.dumps({'question': state['question'], 'facts': facts,

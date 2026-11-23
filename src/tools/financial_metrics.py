@@ -79,12 +79,17 @@ def get_company_facts(cik: str, concept: str, years: int = 5, unit: str = "USD",
         )
         if record.get("accn") in filing_urls:
             record["source_url"] = filing_urls[record["accn"]]
+        if record.get('derivation'):
+            record['amendment_note'] = (
+                'Derived parent net income from consolidated profit minus explicit noncontrolling '
+                'income in the same annual period and filing; see derivation inputs.'
+            )
 
     return {
         "company": company,
         "concept": concept,
         "definition": {key: config["metrics"][concept][key]
-                       for key in ("description", "taxonomy", "unit", "tags")
+                       for key in ("description", "taxonomy", "unit", "tags", "fallback")
                        if key in config["metrics"][concept]},
         "unit": unit,
         "requested_fiscal_year": fiscal_year,

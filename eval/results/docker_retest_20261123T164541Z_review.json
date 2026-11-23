@@ -1,0 +1,67 @@
+{
+  "batch": "eval/results/docker_retest_20261123T164541Z.json",
+  "tested_commit": "ddf2226",
+  "transport": "Docker application HTTP API; no browser visual automation",
+  "image_matches_host": true,
+  "cases": [
+    {
+      "id": "historical_growth",
+      "assessment": "pass",
+      "elapsed_seconds": 69.1,
+      "manual_check": "FY2024 revenue 245122000000 USD; FY2023 revenue 211915000000 USD; ends 2024-06-30 and 2023-06-30. Independent Decimal calculation confirms 15.67% growth. One coverage repair required."
+    },
+    {
+      "id": "quarterly_outlook",
+      "assessment": "fail",
+      "elapsed_seconds": 104.4,
+      "coverage": "complete",
+      "retrieval": "Correct quarterly table and 8-K exhibit retrieved.",
+      "failure": "Writer attempted uncatalogued numeric prose. Qualitative revision exposed internal catalog limitation. Critic rejected that explanation, then Writer reintroduced uncatalogued numbers; deterministic rendering withheld answer.",
+      "trace": "logs/runs/20261123T164836501770Z_c6b31b5a.json",
+      "sources_checked": [
+        {
+          "source_id": 2,
+          "metadata": {
+            "ticker": "AMZN",
+            "form": "10-Q",
+            "accession_number": "0001018724-26-000040",
+            "report_date": "2026-09-30",
+            "filed": "2026-10-30",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm",
+            "section": "Primary document",
+            "retrieved_at": "2026-11-23T16:47:06.733550+00:00",
+            "sha256": "cccdba4644cb980fef8d4d41b5af0ebcb7491c4a00907ae7c39a0c64c726cd3d",
+            "start": 103334,
+            "end": 107548,
+            "preceding_period_heading": {
+              "text": "\t\tThree Months Ended",
+              "start": 96197,
+              "end": 96217
+            },
+            "period_scope_note": "This is the preceding source heading, not an inferred duration. Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data."
+          }
+        },
+        {
+          "source_id": 6,
+          "metadata": {
+            "ticker": "AMZN",
+            "form": "8-K",
+            "accession_number": "0001018724-26-000038",
+            "report_date": "2026-10-29",
+            "filed": "2026-10-29",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000038/amzn-20260930xex991.htm",
+            "section": "EX-99 exhibit",
+            "retrieved_at": "2026-11-23T16:47:41.461551+00:00",
+            "sha256": "729d3eaf4eb6f8686e54062442f37411b69a679fcdd4a90095039d6081dd591a",
+            "start": 12034,
+            "end": 15283
+          }
+        }
+      ]
+    }
+  ],
+  "total_estimated_cost_usd": 0.0051565199999999995,
+  "code_changed": false,
+  "next_focus": "Align report-number representation and Writer/Critic feedback. Preserve numeric source verification; do not solve by disabling validation.",
+  "limitation": "Earlier passing run does not establish repeatable success; current two-case run is 1 pass / 1 fail."
+}

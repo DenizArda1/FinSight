@@ -1,0 +1,35 @@
+{
+  "live_result": "eval/results/report_numbers_live_20261123.json",
+  "test_transport": "Host MCP runtime; Docker image not rebuilt",
+  "unit_tests_passed": 559,
+  "verification": {
+    "supported": true,
+    "issues": [],
+    "evidence_supported": true,
+    "language_matches": true,
+    "answer_complete": true,
+    "status": "passed",
+    "stage": "grounding_and_language",
+    "deterministic_fields": "passed",
+    "method": "source_fields_and_llm_judge"
+  },
+  "coverage": {
+    "complete": true,
+    "gaps": [],
+    "status": "complete",
+    "repair_tasks_attempted": 0
+  },
+  "revision_count": 1,
+  "manual_review": {
+    "actuals": "Source 2 10-Q: three-month net sales 180,169 and 201,944 million USD; not nine-month figures.",
+    "outlook": "Source 6 8-K exhibit: 240.0–247.0 billion USD, 12%–16% growth, 60 basis points adverse FX; clearly described as forecast.",
+    "rendering": "Final answer matches deterministic rendering of source-backed placeholders."
+  },
+  "earlier_replays": "Two first drafts failed numeric token constraints; revisions passed automatic checks but manual review found missing percentage units. Final prompt adds explicit Writer/Critic unit preservation rule.",
+  "limitations": [
+    "Literal extraction verifies presence, not table meaning; Critic still checks units, periods, and claims.",
+    "No new calculations, rounding or scale conversion allowed.",
+    "One passing full live run is not a universal reliability guarantee.",
+    "Numbers retain source formatting; Turkish numeric localization is not implemented."
+  ]
+}

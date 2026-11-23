@@ -1,0 +1,53 @@
+{
+  "offline_tests": {
+    "passed": 563
+  },
+  "changes": [
+    "Expose source start dates to Writer",
+    "Bind cited calendar-year labels without accepting free financial values",
+    "Remove duplicate percent units around percent-rendering tokens",
+    "Derive missing parent net income only from explicit same-period same-filing consolidated profit and noncontrolling interest",
+    "Require requested margin calculations in planning/coverage",
+    "Focus annual narrative retrieval and provide a generic historical comparison plan example"
+  ],
+  "live_walmart": {
+    "artifact": "eval/results/walmart_fix_live_20261123.json",
+    "elapsed_seconds": 283.59889166599896,
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "coverage": {
+      "complete": false,
+      "gaps": [
+        "Walmart’ın FY2025 yıllık raporundaki mevcut MD&A alıntısı, maliyet artışlarına karşı uygulanan fiyatlandırma ve tedarikçi stratejilerinin brüt kâr marjını etkilediğini bildiriyor; ancak tüketici talebinde gerçekleşen değişimleri ve enflasyon, talep veya tedarik maliyetlerinin sonuçlara fiilî etkilerini yeterince açıklamıyor. Ayrıca bu makro etkilerin parasal büyüklüğünün ayrı açıklanıp açıklanmadığına dair yeterli rapor içeriği yok. Risk faktörleri bu gerçekleşmiş-etki ve ölçüm sorularının yerine geçmiyor."
+      ],
+      "status": "partial",
+      "repair_tasks_attempted": 2
+    },
+    "revision_count": 2,
+    "cost_usd": 0.00800178,
+    "independent_checks": {
+      "FY2025_net_margin_percent": 2.88,
+      "FY2024_net_margin_percent": 2.41
+    }
+  },
+  "final_planner_recheck": {
+    "artifact": "eval/results/walmart_fix_plan_20261123.json",
+    "tasks": 2,
+    "correct_metrics_periods_and_no_current_macro": true
+  },
+  "limitations": [
+    "Final generic plan example and focused annual search prompt verified with offline tests and plan-only replay, not another full live run",
+    "Walmart macro effects coverage remains partial; verified answer explicitly describes the evidence gap",
+    "Caterpillar financial fallback checked on local source records, full narrative run not repeated",
+    "Docker image not rebuilt; live run used host code via MCP"
+  ]
+}

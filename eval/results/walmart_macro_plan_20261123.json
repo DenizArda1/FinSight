@@ -1,0 +1,21 @@
+{
+  "request_type": "mixed",
+  "tasks": [
+    {
+      "id": "financial_comparison",
+      "agent": "financial_data",
+      "instruction": "For Walmart, retrieve revenue using get_company_facts and calculate net_margin using compute_metrics, both with fiscal_year=2025 and years=2. Preserve start/end dates and fiscal labels from these records; no separate date search is needed.",
+      "filing_scope": "annual",
+      "years": 2,
+      "fiscal_year": 2025
+    },
+    {
+      "id": "macro_effects",
+      "agent": "filing_rag",
+      "instruction": "For Walmart FY2025, use separate Item 7 searches for inflation/pricing, demand/sales volumes, and costs/profit margins; use business-specific terms from the report. Search Item 1A for relevant risks. Preserve measurement limitations. No current Fed/BLS data.",
+      "filing_scope": "annual",
+      "years": 1,
+      "fiscal_year": 2025
+    }
+  ]
+}

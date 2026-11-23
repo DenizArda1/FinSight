@@ -1,0 +1,171 @@
+{
+  "started_at": "20261123T164541Z",
+  "transport": "HTTP API of running Docker app",
+  "cases": [
+    {
+      "id": "historical_growth",
+      "question": "Microsoft'un 2024 mali yılı gelirini ve bir önceki mali yıla göre gelir büyüme oranını hesapla. İki dönemin bitiş tarihlerini de belirt."
+    },
+    {
+      "id": "quarterly_outlook",
+      "question": "Amazon'un en son çeyreklik raporunda satışları önceki yılın aynı çeyreğine göre nasıl değişmiş? Son şirket açıklamasındaki gelecek çeyrek beklentisiyle birlikte değerlendir. Yıllık, çeyreklik ve yılbaşından bugüne verileri birbirine karıştırma; beklentiyi gerçekleşmiş sonuçtan ayır."
+    }
+  ],
+  "results": [
+    {
+      "case_id": "historical_growth",
+      "job_id": "415355d5c1ee493d828186f7b0a62d86",
+      "job": {
+        "id": "415355d5c1ee493d828186f7b0a62d86",
+        "conversation_id": "ec791d23bea0409ea458694145215697",
+        "company": "",
+        "question": "Microsoft'un 2024 mali yılı gelirini ve bir önceki mali yıla göre gelir büyüme oranını hesapla. İki dönemin bitiş tarihlerini de belirt.",
+        "created_at": "2026-11-23T16:45:41.975756+00:00",
+        "status": "completed",
+        "result": {
+          "supported": true,
+          "prose": "Microsoft’un 2024 mali yılı satış geliri, 2024-06-30’da sona eren dönemde 245122000000 USD oldu. Önceki mali yılın, 2023-06-30’da sona eren dönemindeki satış geliri 211915000000 USD idi. [Source 2]\n\nBu iki dönem arasındaki yıllık satış geliri büyüme oranı 15.67% oldu. [Source 6]",
+          "details": "",
+          "rows": [
+            {
+              "Şirket": "MSFT",
+              "Metrik": "revenue",
+              "Değer": 245122000000,
+              "Birim": "USD",
+              "Mali yıl": 2024,
+              "Dönem sonu": "2024-06-30",
+              "Form": "10-K",
+              "Etiket": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Kaynak": 2
+            },
+            {
+              "Şirket": "MSFT",
+              "Metrik": "revenue",
+              "Değer": 211915000000,
+              "Birim": "USD",
+              "Mali yıl": 2023,
+              "Dönem sonu": "2023-06-30",
+              "Form": "10-K",
+              "Etiket": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Kaynak": 2
+            },
+            {
+              "Şirket": "MSFT",
+              "Metrik": "revenue_growth",
+              "Değer": 0.17788686799846665,
+              "Birim": "ratio",
+              "Mali yıl": 2026,
+              "Dönem sonu": "2026-06-30",
+              "Form": "",
+              "Etiket": "",
+              "Kaynak": 3
+            },
+            {
+              "Şirket": "MSFT",
+              "Metrik": "revenue",
+              "Değer": 245122000000,
+              "Birim": "USD",
+              "Mali yıl": 2024,
+              "Dönem sonu": "2024-06-30",
+              "Form": "10-K",
+              "Etiket": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Kaynak": 5
+            },
+            {
+              "Şirket": "MSFT",
+              "Metrik": "revenue",
+              "Değer": 211915000000,
+              "Birim": "USD",
+              "Mali yıl": 2023,
+              "Dönem sonu": "2023-06-30",
+              "Form": "10-K",
+              "Etiket": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Kaynak": 5
+            },
+            {
+              "Şirket": "MSFT",
+              "Metrik": "revenue_growth",
+              "Değer": 0.1566996201307127,
+              "Birim": "ratio",
+              "Mali yıl": 2024,
+              "Dönem sonu": "2024-06-30",
+              "Form": "",
+              "Etiket": "",
+              "Kaynak": 6
+            }
+          ],
+          "sources": [
+            {
+              "id": 2,
+              "reference": "[Source 2] MSFT | 10-K | 0000950170-25-100235 | FY2023 | 2023-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2025-07-30 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm\n[Source 2] MSFT | 10-K | 0001193125-26-323660 | FY2024 | 2024-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-07-29 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            },
+            {
+              "id": 6,
+              "reference": "[Source 6] MSFT | 10-K | 0000950170-25-100235 | FY2023 | 2023-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2025-07-30 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm\n[Source 6] MSFT | 10-K | 0001193125-26-323660 | FY2024 | 2024-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-07-29 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+            }
+          ],
+          "issues": [],
+          "coverage": {
+            "complete": true,
+            "gaps": [],
+            "status": "complete",
+            "repair_tasks_attempted": 1
+          },
+          "usage": {
+            "model_calls_with_usage": 15,
+            "model_calls_without_usage": 0,
+            "tool_calls": 6,
+            "input_tokens": 34481,
+            "output_tokens": 1580,
+            "estimated_cost_usd": 0.00160064,
+            "calls_without_cost_estimate": 0,
+            "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+          },
+          "markdown": "# FinSight\n\n**Soru / Question:** Microsoft'un 2024 mali yılı gelirini ve bir önceki mali yıla göre gelir büyüme oranını hesapla. İki dönemin bitiş tarihlerini de belirt.\n\nMicrosoft’un 2024 mali yılı satış geliri, 2024-06-30’da sona eren dönemde 245122000000 USD oldu. Önceki mali yılın, 2023-06-30’da sona eren dönemindeki satış geliri 211915000000 USD idi. [^2]\n\nBu iki dönem arasındaki yıllık satış geliri büyüme oranı 15.67% oldu. [^6]\n\n## Kaynaklar / Sources\n\n[^2]: MSFT | 10-K | 0000950170-25-100235 | FY2023 | 2023-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2025-07-30 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm; MSFT | 10-K | 0001193125-26-323660 | FY2024 | 2024-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-07-29 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm\n\n[^6]: MSFT | 10-K | 0000950170-25-100235 | FY2023 | 2023-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2025-07-30 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm; MSFT | 10-K | 0001193125-26-323660 | FY2024 | 2024-06-30 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-07-29 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm\n\nBu not SEC filing'lerine dayalı otomatik bir taslaktır; yatırım tavsiyesi değildir; analist onayı olmadan kullanılmaz.\n"
+        },
+        "elapsed_seconds": 69.1
+      }
+    },
+    {
+      "case_id": "quarterly_outlook",
+      "job_id": "1cb18910d31a409abb3168a4b2b9de72",
+      "job": {
+        "id": "1cb18910d31a409abb3168a4b2b9de72",
+        "conversation_id": "6a24227b2ed142b7a065680783d68acb",
+        "company": "",
+        "question": "Amazon'un en son çeyreklik raporunda satışları önceki yılın aynı çeyreğine göre nasıl değişmiş? Son şirket açıklamasındaki gelecek çeyrek beklentisiyle birlikte değerlendir. Yıllık, çeyreklik ve yılbaşından bugüne verileri birbirine karıştırma; beklentiyi gerçekleşmiş sonuçtan ayır.",
+        "created_at": "2026-11-23T16:46:52.090450+00:00",
+        "status": "completed",
+        "result": {
+          "supported": false,
+          "prose": "",
+          "details": "",
+          "rows": [],
+          "sources": [],
+          "issues": [
+            "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"180,2\", \"201,9\", \"%13’ten\", \"%12’ye\", \"240–247\", \"%12–%16\", \"60\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values.",
+            "The last revision could not be rendered; the earlier unverified draft is retained."
+          ],
+          "coverage": {
+            "complete": true,
+            "gaps": [],
+            "status": "complete",
+            "repair_tasks_attempted": 0
+          },
+          "usage": {
+            "model_calls_with_usage": 17,
+            "model_calls_without_usage": 0,
+            "tool_calls": 8,
+            "input_tokens": 71591,
+            "output_tokens": 3407,
+            "estimated_cost_usd": 0.00355588,
+            "calls_without_cost_estimate": 0,
+            "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+          },
+          "markdown": null
+        },
+        "elapsed_seconds": 104.4
+      }
+    }
+  ]
+}
