@@ -1,0 +1,131 @@
+[
+  {
+    "id": "segment_is_not_total",
+    "expected_supported": false,
+    "matched": true,
+    "verification": {
+      "supported": false,
+      "issues": [
+        "The answer reports consolidated quarterly revenue as 80 million USD, but 80 million USD is North America's segment net sales; consolidated net sales were 125 million USD."
+      ],
+      "evidence_supported": false,
+      "language_matches": true,
+      "answer_complete": false,
+      "repair_targets": [
+        {
+          "paragraph_id": 1,
+          "source_ids": [
+            1
+          ],
+          "reason": "Replace the North America segment figure of 80 million USD with consolidated net sales of 125 million USD for the three months ended September 30, 2025.",
+          "issue_type": "wrong_fact"
+        }
+      ],
+      "status": "failed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    }
+  },
+  {
+    "id": "ytd_is_not_quarter",
+    "expected_supported": false,
+    "matched": true,
+    "verification": {
+      "supported": false,
+      "issues": [
+        "The quarterly revenue was 125 million USD for the three months ended September 30, 2025; 350 million USD is net sales for the nine months ended September 30, 2025."
+      ],
+      "evidence_supported": false,
+      "language_matches": true,
+      "answer_complete": true,
+      "repair_targets": [
+        {
+          "paragraph_id": 1,
+          "source_ids": [
+            1
+          ],
+          "reason": "Uses the nine-month net sales figure as quarterly revenue; the source reports 125 million USD for the three-month period.",
+          "issue_type": "wrong_fact"
+        }
+      ],
+      "status": "failed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    }
+  },
+  {
+    "id": "guidance_is_not_actual",
+    "expected_supported": false,
+    "matched": true,
+    "verification": {
+      "supported": false,
+      "issues": [
+        "The answer says the company achieved revenue of 150 million USD, but the source gives an uncertain next-quarter estimate of 140–150 million USD, not an actual result."
+      ],
+      "evidence_supported": false,
+      "language_matches": true,
+      "answer_complete": false,
+      "repair_targets": [
+        {
+          "paragraph_id": 1,
+          "source_ids": [
+            1
+          ],
+          "reason": "Present the 140–150 million USD figure as management's uncertain next-quarter revenue outlook, not as revenue already achieved.",
+          "issue_type": "wrong_fact"
+        }
+      ],
+      "status": "failed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    }
+  },
+  {
+    "id": "positive_growth_is_not_acceleration",
+    "expected_supported": false,
+    "matched": true,
+    "verification": {
+      "supported": false,
+      "issues": [
+        "The answer says revenue growth accelerated, but the source reports only 12% year-over-year growth and provides no preceding growth rate or comparison establishing acceleration."
+      ],
+      "evidence_supported": false,
+      "language_matches": true,
+      "answer_complete": false,
+      "repair_targets": [
+        {
+          "paragraph_id": 1,
+          "source_ids": [
+            1
+          ],
+          "reason": "The source establishes 12% year-over-year revenue growth, not acceleration; it provides no prior growth rate for comparison.",
+          "issue_type": "unsupported_claim"
+        }
+      ],
+      "status": "failed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    }
+  },
+  {
+    "id": "honest_macro_limit_is_valid",
+    "expected_supported": true,
+    "matched": true,
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "repair_targets": [],
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    }
+  }
+]

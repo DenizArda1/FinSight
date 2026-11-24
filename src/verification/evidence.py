@@ -12,6 +12,19 @@ MAX_REPORT_SOURCE_CHARS = 6000
 MAX_REPORT_TOTAL_CHARS = 12000
 
 
+def table_source_text(match):
+    """Only verbatim source values, excluding synthetic row/column coordinates."""
+    parts = []
+    for table in match.get('financial_tables', []):
+        parts.append(table['preceding_text'])
+        for row in table['rows']:
+            for cell in row:
+                parts.append(cell)
+        for fact in table.get('revenue_facts', []):
+            parts.extend([fact['value_text'], fact['start'], fact['end']])
+    return '\n'.join(parts)
+
+
 def report_text_size(source):
     result = source["result"]
     if source["tool"] == "get_filing_section":
@@ -19,6 +32,7 @@ def report_text_size(source):
     if source["tool"] in REPORT_SEARCH_TOOLS:
         return sum(
             len(match.get("context", {}).get("text", match.get("text", "")))
+            + (len(json.dumps(match["financial_tables"], ensure_ascii=False)) if match.get("financial_tables") else 0)
             for match in result.get("matches", [])
         )
     return 0

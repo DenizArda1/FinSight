@@ -1,0 +1,130 @@
+{
+  "started_at": "20261124T142344Z",
+  "transport": "HTTP API of running Docker app",
+  "cases": [
+    {
+      "id": "apple_latest_financials",
+      "question": "Apple'ın en son tamamlanan mali yıldaki satış geliri ve net kârı nedir? Mali yılı, dönemin başlangıç ve bitiş tarihlerini belirt. Verilerin hangi yıllık rapora dayandığını göster."
+    },
+    {
+      "id": "amazon_quarterly_outlook",
+      "question": "Amazon'un en son çeyrek net satışlarını önceki yılın aynı çeyreğiyle karşılaştır. Raporun açıkladığı büyüme oranını belirt; çeyreklik rakamlarla yılbaşından bugüne rakamları karıştırma. Son kazanç açıklamasındaki gelecek çeyrek satış beklentisini ve temel belirsizlikleri özetle. Gerçekleşmiş sonuçları beklentilerden ayır ve kaynak tarihlerini yaz."
+    }
+  ],
+  "results": [
+    {
+      "case_id": "apple_latest_financials",
+      "job_id": "707ab2d89d6a4d0cb7067a79efdbb384",
+      "job": {
+        "id": "707ab2d89d6a4d0cb7067a79efdbb384",
+        "conversation_id": "9c05410bbf1544cc9478d16d57b739d0",
+        "company": "",
+        "question": "Apple'ın en son tamamlanan mali yıldaki satış geliri ve net kârı nedir? Mali yılı, dönemin başlangıç ve bitiş tarihlerini belirt. Verilerin hangi yıllık rapora dayandığını göster.",
+        "created_at": "2026-11-24T14:23:44.156970+00:00",
+        "status": "completed",
+        "result": {
+          "supported": true,
+          "prose": "Apple’ın en son tamamlanan mali yılı FY2026 olup dönem 2025-09-28–2026-09-26 tarihlerini kapsıyor. Bu dönemde satış geliri 478834000000 USD, net kâr ise 132175000000 USD oldu. [Source 2] [Source 3]\n\nBu veriler, 2026 mali yılına ait, dönemi 2026-09-26’te sona eren ve Item 7 bölümünde finansal sonuçları ele alan yıllık Form 10-K raporuna dayanıyor; rapor 2026’da sunuldu. [Source 6]",
+          "details": "",
+          "rows": [
+            {
+              "Şirket": "AAPL",
+              "Metrik": "revenue",
+              "Değer": 478834000000,
+              "Birim": "USD",
+              "Mali yıl": 2026,
+              "Dönem sonu": "2026-09-26",
+              "Form": "10-K",
+              "Etiket": "RevenueFromContractWithCustomerExcludingAssessedTax",
+              "Kaynak": 2
+            },
+            {
+              "Şirket": "AAPL",
+              "Metrik": "net_income",
+              "Değer": 132175000000,
+              "Birim": "USD",
+              "Mali yıl": 2026,
+              "Dönem sonu": "2026-09-26",
+              "Form": "10-K",
+              "Etiket": "NetIncomeLoss",
+              "Kaynak": 3
+            }
+          ],
+          "sources": [
+            {
+              "id": 2,
+              "reference": "[Source 2] AAPL | 10-K | 0000320193-26-000026 | FY2026 | 2026-09-26 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-11-03 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/aapl-20260926.htm"
+            },
+            {
+              "id": 3,
+              "reference": "[Source 3] AAPL | 10-K | 0000320193-26-000026 | FY2026 | 2026-09-26 | NetIncomeLoss | 2026-11-03 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/aapl-20260926.htm"
+            },
+            {
+              "id": 6,
+              "reference": "[Source 6] AAPL | AAPL | 10-K | 0000320193-26-000026 | FY2026 | 2026-09-26 | Item 7 | 2026-11-03 | Original annual filing section. | https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/aapl-20260926.htm"
+            }
+          ],
+          "issues": [],
+          "coverage": {
+            "complete": true,
+            "gaps": [],
+            "status": "complete",
+            "repair_tasks_attempted": 0
+          },
+          "usage": {
+            "model_calls_with_usage": 11,
+            "model_calls_without_usage": 0,
+            "tool_calls": 6,
+            "input_tokens": 34802,
+            "output_tokens": 1478,
+            "estimated_cost_usd": 0.0020402000000000003,
+            "calls_without_cost_estimate": 0,
+            "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+          },
+          "markdown": "# FinSight\n\n**Soru / Question:** Apple'ın en son tamamlanan mali yıldaki satış geliri ve net kârı nedir? Mali yılı, dönemin başlangıç ve bitiş tarihlerini belirt. Verilerin hangi yıllık rapora dayandığını göster.\n\nApple’ın en son tamamlanan mali yılı FY2026 olup dönem 2025-09-28–2026-09-26 tarihlerini kapsıyor. Bu dönemde satış geliri 478834000000 USD, net kâr ise 132175000000 USD oldu. [^2] [^3]\n\nBu veriler, 2026 mali yılına ait, dönemi 2026-09-26’te sona eren ve Item 7 bölümünde finansal sonuçları ele alan yıllık Form 10-K raporuna dayanıyor; rapor 2026’da sunuldu. [^6]\n\n## Kaynaklar / Sources\n\n[^2]: AAPL | 10-K | 0000320193-26-000026 | FY2026 | 2026-09-26 | RevenueFromContractWithCustomerExcludingAssessedTax | 2026-11-03 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/aapl-20260926.htm\n\n[^3]: AAPL | 10-K | 0000320193-26-000026 | FY2026 | 2026-09-26 | NetIncomeLoss | 2026-11-03 | Latest filed annual value selected across equivalent XBRL tags; later annual comparative values take priority. | https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/aapl-20260926.htm\n\n[^6]: AAPL | AAPL | 10-K | 0000320193-26-000026 | FY2026 | 2026-09-26 | Item 7 | 2026-11-03 | Original annual filing section. | https://www.sec.gov/Archives/edgar/data/320193/000032019326000026/aapl-20260926.htm\n\nBu not SEC filing'lerine dayalı otomatik bir taslaktır; yatırım tavsiyesi değildir; analist onayı olmadan kullanılmaz.\n"
+        },
+        "elapsed_seconds": 70.9
+      }
+    },
+    {
+      "case_id": "amazon_quarterly_outlook",
+      "job_id": "f8e321c733b04c28babaa89b45c30344",
+      "job": {
+        "id": "f8e321c733b04c28babaa89b45c30344",
+        "conversation_id": "7069304f339c4b399d302c14fa1d86bf",
+        "company": "",
+        "question": "Amazon'un en son çeyrek net satışlarını önceki yılın aynı çeyreğiyle karşılaştır. Raporun açıkladığı büyüme oranını belirt; çeyreklik rakamlarla yılbaşından bugüne rakamları karıştırma. Son kazanç açıklamasındaki gelecek çeyrek satış beklentisini ve temel belirsizlikleri özetle. Gerçekleşmiş sonuçları beklentilerden ayır ve kaynak tarihlerini yaz.",
+        "created_at": "2026-11-24T14:24:59.287195+00:00",
+        "status": "completed",
+        "result": {
+          "supported": false,
+          "prose": "",
+          "details": "",
+          "rows": [],
+          "sources": [],
+          "issues": [
+            "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"2026\", \"30\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values."
+          ],
+          "coverage": {
+            "complete": true,
+            "gaps": [],
+            "status": "complete",
+            "repair_tasks_attempted": 0
+          },
+          "usage": {
+            "model_calls_with_usage": 14,
+            "model_calls_without_usage": 0,
+            "tool_calls": 7,
+            "input_tokens": 94796,
+            "output_tokens": 2318,
+            "estimated_cost_usd": 0.00401488,
+            "calls_without_cost_estimate": 0,
+            "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+          },
+          "markdown": null
+        },
+        "elapsed_seconds": 83.5
+      }
+    }
+  ]
+}

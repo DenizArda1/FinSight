@@ -1,4 +1,4 @@
-"""Paragraph patches for bounded Writer revisions; no additional model calls."""
+#Paragraph patches for bounded Writer revisions; no additional model calls
 
 from copy import deepcopy
 import re
@@ -30,8 +30,9 @@ def targeted_review_schema(base_schema, paragraphs, evidence):
                     "type": "integer", **({"enum": source_ids} if source_ids else {})},
                 },
                 "reason": {"type": "string", "minLength": 1},
+                "issue_type": {"type": "string", "enum": ["wrong_fact", "unsupported_claim", "missing_evidence", "language"]},
             },
-            "required": ["paragraph_id", "source_ids", "reason"],
+            "required": ["paragraph_id", "source_ids", "reason", "issue_type"],
         },
     }
     schema["required"].append("repair_targets")

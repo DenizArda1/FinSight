@@ -73,7 +73,8 @@ async def check_coverage(state, llm_config):
             "A source failure or already reported missing data may have no useful repair: return tasks=[] then. "
             "For complete coverage return gaps=[] and tasks=[].")},
         {'role': 'user', 'content': json.dumps({'question': state['question'], 'facts': facts,
-                                               'reports': evidence_for_prompt(reports), 'calls': calls},
+                                               'reports': evidence_for_prompt(reports), 'calls': calls,
+                                               'review_issues': (state.get('verification') or {}).get('issues', [])},
                                               ensure_ascii=False, allow_nan=False)},
     ]
     try:

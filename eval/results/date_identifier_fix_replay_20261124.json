@@ -1,0 +1,36 @@
+[
+  {
+    "id": "amzn_quarter_guidance",
+    "mode": "original_first_draft_replay_after_fix",
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "repair_targets": [],
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": "Amazon’un 2026-09-30’da sona eren çeyreğinde konsolide net satışları, geçen yılın aynı çeyreğindeki 180,169 milyon dolardan 201,944 milyon dolara yükseldi; şirketin açıkladığı yıllık büyüme oranı yüzde 12 oldu. Bunlar üç aylık gerçekleşmiş sonuçlardır; dokuz aylık yılbaşından bugüne satışlar ayrı bir dönem ölçüsüdür ve bu karşılaştırmaya dahil değildir. [Source 1]\n\n2026-10-29 tarihli son kazanç açıklamasında Amazon, 2026’nın dördüncü çeyreği net satışlarını 240.0–247.0 milyar dolar aralığında, 2025’in aynı çeyreğine göre 12%–16% büyüme olarak öngördü. Bu bir rehberliktir, gerçekleşmiş sonuç değildir. [Source 5]\n\nŞirket, beklentilerin döviz kurları ve enerji fiyatlarındaki dalgalanmalara; küresel ekonomik ve jeopolitik koşullara, tarife ve ticaret politikalarına, kaynak ve tedarik oynaklığına (bellek çipleri dahil), müşteri talebi ve harcamalarına, resesyon endişelerine, enflasyon ve faizlere, bölgesel işgücü kısıtlarına ve teknoloji, internet, e-ticaret ve bulut hizmetlerindeki büyüme hızına bağlı belirsizlik taşıdığını belirtti. 2026 üçüncü çeyreği için bildirilen 2026-09-30 dönem sonu ile beklentinin açıklandığı 2026-10-29 tarihi farklıdır. [Source 1] [Source 5]"
+  },
+  {
+    "id": "msft_annual_metrics",
+    "mode": "original_first_draft_replay_after_fix",
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "repair_targets": [],
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "draft": "Microsoft’un yerel verideki son iki mali yılı FY2025 (dönem bitişi 2025-06-30) ve FY2026 (dönem bitişi 2026-06-30) olarak karşılaştırılmıştır. FY2025’te yıllık gelir 281724000000 USD, net kâr 101832000000 USD ve net kâr marjı 36.15%; FY2026’da yıllık gelir 331839000000 USD, net kâr 133749000000 USD ve net kâr marjı 40.31% oldu. Marjlar, aynı mali yılın net kârının gelirine oranı olarak hesaplanmıştır. [Source 2] [Source 3] [Source 4]\n\nGelir, FY2026’da FY2025’e göre yükseldi; son mali yılın yıllık gelir büyüme oranı 17.79% olarak hesaplandı. Şirket, FY2026 gelirindeki artışı Microsoft Cloud’daki büyümeye bağladı; Intelligent Cloud gelirindeki artışta Azure, Productivity and Business Processes artışında ise Microsoft 365 Commercial cloud etkiliydi. More Personal Computing geliri ise Xbox kaynaklı düşüş nedeniyle geriledi; Search advertising büyümesi bunu kısmen dengeledi. [Source 7] [Source 12]\n\nNet kâr marjı FY2026’da önceki mali yıla kıyasla yükseldi. Şirket, maliyet gelirinin Microsoft Cloud büyümesiyle arttığını; brüt marj yüzdesinin ise AI altyapısına devam eden yatırımlar ve artan AI ürünü kullanımı nedeniyle hafifçe düştüğünü, Microsoft Cloud verimlilik kazanımlarının bu baskıyı kısmen dengelediğini belirtti. FY2026 net kârındaki artışın karşılaştırmalı yorumunda OpenAI yatırımlarından kaynaklanan kazanç ve kayıpların etkisi de önemlidir: şirket, cari yıl net kârının bu yatırımlardan gelen net kazançlarla, önceki yıl net kârının ise net kayıplarla olumlu ve olumsuz yönde etkilendiğini bildirdi. [Source 12] [Source 11]"
+  }
+]

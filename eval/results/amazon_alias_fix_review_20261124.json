@@ -1,0 +1,37 @@
+{
+  "cause": [
+    "Writer guessed opaque numbered report field aliases",
+    "Raw localized amounts and partial dates failed deterministic validation"
+  ],
+  "fix": "Report aliases now identify source plus exact literal, e.g. {{S1|201,944}}. Existing source membership and Critic checks retained.",
+  "offline_tests_passed": 566,
+  "host_e2e": {
+    "artifact": "amazon_readable_fields_e2e_20261124.json",
+    "supported": true,
+    "coverage": "complete",
+    "revisions": 2
+  },
+  "docker_e2e": {
+    "artifact": "amazon_alias_docker_20261124T143629Z.json",
+    "trace": "logs/runs/20261124T143811442812Z_d9a3d186.json",
+    "supported": true,
+    "coverage": {
+      "complete": true,
+      "gaps": [],
+      "status": "complete",
+      "repair_tasks_attempted": 0
+    },
+    "revisions": 1,
+    "seconds": 101.9
+  },
+  "manual_checks": [
+    "Consolidated quarterly sales 180,169 and 201,944 million, not segment or nine-month amounts",
+    "Reported 12% growth is not described as acceleration",
+    "Outlook 240.0–247.0 billion and 12%–16% remains forecast",
+    "Dates and currency assumption 60 basis points match evidence",
+    "No unnamed financial table rows"
+  ],
+  "discarded_experiment": "Constrained prose regex produced unnatural output and was fully reverted; not included in final code",
+  "limits": "Two end-to-end passes support this fix, not a guarantee of error-free generation. Narrative source coverage gaps in other questions remain separate.",
+  "push_performed": false
+}

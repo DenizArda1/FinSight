@@ -9,7 +9,7 @@ from src.llm.client import config_for_role, generate_response
 from src.llm.prompts import build_agent_answer_messages, build_agent_verification_messages
 from src.verification.citations import SOURCE_REFERENCE, validate_citations
 from src.verification.grounding import parse_verification_response
-from src.verification.evidence import REPORT_SEARCH_TOOLS, limit_report_evidence
+from src.verification.evidence import REPORT_SEARCH_TOOLS, limit_report_evidence, table_source_text
 
 
 from src.verification.field_references import FIELD_REFERENCE, REPORT_NUMBER, normalize_catalog_references
@@ -22,7 +22,7 @@ DISPLAY_FIELDS = {
     "value", "unit", "start", "end", "fiscal_year", "period_label", "form",
     "filed", "accn", "ticker", "name", "cik", "accession_number", "report_date",
     "section", "section_title", "source_url", "periods", "metric", "concept",
-    "requested_period_ends", "missing_period_ends", "available_period_ends", "tag", "filed", "amendment_note",
+    "period_type", "scope", "status", "requested_period_ends", "missing_period_ends", "available_period_ends", "tag", "filed", "amendment_note",
 }
 ANSWER_KINDS = {"answer", "insufficient_data", "clarification", "refusal"}
 VERIFICATION_SCHEMA = {
@@ -59,7 +59,7 @@ def record_template(source_id, path, record):
         fields.append(tokens["start"] + " → " + tokens["end"])
     elif "report_date" not in tokens and "end" in tokens:
         fields.append(tokens["end"])
-    fields.extend(tokens[key] for key in ("report_date", "form", "accn", "accession_number", "section", "tag") if key in tokens)
+    fields.extend(tokens[key] for key in ("report_date", "filed", "form", "accn", "accession_number", "section", "tag") if key in tokens)
     return " | ".join(fields) + f" [Source {source_id}]"
 
 
@@ -87,6 +87,10 @@ def build_fact_catalog(evidence):
 
         for index, match in enumerate(result.get("matches", [])):
             records.append((f"matches/{index}/metadata", match["metadata"]))
+            for table_index, table in enumerate(match.get('financial_tables', [])):
+                for fact_index, fact in enumerate(table.get('revenue_facts', [])):
+                    if 'value' in fact:
+                        records.append((f"matches/{index}/financial_tables/{table_index}/revenue_facts/{fact_index}", fact))
 
         for path, record in records:
             identifier = f"{source_id}:{path}" if path else f"{source_id}:company"
@@ -172,22 +176,29 @@ def bind_cited_metadata(prose, catalog):
     for paragraph in prose.split("\n\n"):
         cited = {int(number) for number in SOURCE_REFERENCE.findall(paragraph)}
         replacements = {}
+        # Repair a partially tokenized localized date as one complete date.
+        year_tokens = {}
+        for entry in catalog.values():
+            if entry['source_id'] in cited and entry.get('reported_number'):
+                value = entry['fields'].get('value', '')
+                if re.fullmatch(r'(?:19|20)\d{2}', str(value)):
+                    year_tokens.setdefault(str(value), []).extend(FIELD_REFERENCE.findall(entry['template']))
         for entry in catalog.values():
             if entry["source_id"] not in cited:
                 continue
             for match in FIELD_REFERENCE.finditer(entry["template"]):
                 field = match[2].rsplit("/", 1)[-1]
-                if field not in {"fiscal_year", "start", "end", "report_date", "form", "section"}:
+                if field not in {"fiscal_year", "start", "end", "report_date", "filed", "form", "section"}:
                     continue
                 value = entry["fields"].get(field)
                 if not isinstance(value, (str, int)) or isinstance(value, bool) or value == "":
                     continue
                 # Chunk start/end are offsets; only ISO date strings are filing dates.
-                if field in {"start", "end", "report_date"} and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(value)):
+                if field in {"start", "end", "report_date", "filed"} and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(value)):
                     continue
                 prefix = "FY" if field == "fiscal_year" else ""
                 replacements.setdefault(prefix + str(value), prefix + match.group())
-                if field in {'start', 'end', 'report_date'}:
+                if field in {'start', 'end', 'report_date', 'filed'}:
                     parsed = date.fromisoformat(value)
                     month_names = (
                         ('January February March April May June July August September October November December').split(),
@@ -197,6 +208,10 @@ def bind_cited_metadata(prose, catalog):
                         month = names[parsed.month - 1]
                         replacements.setdefault(f'{parsed.day} {month} {parsed.year}', match.group())
                         replacements.setdefault(f'{month} {parsed.day}, {parsed.year}', match.group())
+                        for source, path, modifier in year_tokens.get(str(parsed.year), []):
+                            token = '{{' + source + ':' + path + modifier + '}}'
+                            replacements.setdefault(f'{parsed.day} {month} {token}', match.group())
+                            replacements.setdefault(f'{month} {parsed.day}, {token}', match.group())
         if replacements:
             # Bind full dates before standalone years so a Turkish suffix such
             # as "31 Mayıs 2025’te" does not split the date into partial tokens.
@@ -403,7 +418,7 @@ def cited_report_texts(evidence):
             continue
         result = source["result"]
         if source["tool"] in REPORT_SEARCH_TOOLS:
-            reports[source["source_id"]] = [match.get("context", {}).get("text", match["text"])
+            reports[source["source_id"]] = [match.get("context", {}).get("text", match["text"]) + "\n" + table_source_text(match)
                                            for match in result.get("matches", [])]
         elif source["tool"] == "get_filing_section":
             reports[source["source_id"]] = [result.get("text", "")]
@@ -435,6 +450,19 @@ def mask_cited_identifiers(prose, evidence):
             year = label.removeprefix("FY")
             if any(re.search(r'\b(?:FY)?' + year + r'\b', text) for text in excerpts):
                 line = re.sub(r'\b' + label + r'\b', ' ' * len(label), line)
+        # A year in an explicit period label is not a bare monetary amount.
+        period_year = r"\b(?:19|20)\d{2}(?=\s+(?:(?:birinci|ikinci|üçüncü|dördüncü)\s+çeyre|mali yıl|fiscal year))"
+        for match in list(re.finditer(period_year, line)):
+            year = match.group()
+            if any(re.search(r'\b' + year + r'\b', text) for text in excerpts):
+                line = line[:match.start()] + ' ' * len(year) + line[match.end():]
+        # Recognized product-name syntax still requires an exact cited-source
+        # occurrence. Never exempt a number followed by a monetary unit.
+        products = r"\b(?:Microsoft|Office|Windows|iPhone|PlayStation)\s+\d+\b(?!\s*(?i:%|USD|EUR|GBP|JPY|TRY|TL|dollars?|dolar|euro|million|billion|milyon|milyar))"
+        for match in list(re.finditer(products, line)):
+            label = match.group()
+            if any(re.search(r'(?<!\w)' + re.escape(label) + r'(?!\w)', text) for text in excerpts):
+                line = line[:match.start()] + ' ' * len(label) + line[match.end():]
         for token in set(re.findall(r"\b(?:[A-Za-z][A-Za-z-]*\d[A-Za-z0-9-]*|\d+[A-Z][A-Za-z0-9-]*)\b", line)):
             if re.match(r"^(?:FY|Q|CIK|USD|EUR|GBP|JPY|CNY|CAD|AUD)\d", token, re.IGNORECASE):
                 continue

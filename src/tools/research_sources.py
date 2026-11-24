@@ -13,6 +13,7 @@ from src.ingestion.public_sources import PublicSourceClient
 from src.ingestion.sec_access import preparation_lock, sec_client
 from src.rag.chunking import split_text
 from src.rag.html_parser import extract_text
+from src.rag.financial_tables import extract_financial_tables, table_context_for_excerpt
 from src.rag.hybrid import bm25_rank
 from src.tools.company import resolve_company
 
@@ -70,7 +71,11 @@ def rank_documents(documents, query, top_k):
                 'This is the preceding source heading, not an inferred duration. '
                 'Check headings and table columns inside the excerpt; a filing may mix quarterly and year-to-date data.'
             )
-        matches.append({'text': text[start:end], 'score': record['bm25_score'], 'metadata': metadata})
+        match = {'text': text[start:end], 'score': record['bm25_score'], 'metadata': metadata}
+        tables = table_context_for_excerpt(documents[record['document_index']].get('tables', []), start, end)
+        if tables:
+            match['financial_tables'] = tables
+        matches.append(match)
     return matches
 
 
@@ -129,7 +134,7 @@ def search_company_updates(ticker, query, form='10-Q', limit=4, top_k=4):
                     text = extract_text(response['text'])
                     if not text.strip():
                         raise ValueError('Empty cleaned filing')
-                    documents.append({'text': text, 'metadata': {
+                    documents.append({'text': text, 'tables': extract_financial_tables(response['text'], text), 'metadata': {
                         'ticker': company['ticker'], 'form': row['form'], 'accession_number': accession,
                         'report_date': row['reportDate'], 'filed': row['filingDate'], 'source_url': url,
                         'section': 'Primary document' if index == 0 else 'EX-99 exhibit',

@@ -5,6 +5,27 @@ from tests.filing_fixtures import REPORT_TEXT
 
 
 class SectionTests(unittest.TestCase):
+    def test_explicit_mda_reference_follows_separate_caption(self):
+        prefix = REPORT_TEXT.split("Item 7.")[0]
+        stub = ("Item 7. Management’s Discussion and Analysis\n"
+                "See the information under the caption “Management’s Discussion and Analysis.”\n"
+                "Item 7A. Quantitative and Qualitative Disclosures\nMarket risk reference.\n"
+                "Item 8. Financial Statements\nSee statements.\nItem 16. Summary\nNone.\n")
+        chapter = "MANAGEMENT’S DISCUSSION AND ANALYSIS\n" + 'Actual operating results. ' * 30
+        boundary = "\nFINANCIAL INSTRUMENT MARKET RISK INFORMATION\nExcluded risk and financial statements."
+        text = prefix + stub + chapter + boundary
+        sections = extract_sections(text)
+        mda = sections[2]
+        self.assertEqual(mda['section'], 'Item 7')
+        self.assertEqual(mda['text'], text[mda['start']:mda['end']])
+        self.assertIn('Actual operating results.', mda['text'])
+        self.assertNotIn('Excluded', mda['text'])
+        self.assertLess(mda['reference_start'], mda['start'])
+        for invalid in (text.replace('See the information under the caption', 'Unrelated text'),
+                        text.replace(boundary, ''), text + '\n' + chapter + boundary):
+            with self.subTest(text=invalid[-100:]), self.assertRaises(ValueError):
+                extract_sections(invalid)
+
     def test_cross_reference_chapters_exclude_toc_and_repeated_page_footers(self):
         text = ("Form 10-K Cross-Reference Index\n"
                 "\tManagement's Discussion and Analysis\t\nOverview\n"

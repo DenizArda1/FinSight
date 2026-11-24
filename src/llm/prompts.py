@@ -5,10 +5,21 @@ from src.verification.field_references import REPORT_NUMBER, catalog_aliases
 
 
 FINANCIAL_MEANING_RULES = (
+    "When financial_tables are present, use their original cells and spans to check table meaning. "
+    "Tagged revenue_facts describe actual XBRL values, with explicit period, scale and dimensions. "
+    "When value is present it is already normalized to USD; scale_power applies only to value_text, "
+    "never multiply the normalized value again. "
+    "A dimensional fact is not an entity-wide total. Other_duration is not a quarter. "
+    "Untagged cells and preceding_text are raw evidence, not prevalidated financial facts: "
+    "resolve headers, units, period and actual versus guidance from the source or state ambiguity. "
+    "Do not treat a filing's report_date as every table column's period. "
     "Keep revenue distinct from net income: in Turkish, revenue/net revenue means satış geliri/net satışlar, "
     "while net income means net kâr. Do not translate net revenue as net gelir. "
     "Distinguish a falling revenue level from a falling growth rate: when a negative growth rate "
     "moves toward zero, revenue is still declining but the contraction is slowing; the growth rate improved. "
+    "One positive growth rate establishes that revenue increased, not that growth accelerated. "
+    "Claims that growth accelerated, slowed, or that the growth rate increased/decreased require "
+    "two comparable growth rates or an explicit source statement comparing those rates. "
 )
 
 
@@ -24,11 +35,11 @@ def prompt_fact_catalog(catalog):
         references = {}
         for token in re.findall(r"\{\{[^{}]+\}\}", entry["template"]):
             field = token.split(":", 1)[1].removesuffix("}}").rsplit("/", 1)[-1].split("|", 1)[0]
-            if field in {"value", "unit", "fiscal_year", "start", "end", "report_date", "section"} or key.endswith(":company") or entry.get("availability"):
+            if field in {"value", "unit", "fiscal_year", "start", "end", "report_date", "filed", "section"} or key.endswith(":company") or entry.get("availability"):
                 references[field] = aliases[token]
         visible[key] = {
             "fields": {name: value for name, value in fields.items()
-                       if name in {"metric", "concept", "fiscal_year", "section", "availability", "period_end", "ticker", "name"}},
+                       if name in {"metric", "concept", "period_type", "scope", "status", "fiscal_year", "section", "availability", "period_end", "ticker", "name"}},
             "inline_fields": references,
         }
     return visible
@@ -81,6 +92,8 @@ def build_agent_answer_messages(question, evidence, catalog, feedback=None, requ
         "inline_fields, for example {{F1_value}} {{F1_unit}}. Copy tokens exactly; never invent IDs. "
         "Tokens already include the correct numeric format, including percentages where appropriate. "
         "Catalog entries marked reported_number are exact numeric strings from that source excerpt. "
+        "Their tokens are self-describing: {{S1|201,944}} means the exact reported value 201,944 "
+        "from Source 1. Copy the displayed token; do not translate decimal/thousands separators. "
         "Use their tokens for quoted report amounts, percentages and outlook ranges; preserve the source's "
         "units and scale (millions vs billions), table column, period, and actual-versus-forecast meaning. "
         "They are not computed metrics. Do not round, rescale, calculate differences or translate numeric separators. "
@@ -92,8 +105,9 @@ def build_agent_answer_messages(question, evidence, catalog, feedback=None, requ
         "Never write a bare growth rate such as 'growth was 12'. Do not add a second unit if the token already contains it. "
         "The application replaces them with source values and attaches citations. You do not need "
         "to write JSON paths, perform calculations, or choose number formats. "
-        "Use the catalog's year and date tokens for reporting periods. Comparative FY labels "
-        "explicitly present in a cited report may remain in prose. If an excerpt has a figure "
+        "Use the catalog's year and date tokens for reporting periods. "
+        "Keep dates as complete date tokens; do not split a source date into a bare day, month and year. "
+        "Comparative FY labels explicitly present in a cited report may remain in prose. If an excerpt has a figure "
         "without a catalog token, describe it qualitatively instead of inventing a token or value. "
         "Never expose catalog, token or validation implementation details in the user-facing answer. "
         "Identify each distinct fiscal period with its fiscal year and period end once. "
@@ -223,9 +237,17 @@ def build_agent_verification_messages(question, answer, evidence, kind, prose, p
         "kind": kind, "prose_for_language_check": prose, "question": question,
     }
     if paragraphs is not None:
+        payload["available_uncited_evidence"] = evidence_for_prompt(
+            [source for source in evidence if source["source_id"] not in cited])
         system += (
+            " available_uncited_evidence is provided only to locate missing coverage: it does not "
+            "support an existing claim without the correct citation. If the needed information is "
+            "already there, classify the omission as wrong_fact or unsupported_claim and identify "
+            "that source for revision, not missing_evidence. "
             " Also return repair_targets: one entry per incorrect prose paragraph, with paragraph_id, "
-            "source_ids and a concrete reason. Use the supplied numbered paragraphs. "
+            "source_ids, issue_type and a concrete reason. issue_type is wrong_fact for a wrong "
+            "metric/period/scope, unsupported_claim for an unsupported interpretation, missing_evidence "
+            "only when needed evidence was not collected, or language. Use the supplied numbered paragraphs. "
             "Select only paragraphs needing correction; combine errors in the same paragraph. "
             "For a missing requested topic select the paragraph where it belongs. "
             "For language errors select affected paragraphs; source_ids may be empty for language or scope errors. "

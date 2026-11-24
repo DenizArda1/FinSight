@@ -185,6 +185,27 @@ class CompanyIndexTests(unittest.TestCase):
         self.mocks['filings'].return_value = [self.report]
         self.mocks['embeddings'].return_value = [{'chunk_id': 'new-adbe'}]
 
+    def test_same_source_parse_failure_is_not_reprocessed_but_changed_source_retries(self):
+        self.mocks['filings'].return_value = [{'status': 'failed', 'error_type': 'ValueError',
+                                               'error': 'Missing section'}]
+        for _ in range(2):
+            with self.assertRaisesRegex(ValueError, 'Missing section'):
+                prepare_company_index(self.company, self.processed)
+        self.assertEqual(self.mocks['filings'].call_count, 1)
+        self.mocks['embeddings'].assert_not_called()
+        save_json({'filings': [{'accessionNumber': 'new'}]},
+                  self.root / 'financial_data/raw' / self.company['cik'] / 'manifest.json')
+        self.mocks['filings'].return_value = [self.report]
+        prepare_company_index(self.company, self.processed)
+        self.assertEqual(self.mocks['filings'].call_count, 2)
+
+    def test_io_failures_are_not_cached_as_deterministic_parse_failures(self):
+        self.mocks['filings'].return_value = [{'status': 'failed', 'error_type': 'OSError', 'error': 'Temporary IO failure'}]
+        for _ in range(2):
+            with self.assertRaisesRegex(ValueError, 'Temporary IO failure'):
+                prepare_company_index(self.company, self.processed)
+        self.assertEqual(self.mocks['filings'].call_count, 2)
+
     def test_company_sync_preserves_other_company_reports_and_only_prunes_its_own_ids(self):
         prepare_company_index(self.company, self.processed)
         self.collection.get.assert_called_once_with(where={'cik': self.company['cik']}, include=['documents', 'metadatas'])

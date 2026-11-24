@@ -1,0 +1,59 @@
+{
+  "started_at": "20261124T143629Z",
+  "transport": "HTTP API of running Docker app",
+  "cases": [
+    {
+      "id": "amazon_quarterly_outlook",
+      "question": "Amazon'un en son çeyrek net satışlarını önceki yılın aynı çeyreğiyle karşılaştır. Raporun açıkladığı büyüme oranını belirt; çeyreklik rakamlarla yılbaşından bugüne rakamları karıştırma. Son kazanç açıklamasındaki gelecek çeyrek satış beklentisini ve temel belirsizlikleri özetle. Gerçekleşmiş sonuçları beklentilerden ayır ve kaynak tarihlerini yaz."
+    }
+  ],
+  "results": [
+    {
+      "case_id": "amazon_quarterly_outlook",
+      "job_id": "392bbce800ab4fb18f8322b2d489043d",
+      "job": {
+        "id": "392bbce800ab4fb18f8322b2d489043d",
+        "conversation_id": "306149fcf42c492ab427a4561d156e4f",
+        "company": "",
+        "question": "Amazon'un en son çeyrek net satışlarını önceki yılın aynı çeyreğiyle karşılaştır. Raporun açıkladığı büyüme oranını belirt; çeyreklik rakamlarla yılbaşından bugüne rakamları karıştırma. Son kazanç açıklamasındaki gelecek çeyrek satış beklentisini ve temel belirsizlikleri özetle. Gerçekleşmiş sonuçları beklentilerden ayır ve kaynak tarihlerini yaz.",
+        "created_at": "2026-11-24T14:36:29.522676+00:00",
+        "status": "completed",
+        "result": {
+          "supported": true,
+          "prose": "Amazon’un 2026-09-30 tarihinde sona eren üç aylık dönemdeki konsolide net satışları, bir önceki yılın aynı çeyreğindeki 180,169 milyon dolardan 201,944 milyon dolara çıktı; şirketin açıkladığı yıllık büyüme oranı yüzde 12’ydi. Bunlar yalnızca üç aylık sonuçlardır; dokuz aylık yılbaşından bugüne değerlerle karıştırılmamalıdır. [Source 1]\n\nGelecek çeyrek için şirketin 2026-10-29 tarihli kazanç açıklamasında verdiği beklenti, 2026’nın dördüncü çeyreğinde 240.0–247.0 milyar dolar net satış ve 2025’in aynı çeyreğine kıyasla 12%–16% büyümedir. Bu bir tahmindir; gerçekleşmiş satış sonucu değildir. Şirket, beklentilerin döviz kurları ve enerji fiyatları, küresel ekonomik ve jeopolitik koşullar, tarife ve ticaret politikaları, kaynak ve tedarik oynaklığı (bellek çipleri dâhil) ile müşteri talebi ve harcamaları gibi etkenler nedeniyle önemli belirsizlik taşıdığını belirtiyor; ayrıca tahmin, döviz kurlarından yaklaşık 60 baz puan olumsuz etki öngörüyor. [Source 5]",
+          "details": "",
+          "rows": [],
+          "sources": [
+            {
+              "id": 1,
+              "reference": "[Source 1] AMZN | AMZN | 10-Q | 0001018724-26-000040 | 2026-09-30 | Primary document | 2026-10-30 | https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm"
+            },
+            {
+              "id": 5,
+              "reference": "[Source 5] AMZN | AMZN | 8-K | 0001018724-26-000038 | 2026-10-29 | EX-99 exhibit | 2026-10-29 | https://www.sec.gov/Archives/edgar/data/1018724/000101872426000038/amzn-20260930xex991.htm"
+            }
+          ],
+          "issues": [],
+          "coverage": {
+            "complete": true,
+            "gaps": [],
+            "status": "complete",
+            "repair_tasks_attempted": 0
+          },
+          "usage": {
+            "model_calls_with_usage": 14,
+            "model_calls_without_usage": 0,
+            "tool_calls": 7,
+            "input_tokens": 82074,
+            "output_tokens": 2769,
+            "estimated_cost_usd": 0.00413022,
+            "calls_without_cost_estimate": 0,
+            "note": "API token estimate, excluding taxes and local hardware costs; missing usage is not zero usage."
+          },
+          "markdown": "# FinSight\n\n**Soru / Question:** Amazon'un en son çeyrek net satışlarını önceki yılın aynı çeyreğiyle karşılaştır. Raporun açıkladığı büyüme oranını belirt; çeyreklik rakamlarla yılbaşından bugüne rakamları karıştırma. Son kazanç açıklamasındaki gelecek çeyrek satış beklentisini ve temel belirsizlikleri özetle. Gerçekleşmiş sonuçları beklentilerden ayır ve kaynak tarihlerini yaz.\n\nAmazon’un 2026-09-30 tarihinde sona eren üç aylık dönemdeki konsolide net satışları, bir önceki yılın aynı çeyreğindeki 180,169 milyon dolardan 201,944 milyon dolara çıktı; şirketin açıkladığı yıllık büyüme oranı yüzde 12’ydi. Bunlar yalnızca üç aylık sonuçlardır; dokuz aylık yılbaşından bugüne değerlerle karıştırılmamalıdır. [^1]\n\nGelecek çeyrek için şirketin 2026-10-29 tarihli kazanç açıklamasında verdiği beklenti, 2026’nın dördüncü çeyreğinde 240.0–247.0 milyar dolar net satış ve 2025’in aynı çeyreğine kıyasla 12%–16% büyümedir. Bu bir tahmindir; gerçekleşmiş satış sonucu değildir. Şirket, beklentilerin döviz kurları ve enerji fiyatları, küresel ekonomik ve jeopolitik koşullar, tarife ve ticaret politikaları, kaynak ve tedarik oynaklığı (bellek çipleri dâhil) ile müşteri talebi ve harcamaları gibi etkenler nedeniyle önemli belirsizlik taşıdığını belirtiyor; ayrıca tahmin, döviz kurlarından yaklaşık 60 baz puan olumsuz etki öngörüyor. [^5]\n\n## Kaynaklar / Sources\n\n[^1]: AMZN | AMZN | 10-Q | 0001018724-26-000040 | 2026-09-30 | Primary document | 2026-10-30 | https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm\n\n[^5]: AMZN | AMZN | 8-K | 0001018724-26-000038 | 2026-10-29 | EX-99 exhibit | 2026-10-29 | https://www.sec.gov/Archives/edgar/data/1018724/000101872426000038/amzn-20260930xex991.htm\n\nBu not SEC filing'lerine dayalı otomatik bir taslaktır; yatırım tavsiyesi değildir; analist onayı olmadan kullanılmaz.\n"
+        },
+        "elapsed_seconds": 101.9
+      }
+    }
+  ]
+}

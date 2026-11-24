@@ -29,6 +29,42 @@ async def write_with_initial_corruption(state, llm_config, feedback=None):
 
 
 class OrchestratorTests(unittest.IsolatedAsyncioTestCase):
+    async def test_semantic_rejection_patches_only_selected_paragraph(self):
+        composition = {**self.composition, "text": "Risk evidence is available. [Source 3]\n\nCurrency losses occurred. [Source 3]"}
+        target = {"paragraph_id": 2, "source_ids": [3], "issue_type": "unsupported_claim",
+                  "reason": "The source describes risk, not realized currency losses."}
+        self.writer_response.side_effect = [
+            json.dumps(composition), json.dumps({**self.rejection, "repair_targets": [target]}),
+            json.dumps({"patches": [{"paragraph_id": 2, "text": "The report describes risks. [Source 3]"}]}),
+            json.dumps(self.approval),
+        ]
+        state = await run_orchestrator('Apple revenue and risks?', self.config, self.client, TOOL_SCHEMAS)
+        self.assertEqual(state['verification']['status'], 'passed')
+        self.assertEqual(state['composition']['text'].split('\n\n')[0], composition['text'].split('\n\n')[0])
+        self.assertEqual(state['composition']['facts'], composition['facts'])
+        self.assertEqual(self.coverage_check.await_count, 1)
+        self.assertIn('patches', self.writer_response.call_args_list[2].kwargs['response_format']['properties'])
+
+    async def test_missing_evidence_reuses_one_bounded_retrieval_pass(self):
+        task = {'id': 'missing', 'agent': 'financial_data', 'instruction': 'Retrieve earlier revenue.',
+                'filing_scope': 'annual', 'fiscal_year': None, 'years': 2}
+        complete = {'complete': True, 'status': 'complete', 'gaps': [], 'tasks': []}
+        partial = {'complete': False, 'status': 'partial', 'gaps': ['Earlier period missing'], 'tasks': [task]}
+        self.coverage_check.side_effect = [complete, partial, complete]
+        self.chat.side_effect = list(self.chat.side_effect) + [
+            tool_message('resolve_ticker_to_cik', {'ticker': 'AAPL'}),
+            tool_message('get_company_facts', {'cik': '0000320193', 'concept': 'revenue', 'years': 2}), self.done]
+        self.call_tool.side_effect = list(self.call_tool.side_effect) + [{'cik': '0000320193'}, {'records': []}]
+        target = {'paragraph_id': 1, 'source_ids': [], 'issue_type': 'missing_evidence', 'reason': 'Earlier period missing'}
+        self.writer_response.side_effect = [json.dumps(self.composition),
+            json.dumps({**self.rejection, 'repair_targets': [target]}),
+            json.dumps(self.composition), json.dumps(self.approval)]
+        state = await run_orchestrator('Compare Apple revenue.', self.config, self.client, TOOL_SCHEMAS)
+        self.assertEqual(state['verification']['status'], 'passed')
+        self.assertEqual(state['coverage']['repair_tasks_attempted'], 1)
+        self.assertEqual(self.coverage_check.await_count, 3)
+        self.assertEqual(self.call_tool.await_count, 5)
+
     async def test_coverage_repair_runs_once_and_retains_partial_status(self):
         task = {'id': 'missing', 'agent': 'financial_data', 'instruction': 'Retrieve earlier revenue.',
                 'filing_scope': 'annual', 'fiscal_year': None, 'years': 2}
@@ -124,8 +160,8 @@ class OrchestratorTests(unittest.IsolatedAsyncioTestCase):
             "kind": "answer", "text": "Risk evidence is available. [Source 3]",
             "facts": ["2:records/0"],
         }
-        self.approval = {"evidence_supported": True, "language_matches": True, "answer_complete": True, "issues": []}
-        self.rejection = {"evidence_supported": False, "language_matches": True, "answer_complete": True, "issues": ["Remove unsupported claim"]}
+        self.approval = {"evidence_supported": True, "language_matches": True, "answer_complete": True, "issues": [], "repair_targets": []}
+        self.rejection = {"evidence_supported": False, "language_matches": True, "answer_complete": True, "issues": ["Remove unsupported claim"], "repair_targets": []}
         self.writer_response.side_effect = [json.dumps(self.composition), json.dumps(self.approval)]
         self.client = object()
         self.config = {"model": "test-model"}

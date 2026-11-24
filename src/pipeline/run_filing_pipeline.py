@@ -98,7 +98,7 @@ def process_company_filings(ticker, years=5, max_chars=1500, overlap=200):
                 report["original_fiscal_year"] = original_years[filing["reportDate"]]
             document = process_filing(report, max_chars=max_chars, overlap=overlap)
         except (ValueError, OSError, KeyError) as error:
-            entry.update({"status": "failed", "error": str(error)})
+            entry.update({"status": "failed", "error": str(error), "error_type": type(error).__name__})
         else:
             if filing["form"] == "10-K":
                 original_years[filing["reportDate"]] = document["filing"]["fiscal_year"]

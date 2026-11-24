@@ -33,6 +33,39 @@ def find_headings(text):
     return sorted(headings, key=lambda heading: heading["start"])
 
 
+def referenced_mda(text, heading, following):
+    """Follow an explicit same-document MD&A caption reference, never a guessed range."""
+    stub = text[heading['end']:following['start']]
+    reference = re.search(
+        r"See the information under (?:the caption )?[\"“](Management['’]s Discussion and Analysis)\.?[\"”]",
+        stub, re.IGNORECASE)
+    if not reference:
+        return None
+    title = r"Management['’]s Discussion and Analysis"
+    starts = list(re.finditer(r'(?im)^[ \t]*' + title + r'[ \t]*$', text))
+    boundary = re.compile(
+        r'(?im)^[ \t]*(?:FINANCIAL INSTRUMENT MARKET RISK INFORMATION|'
+        r'(?:STATEMENTS OF CONSOLIDATED|CONSOLIDATED STATEMENTS OF) INCOME|'
+        r'CONSOLIDATED FINANCIAL STATEMENTS|REPORT OF INDEPENDENT REGISTERED PUBLIC ACCOUNTING FIRM)[ \t]*$')
+    candidates = []
+    for start in starts:
+        if start.start() <= following['end']:
+            continue
+        first_line = text[start.end():].strip().split('\n', 1)[0].strip()
+        if first_line.isdigit():
+            continue  # Contents entry, not the referenced chapter.
+        end = boundary.search(text, start.end())
+        if end is None or len(text[start.end():end.start()].strip()) < MIN_BODY_CHARS:
+            continue
+        candidates.append({'section': 'Item 7', 'title': SECTION_TITLES['7'],
+                           'start': start.start(), 'end': end.start(),
+                           'text': text[start.start():end.start()],
+                           'reference_start': heading['start'], 'reference_end': following['start']})
+    if len(candidates) != 1:
+        raise ValueError('Ambiguous or missing explicitly referenced MD&A chapter')
+    return candidates[0]
+
+
 def extract_sections(text, partial=False):
     headings = find_headings(text)
     if partial:
@@ -57,6 +90,11 @@ def extract_sections(text, partial=False):
         item = heading["item"]
         if item not in candidates or following["item"] not in END_ITEMS[item]:
             continue
+        if item == '7' and len(text[heading['end']:following['start']].strip()) < MIN_BODY_CHARS:
+            chapter = referenced_mda(text, heading, following)
+            if chapter is not None:
+                candidates[item].append(chapter)
+                continue
         if len(text[heading["end"]:following["start"]].strip()) < MIN_BODY_CHARS:
             continue
         start, end = heading["start"], following["start"]

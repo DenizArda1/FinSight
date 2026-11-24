@@ -1,0 +1,21 @@
+{
+  "mode": "frozen_evidence_replay",
+  "question": "Amazon'un en son çeyrek net satışlarını önceki yılın aynı çeyreğiyle karşılaştır. Raporun açıkladığı büyüme oranını belirt; çeyreklik rakamlarla yılbaşından bugüne rakamları karıştırma. Son kazanç açıklamasındaki gelecek çeyrek satış beklentisini ve temel belirsizlikleri özetle. Gerçekleşmiş sonuçları beklentilerden ayır ve kaynak tarihlerini yaz.",
+  "enriched_excerpts": 1,
+  "seconds": 11.41736404200492,
+  "attempts": [
+    {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "repair_targets": [],
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    }
+  ],
+  "answer": "Amazon, 2026-09-30’da sona eren üç aylık dönemde net satışlarını önceki yılın aynı çeyreğindeki 180,169 milyon dolardan 201,944 milyon dolara yükseltti; şirketin açıkladığı yıllık büyüme oranı yüzde 12 idi. Bunlar çeyreklik gerçekleşmiş sonuçlardır; rapordaki dokuz aylık toplamlar bu karşılaştırmaya dahil değildir. [Source 1]\n\n2026-10-29 tarihli son kazanç açıklamasında Amazon, 2026’nın dördüncü çeyreği için net satışların 240.0 milyar–247.0 milyar dolar aralığında olmasını ve 2025’in aynı çeyreğine kıyasla 12%–16% büyümesini beklediğini bildirdi. Bu rakamlar gerçekleşmiş sonuç değil, ileriye dönük beklentidir. [Source 5]\n\nŞirket beklentilerin önemli belirsizliklere tabi olduğunu; döviz kurları ve enerji fiyatlarındaki dalgalanmalar, küresel ekonomik ve jeopolitik koşullar, tarife ve ticaret politikaları, kaynak ve tedarik oynaklığı (hafıza çipleri dahil), müşteri talebi ve harcamaları, enflasyon, faiz oranları ve bölgesel işgücü piyasası kısıtlarının sonuçları etkileyebileceğini belirtti. Rehberlik ayrıca enerji türev sözleşmelerinin yeniden değerlemesinden etki olmayacağı ve ek satın alma, yeniden yapılandırma veya hukuki uzlaşma gerçekleşmeyeceği varsayımlarına dayanıyor. [Source 5]"
+}

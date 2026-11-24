@@ -8,12 +8,14 @@ REPORT_NUMBER = re.compile(
 
 FIELD_REFERENCE = re.compile(r"\{\{([1-9][0-9]*):([A-Za-z0-9_/-]+)(\|percent)?\}\}")
 
-
 def catalog_aliases(catalog):
     """Expose short display tokens; source paths stay inside the application."""
     aliases = {}
     for index, entry in enumerate(catalog.values(), 1):
         for match in FIELD_REFERENCE.finditer(entry["template"]):
+            if entry.get('reported_number'):
+                aliases['{{S' + str(entry['source_id']) + '|' + entry['fields']['value'] + '}}'] = match.group()
+                continue
             field = match[2].rsplit("/", 1)[-1]
             if field.isdigit():
                 field = match[2].rsplit("/", 2)[-2] + "_" + field

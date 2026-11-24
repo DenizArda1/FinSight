@@ -1,0 +1,68 @@
+{
+  "mode": "live_local_multi_agent_mcp",
+  "results_file": "eval/results/three_e2e_20261124T150422Z.json",
+  "code_unchanged_during_test": true,
+  "counts": {
+    "full": 1,
+    "partial": 1,
+    "failed": 1
+  },
+  "total_elapsed_seconds": 649.1811484579957,
+  "estimated_api_cost_usd": 0.0284979,
+  "cases": [
+    {
+      "id": "amzn_quarter_guidance",
+      "application_status": "withheld",
+      "verification": "failed",
+      "coverage": "complete",
+      "elapsed_seconds": 96.85197820800386,
+      "scheduled_revisions": 2,
+      "assessment": "failed",
+      "reason": "All three Writer attempts failed deterministic numeric binding; Critic never reviewed a rendered draft.",
+      "observations": [
+        "Required quarterly and guidance evidence was collected; coverage reported complete.",
+        "Localized dates and loose years remained outside source field tokens. Partially replacing the year also left unbound date-day numbers.",
+        "Initial company-name tool failures recovered after the specialist used AMZN."
+      ],
+      "priority": "Fix source-backed date rendering and validation without relaxing financial amount verification."
+    },
+    {
+      "id": "msft_annual_metrics",
+      "application_status": "completed",
+      "verification": "passed",
+      "coverage": "complete",
+      "elapsed_seconds": 138.52479845899506,
+      "scheduled_revisions": 3,
+      "assessment": "passed_with_revisions",
+      "reason": "Delivered three paragraphs; numerical values and narrative claims checked against tool records and cited passages.",
+      "observations": [
+        "FY2025/FY2026 revenues: 281724000000 / 331839000000 USD. Net income: 101832000000 / 133749000000 USD.",
+        "Margins 36.15% / 40.31% and latest revenue growth 17.79% match the deterministic calculations.",
+        "Microsoft 365 caused two numeric-binding failures before a third revision corrected cost-of-revenue wording.",
+        "Sources 11 and 12 support the cloud, Xbox, cost and OpenAI investment explanations."
+      ],
+      "priority": "Treat source-supported product identifiers separately from financial amounts."
+    },
+    {
+      "id": "deere_new_company",
+      "application_status": "completed",
+      "verification": "passed",
+      "coverage": "partial",
+      "elapsed_seconds": 413.8043717909968,
+      "scheduled_revisions": 2,
+      "assessment": "partial",
+      "reason": "New-company preparation and annual metrics succeeded, but requested current demand/financing research remains incomplete.",
+      "observations": [
+        "Annual FY2025 revenue 45684000000 USD and net income 5027000000 USD match local SEC records.",
+        "Source 22 supports quarterly 12608/1377 and nine-month 35589/3802 million USD revenue/net income.",
+        "Source 37 supports August 20 segment outlook and potential risk language; the answer discloses lack of newer announcement content.",
+        "Four annual RAG calls failed with Expected one substantive Item 7 section; found 0.",
+        "Inspection of the actual 2025 filing shows Item 7 points to a separate MANAGEMENT’S DISCUSSION AND ANALYSIS caption after Item 16; the content exists.",
+        "Fed/CPI searches and repeated failed preparation added work; 39 evidence IDs were generated and most report sources were omitted by evidence limits."
+      ],
+      "priority": "Support explicitly cross-referenced MD&A sections and avoid repeating the same known preparation failure; then reassess targeted recent-source retrieval."
+    }
+  ],
+  "production_code_changed_during_test": false,
+  "docker_rebuilt": false
+}

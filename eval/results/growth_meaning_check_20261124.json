@@ -1,0 +1,32 @@
+[
+  {
+    "case": "unsupported_acceleration",
+    "verification": {
+      "supported": false,
+      "issues": [
+        "“Dolayısıyla büyüme hızı arttı” iddiası yanlış: Kaynak 1’de yıllık büyüme oranı 2025’in üçüncü çeyreğindeki %13’ten 2026’nın üçüncü çeyreğinde %12’ye düşüyor."
+      ],
+      "evidence_supported": false,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "failed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    }
+  },
+  {
+    "case": "supported_revenue_increase",
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    }
+  }
+]

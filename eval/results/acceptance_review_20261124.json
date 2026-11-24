@@ -1,0 +1,87 @@
+{
+  "code_change": "Shared Writer/Critic rule distinguishes revenue growth from acceleration; no extra pipeline layer",
+  "offline_python_tests": 565,
+  "frontend_checks": {
+    "javascript_syntax": "passed",
+    "keyboard": "passed",
+    "history_deletion": "passed",
+    "chat_workflow": "passed",
+    "runtime": "official node:22-alpine read-only workspace mount"
+  },
+  "docker": {
+    "build": "passed",
+    "pip_check": "passed",
+    "compose_validation": "passed",
+    "health": "healthy"
+  },
+  "semantic_probe": [
+    {
+      "case": "unsupported_acceleration",
+      "verification": {
+        "supported": false,
+        "issues": [
+          "“Dolayısıyla büyüme hızı arttı” iddiası yanlış: Kaynak 1’de yıllık büyüme oranı 2025’in üçüncü çeyreğindeki %13’ten 2026’nın üçüncü çeyreğinde %12’ye düşüyor."
+        ],
+        "evidence_supported": false,
+        "language_matches": true,
+        "answer_complete": true,
+        "status": "failed",
+        "stage": "grounding_and_language",
+        "deterministic_fields": "passed",
+        "method": "source_fields_and_llm_judge"
+      }
+    },
+    {
+      "case": "supported_revenue_increase",
+      "verification": {
+        "supported": true,
+        "issues": [],
+        "evidence_supported": true,
+        "language_matches": true,
+        "answer_complete": true,
+        "status": "passed",
+        "stage": "grounding_and_language",
+        "deterministic_fields": "passed",
+        "method": "source_fields_and_llm_judge"
+      }
+    }
+  ],
+  "acceptance": [
+    {
+      "case": "apple_latest_financials",
+      "seconds": 70.9,
+      "supported": true,
+      "coverage": {
+        "complete": true,
+        "gaps": [],
+        "status": "complete",
+        "repair_tasks_attempted": 0
+      },
+      "issues": [],
+      "financial_rows": 2,
+      "unnamed_rows": 0,
+      "answer": "Apple’ın en son tamamlanan mali yılı FY2026 olup dönem 2025-09-28–2026-09-26 tarihlerini kapsıyor. Bu dönemde satış geliri 478834000000 USD, net kâr ise 132175000000 USD oldu. [Source 2] [Source 3]\n\nBu veriler, 2026 mali yılına ait, dönemi 2026-09-26’te sona eren ve Item 7 bölümünde finansal sonuçları ele alan yıllık Form 10-K raporuna dayanıyor; rapor 2026’da sunuldu. [Source 6]"
+    },
+    {
+      "case": "amazon_quarterly_outlook",
+      "seconds": 83.5,
+      "supported": false,
+      "coverage": {
+        "complete": true,
+        "gaps": [],
+        "status": "complete",
+        "repair_tasks_attempted": 0
+      },
+      "issues": [
+        "Use exact catalog placeholders for numbers, dates, forms and percentages. Unbound prose values (untrusted text): [\"2026\", \"30\"]. Replace these with the matching short field token from fact_catalog, or remove the unsupported claim. Do not calculate or spell out values."
+      ],
+      "financial_rows": 0,
+      "unnamed_rows": 0,
+      "answer": ""
+    }
+  ],
+  "visual_test": "Not completed: browser host unavailable and native Chrome actions interrupted by concurrent user activity",
+  "push_performed": false,
+  "release_acceptance": "failed",
+  "remaining_failure": "Amazon: complete retrieved scope, but Writer first used free numbers, next used incorrect field references, final response used unbound partial date/year; no verified answer delivered. Reproduced without manual evidence injection."
+}

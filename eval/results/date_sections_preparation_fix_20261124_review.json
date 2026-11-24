@@ -1,0 +1,77 @@
+{
+  "fixes": [
+    "Bind source-backed quarter years and partly tokenized localized dates without exempting monetary amounts.",
+    "Expose filed as an explicit source field, distinct from reporting-period end.",
+    "Permit exact cited numbered product names with monetary-unit guards.",
+    "Follow explicit same-document MD&A caption references with bounded unique chapter ranges.",
+    "Cache deterministic preparation failures within the MCP process; changed source or explicit refresh can retry. Do not cache IO failures.",
+    "Stop repeated annual RAG requests after a company report-preparation failure."
+  ],
+  "automated_tests_passed": 580,
+  "deere_local_preparation": {
+    "annual_reports_parsed": 5,
+    "index_prepared": true,
+    "seconds": 56.1
+  },
+  "amazon_final": {
+    "artifact": "eval/results/amazon_date_fix_final_20261124T153524Z.json",
+    "status": "completed",
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "repair_targets": [],
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "coverage": {
+      "complete": true,
+      "gaps": [],
+      "status": "complete",
+      "repair_tasks_attempted": 0
+    },
+    "elapsed_seconds": 98.83630516700214,
+    "revisions": 1
+  },
+  "deere_after_parser_fix": {
+    "artifact": "eval/results/fix_e2e_20261124T152445Z.json",
+    "status": "completed",
+    "verification": {
+      "supported": true,
+      "issues": [],
+      "evidence_supported": true,
+      "language_matches": true,
+      "answer_complete": true,
+      "repair_targets": [],
+      "status": "passed",
+      "stage": "grounding_and_language",
+      "deterministic_fields": "passed",
+      "method": "source_fields_and_llm_judge"
+    },
+    "coverage": {
+      "complete": false,
+      "gaps": [
+        "FY2025 geliri (45,684 milyar USD) ve net kârı (5,027 milyar USD) destekleniyor. Ancak en son 10-Q’nun görünen içeriği, güncel çeyreğe ait gelir/net kârı veya güncel bilanço verilerini ortaya koymuyor; görünen 33,290 milyar USD gelir önceki yılın dokuz aylık dönemine ait. Bu nedenle çeyreklik rapora dayalı güncel finansal durum değerlendirilemiyor.",
+        "Şirket açıklamalarında faiz oranlarındaki yükselişin talep ve sermayeye erişim için risk olduğu belirtiliyor; FY2026 segment satış beklentileri de mevcut. Ancak bunlar, tarım ekipmanı talebindeki gerçekleşmiş gelişmeleri veya finansman koşullarının gerçekleşmiş etkilerini açıklamıyor. Finansman koşullarına ilişkin yönetim beklentileri de yeterince desteklenmiyor. Son açıklama içeriği ve talep/finansman konularındaki gerçekleşmiş etkiler için hedefli kanıt eksik."
+      ],
+      "status": "partial",
+      "repair_tasks_attempted": 2
+    },
+    "elapsed_seconds": 480.5814984999961,
+    "annual_search_errors": []
+  },
+  "replays": [
+    "eval/results/date_identifier_fix_replay_20261124.json",
+    "eval/results/filing_date_patch_replay_20261124.json"
+  ],
+  "remaining": "Deere still returns an honest partial answer. Evidence retrieval/admission does not consistently preserve the current-quarter figures and realized demand/financing effects. Parser success is not full question coverage.",
+  "notes": [
+    "The intermediate Amazon retry exposed the missing filed catalog field; it was fixed before the final Amazon run.",
+    "The Critic can vary on language and source-date completeness; a passing verdict is not a guarantee.",
+    "No Docker rebuild or git push was performed."
+  ]
+}

@@ -10,6 +10,47 @@ from src.verification.agent_answer import (
 
 
 class FieldReferenceTests(unittest.TestCase):
+    def test_source_backed_dates_and_quarter_years_survive_partial_tokenization(self):
+        evidence = [{'source_id': 1, 'tool': 'search_company_updates', 'result': {'matches': [{
+            'text': 'Three months ended September 30, 2026. Revenue 100.',
+            'metadata': {'report_date': '2026-09-30', 'filed': '2026-10-30'}}]}}]
+        catalog = build_fact_catalog(evidence)
+        for text in ("30 Eylül 2026’da sona erdi; 2026 üçüncü çeyreği. [Source 1]",
+                     "30 Eylül {{S1|2026}}’da sona erdi. [Source 1]",
+                     "30 Eylül 2026 dönem sonu; 30 Ekim 2026 dosyalama tarihi. [Source 1]"):
+            answer = render_agent_template(compose_template({'kind': 'answer', 'text': text, 'facts': []}, catalog), evidence)
+            self.assertIn('2026-09-30', answer)
+        for text in ('Revenue 2026 USD. [Source 1]', '2027 üçüncü çeyreği. [Source 1]',
+                     '29 Eylül 2026 tarihinde. [Source 1]'):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                render_agent_template(compose_template({'kind': 'answer', 'text': text, 'facts': []}, catalog), evidence)
+
+    def test_numbered_product_names_require_exact_cited_support(self):
+        evidence = [{'source_id': 1, 'tool': 'get_filing_section',
+                     'result': {'text': 'Microsoft 365 and Windows 11 revenue increased. Revenue 365 USD.'}}]
+        for text in ('Microsoft 365 revenue increased. [Source 1]', 'Windows 11 revenue increased. [Source 1]'):
+            render_agent_template({'kind': 'answer', 'template': text}, evidence)
+        for text in ('Microsoft 366 revenue increased. [Source 1]', 'Revenue 365 USD. [Source 1]',
+                     'Microsoft 365 million USD. [Source 1]'):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                render_agent_template({'kind': 'answer', 'template': text}, evidence)
+        evidence[0]['result']['text'] = 'No product names here.'
+        with self.assertRaises(ValueError):
+            render_agent_template({'kind': 'answer', 'template': 'Microsoft 365. [Source 1]'}, evidence)
+
+    def test_report_aliases_identify_exact_value_and_source(self):
+        evidence = [
+            {'source_id': 1, 'tool': 'get_filing_section', 'result': {'text': 'Total sales 201,944 million.'}},
+            {'source_id': 2, 'tool': 'get_filing_section', 'result': {'text': 'Outlook 247.0 billion.'}},
+        ]
+        catalog = build_fact_catalog(evidence)
+        text = 'Sales {{S1|201,944}} million; outlook {{S2|247.0}} billion.'
+        rendered = render_agent_template(compose_template({'kind': 'answer', 'text': text, 'facts': []}, catalog), evidence)
+        self.assertIn('Sales 201,944 million; outlook 247.0 billion.', rendered)
+        for bad in ('{{S2|201,944}}', '{{S1|201.944}}', '{{S1|999}}', '{{S1|201.9}}'):
+            with self.subTest(token=bad), self.assertRaises(ValueError):
+                render_agent_template(compose_template({'kind': 'answer', 'text': bad, 'facts': []}, catalog), evidence)
+
     def test_percentage_units_are_not_duplicated(self):
         evidence = [{'source_id': 1, 'tool': 'get_filing_section',
                      'result': {'text': 'Growth 12%. Sales 50.'}}]

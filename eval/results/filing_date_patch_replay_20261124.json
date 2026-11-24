@@ -1,0 +1,16 @@
+{
+  "mode": "previously_failed_filing_date_patch_replay",
+  "verification": {
+    "supported": true,
+    "issues": [],
+    "evidence_supported": true,
+    "language_matches": true,
+    "answer_complete": true,
+    "repair_targets": [],
+    "status": "passed",
+    "stage": "grounding_and_language",
+    "deterministic_fields": "passed",
+    "method": "source_fields_and_llm_judge"
+  },
+  "answer": "Amazon’un 30 Eylül 2026’da sona eren üç aylık dönem net satışları, 30 Eylül 2025’te sona eren aynı çeyrekteki $180,169 milyon düzeyinden $201,944 milyona yükseldi. Şirket, bu çeyrek için yıllık net satış büyümesini yüzde 12 olarak açıkladı. Bu rakamlar yalnızca üç aylık dönemlere aittir; raporda ayrıca verilen dokuz aylık yılbaşından bugüne satışlarla karıştırılmamalıdır. 10-Q, 2026-10-30’da yayımlandı. [Source 1]\n\n29 Ekim 2026 tarihli son kazanç açıklamasında Amazon, 2026’nın dördüncü çeyreği için net satışları $240.0–$247.0 milyar aralığında ve 2025’in aynı çeyreğine göre 12%–16% büyüme olarak öngördü. Bu bir tahmindir, gerçekleşmiş satış sonucu değildir; şirket tahminin döviz kurlarından yaklaşık 60 baz puanlık olumsuz etkiyi içerdiğini belirtti. [Source 5]\n\nŞirket, beklentilerin önemli belirsizliklere tabi olduğunu; döviz kurları ve enerji fiyatlarındaki dalgalanmaların, küresel ekonomik ve jeopolitik koşulların, tarife ve ticaret politikalarının, kaynak ve tedarik oynaklığının (bellek çipleri dahil), müşteri talebi ve harcamalarının, resesyon kaygılarının, enflasyonun ve faiz oranlarının sonuçları etkileyebileceğini bildirdi. 10-Q’daki yönetim değerlendirmesi de makroekonomik ve jeopolitik gelişmeler, tarife ve ticaret politikaları ile talep ve teknoloji yatırımlarının sonuçlar üzerindeki etkisinin tahmin edilmesi, ayrıştırılması ve ölçülmesinin zor olduğunu; bu etkenlerin 2026’nın dördüncü çeyreğinde de sonuçları etkilemesinin beklendiğini belirtiyor. [Source 1] [Source 5]"
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "segment_is_not_total",
+    "question": "What is the company's consolidated quarterly revenue?",
+    "source_text": "Three months ended September 30, 2025. Amounts in millions of USD. Consolidated net sales: 125. North America segment net sales: 80.",
+    "text": "Consolidated quarterly revenue was {{S1|80}} million USD. [Source 1]",
+    "expected_supported": false,
+    "expected_issue": "Segment revenue must not be presented as consolidated revenue."
+  },
+  {
+    "id": "ytd_is_not_quarter",
+    "question": "What is the company's quarterly revenue?",
+    "source_text": "Net sales, in millions of USD: Three months ended September 30, 2025: 125. Nine months ended September 30, 2025: 350.",
+    "text": "Quarterly revenue was {{S1|350}} million USD. [Source 1]",
+    "expected_supported": false,
+    "expected_issue": "Nine-month revenue is not quarterly revenue."
+  },
+  {
+    "id": "guidance_is_not_actual",
+    "question": "Summarize the company's next-quarter revenue outlook.",
+    "source_text": "Management expects next-quarter revenue between 140 and 150 million USD. These forward-looking estimates are uncertain and do not represent actual results.",
+    "text": "The company achieved next-quarter revenue of {{S1|150}} million USD. [Source 1]",
+    "expected_supported": false,
+    "expected_issue": "An outlook upper bound is not a realized result."
+  },
+  {
+    "id": "positive_growth_is_not_acceleration",
+    "question": "Does the reported growth rate establish that revenue growth accelerated?",
+    "source_text": "Revenue increased by 12% year over year. No preceding growth rate or statement about acceleration is provided.",
+    "text": "Revenue growth accelerated, as shown by the reported {{S1|12%}} growth rate. [Source 1]",
+    "expected_supported": false,
+    "expected_issue": "Acceleration requires comparable growth rates or an explicit source statement."
+  },
+  {
+    "id": "honest_macro_limit_is_valid",
+    "question": "How did inflation affect the company's revenue?",
+    "source_text": "Inflation may adversely affect demand. The company cannot isolate or quantify its effects on reported revenue.",
+    "text": "The company identifies inflation as a potential demand risk but says it cannot isolate or quantify its revenue effect. The disclosure therefore does not establish a measured revenue loss from inflation. [Source 1]",
+    "expected_supported": true,
+    "expected_issue": null
+  }
+]

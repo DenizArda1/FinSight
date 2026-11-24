@@ -196,6 +196,17 @@ def model_tool_message(name, arguments):
 
 
 class SpecialistLoopTests(unittest.IsolatedAsyncioTestCase):
+    async def test_report_preparation_failure_blocks_other_queries_for_same_company(self):
+        task = {'id': 'risk', 'agent': 'filing_rag', 'instruction': 'Explain risks.'}
+        self.chat.side_effect = [
+            model_tool_message('search_filings', {'ticker': 'DE', 'query': 'risks', 'section': 'Item 7'}),
+            model_tool_message('search_filings', {'ticker': 'DE', 'query': 'other risks', 'section': 'Item 1A'}),
+        ]
+        self.call_tool.side_effect = MCPToolError('Report preparation failed for DE: missing section')
+        result = await run_specialist(task, {}, self.client, TOOL_SCHEMAS)
+        self.assertEqual(self.call_tool.await_count, 1)
+        self.assertEqual(result['tool_call_count'], 1)
+
     async def test_plan_coverage_is_used_by_mcp_and_recorded_in_trace(self):
         self.chat.side_effect = [self.resolve, self.facts, self.done]
         self.call_tool.side_effect = [self.company, {'records': []}]

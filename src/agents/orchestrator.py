@@ -11,6 +11,21 @@ from src.agents.coverage import check_coverage
 from src.observability import observation, update_observation
 
 
+async def collect_coverage_repairs(state, tasks, llm_config, mcp_client, tool_schemas):
+    #The same bounded retrieval pass serves coverage and a later missing-evidence review.
+    for index, task in enumerate(tasks, 1):
+        repair_trace = []
+        scoped_task = {**task, 'id': f'coverage_repair_{index}'}
+        try:
+            with observation(task["agent"], "agent", metadata={"task_id": scoped_task["id"]}):
+                await run_specialist(scoped_task, llm_config, mcp_client, tool_schemas,
+                                     trace=repair_trace, max_steps=6, max_tool_calls=6)
+        except SpecialistLimitError:
+            pass  # The bounded pass still retains any successful tool evidence.
+        finally:
+            state['trace'].extend(deepcopy(repair_trace))
+
+
 async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace=None, max_revisions=2) -> AgentState:
     if type(max_revisions) is not int or not 0 <= max_revisions <= 2:
         raise ValueError("Max revisions must be an integer between 0 and 2")
@@ -81,17 +96,7 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
         with observation("coverage", "chain"):
             coverage = await check_coverage(state, llm_config)
         repair_tasks = coverage['tasks']
-        for index, task in enumerate(repair_tasks, 1):
-            repair_trace = []
-            scoped_task = {**task, 'id': f'coverage_repair_{index}'}
-            try:
-                with observation(task["agent"], "agent", metadata={"task_id": scoped_task["id"]}):
-                    await run_specialist(scoped_task, llm_config, mcp_client, tool_schemas,
-                                         trace=repair_trace, max_steps=6, max_tool_calls=6)
-            except SpecialistLimitError:
-                pass  # The bounded pass still retains any successful tool evidence.
-            finally:
-                state['trace'].extend(deepcopy(repair_trace))
+        await collect_coverage_repairs(state, repair_tasks, llm_config, mcp_client, tool_schemas)
         if repair_tasks:
             with observation("coverage", "chain"):
                 coverage = await check_coverage(state, llm_config)
@@ -102,6 +107,7 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
     feedback = None
     last_candidate = None
     critic_reviews = 0
+    critic_retrieval_attempted = False
     # Syntax repairs can consume the normal budget before the first content
     # review. Reserve at most one further revision for that first review.
     for revision in range(max_revisions + 2):
@@ -123,7 +129,7 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
         else:
             last_candidate = {key: deepcopy(state[key]) for key in ("draft", "composition", "evidence")}
             with observation("critic", "agent", metadata={"revision": revision}) as span:
-                await run_critic(state, llm_config)
+                await run_critic(state, llm_config, locate_repairs=True)
                 status = (state["verification"] or {}).get("status")
                 update_observation(span, metadata={
                     "revision": revision,
@@ -156,6 +162,23 @@ async def run_orchestrator(question, llm_config, mcp_client, tool_schemas, trace
             "previous_composition": deepcopy(state["composition"]),
             "issues": deepcopy(verification["issues"]),
         }
+        targets = verification.get("repair_targets", [])
+        if targets and writer_response is None:
+            feedback["repair_targets"] = deepcopy(targets)
+        missing_evidence = any(target.get("issue_type") == "missing_evidence" for target in targets)
+        if missing_evidence and not critic_retrieval_attempted and state.get('coverage', {}).get('repair_tasks_attempted', 0) == 0:
+            critic_retrieval_attempted = True
+            # Share the existing retrieval budget; never start an unbounded new loop.
+            coverage = await check_coverage(state, llm_config)
+            repair_tasks = coverage['tasks']
+            await collect_coverage_repairs(state, repair_tasks, llm_config, mcp_client, tool_schemas)
+            if repair_tasks:
+                coverage = await check_coverage(state, llm_config)
+                # Admission of new evidence can change the visible source set.
+                feedback.pop("repair_targets", None)
+            state['coverage'] = {key: value for key, value in coverage.items() if key != 'tasks'}
+            state['coverage']['repair_tasks_attempted'] = len(repair_tasks)
+            state['trace'].append({'type': 'coverage', **state['coverage']})
         if writer_response is not None:
             feedback["previous_response"] = writer_response
         state["trace"].append({

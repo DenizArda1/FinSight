@@ -135,6 +135,7 @@ async def run_specialist(task, llm_config, mcp_client, tool_schemas,max_steps=6,
     searched_sections = set()
     successful_calls = set()
     failed_calls = {}
+    failed_report_companies = set()
     has_research_result = False
     empty_response_retried = False
     started = perf_counter()
@@ -239,6 +240,11 @@ async def run_specialist(task, llm_config, mcp_client, tool_schemas,max_steps=6,
                 name, arguments = function["name"], function.get("arguments")
                 arguments = scoped_tool_arguments(name, arguments, filing_scope, requested_years, fiscal_year)
                 call_key = json.dumps([name, arguments], sort_keys=True, allow_nan=False)
+                report_company = str(arguments.get('ticker', '')).strip().upper() if isinstance(arguments, dict) else ''
+                if name in {'search_filings', 'get_filing_section'} and report_company in failed_report_companies:
+                    messages.append({'role': 'tool', 'tool_name': name,
+                                     'content': 'Annual report preparation already failed for this company. Changing the query or section cannot repair parsing. Use another source or disclose the missing evidence.'})
+                    continue
                 if failed_calls.get(call_key, 0) >= 2:
                     messages.append({'role': 'tool', 'tool_name': name,
                                      'content': 'This exact request failed twice. Do not repeat it. Report missing coverage or use a different source.'})
@@ -282,6 +288,8 @@ async def run_specialist(task, llm_config, mcp_client, tool_schemas,max_steps=6,
                     result = {"error": {"type": type(error).__name__, "message": str(error)}}
                     event["status"] = "error"
                     failed_calls[call_key] = failed_calls.get(call_key, 0) + 1
+                    if name in {'search_filings', 'get_filing_section'} and 'Report preparation failed for ' in str(error):
+                        failed_report_companies.add(report_company)
                     if not isinstance(error, (ValueError, MCPToolError)):
                         event.update({
                             "result": deepcopy(result),

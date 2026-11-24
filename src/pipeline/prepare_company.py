@@ -19,6 +19,8 @@ from src.utils.utils import load_json, load_yaml, save_json
 
 ROOT = Path(__file__).resolve().parents[2]
 REFRESH_INTERVAL = timedelta(hours=24)
+# Process-local only: the next MCP session or explicit refresh can retry.
+_REPORT_PREPARATION_FAILURES = {}
 
 
 def refresh_due(manifest, now=None):
@@ -64,13 +66,20 @@ def prepare_company(identifier, *, filings=False, refresh=False):
             process_company(company['cik'])
             save_json({'source_signature': signature}, state_path)
         if filings:
+            if refresh:
+                _REPORT_PREPARATION_FAILURES.pop(str(raw.resolve()), None)
             prepare_company_index(company, processed)
     return company
 
 
 def prepare_company_index(company, processed):
 
-    signature = source_signature(ROOT / 'financial_data/raw' / company['cik'])
+    raw = ROOT / 'financial_data/raw' / company['cik']
+    signature = source_signature(raw)
+    failure_key = str(raw.resolve())
+    prior_failure = _REPORT_PREPARATION_FAILURES.get(failure_key)
+    if prior_failure and prior_failure['signature'] == signature:
+        raise ValueError(prior_failure['message'] + ' (same source already failed in this session)')
     state_path = processed / company['cik'] / 'index_source.json'
     settings = load_yaml(ROOT / 'configs/settings.yaml')
     collection = get_vector_collection(settings['vector_store'])
@@ -100,7 +109,11 @@ def prepare_company_index(company, processed):
     reports = process_company_filings(company['ticker'])
     failures = [r for r in reports if r['status'] == 'failed']
     if failures:
-        raise ValueError(f"Report preparation failed for {company['ticker']}: {failures[0]['error']}")
+        message = f"Report preparation failed for {company['ticker']}: {failures[0]['error']}"
+        if all(report.get('error_type') == 'ValueError' for report in failures):
+            _REPORT_PREPARATION_FAILURES[failure_key] = {'signature': signature, 'message': message}
+        raise ValueError(message)
+    _REPORT_PREPARATION_FAILURES.pop(failure_key, None)
     prepared = [r for r in reports if r['status'] == 'prepared']
     if not prepared:
         raise ValueError(f"No supported narrative sections for {company['ticker']}")

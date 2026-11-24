@@ -64,7 +64,7 @@ class TargetedRevisionTests(unittest.IsolatedAsyncioTestCase):
         self.state["composition"] = deepcopy(self.composition)
         catalog = build_fact_catalog(self.state["evidence"])
         self.state["draft"] = render_agent_template(compose_template(self.composition, catalog), self.state["evidence"])
-        self.targets = [{"paragraph_id": 2, "source_ids": [2], "reason": "A potential effect is not an observed reduction."}]
+        self.targets = [{"paragraph_id": 2, "source_ids": [2], "reason": "A potential effect is not an observed reduction.", "issue_type": "unsupported_claim"}]
 
     @patch("src.verification.agent_answer.generate_response")
     async def test_targeted_critic_locates_error_in_rendered_paragraph(self, generate):
@@ -76,6 +76,18 @@ class TargetedRevisionTests(unittest.IsolatedAsyncioTestCase):
         payload = json.loads(generate.call_args.args[0][1]["content"])
         self.assertIn("123 USD", payload["paragraphs"][0]["text"])
         self.assertEqual(payload["paragraphs"][1]["paragraph_id"], 2)
+
+    @patch("src.verification.agent_answer.generate_response")
+    async def test_uncited_evidence_is_available_to_distinguish_omission_from_retrieval_gap(self, generate):
+        self.state['composition'] = {"kind": "answer", "facts": [], "text": "Revenue {{1:records/0/value}} USD."}
+        catalog = build_fact_catalog(self.state['evidence'])
+        self.state['draft'] = render_agent_template(compose_template(self.state['composition'], catalog), self.state['evidence'])
+        generate.return_value = json.dumps({"evidence_supported": True, "language_matches": True,
+            "answer_complete": False, "issues": ["Currency risk omitted"], "repair_targets": []})
+        await run_critic(self.state, {}, locate_repairs=True)
+        payload = json.loads(generate.call_args.args[0][1]['content'])
+        self.assertEqual([source['source_id'] for source in payload['tool_evidence']], [1])
+        self.assertEqual([source['source_id'] for source in payload['available_uncited_evidence']], [2])
 
     @patch("src.verification.agent_answer.generate_response")
     async def test_patch_keeps_correct_financial_prose_and_still_requires_critic(self, generate):
